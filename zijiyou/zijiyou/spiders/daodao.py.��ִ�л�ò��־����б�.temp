@@ -1,0 +1,134 @@
+'''
+Created on 2011-3-28
+
+@author: shiym
+'''
+import re
+from scrapy.contrib_exp.crawlspider import Rule
+from scrapy.contrib.loader.processor import TakeFirst
+from scrapy.contrib.loader import XPathItemLoader
+from scrapy.selector import HtmlXPathSelector
+
+from zijiyou.items.zijiyouItem import ZijiyouItem
+from zijiyou.spiders.baseCrawlSpider import baseCrawlSpider
+
+class daodao(baseCrawlSpider):
+    '''
+    Spider for www.daodao.com
+    '''
+    name ="daodaoSpider"
+    
+    # regexs
+    regexHome=r'http://www.daodao.com/Lvyou$'           
+    regexCountry=r'Tourism-.*-.*-Vacations.html$'          # Tourism-g294232-Japan-Vacations.html
+    regexArea=r'Attractions-.*-Activities-[a-z A-Z]*\.html$' # Attractions-g294232-Activities-Japan.html
+    regexList=r'Attractions-.*-Activities-.*\.html$' # Attractions-g298184-Activities-Tokyo_Tokyo_Prefecture_Kanto.html
+
+    homePage="http://www.daodao.com"
+    allowed_domains = ["daodao.com"]
+    start_urls = [
+            'http://www.daodao.com/Lvyou'
+            ]
+
+    rules = [
+            Rule(regexHome, 'parseHome'),
+            Rule(regexCountry, 'parseCountry'),
+            Rule(regexArea,'parseArea'),
+            Rule(regexList, 'parseItem')
+            ]
+    
+    def parseHome(self,response):
+        print('****begin parseHome***********************************************************')
+        counter=0;
+        reqs=[]
+        
+        hxs=HtmlXPathSelector(response);
+        sites=hxs.select('//div[@class="box-t1 top-outer-loc"]')
+        if sites !=[]:
+            links=sites[0].select('.//ul/li/a/@href').extract()
+            for link in links:
+                counter+=1
+                if counter<2 :
+                    link=self.homePage+link
+                    print(link)
+                    req=self.makeRequest(link,priority=self.priority_county)
+                    reqs.append(req) # need attention
+                    print('req:',req)
+            print('----------------homeParser get links =---------------------------',counter)
+            return reqs
+        else:
+            print('$$$$$$$$$$$$$$$$ failed parseHome get links =---------------------------',counter)
+    
+    def parseCountry(self,response):
+        print('***begin parseCountry*******************************************************')
+        counter=0;
+        reqs=[]
+        links=self.extractLinks(response,allow=self.regexArea,restrict_xpaths='//div[@class="mod-box-t1"]/ul/li')
+        if links!=[]:
+            link=links[0]
+            req=self.makeRequest(link.url, priority=self.priority_area)
+            reqs.append(req)
+            print('req:',req)
+            print('----------------parseCountry success ---------------------------')
+            return reqs
+        else :
+            print('$$$$$$$$$$$$$$$$ failed parseCountry get links =---------------------------')
+        
+    def parseArea(self,response):
+        print('****begin parseArea***********************************************************')
+        counter=0
+        reqs=[]
+        links=self.extractLinks(response,allow=self.regexList,restrict_xpaths='//div[@id="LOCATION_LIST"]/ul[@class="geoList"]/li/a')
+        if links!=[]:
+            '''
+            for link in links:
+                counter+=1
+                if counter<2:
+                    req=self.make_request(link.url,priority=self.priority_list)
+                    reqs.append(req)
+                    print('req:',req) '''
+            
+            link=links[0]
+            req=self.makeRequest(link.url,priority=self.priority_list)
+            reqs.append(req)
+            print('req:',req)
+            
+            print('-----parseArea success----------------------------------------------------------',counter)
+            return reqs
+        else:
+            print('$$$$$$$$$$$$$$$$ failed parseArea get links $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',counter)
+
+    def parseItem(self,response):
+        
+        print('****begin parseItem****************************************************')
+        hxs=HtmlXPathSelector(response);
+        sites=hxs.select('//div[@id="ATTRACTION_OVERVIEW"]/div[@class="attraction-list clearfix"]')
+        
+        items=[]
+        for site in sites:
+            
+            '''
+            item=ZijiyouItem()
+            item.name="-".join(site.select('.//div[@class="info"]/div[@class="title"]/a/text()').extract())
+            item.address="-".join(site.select('.//div[@class="info"]/address/span/text()').extract())
+            item.area="-".join(site.select('.//div[@class="info"]/address/span[@class="country-name"]/text()').extract())
+            item.tags.append(site.select('.//div[@class="info"]/div[@class="typle"]/a/text()').extract())
+            item.popularity="-".join(site.select('.//div[@class="rank"]/span/strong/text()').extract())
+            # item.photos.append(site.select('.//div[@class="photos clearfix"]/img')) get the attribute
+            items.append(item)
+            '''
+            name="-".join(site.select('.//div[@class="info"]/div[@class="title"]/a/text()').extract())
+            address="-".join(site.select('.//div[@class="info"]/address/span/text()').extract())
+            area="-".join(site.select('.//div[@class="info"]/address/span[@class="country-name"]/text()').extract())
+            tags="-".join(site.select('.//div[@class="info"]/div[@class="typle"]/a/text()').extract())
+            print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1')
+            print(name,'---',address,'---',area,'---',tags)
+            print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1')
+        print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+            # print(item)
+            
+        return items
+        
+SPIDER = daodao()
+        
+    
