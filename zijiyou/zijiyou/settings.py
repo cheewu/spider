@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Scrapy settings for zijiyou project
 #
 # For simplicity, this file contains only the most important settings by
@@ -14,8 +15,13 @@ NEWSPIDER_MODULE = 'zijiyou.spiders'
 DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ZijiyouItem'
 ITEM_PIPELINES=['zijiyou.pipelines.pipelines.ZijiyouPipeline']
 
+# mongodb setting
 DB_HOST = 'localhost'
 DB_PORT=27017
-DB_COLLECTIONs = ['daodaoCol']
+DB='daodaoDb'
+DB_COLLECTIONS = ['daodaoCol']
 
 LOG_FILE='./zijiyou.log'
+CONCURRENT_REQUESTS_PER_SPIDER=1
+DOWNLOAD_DELAY = 10
+

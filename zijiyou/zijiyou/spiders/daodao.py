@@ -81,7 +81,7 @@ class Daodao(BaseCrawlSpider):
             #print('parseHomeprint:---------------------------------------------------------',len(reqs),reqs[0])
         else:
             self.log("Cann't find any block of the country",level=scrapy.log.ERROR)
-        return reqs[0:1] #test
+        return reqs
     
     def parseCountry(self,response):
         '''
@@ -99,7 +99,7 @@ class Daodao(BaseCrawlSpider):
             self.log("Cann't find any links of the Area from:%s" % response.url,level=scrapy.log.ERROR)
         #print('parseCountry success:---------------------------------------------------------',len(reqs),reqs[0])
         # cann't crawl all the info directory
-        return reqs[0:1]
+        return reqs
         '''
         length=len(reqs)
         if length>8:
@@ -126,11 +126,10 @@ class Daodao(BaseCrawlSpider):
         if len(reqs2)<1:
             self.log("Can't find nextPage Request from :%s" % response.url , level=scrapy.log.WARNING)
         else:
-            pass
             # 被禁，暂时查第一页
-            #reqs.extend(reqs2)            
+            reqs.extend(reqs2)            
         #print('-----parseArea success----------------------------------------------------------',len(reqs),reqs[0])
-        return reqs[0:1] 
+        return reqs
     
     def parseAttraction(self,response):
         '''
@@ -152,9 +151,9 @@ class Daodao(BaseCrawlSpider):
             #print("Can't find nextPage Request from :%s" % response.url)
             self.log("Can't find nextPage Request from :%s" % response.url , level=scrapy.log.WARNING)
         else:
-            pass
             # 被禁，暂时查第一页
-            #reqs.extend(reqs2)
+            #pass
+            reqs.extend(reqs2)
         #print('-----parseAttraction success----------------------------------------------------------',len(reqs),reqs[0])
         return reqs #test
     
