@@ -6,7 +6,13 @@ from zijiyou.pipelines.mongoDbApt import MongoDbApt
 import datetime
 
 mon=MongoDbApt()
-
+print mon.testCount("daodaoCol")
+print mon.testCollectionNames()
+print mon.testFindOne("daodaoCol")
+#mon.testRemove("daodaoCol", {"text":"My first blog post!"})
+mon.testRemoveAll("daodaoCol")
+print mon.testCount("daodaoCol")
+'''
 testValue={'area': ['\xe4\xba\x9a\xe6\xb4\xb2\n-\xe6\x97\xa5\xe6\x9c\xac\n-\xe5\x85\xb3\xe4\xb8\x9c\n-\xe4\xb8\x9c\xe4\xba\xac\xe9\x83\xbd\n-\xe4\xb8\x9c\xe4\xba\xac\n-\xe5\x8f\xb0\xe4\xb8\x9c\xe5\x8c\xba\n-\xe5\x8f\xb0\xe4\xb8\x9c\xe5\x8c\xba\xe6\x99\xaf\xe7\x82\xb9'], 
            'pageUrl': ['http://www.daodao.com/Attraction_Review-g1066461-d321129-Reviews-Asakusa-Taito_Tokyo_Tokyo_Prefecture_Kanto.html'], 
            'name': ['\n\xe6\xb5\x85\xe8\x8d\x89\n'], 
@@ -21,7 +27,7 @@ for val in values:
     print('-------')
     val
     print('+++++++')
-
+'''
 
 #print (mon.dbHost,mon.port,mon.dbs,mon.dbCollections)
 

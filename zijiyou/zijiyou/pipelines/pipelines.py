@@ -21,7 +21,7 @@ class ZijiyouPipeline(object):
         self.saveItem2Mongodb(item)
         
     def saveItem2File(self,item):
-        values="\n"        
+        values="\n"
         for k,v in item.items():
             value=k+"："+("-".join("%s" % p for p in v))
             values+=re.sub("[\r\n]", "", value)+"\n"
@@ -30,7 +30,7 @@ class ZijiyouPipeline(object):
     def saveItem2Mongodb(self,item):
         values={}
         for k,v in item.items():
-            values[k]=v
+            values[k]="-".join("%s" % p for p in v)
         print values 
         obj = self.mongoApt.saveItem("daodaoCol", values)
         print ('++++saveItem2Mongodb++++++++++++++++++++++++++++++++:' ,obj)
