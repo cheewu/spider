@@ -5,9 +5,11 @@ Created on 2011-3-28
 @author: shiym
 '''
 
-from scrapy.http import Request
+from scrapy.conf import settings
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib_exp.crawlspider import CrawlSpider
+from scrapy.http import Request
+import os
 
 class BaseCrawlSpider(CrawlSpider):
     '''

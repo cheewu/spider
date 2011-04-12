@@ -4,9 +4,9 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 from scrapy.conf import settings
+from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.contentItem import ContentItem
 from zijiyou.items.zijiyouItem import ZijiyouItem
-from zijiyou.pipelines.mongoDbApt import MongoDbApt
 import re
 
 
