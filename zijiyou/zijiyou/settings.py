@@ -19,7 +19,7 @@ ITEM_PIPELINES=['zijiyou.pipelines.pipelines.ZijiyouPipeline']
 DB_HOST = 'localhost'
 DB_PORT=27017
 DB='daodaoDb'
-DB_COLLECTIONS = ['daodaoCol']
+DB_COLLECTIONS = ['daodaoCol', 'responseCol']
 
 LOG_FILE='./zijiyou.log'
 CONCURRENT_REQUESTS_PER_SPIDER=1

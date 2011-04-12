@@ -4,15 +4,16 @@ Created on 2011-3-28
 
 @author: shiym
 '''
+from scrapy.contrib_exp.crawlspider import Rule
+from scrapy.selector import HtmlXPathSelector
+from zijiyou.items.contentItem import ContentItem
+from zijiyou.items.itemLoader import ZijiyouItemLoader
+from zijiyou.items.zijiyouItem import ZijiyouItem
+from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import re
 import scrapy.log
 #from scrapy.conf import settings 
-from scrapy.contrib_exp.crawlspider import Rule
-from scrapy.selector import HtmlXPathSelector
 
-from zijiyou.items.zijiyouItem import ZijiyouItem
-from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-from zijiyou.items.itemLoader import ZijiyouItemLoader
 
 class Daodao(BaseCrawlSpider):
     '''
@@ -81,7 +82,7 @@ class Daodao(BaseCrawlSpider):
             #print('parseHomeprint:---------------------------------------------------------',len(reqs),reqs[0])
         else:
             self.log("Cann't find any block of the country",level=scrapy.log.ERROR)
-        return reqs
+        return reqs[0:1]
     
     def parseCountry(self,response):
         '''
@@ -99,7 +100,7 @@ class Daodao(BaseCrawlSpider):
             self.log("Cann't find any links of the Area from:%s" % response.url,level=scrapy.log.ERROR)
         #print('parseCountry success:---------------------------------------------------------',len(reqs),reqs[0])
         # cann't crawl all the info directory
-        return reqs
+        return reqs[0:1]
         '''
         length=len(reqs)
         if length>8:
@@ -127,9 +128,10 @@ class Daodao(BaseCrawlSpider):
             self.log("Can't find nextPage Request from :%s" % response.url , level=scrapy.log.WARNING)
         else:
             # 被禁，暂时查第一页
-            reqs.extend(reqs2)            
+            #reqs.extend(reqs2)
+            pass            
         #print('-----parseArea success----------------------------------------------------------',len(reqs),reqs[0])
-        return reqs
+        return reqs[0:1]
     
     def parseAttraction(self,response):
         '''
@@ -152,10 +154,10 @@ class Daodao(BaseCrawlSpider):
             self.log("Can't find nextPage Request from :%s" % response.url , level=scrapy.log.WARNING)
         else:
             # 被禁，暂时查第一页
-            #pass
-            reqs.extend(reqs2)
+            pass
+            #reqs.extend(reqs2)
         #print('-----parseAttraction success----------------------------------------------------------',len(reqs),reqs[0])
-        return reqs #test
+        return reqs[0:1] #test
     
     def parseItem(self,response):
         '''    
@@ -163,89 +165,50 @@ class Daodao(BaseCrawlSpider):
         the pipeLine configured by "settings" will store the data
         '''
         print('****begin parseAttractionList to get item directory****************************************************')
-        
-        loader = ZijiyouItemLoader(ZijiyouItem(),response=response)
+       
         hxs=HtmlXPathSelector(response);
         
-        names=hxs.select('//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()').extract()
-        name=("-".join("%s" % p for p in names)).encode("utf-8")
-        if name:
-            loader.add_value('name', name)
-        addresses=hxs.select('//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()').extract()
-        address=("-".join("%s" % p for p in addresses)).encode("utf-8")
-        if address:
-            loader.add_value('address',address)
-        areas=hxs.select('//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li/a/text()').extract()
-        area=("-".join("%s" % p for p in areas)).encode("utf-8")
-        if area:
-            loader.add_value('area',area)
-        descs=hxs.select('//div[@class="clearfix"]/div/div[@class="review-intro"]/p/text()').extract()
-        desc=("-".join("%s" % p for p in descs)).encode("utf-8")
-        if desc:
-            #print ('description:%s' % desc)
-            loader.add_value('desc', desc)
-        xpathLink='//div[@class="clearfix"]/div/div[@class="review-intro"]'
-        descLink=self.extractLinks(response,restrict_xpaths=xpathLink)
-        if descLink!=[]:
-            #print ('descLink:%s' % descLink[0].url)
-            loader.add_value('descLink', descLink[0].url)
-        popularitys=hxs.select('//div[@class="leftContent"]/div[@class="ar-rank"]/span/strong/text()').extract()
-        popularity=("-".join("%s" % p for p in popularitys)).encode("utf-8")
-        if popularity:
-            #print ('popularity: %s' % popularity)
-            loader.add_value('popularity',popularity)
-        telNums=hxs.select('//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()')
-        if len(telNums)>3:
-            telNum1=("-".join("%s" % p for p in telNums)).encode("utf-8")
-            telNum=re.search('\+\d+ [0-9 -]+', telNum1, 0)
-            if telNum:
-                #print ('telNum: %s' % telNum.group(0))
-                loader.add_value('telNum', telNum.group(0))
-        loader.add_value('pageUrl', response.url)
-        item=loader.load_item()
-        return item
-        
-        '''
+        '''zijiyouItem'''
+        print 'create zijiyou loader and start to load zijiyouItem' 
         loader = ZijiyouItemLoader(ZijiyouItem(),response=response)
-        #homePath=r'//div[@class="clearfix"]/div/div[@class="hotel-info clearfix"]/div[@class="leftContent"]'
-        print('+++++++++1')
-        loader.add_xpath('name', '//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()') 
-        loader.add_xpath('area', '//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li/a/text()') 
-        loader.add_xpath('address', '//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()') 
-        print('+++++++++2')
-        loader.add_xpath('desc', '//div[@class="clearfix"]/div/div[@class="review-intro"]/p/text()') 
-        loader.add_xpath('popularity', '//div[@class="clearfix"]/div/div/div/div[@class="ar-rank"]/span/text()')
-        loader.add_xpath('telNum', '//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/h3/text()') # 第3个 没有span标签
-        loader.add_value('pageUrl', response.url)
-        print('+++++++++3')
-        item = loader.load_item()
-        print(item)
-        return item
-        
-        '''
-        
-        '''
-        homePath=r'//div[@class="clearfix"]/div/div[@class="hotel-info clearfix"]/div[@class="leftContent"]'
+        #define xpath rule
         xpathItem={r'name':r'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
-                   r'area':r'//div[@id="MAIN"]/div[class="crumbs"]/ul/li/ul/li/a/text()',
-                   r'address':homePath+r'/div[@class="ar-detail"]/ul/li/span/text()',
-                   r'desc':r'//div[@class="clearfix"]/div/div[@class="review-intro"]/text()',
-                   r'popularity':homePath+r'/div[@class="ar-rank"]/span/text()',
-                   r'telNum':homePath+r'/div[@class="ar-detail"]/ul/li/h3/text()'
+                   r'area':r'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li/a/text()',
+                   r'address':r'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
+                   r'desc':r'//div[@class="clearfix"]/div/div[@class="review-intro"]/p/text()',
+                   r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
+                   r'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
+                   r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'
         }
-        itemAddValue={'pageUrl':response.url
-                   }
-        loader = ZijiyouItemLoader(ZijiyouItem(),response=response)
-        print('+++++++++1',len(xpathItem.items()))
+        
         for k,v in xpathItem.items():
-            loader.add_xpath(k, v)
-        print('+++++++++2')
-        for k,v in itemAddValue.items():
-            loader.add_value(k, v)
-        item = loader.load_item()
-        print('+++++++++3')
-        print item #test
+            values = hxs.select(v).extract()
+            value=("-".join("%s" % p for p in values)).encode("utf-8")
+            if(k == 'telNum'):
+                if len(values) > 3:
+                    value = re.search('\+\d+ [0-9 -]+', value, 0)
+                    if value:
+                        #print ('telNum: %s' % telNum.group(0))
+                        loader.add_value(k, value.group(0))
+            else:
+                if value:
+                    loader.add_value(k, value)
+        
+        loader.add_value('pageUrl', response.url)
+        zijiyouItem = loader.load_item()
+        
+        '''contentItem''' 
+        print 'create content loader and start to load contentItem' 
+        loader = ZijiyouItemLoader(ContentItem(),response=response)
+        loader.add_value('pageUrl', response.url)
+        loader.add_value('content', response.body_as_unicode())
+        contentItem = loader.load_item()
+        
+        '''create item to store every Item'''
+        item = []
+        item.append(zijiyouItem)
+        item.append(contentItem)
+        #print item[0]
         return item
-        '''
 
 SPIDER = Daodao()
