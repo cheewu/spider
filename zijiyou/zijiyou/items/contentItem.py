@@ -5,13 +5,6 @@ Created on 2011-4-8
 '''
 from scrapy.item import Field, Item
 
-class ContentItem(Item):
-    '''
-    classdocs
-    '''
-    pageUrl = Field()
-    title = Field()
-    content = Field()
-    type = Field()
+
 
         

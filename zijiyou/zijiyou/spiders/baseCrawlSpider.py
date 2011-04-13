@@ -20,6 +20,10 @@ class BaseCrawlSpider(CrawlSpider):
     priorityArea = 100
     priorityAttraction = 200
     priorityAttractionItem=500
+    
+    priorityNoteEntry=200
+    priorityNote=300
+    priorityNoteItem=400
 
     def extractLinks(self, response, **extra): 
         """ 
