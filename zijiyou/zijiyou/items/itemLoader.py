@@ -13,7 +13,7 @@ def encodeUft8(inputs):
     print(value)
     return value.encode("utf-8")
 '''
-print ('++begin ItemLoader +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+#print ('++itemlocader +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 textProcessor = Compose(TakeFirst(), remove_entities,Join())
 joinProcessor = Compose(remove_entities,Join())
 

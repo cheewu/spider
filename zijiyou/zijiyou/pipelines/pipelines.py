@@ -15,7 +15,8 @@ class ZijiyouPipeline(object):
     mongoApt=None
     
     def __init__(self):
-        self.mongoApt=MongoDbApt()
+        if not self.mongoApt:
+            self.mongoApt=MongoDbApt()
         #self.fileApt = open("zijiyou/pipelines/test.txt","w+")
     
     def process_item(self, item, spider):

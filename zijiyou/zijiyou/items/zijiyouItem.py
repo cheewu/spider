@@ -21,4 +21,5 @@ class ZijiyouItem(Item):
     pageUrl=Field()
     telNum=Field()
     #travelerReviews={}
-     
+    def __str__(self):
+        return "ZijiyouItem"

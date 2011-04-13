@@ -18,8 +18,7 @@ class MongoDbApt(object):
         '''
         init the dataBase
         '''
-        #log.msg("++初始化MongoDbApt++++++++++++++++++++++++++++++++++++",level=log.INFO)
-        #print "++初始化MongoDbApt++++++++++++++++++++++++++++++++++++"
+        log.msg("++初始化MongoDbApt++++++++++++++++++++++++++++++++++++",level=log.INFO)
         self.dbHost=settings.get("DB_HOST")
         dbName=settings.get("DB")
         dbCols=settings.get("DB_COLLECTIONS")
@@ -67,7 +66,7 @@ class MongoDbApt(object):
         if mycursor:
             for p in mycursor:
                 results.append(p)
-        return results        
+        return results
     
     def updateItem(self,colName,whereJson,updateJson):
         '''

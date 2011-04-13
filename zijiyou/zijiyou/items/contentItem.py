@@ -13,5 +13,7 @@ class ContentItem(Item):
     title = Field()
     content = Field()
     type = Field()
-
+    
+    def __str__(self):
+        return "ContentItem"
         
