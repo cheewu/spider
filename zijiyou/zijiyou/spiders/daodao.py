@@ -23,7 +23,9 @@ class Daodao(BaseCrawlSpider):
                  "parseCountry":None,
                  "parseArea":None,
                  "parseAttraction":None,
-                 "parseItem":None
+                 "parseItem":None,
+                 "parseNote":None,
+                 "parseNoteItem":None
                  }
     
     name ="daodaoSpider"
@@ -114,7 +116,7 @@ class Daodao(BaseCrawlSpider):
         areaLinks=self.extractLinks(response,allow=self.regexArea,restrict_xpaths=xpathCountry[0])
         if areaLinks!=[]:
             link=areaLinks[0]
-            req=self.makeRequest(link.url,self.parseArea, priority=self.priorityArea)
+            req=self.makeRequest(link.url,'parseArea', priority=self.priorityArea)
             reqs.append(req)
         else :
             log.msg("Cann't find any links of the Area from:%s" % response.url,level=log.ERROR)
@@ -125,7 +127,7 @@ class Daodao(BaseCrawlSpider):
         if noteLinks!=[]:
             link=noteLinks[0]
             print 'noteEntry link:', link.url
-            req=self.makeRequest(link.url,self.parseNote, priority=self.priorityNoteEntry)
+            req=self.makeRequest(link.url,'parseNote', priority=self.priorityNoteEntry)
             reqs.append(req)
         else :
             self.log("Cann't find any links of the Note Entry from:%s" % response.url,level=log.ERROR)
@@ -239,11 +241,11 @@ class Daodao(BaseCrawlSpider):
                    ]
         xpathNextPage='//div[@class="pagination"]/div[@class="pgLinks clearfix"]'
         reqs=[]
-        reqs1=self.extractRequests(response, self.priorityNote,self.parseNoteItem, allow=self.regexNote,restrict_xpaths=xpathNote[0])
+        reqs1=self.extractRequests(response, self.priorityNote, 'parseNoteItem', allow=self.regexNote,restrict_xpaths=xpathNote[0])
         reqs.extend(reqs1)
         if len(reqs)<1:
             self.log("Can't find any links of note from :%s" % response.url , level=log.ERROR)
-        reqs2= self.parseNextPage(response, xpathNextPage, self.priorityNote, self.parseNote)
+        reqs2= self.parseNextPage(response, xpathNextPage, self.priorityNote, 'parseNote')
         if len(reqs2)<1:
             self.log("Can't find nextPage Request from :%s" % response.url , level=log.WARNING)
         else:
@@ -311,5 +313,4 @@ class Daodao(BaseCrawlSpider):
         #print item[0]
         return item
     
-
 SPIDER = Daodao()

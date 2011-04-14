@@ -41,7 +41,6 @@ class BaseCrawlSpider(CrawlSpider):
             self.mongoApt=MongoDbApt()
         self.recentRequests = []
         dispatcher.connect(self.spiderClosed, signal=signals.spider_closed)
-
         super(BaseCrawlSpider, self).__init__()
 
     def __unicode__(self):

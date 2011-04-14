@@ -25,7 +25,7 @@ DB_COLLECTIONS = ['daodaoCol',
                   'noteCol']
 
 LOG_FILE='./zijiyou.log'
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 3
 CONCURRENT_REQUESTS_PER_SPIDER=8
 RECENT_URLS_SIZE = 3000
 CLOSESPIDER_TIMEOUT=3600
@@ -50,4 +50,11 @@ DOWNLOADER_MIDDLEWARES = {
 SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.RequestSaver': 501}
 
 #proxy server
-PROXY = ['http://127.0.0.1:8081', 'http://113.105.168.172:8080', 'http://124.248.34.51:3128', 'local']
+PROXY = ['http://127.0.0.1:8081', 
+         'http://222.216.108.167:8081', 
+         'http://117.34.73.50:80', 
+         'http://111.1.32.121:80', 
+         'http://222.86.192.246:3128',
+         'http://124.248.34.51:3128', 
+         'http://222.173.162.21:563', 
+         'local']
