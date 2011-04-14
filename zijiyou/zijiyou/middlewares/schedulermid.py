@@ -36,7 +36,7 @@ class RequestSaver(object):
             self.mongoApt.saveItem(self.colName,recentReq)
             log.msg("保存新request：%s" % request.url,level=log.INFO)
         else:
-            log.msg("重复的request，不知行保存：%s" % request.url,level=log.INFO)
+            log.msg("重复的request，不执行保存：%s" % request.url,level=log.INFO)
         
         spider.recentRequests.append(recentReq)
         maxRecentUrlsSize=settings.get('RECENT_URLS_SIZE',300)
