@@ -38,7 +38,9 @@ class MongoDbApt(object):
         '''
         save a single item. colName is the name of the collection. 
         '''
-        return self.dbCollections[colName].insert(item)
+        objectId = self.dbCollections[colName].insert(item)
+        log.msg("MongoDbApt保存item成功：++++++++++++++++++++++++++++++++++++%s" %objectId,level=log.INFO)
+        return objectId
         
     def findOne(self,colName):
         '''

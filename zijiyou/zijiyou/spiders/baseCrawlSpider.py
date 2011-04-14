@@ -50,11 +50,11 @@ class BaseCrawlSpider(CrawlSpider):
         """
         查询recent requests
         """ 
-        log.msg("getStartUrls++++++++++++++++++++++++++++++++++++++++++++++", level=log.INFO) 
+#        log.msg("getStartUrls++++++++++++++++++++++++++++++++++++++++++++++", level=log.INFO) 
         try:
             #查数据库
             recentRrls=[]
-            queJson={"status":"0"}
+            queJson={"status":{"$gte":300}}
             sortField="priority"
             recentRrls=self.mongoApt.findByDictionaryAndSort(self.colName, queJson, sortField)
             return recentRrls
@@ -67,11 +67,11 @@ class BaseCrawlSpider(CrawlSpider):
         override
         若获得recent requests，则用它启动spider，否则从start_url启动
         '''
-        print len(self.rules)
-        log.msg("start_requests++++++++++++++++++++++++++++++++++++++++++++++", level=log.INFO) 
+#        print len(self.rules)
         recentRrls = self.getStartUrls()
-        if recentRrls:
-            log.msg("start_requests1++++++++++++++++++++++++++++++++++++++++++++++", level=log.INFO) 
+        log.msg("start_requests++++++++++++++++++++++++++++++++++++++++++++++%s" % (len(recentRrls)), level=log.INFO) 
+        if recentRrls and len(recentRrls)>0:
+#            log.msg("start_requests1++++++++++++++++++++++++++++++++++++++++++++++", level=log.INFO) 
             reqs = []
             
             maxRecentUrlSize=settings.get('RECENT_URLS_SIZE',3000)
@@ -86,6 +86,8 @@ class BaseCrawlSpider(CrawlSpider):
                 pagePriority=p["priority"]
                 req=self.makeRequest(url, callBackFunctionName,priority=pagePriority)
                 reqs.append(req)
+            print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+            print reqs
             log.msg("获得recent requests，数量=%s" % len(reqs),level=log.INFO)
             return reqs
         else:
@@ -136,7 +138,8 @@ class BaseCrawlSpider(CrawlSpider):
         make request, the metaDic indicates the name of call back function
         '''
         metaDic={'callBack':callBackFunctionName}
-        kw.setdefault('callback', self.functionDic[callBackFunctionName])
+        if callBackFunctionName:
+            kw.setdefault('callback', self.functionDic[callBackFunctionName])
         kw.setdefault('meta',metaDic)
         return Request(url, **kw)
     

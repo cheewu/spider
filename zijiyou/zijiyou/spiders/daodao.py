@@ -62,6 +62,8 @@ class Daodao(BaseCrawlSpider):
         self.functionDic["parseArea"]=self.parseArea
         self.functionDic["parseAttraction"]=self.parseAttraction
         self.functionDic["parseItem"]=self.parseItem
+        self.functionDic["parseNote"]=self.parseNote
+        self.functionDic["parseNoteItem"]=self.parseNoteItem
         
         super(Daodao, self).__init__()
     
