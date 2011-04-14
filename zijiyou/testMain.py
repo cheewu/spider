@@ -1,21 +1,33 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
-import pymongo
+from bson.objectid import ObjectId
 from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
+import pymongo
 
 mon=MongoDbApt()
 colName="crawlCol"
 #mon.removeAll(colName)
-queJson={"status":1}
+#update
+#whereJson={"priority":{"$gte":4000}}
+#updateJson={"status":400}
+#mon.updateItem(colName,whereJson,updateJson)
+
+queJson={"status":{"$gte":200}}#
 sortField="priority"
 results=mon.findByDictionaryAndSort(colName, queJson, sortField)
 print len(results)
 for p in results:
     print p
-print 'findOne'
-print mon.findOne(colName)
+print 'find by id ++++++++++++++++++++++++++++++'
+#queJson2={"_id":ObjectId("4da65b7b834fc00a6d000000")}
+#results2=mon.findByDictionaryAndSort(colName, queJson2, sortField)
+#for p in results2:
+#    print p
+
+#print 'findOne'
+#print mon.findOne(colName)
 
 #mon.removeAll(colName)
 #testValue={"url":"www.daodao.com.lvyou",
