@@ -74,8 +74,8 @@ class BaseCrawlSpider(CrawlSpider):
 #            log.msg("start_requests1++++++++++++++++++++++++++++++++++++++++++++++", level=log.INFO) 
             reqs = []
             
-            maxRecentUrlSize=settings.get('RECENT_URLS_SIZE',3000)
-            while len(recentRrls) > maxRecentUrlSize:
+            maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
+            while len(recentRrls) > maxInitRequestSize:
                 recentRrls.pop(0)
             firstRrl = recentRrls[0]
             log.msg('开始crawl，第一个url : %s' % firstRrl, level=log.INFO)
