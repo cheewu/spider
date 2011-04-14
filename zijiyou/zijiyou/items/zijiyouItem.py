@@ -7,10 +7,9 @@ Created on 2011-3-28
 
 from scrapy.item import Item, Field
 
-'''景点元数据结构'''
 class ZijiyouItem(Item):
     '''
-    struct information
+    景点元数据结构
     '''
     area=Field()
     name=Field()
@@ -25,8 +24,7 @@ class ZijiyouItem(Item):
     
     def __str__(self):
         return "ZijiyouItem"
- 
-'''完整的抓取页面结构'''   
+
 class ContentItem(Item):
     '''
     classdocs
@@ -39,8 +37,11 @@ class ContentItem(Item):
     def __str__(self):
         return 'ContentItem'
 
-'''游记元数据结构'''  
+
 class NoteItem(Item):
+    '''
+    游记元数据结构
+    '''  
     title = Field()
     area = Field()
     type = Field()
