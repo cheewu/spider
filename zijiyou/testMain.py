@@ -14,17 +14,21 @@ colName="crawlCol"
 #updateJson={"status":400}
 #mon.updateItem(colName,whereJson,updateJson)
 
-queJson={"status":{"$gte":200}}#
-sortField="priority"
-results=mon.findByDictionaryAndSort(colName, queJson, sortField)
-print len(results)
-for p in results:
-    print p
-print 'find by id ++++++++++++++++++++++++++++++'
+#queJson={}#"status":{"$gte":200}
+#sortField="priority"
+#results=mon.findByDictionaryAndSort(colName, queJson, sortField)
+#print len(results)
+#for p in results:
+#    print p
+#print 'find by id ++++++++++++++++++++++++++++++'
 #queJson2={"_id":ObjectId("4da65b7b834fc00a6d000000")}
 #results2=mon.findByDictionaryAndSort(colName, queJson2, sortField)
 #for p in results2:
 #    print p
+
+print 'is Exist'
+queJson3={"status":1}
+print mon.isExist(colName, queJson3)
 
 #print 'findOne'
 #print mon.findOne(colName)
