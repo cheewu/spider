@@ -9,6 +9,10 @@ import pymongo
 mon=MongoDbApt()
 colName="crawlCol"
 #mon.removeAll(colName)
+#mon.removeAll("daodaoCol")
+#mon.removeAll("responseCol")
+#mon.removeAll("crawlCol")
+#mon.removeAll("noteCol")
 #update
 #whereJson={"priority":{"$gte":4000}}
 #updateJson={"status":400}
