@@ -92,7 +92,8 @@ class BaseCrawlSpider(CrawlSpider):
             return reqs
         else:
             log.msg("recent requests为空，交给父类启动" ,level=log.ERROR)
-            return super(BaseCrawlSpider, self).start_requests()
+            return []
+#            return super(BaseCrawlSpider, self).start_requests()
 
     def spiderClosed(self):
         """
@@ -109,7 +110,7 @@ class BaseCrawlSpider(CrawlSpider):
             updateJson={"priority":p["priority"]}
             self.mongoApt.updateItem(self.colName,whereJson,updateJson)
         self.recentRequests=[]
-        print len(self.rules)
+        print 'closeSpider.......................................................'
         log.msg("recentRequests 入数据库：%s" %len(recentRequests), level=log.INFO)
         
         #重启
