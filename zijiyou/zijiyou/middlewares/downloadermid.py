@@ -13,20 +13,14 @@ class ErrorFlag(object):
 from zijiyou.db.mongoDbApt import MongoDbApt
 
 class RequestedUrlUpdate(object):
+    '''
+    访问过的url更新数据库
+    '''
     mongoApt=None
     colName="crawlCol"
     def __init__(self):
         if not self.mongoApt:
             self.mongoApt=MongoDbApt()
-    
-    '''
-    访问过的url更新数据库
-    '''
-    def method(self):
-        '''
-        what is the proper name of method?
-        '''
-        pass
     
     def process_response(self, request, response, spider):
 #        log.msg("开始调用downloadmid中间件",level=log.INFO)
@@ -35,11 +29,14 @@ class RequestedUrlUpdate(object):
         updateJson={"status":1}
         if responseStatus:
             updateJson["status"]=responseStatus
-        if responseStatus == 400:
-            log.msg("400错误！爬取站点可能拒绝访问或拒绝响应", level=log.ERROR)
-            print "400错误！爬取站点可能拒绝访问或拒绝响应"
-        log.msg("recentRequests 更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
+        if responseStatus in [400, 403]:
+            log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应" % responseStatus, level=log.ERROR)
+            if request.meta:
+                meta=request.meta
+                meta["status"]=responseStatus
+                request.meta=meta
         self.mongoApt.updateItem(self.colName,whereJson,updateJson)
+        log.msg("recentRequests 更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
 #        log.msg("成功调用downloadmid中间件",level=log.INFO)
         return response
 
@@ -48,12 +45,9 @@ class RandomHttpProxy(object):
     curProxyIndex = -1 # use local network, not set proxy
     proxies = []
     
-    log.start()
-
     def process_request(self, request, spider):
         '''init proxy configure'''
         if(self.proxyNum == -1 and settings['PROXY'] != None):
-            self.proxies = settings['PROXY']
             self.proxyNum = len(self.proxies)
             #print self.proxies
         
@@ -87,7 +81,6 @@ class RandomHttpProxy(object):
                 
             
 class ResponseStatusCheck(object):
-    log.start()
     
     def process_response(self, request, response, spider):
         print 'check response status'
