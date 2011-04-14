@@ -86,8 +86,8 @@ class BaseCrawlSpider(CrawlSpider):
                 pagePriority=p["priority"]
                 req=self.makeRequest(url, callBackFunctionName,priority=pagePriority)
                 reqs.append(req)
-            print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-            print reqs
+#            print '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+#            print reqs
             log.msg("获得recent requests，数量=%s" % len(reqs),level=log.INFO)
             return reqs
         else:

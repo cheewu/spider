@@ -4,10 +4,12 @@ Created on 2011-4-12
 
 @author: shiym
 '''
-from scrapy.conf import settings
 from scrapy import log
-
+from scrapy.conf import settings
 from zijiyou.db.mongoDbApt import MongoDbApt
+import datetime
+
+
 
 class RequestSaver(object):
     '''
@@ -20,22 +22,27 @@ class RequestSaver(object):
             self.mongoApt=MongoDbApt()
 
     def enqueue_request(self,spider,request):
-        log.msg("开始调用schedulermid中间件",level=log.INFO)
-        recentReq={"url":"","callBack":"","status":"","priority":1}
+#        log.msg("开始调用schedulermid中间件",level=log.INFO)
+        recentReq={"url":"","callBack":None,"status":"","priority":1,"dateTime":datetime.datetime.now()}
         recentReq["url"]=request.url
-#        recentReq["callBack"]=request.meta["callBack"]
+        meta=request.meta
+        if meta and "callBack" in meta:
+            recentReq["callBack"]=request.meta["callBack"]
         recentReq["priority"]=request.priority
         recentReq["status"]=0
-        print '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-        print recentReq
-        self.mongoApt.saveItem(self.colName,recentReq)
-        log.msg("保存新request：%s" % recentReq["url"],level=log.INFO)
+        
+        queJson={"url":request.url}
+        if not self.mongoApt.isExist(self.colName, queJson):
+            self.mongoApt.saveItem(self.colName,recentReq)
+            log.msg("保存新request：%s" % request.url,level=log.INFO)
+        else:
+            log.msg("重复的request，不知行保存：%s" % request.url,level=log.INFO)
         
         spider.recentRequests.append(recentReq)
         maxRecentUrlsSize=settings.get('RECENT_URLS_SIZE',300)
         while len(spider.recentRequests) > maxRecentUrlsSize:
             spider.recentRequests.pop(0)
-        log.msg("成功完成调用schedulermid中间件",level=log.INFO)
+#        log.msg("成功完成调用schedulermid中间件",level=log.INFO)
         return None
     
     
