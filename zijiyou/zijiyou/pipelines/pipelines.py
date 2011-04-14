@@ -61,4 +61,4 @@ class ZijiyouPipeline(object):
 #        print values 
         obj = self.mongoApt.saveItem(collectionName, values)
         print ('++++saveItem2Mongodb++++col:', collectionName, '++++++:' ,obj)
-        log.msg('++++saveItem2Mongodb++++col:', collectionName, '++++++:%s' % obj, level = log.INFO)
+        log.msg('++++saveItem2Mongodb++++col:' + collectionName + '++++++:%s' % obj, level = log.INFO)
