@@ -2,16 +2,47 @@
 #!/usr/bin/env python
 
 import pymongo
-from zijiyou.pipelines.mongoDbApt import MongoDbApt
+from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
 
 mon=MongoDbApt()
+colName="crawlCol"
+#mon.removeAll(colName)
+queJson={"status":1}
+sortField="priority"
+results=mon.findByDictionaryAndSort(colName, queJson, sortField)
+print len(results)
+for p in results:
+    print p
+print 'findOne'
+print mon.findOne(colName)
+
+#mon.removeAll(colName)
+#testValue={"url":"www.daodao.com.lvyou",
+#           "callBack":"parseOne",
+#           "status":"0",
+#           "priority":1}
+#mon.saveItem(colName, testValue)
+#print mon.count(colName)
+#print mon.findOne(colName)
+#whereJson={"url":"www.daodao.com.lvyou211"}
+#updateJson={"status":"1"}
+#mon.updateItem(colName, whereJson, updateJson)
+#print 'updateItem OK'
+#queJson={"status":"0"}
+#sortField="priority"
+#results=mon.findByDictionaryAndSort(colName, queJson, sortField)
+#print len(results)
+#print results
+
+'''
 print mon.testCount("daodaoCol")
 print mon.testCollectionNames()
 print mon.testFindOne("daodaoCol")
 #mon.testRemove("daodaoCol", {"text":"My first blog post!"})
 mon.testRemoveAll("daodaoCol")
 print mon.testCount("daodaoCol")
+'''
 '''
 testValue={'area': ['\xe4\xba\x9a\xe6\xb4\xb2\n-\xe6\x97\xa5\xe6\x9c\xac\n-\xe5\x85\xb3\xe4\xb8\x9c\n-\xe4\xb8\x9c\xe4\xba\xac\xe9\x83\xbd\n-\xe4\xb8\x9c\xe4\xba\xac\n-\xe5\x8f\xb0\xe4\xb8\x9c\xe5\x8c\xba\n-\xe5\x8f\xb0\xe4\xb8\x9c\xe5\x8c\xba\xe6\x99\xaf\xe7\x82\xb9'], 
            'pageUrl': ['http://www.daodao.com/Attraction_Review-g1066461-d321129-Reviews-Asakusa-Taito_Tokyo_Tokyo_Prefecture_Kanto.html'], 

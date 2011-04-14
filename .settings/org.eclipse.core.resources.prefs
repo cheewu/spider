@@ -1,6 +1,7 @@
-#Wed Apr 13 13:36:55 CST 2011
+#Thu Apr 14 10:05:28 CST 2011
 eclipse.preferences.version=1
 encoding//zijiyou/zijiyou/db/mongoDbApt.py=utf-8
+encoding//zijiyou/zijiyou/items/itemLoader.py=utf-8
 encoding//zijiyou/zijiyou/items/zijiyouItem.py=utf-8
 encoding//zijiyou/zijiyou/middlewares/downloadermid.py=utf-8
 encoding//zijiyou/zijiyou/pipelines/pipelines.py=utf-8

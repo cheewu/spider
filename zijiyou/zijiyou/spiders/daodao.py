@@ -4,13 +4,13 @@ Created on 2011-3-28
 
 @author: shiym
 '''
+from scrapy import log
 from scrapy.contrib_exp.crawlspider import Rule
 from scrapy.selector import HtmlXPathSelector
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import ZijiyouItem, ContentItem, NoteItem
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import re
-import scrapy.log
 #from scrapy.conf import settings 
 
 
@@ -18,6 +18,14 @@ class Daodao(BaseCrawlSpider):
     '''
     Spider for www.daodao.com
     '''
+    functionDic={"parseNextPage":None,
+                 "parseHome":None,
+                 "parseCountry":None,
+                 "parseArea":None,
+                 "parseAttraction":None,
+                 "parseItem":None
+                 }
+    
     name ="daodaoSpider"
     # regexs
     regexHome=r'http://www.daodao.com/Lvyou.*'
@@ -36,30 +44,37 @@ class Daodao(BaseCrawlSpider):
     homePage="http://www.daodao.com"
     allowed_domains = ["daodao.com"]
     start_urls = [
-            'http://www.daodao.com/Lvyou'
-            ]
+                  'http://www.daodao.com/Lvyou'
+                  ]
 
     rules = [Rule(regexHome, 'parseHome')] # It's a evil that Managing callBack order depends on rules
     
-    '''
-    def __init__(self):        
-        #scrapy.log.start(logfile=settings.get("LOG_FILE", "zijiyou.log"), loglevel=scrapy.log.INFO)
-        print ('begin!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        scrapy.log.start(logfile="zijiyou.log", loglevel=scrapy.log.INFO)
-    '''
-            
-    def parseNextPage(self,response,nextPageXPath,pagePriority,callBackFunction):
+    def __init__(self):
+        '''
+        initiate the functionDictionary
+        '''
+        log.msg("daodaoInit,initiate the functionDictionary", level=log.INFO)
+        self.functionDic["parseNextPage"]=self.parseNextPage
+        self.functionDic["parseHome"]=self.parseHome
+        self.functionDic["parseCountry"]=self.parseCountry
+        self.functionDic["parseArea"]=self.parseArea
+        self.functionDic["parseAttraction"]=self.parseAttraction
+        self.functionDic["parseItem"]=self.parseItem
+        
+        super(Daodao, self).__init__()
+    
+    def parseNextPage(self,response,nextPageXPath,pagePriority,callBackFunctionName):
         '''
         get the links of nextPage , return the request
         '''
-        #print('****begin parseNextPage***********************************************************',pagePriority)
+        log.msg('****begin parseNextPage***********************************************************', loglevel=log.INFO)
         reqs=[]
         hxs=HtmlXPathSelector(response)
         links = hxs.select(nextPageXPath).extract()
         if links != []:
             link = links[0]
             link = self.homePage + link
-            req = self.makeRequest(link,callBackFunction,priority=pagePriority) # request for the nextPage
+            req = self.makeRequest(link,callBackFunctionName,priority=pagePriority) # request for the nextPage
             reqs.append(req)
         return reqs
     
@@ -68,8 +83,7 @@ class Daodao(BaseCrawlSpider):
         get requests of country
         default callBack is parseCountry
         '''
-        #print('****begin parseHome***********************************************************')
-        scrapy.log.start(logfile="zijiyou.log", loglevel=scrapy.log.INFO)
+        log.msg('****begin parseHome***********************************************************', loglevel=log.INFO)
         reqs=[]
         
         hxs=HtmlXPathSelector(response);
@@ -80,31 +94,32 @@ class Daodao(BaseCrawlSpider):
             links=sites[0].select(xpathHome[1]).extract() # should be configured by a flag indicating ONLY
             for link in links:
                 link=self.homePage+link
-                req=self.makeRequest(link,self.parseCountry,priority=self.priorityCounty)
+                req=self.makeRequest(link,"parseCountry",priority=self.priorityCounty)
                 reqs.append(req)
             if len(reqs)<1:
-                self.log("Cann't find any links of the country under the block from:%s"% response.url,level=scrapy.log.ERROR)                
+                log.msg("Cann't find any links of the country under the block from:%s"% response.url,level=log.ERROR)                
             #print('parseHomeprint:---------------------------------------------------------',len(reqs),reqs[0])
         else:
-            self.log("Cann't find any block of the country",level=scrapy.log.ERROR)
-        return reqs[0:1]
+            log.msg("Cann't find any block of the country",level=log.ERROR)
+        return reqs
     
     def parseCountry(self,response):
         '''
         jump to the area. default callBack is parseArea
         '''
-        print('***begin parseCountry*******************************************************')
+        log.msg('***begin parseCountry*******************************************************', loglevel=log.INFO)
         reqs=[]
         xpathCountry=['//div[@class="mod-box-t1"]/ul/li']
+        '''process area'''
         areaLinks=self.extractLinks(response,allow=self.regexArea,restrict_xpaths=xpathCountry[0])
         if areaLinks!=[]:
             link=areaLinks[0]
             req=self.makeRequest(link.url,self.parseArea, priority=self.priorityArea)
-            #reqs.append(req)
+            reqs.append(req)
         else :
-            self.log("Cann't find any links of the Area from:%s" % response.url,level=scrapy.log.ERROR)
-        #print('parseCountry success:---------------------------------------------------------',len(reqs),reqs[0])
+            log.msg("Cann't find any links of the Area from:%s" % response.url,level=log.ERROR)
         # cann't crawl all the info directory
+
         '''process the note entry'''
         noteLinks=self.extractLinks(response,allow=self.regexNoteEntry,restrict_xpaths=xpathCountry[0])
         if noteLinks!=[]:
@@ -113,35 +128,27 @@ class Daodao(BaseCrawlSpider):
             req=self.makeRequest(link.url,self.parseNote, priority=self.priorityNoteEntry)
             reqs.append(req)
         else :
-            self.log("Cann't find any links of the Note Entry from:%s" % response.url,level=scrapy.log.ERROR)
-        
+            self.log("Cann't find any links of the Note Entry from:%s" % response.url,level=log.ERROR)
         
         return reqs
-        '''
-        length=len(reqs)
-        if length>8:
-            return reqs[0:9]
-        else:
-            return reqs
-        '''
         
     def parseArea(self,response):
         '''
         get the request of AttractionList whose callBack is parseAttraction. 
         And get the request of NextPage for recursive action, so this request's callBack is parseArea        
         '''
-        print('****begin parseArea***********************************************************')
+        log.msg("****begin parseArea***********************************************************" ,level=log.INFO)
         xpathArea=['//div[@id="LOCATION_LIST"]'
                    ]
         xpathNextPage='//div[@class="pagination"]/div[@class="pgLinks clearfix"]'
         reqs=[]
-        reqs1=self.extractRequests(response, self.priorityAttraction,self.parseAttraction,allow=self.regexAttraction,restrict_xpaths=xpathArea[0])
+        reqs1=self.extractRequests(response, self.priorityAttraction,"parseAttraction",allow=self.regexAttraction,restrict_xpaths=xpathArea[0])
         reqs.extend(reqs1)
         if len(reqs)<1:
-            self.log("Can't find any links of attraction from :%s" % response.url , level=scrapy.log.ERROR)
-        reqs2= self.parseNextPage(response, xpathNextPage, self.priorityArea,self.parseArea)
+            log.msg("Can't find any links of attraction from :%s" % response.url , level=log.ERROR)
+        reqs2= self.parseNextPage(response, xpathNextPage, self.priorityArea,"parseArea")
         if len(reqs2)<1:
-            self.log("Can't find nextPage Request from :%s" % response.url , level=scrapy.log.WARNING)
+            log.msg("Can't find nextPage Request from :%s" % response.url , level=log.WARNING)
         else:
             # 被禁，暂时查第一页
             reqs.extend(reqs2)
@@ -154,20 +161,20 @@ class Daodao(BaseCrawlSpider):
         get the request of AttractionItem whose callBack is parseItem.
         And get the request of NextPage for recursive action, so this request's callBack is parseAttraction
         '''
-        print('***begin parseAttraction*******************************************************')
+        log.msg("****begin parseAttraction***********************************************************" ,level=log.INFO)
         reqs=[]
         xpathAttraction=['//div[@class="attraction-list clearfix"]/div[@class="clearfix"]/div[@class="info"]/div[@class="title"]'
                          ]
         xpathNextPage='//div[@class="pagination"]/div[@class="pgLinks clearfix"]'
-        reqs.extend(self.extractRequests(response, self.priorityAttractionItem,self.parseItem,allow=self.regexAttractionItem,restrict_xpaths=xpathAttraction[0]))
+        reqs.extend(self.extractRequests(response, self.priorityAttractionItem,"parseItem",allow=self.regexAttractionItem,restrict_xpaths=xpathAttraction[0]))
         if len(reqs)<1:
             #print("Can't find any links of attractionItem from :%s" % response.url)
-            self.log("Can't find any links of attractionItem from :%s" % response.url , level=scrapy.log.ERROR)
+            log.msg("Can't find any links of attractionItem from :%s" % response.url , level=log.ERROR)
         
-        reqs2= self.parseNextPage(response, xpathNextPage, self.priorityAttraction,self.parseAttraction)
+        reqs2= self.parseNextPage(response, xpathNextPage, self.priorityAttraction,"parseAttraction")
         if len(reqs2)<1:
             #print("Can't find nextPage Request from :%s" % response.url)
-            self.log("Can't find nextPage Request from :%s" % response.url , level=scrapy.log.WARNING)
+            log.msg("Can't find nextPage Request from :%s" % response.url , level=log.WARNING)
         else:
             # 被禁，暂时查第一页
             #pass
@@ -180,12 +187,10 @@ class Daodao(BaseCrawlSpider):
         parse the page, get the information of attraction to initiate zijiyouItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
         '''
-        print('****begin parseAttractionList to get item directory****************************************************')
-       
+        log.msg("****begin parseAttractionList to get item directory***********************************************************" ,level=log.INFO)
         hxs=HtmlXPathSelector(response);
         
         '''zijiyouItem'''
-        print 'create zijiyou loader and start to load zijiyouItem' 
         loader = ZijiyouItemLoader(ZijiyouItem(),response=response)
         #define xpath rule
         xpathItem={r'name':r'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
@@ -237,16 +242,16 @@ class Daodao(BaseCrawlSpider):
         reqs1=self.extractRequests(response, self.priorityNote,self.parseNoteItem, allow=self.regexNote,restrict_xpaths=xpathNote[0])
         reqs.extend(reqs1)
         if len(reqs)<1:
-            self.log("Can't find any links of note from :%s" % response.url , level=scrapy.log.ERROR)
+            self.log("Can't find any links of note from :%s" % response.url , level=log.ERROR)
         reqs2= self.parseNextPage(response, xpathNextPage, self.priorityNote, self.parseNote)
         if len(reqs2)<1:
-            self.log("Can't find nextPage Request from :%s" % response.url , level=scrapy.log.WARNING)
+            self.log("Can't find nextPage Request from :%s" % response.url , level=log.WARNING)
         else:
             # 被禁，暂时查第一页
             reqs.extend(reqs2)
             #pass            
         #print('-----parseArea success----------------------------------------------------------',len(reqs),reqs[0])
-        return reqs[0:1]
+        return reqs
     
     def parseNoteItem(self, response):
         '''    

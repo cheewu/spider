@@ -22,6 +22,9 @@ class ZijiyouItem(Item):
     pageUrl=Field()
     telNum=Field()
     #travelerReviews={}
+    
+    def __str__(self):
+        return "ZijiyouItem"
  
 '''完整的抓取页面结构'''   
 class ContentItem(Item):
@@ -34,7 +37,7 @@ class ContentItem(Item):
     type = Field()
     
     def __str__(self):
-        return ''
+        return 'ContentItem'
 
 '''游记元数据结构'''  
 class NoteItem(Item):
@@ -45,5 +48,6 @@ class NoteItem(Item):
     content = Field()
     date = Field()
     pageUrl = Field()
-    
-     
+      
+    def __str__(self):
+        return "NoteItem"

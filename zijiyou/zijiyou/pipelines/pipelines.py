@@ -4,7 +4,6 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 from scrapy import log
-from scrapy.conf import settings
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.zijiyouItem import ZijiyouItem, ContentItem, NoteItem
 import re
@@ -17,7 +16,8 @@ class ZijiyouPipeline(object):
     log.start()
     
     def __init__(self):
-        self.mongoApt=MongoDbApt()
+        if not self.mongoApt:
+            self.mongoApt=MongoDbApt()
         #self.fileApt = open("zijiyou/pipelines/test.txt","w+")
     
     def process_item(self, item, spider):
