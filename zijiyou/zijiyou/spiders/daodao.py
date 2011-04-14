@@ -4,14 +4,13 @@ Created on 2011-3-28
 
 @author: shiym
 '''
+from scrapy import log
 from scrapy.contrib_exp.crawlspider import Rule
 from scrapy.selector import HtmlXPathSelector
-from zijiyou.items.contentItem import ContentItem
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import ZijiyouItem
+from zijiyou.items.zijiyouItem import ZijiyouItem, ContentItem, NoteItem
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import re
-from scrapy import log
 #from scrapy.conf import settings 
 
 
@@ -24,7 +23,9 @@ class Daodao(BaseCrawlSpider):
                  "parseCountry":None,
                  "parseArea":None,
                  "parseAttraction":None,
-                 "parseItem":None
+                 "parseItem":None,
+                 "parseNote":None,
+                 "parseNoteItem":None
                  }
     
     name ="daodaoSpider"
@@ -33,6 +34,12 @@ class Daodao(BaseCrawlSpider):
     regexArea=r'Attractions-g\d+-Activities-.*\.html$'
     regexAttraction=r'Attractions-g\d+-Activities[-oa\d]?-?[a-z _ A-Z]+_[a-z _ A-Z]+\.html$'
     regexAttractionItem=r'Attraction_Review-g\d+-.*-Reviews-.*.html$'
+    
+    #Travel Notes
+    regexNoteEntry=r'Tourism-g\d+-c0-.*\.html$'
+    regexNote=r'Tourism-g\d+-c\d+-n\d+.*\.html$'
+    regexNoteItem=r'Tourism-g\d+-c0-.*\.html$'
+    
     #XPath
     xpathNextPage="//a[@class='next sprite-arrow-right-green ml6 ']/@href"
     
@@ -96,7 +103,7 @@ class Daodao(BaseCrawlSpider):
             #print('parseHomeprint:---------------------------------------------------------',len(reqs),reqs[0])
         else:
             log.msg("Cann't find any block of the country",level=log.ERROR)
-        return reqs[0:1]
+        return reqs
     
     def parseCountry(self,response):
         '''
@@ -105,15 +112,27 @@ class Daodao(BaseCrawlSpider):
         log.msg('***begin parseCountry*******************************************************', loglevel=log.INFO)
         reqs=[]
         xpathCountry=['//div[@class="mod-box-t1"]/ul/li']
-        links=self.extractLinks(response,allow=self.regexArea,restrict_xpaths=xpathCountry[0])
-        if links!=[]:
-            link=links[0]
-            req=self.makeRequest(link.url,"parseArea", priority=self.priorityArea)
+        '''process area'''
+        areaLinks=self.extractLinks(response,allow=self.regexArea,restrict_xpaths=xpathCountry[0])
+        if areaLinks!=[]:
+            link=areaLinks[0]
+            req=self.makeRequest(link.url,'parseArea', priority=self.priorityArea)
             reqs.append(req)
         else :
             log.msg("Cann't find any links of the Area from:%s" % response.url,level=log.ERROR)
         # cann't crawl all the info directory
-        return reqs[0:1]
+
+        '''process the note entry'''
+        noteLinks=self.extractLinks(response,allow=self.regexNoteEntry,restrict_xpaths=xpathCountry[0])
+        if noteLinks!=[]:
+            link=noteLinks[0]
+            print 'noteEntry link:', link.url
+            req=self.makeRequest(link.url,'parseNote', priority=self.priorityNoteEntry)
+            reqs.append(req)
+        else :
+            self.log("Cann't find any links of the Note Entry from:%s" % response.url,level=log.ERROR)
+        
+        return reqs
         
     def parseArea(self,response):
         '''
@@ -134,10 +153,10 @@ class Daodao(BaseCrawlSpider):
             log.msg("Can't find nextPage Request from :%s" % response.url , level=log.WARNING)
         else:
             # 被禁，暂时查第一页
-            #reqs.extend(reqs2)
-            pass            
+            reqs.extend(reqs2)
+            #pass            
         #print('-----parseArea success----------------------------------------------------------',len(reqs),reqs[0])
-        return reqs[0:1]
+        return reqs
     
     def parseAttraction(self,response):
         '''
@@ -160,10 +179,10 @@ class Daodao(BaseCrawlSpider):
             log.msg("Can't find nextPage Request from :%s" % response.url , level=log.WARNING)
         else:
             # 被禁，暂时查第一页
-            pass
-            #reqs.extend(reqs2)
+            #pass
+            reqs.extend(reqs2)
         #print('-----parseAttraction success----------------------------------------------------------',len(reqs),reqs[0])
-        return reqs[0:1] #test
+        return reqs #test
     
     def parseItem(self,response):
         '''    
@@ -205,6 +224,7 @@ class Daodao(BaseCrawlSpider):
         print 'create content loader and start to load contentItem' 
         loader = ZijiyouItemLoader(ContentItem(),response=response)
         loader.add_value('pageUrl', response.url)
+        loader.add_value('type', 'attraction')
         loader.add_value('content', response.body_as_unicode())
         contentItem = loader.load_item()
         
@@ -214,5 +234,83 @@ class Daodao(BaseCrawlSpider):
         item.append(contentItem)
         #print item[0]
         return item
-
+    
+    def parseNote(self, response):
+        log.msg('****begin parseNote***********************************************************', level=log.INFO)
+        xpathNote=['//div[@class="article-list"]'
+                   ]
+        xpathNextPage='//div[@class="pagination"]/div[@class="pgLinks clearfix"]'
+        reqs=[]
+        reqs1=self.extractRequests(response, self.priorityNote, 'parseNoteItem', allow=self.regexNote,restrict_xpaths=xpathNote[0])
+        reqs.extend(reqs1)
+        if len(reqs)<1:
+            self.log("Can't find any links of note from :%s" % response.url , level=log.ERROR)
+        reqs2= self.parseNextPage(response, xpathNextPage, self.priorityNote, 'parseNote')
+        if len(reqs2)<1:
+            self.log("Can't find nextPage Request from :%s" % response.url , level=log.WARNING)
+        else:
+            # 被禁，暂时查第一页
+            reqs.extend(reqs2)
+            #pass            
+        #print('-----parseArea success----------------------------------------------------------',len(reqs),reqs[0])
+        return reqs
+    
+    def parseNoteItem(self, response):
+        '''    
+        parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
+        the pipeLine configured by "settings" will store the data
+        '''
+        log.msg('****begin parseNoteItem to get item directory****************************************************', level=log.INFO)
+       
+        hxs=HtmlXPathSelector(response)
+        
+        '''noteItem'''
+        print 'create note loader and start to load noteItem' 
+        loader = ZijiyouItemLoader(NoteItem(),response=response)
+        #define xpath rule
+        xpath = r'//div[@class="article-title borderBom"]/div/h1/text()'
+        title = ("-".join("%s" % p for p in hxs.select(xpath).extract())).encode("utf-8")
+        loader.add_value("title", title)
+        
+        xpath = r'//div[@class="article-content"]'
+        content = ("-".join("%s" % p for p in hxs.select(xpath).extract())).encode("utf-8")
+        loader.add_value("content", content)
+        
+        xpath = r'//div[@class="article-title borderBom"]/p/span/text()'
+        date = hxs.select(xpath)[-1].extract()
+        loader.add_value("date", date)
+        
+        xpath = r'//ul[@class="article-extra borderBom"]/li'
+        results = hxs.select(xpath)
+        for i in range(len(results)):
+            if(i == 0):
+                area = ("-".join("%s" % p for p in results[i].select(r'div/a/text()').extract())).encode("utf-8")
+                loader.add_value("area", area)
+            elif(i == 1):
+                type = ("-".join("%s" % p for p in results[i].select(r'a/text()').extract())).encode("utf-8")
+                loader.add_value("type", type)
+            elif(i == 2):
+                tags = results[i].select(r'div/a/text()').extract()
+                tag = ("-".join("%s" % p for p in tags)).encode("utf-8")
+                loader.add_value("tag", tag)
+            
+        loader.add_value('pageUrl', response.url)
+        noteItem = loader.load_item()
+        #print noteItem
+        
+        '''contentItem''' 
+        print 'create content loader and start to load contentItem' 
+        loader = ZijiyouItemLoader(ContentItem(),response=response)
+        loader.add_value('pageUrl', response.url)
+        loader.add_value('type', 'note')
+        loader.add_value('content', response.body_as_unicode())
+        contentItem = loader.load_item()
+        
+        '''create item to store every Item'''
+        item = []
+        item.append(noteItem)
+        item.append(contentItem)
+        #print item[0]
+        return item
+    
 SPIDER = Daodao()

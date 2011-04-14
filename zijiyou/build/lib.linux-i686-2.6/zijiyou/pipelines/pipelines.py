@@ -3,16 +3,19 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/topics/item-pipeline.html
+from scrapy import log
 from scrapy.conf import settings
+from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.contentItem import ContentItem
 from zijiyou.items.zijiyouItem import ZijiyouItem
-from zijiyou.pipelines.mongoDbApt import MongoDbApt
 import re
 
 
 class ZijiyouPipeline(object):
     fileApt=None
     mongoApt=None
+    
+    log.start()
     
     def __init__(self):
         self.mongoApt=MongoDbApt()
@@ -56,3 +59,4 @@ class ZijiyouPipeline(object):
 #        print values 
         obj = self.mongoApt.saveItem(collectionName, values)
         print ('++++saveItem2Mongodb++++++++++++++++++++++++++++++++:' ,obj)
+        log.msg('++++saveItem2Mongodb++++++++++++++++++++++++++++++++:%s' % obj, level = log.INFO)

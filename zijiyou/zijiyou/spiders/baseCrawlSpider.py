@@ -5,16 +5,14 @@ Created on 2011-3-28
 @author: shiym
 '''
 
+from scrapy import log, signals
 from scrapy.conf import settings
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib_exp.crawlspider import CrawlSpider
 from scrapy.http import Request
 from scrapy.xlib.pydispatch import dispatcher
-from scrapy import signals
-from scrapy import log
-from scrapy.core.scheduler import Scheduler
-
 from zijiyou.db.mongoDbApt import MongoDbApt
+
 
 class BaseCrawlSpider(CrawlSpider):
     '''
@@ -27,6 +25,11 @@ class BaseCrawlSpider(CrawlSpider):
     priorityArea = 100
     priorityAttraction = 200
     priorityAttractionItem=500
+    
+    priorityNoteEntry=200
+    priorityNote=300
+    priorityNoteItem=400
+    
     mongoApt=None
     colName="crawlCol"
 
@@ -38,7 +41,6 @@ class BaseCrawlSpider(CrawlSpider):
             self.mongoApt=MongoDbApt()
         self.recentRequests = []
         dispatcher.connect(self.spiderClosed, signal=signals.spider_closed)
-
         super(BaseCrawlSpider, self).__init__()
 
     def __unicode__(self):

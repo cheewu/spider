@@ -7,6 +7,7 @@ Created on 2011-3-28
 
 from scrapy.item import Item, Field
 
+'''景点元数据结构'''
 class ZijiyouItem(Item):
     '''
     struct information
@@ -21,5 +22,32 @@ class ZijiyouItem(Item):
     pageUrl=Field()
     telNum=Field()
     #travelerReviews={}
+    
     def __str__(self):
         return "ZijiyouItem"
+ 
+'''完整的抓取页面结构'''   
+class ContentItem(Item):
+    '''
+    classdocs
+    '''
+    pageUrl = Field()
+    title = Field()
+    content = Field()
+    type = Field()
+    
+    def __str__(self):
+        return 'ContentItem'
+
+'''游记元数据结构'''  
+class NoteItem(Item):
+    title = Field()
+    area = Field()
+    type = Field()
+    tag = Field()
+    content = Field()
+    date = Field()
+    pageUrl = Field()
+      
+    def __str__(self):
+        return "NoteItem"
