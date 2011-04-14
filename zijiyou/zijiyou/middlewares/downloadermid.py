@@ -20,14 +20,18 @@ class RequestedUrlUpdate(object):
     访问过的url更新数据库
     '''
     def process_response(self, request, response, spider):
-        log.msg("开始调用downloadmid中间件",level=log.INFO)
+#        log.msg("开始调用downloadmid中间件",level=log.INFO)
         whereJson={"url":request.url}
+        responseStatus=response.status
         updateJson={"status":1}
-        print '-------------------------------------------------------'
-        print whereJson      
-        log.msg("recentRequests 更新数据库：", level=log.INFO)
-        self.mongoApt.updateItem(self.colName,whereJson,updateJson)  
-        log.msg("成功调用downloadmid中间件",level=log.INFO)
+        if responseStatus:
+            updateJson["status"]=responseStatus
+        if responseStatus == 400:
+            log.msg("400错误！爬取站点可能拒绝访问或拒绝响应", level=log.ERROR)
+            print "400错误！爬取站点可能拒绝访问或拒绝响应"
+        log.msg("recentRequests 更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
+        self.mongoApt.updateItem(self.colName,whereJson,updateJson)
+#        log.msg("成功调用downloadmid中间件",level=log.INFO)
         return response
 
 class RandomHttpProxy(object):
