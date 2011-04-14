@@ -234,7 +234,7 @@ class Daodao(BaseCrawlSpider):
         return item
     
     def parseNote(self, response):
-        print('****begin parseNote***********************************************************')
+        log.msg('****begin parseNote***********************************************************', level=log.INFO)
         xpathNote=['//div[@class="article-list"]'
                    ]
         xpathNextPage='//div[@class="pagination"]/div[@class="pgLinks clearfix"]'
@@ -258,7 +258,7 @@ class Daodao(BaseCrawlSpider):
         parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
         '''
-        print('****begin parseNoteItem to get item directory****************************************************')
+        log.msg('****begin parseNoteItem to get item directory****************************************************', level=log.INFO)
        
         hxs=HtmlXPathSelector(response)
         
