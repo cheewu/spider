@@ -54,6 +54,14 @@ class MongoDbApt(object):
         '''
         return self.db[colName].count()
     
+    def isExist(self,colName,queJson):
+        num=self.db[colName].find(queJson).count()
+#        return num
+        if num>0:
+            return True
+        else:
+            return False
+    
     def findByDictionaryAndSort(self,colName,queJson,sortField):
         '''
         find and sort result(option) of mongodb
