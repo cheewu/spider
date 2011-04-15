@@ -8,6 +8,99 @@ import pymongo
 
 mon=MongoDbApt()
 colName="crawlCol"
+
+'''模糊查询 日本'''
+#regexAttraction='Attractions-g\d+-Activities-[oa\d-]+.*\.html$'#Attractions-g294232-Activities-oa1315-Japan.html Attractions-g\d+-Activities[-oa\d]+.*[Japan]+\.html$
+##regexAttraction=r'^http:.*.html' Attractions-g\d+-Activities[-oa\d-]+.*\.html$
+#                #http://www.daodao.com/Attractions-g294232-Activities- Japan.html
+#pattern=re.compile(regexAttraction)
+##queJson={"url":{"$regex":regexAttraction}}
+#queJson={"url":pattern}
+#results = mon.findByDictionaryAndSort(colName, queJson, None)
+#print len(results)
+#i=0
+#for p in results:
+#    i+=1
+#    if i <5:
+#        print p
+
+''''精确查询'''
+#reg=r'http://www.daodao.com/Attraction_Review-g1066443-d1373705-Reviews-Chidorigafuchi-Chiyoda_Tokyo_Tokyo_Prefecture_Kanto.html'
+#pattern=re.compile(reg)
+#queJson={"url":pattern}
+#results = mon.findByDictionaryAndSort(colName, queJson, None)
+#print len(results)
+#i=0
+#for p in results:
+#    i+=1
+#    if i <5:
+#        print p
+
+'''造数据'''
+#mon.removeAll(colName)
+#value=[{"url":"http://www.daodao.com/Lvyou","order":1},
+#       {"url":"http://www.daodao.com/Tourism-g294232-Japan-Vacations.html","order":2},
+#       {"url":"http://www.daodao.com/Attractions-g294232-Activities-Japan.html","order":3},
+#       {"url":"http://www.daodao.com/Attractions-g294232-Activities-oa15-Japan.html","order":4},
+#       {"url":"http://www.daodao.com/Attractions-g298184-Activities-Tokyo_Tokyo_Prefecture_Kanto.html","order":5},
+#       {"url":"http://www.daodao.com/Attractions-g298115-Activities-oa15-Kanazawa_Ishikawa_Prefecture_Chubu.html","order":6},
+#       {"url":"http://www.daodao.com/Attraction_Review-g1066443-d1373705-Reviews-Chidorigafuchi-Chiyoda_Tokyo_Tokyo_Prefecture_Kanto.html","order":7}
+#       ]
+#print mon.saveItem(colName, value)
+#print mon.count(colName)
+#print mon.findOne(colName)
+
+'''备份数据'''
+#colSource=[
+#           'daodaoCol', 
+#           'crawlCol',
+#           'noteCol'
+#           ]
+#colTarget=[
+#           'daodaoColTest', 
+#           'crawlColTest',
+#           'noteColTest'
+#           ]
+#queJson={}
+#
+#for i in range(0,3):
+#    mon.removeAll(colTarget[i])
+#    print mon.count(colTarget[i])
+#print '开始备份...'
+#for i in range(0,3):
+#    results=mon.findByDictionaryAndSort(colSource[i], queJson, None)
+#    mon.saveItem(colTarget[i], results)
+#    print mon.count(colTarget[i])
+#print '完成备份1！'
+#results=mon.findByDictionaryAndSort("responseCol", {}, None)
+#print len(results)
+#for p in results:
+#    mon.saveItem("responseColTest", p)
+#print mon.count("responseColTest")
+#print '完成备份2！'
+'''
+清空爬到的数据
+'''
+#colSource=[
+#           'responseCol',
+#           'daodaoCol', 
+#           'crawlCol',
+#           'noteCol'
+#           ]
+#print '清空...'
+#for i in range(0,4):
+#    mon.removeAll(colSource[i])
+#    print mon.count(colSource[i])
+#print '完成清空...'
+
+#爬虫启动url
+#value={"url":"http://www.daodao.com/Lvyou","callBack":None,"status":400,"priority":1,"dateTime":datetime.datetime.now()}
+#mon.saveItem("crawlCol", value)
+#print mon.count("crawlCol")
+
+
+
+
 #mon.removeAll(colName)
 #mon.removeAll("daodaoCol")
 #mon.removeAll("responseCol")
@@ -30,9 +123,6 @@ colName="crawlCol"
 #for p in results2:
 #    print p
 
-print 'is Exist'
-queJson3={"status":1}
-print mon.isExist(colName, queJson3)
 
 #print 'findOne'
 #print mon.findOne(colName)

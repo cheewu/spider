@@ -29,7 +29,7 @@ class RequestSaver(object):
         if meta and "callBack" in meta:
             recentReq["callBack"]=request.meta["callBack"]
         recentReq["priority"]=request.priority
-        recentReq["status"]=0
+        recentReq["status"]=1000
         
         queJson={"url":request.url}
         if not self.mongoApt.isExist(self.colName, queJson):

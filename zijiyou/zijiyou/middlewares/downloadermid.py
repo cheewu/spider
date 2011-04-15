@@ -34,7 +34,7 @@ class RequestedUrlUpdate(object):
             if request.meta:
                 meta=request.meta
                 meta["status"]=responseStatus
-                request.meta=meta
+#                request.replace(meta)
         self.mongoApt.updateItem(self.colName,whereJson,updateJson)
         log.msg("recentRequests 更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
 #        log.msg("成功调用downloadmid中间件",level=log.INFO)

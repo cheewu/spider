@@ -104,11 +104,12 @@ class BaseCrawlSpider(CrawlSpider):
         recentRequests=self.recentRequests
         for p in recentRequests:
             p["priority"]=p["priority"]*10
-            
-        for p in recentRequests:
-            whereJson={"url":p["url"]}
-            updateJson={"priority":p["priority"]}
-            self.mongoApt.updateItem(self.colName,whereJson,updateJson)
+        
+        #暂时停用
+#        for p in recentRequests:
+#            whereJson={"url":p["url"]}
+#            updateJson={"priority":p["priority"]}
+#            self.mongoApt.updateItem(self.colName,whereJson,updateJson)
         self.recentRequests=[]
         print 'closeSpider.......................................................'
         log.msg("recentRequests 入数据库：%s" %len(recentRequests), level=log.INFO)
