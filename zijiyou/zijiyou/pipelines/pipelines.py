@@ -5,15 +5,13 @@
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 from scrapy import log
 from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.items.zijiyouItem import ZijiyouItem, ContentItem, NoteItem
+from zijiyou.items.zijiyouItem import Attraction,ResponseBody,Note,CommonSense
 import re
 
 
 class ZijiyouPipeline(object):
     fileApt=None
     mongoApt=None
-    
-    log.start()
     
     def __init__(self):
         if not self.mongoApt:
@@ -22,12 +20,14 @@ class ZijiyouPipeline(object):
     
     def process_item(self, item, spider):
         collectionName = None
-        if isinstance(item, ZijiyouItem):
-            collectionName = 'daodaoCol'
-        elif isinstance(item, ContentItem):
-            collectionName = 'responseCol'
-        elif isinstance(item, NoteItem):
-            collectionName = 'noteCol'
+        if isinstance(item, Attraction):
+            collectionName = 'Attraction'
+        elif isinstance(item, ResponseBody):
+            collectionName = 'ResponseBody'
+        elif isinstance(item, Note):
+            collectionName = 'Note'
+        elif isinstance(item, CommonSense):
+            collectionName = 'CommonSense'
             
         if(collectionName != None):
             # 存到txt文件中
@@ -52,13 +52,11 @@ class ZijiyouPipeline(object):
         value = ''
         for k,v in item.items():
             try:
-                '''if v is not a dic or list will throw exception'''
+                '''if v is not a dic or list, a exception will be thrown'''
                 value = "-".join("%s" % p for p in v)
-                value = re.sub("[\r\n]", "", value)+"\n"
             except Exception:
                 value = "%s" % v
             values[k] = value
-#        print values 
         obj = self.mongoApt.saveItem(collectionName, values)
-        print ('++++saveItem2Mongodb++++col:', collectionName, '++++++:' ,obj)
-        log.msg('++++saveItem2Mongodb++++col:' + collectionName + '++++++:%s' % obj, level = log.INFO)
+        print '++++saveItem2Mongodb++++col:(%s/%s)' % (collectionName ,obj)
+        log.msg('++++saveItem2Mongodb++++col:(%s/%s)' % (collectionName ,obj), level = log.INFO)
