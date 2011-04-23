@@ -19,20 +19,10 @@ class ZijiyouPipeline(object):
         #self.fileApt = open("zijiyou/pipelines/test.txt","w+")
     
     def process_item(self, item, spider):
-        collectionName = None
-        if isinstance(item, Attraction):
-            collectionName = 'Attraction'
-        elif isinstance(item, ResponseBody):
-            collectionName = 'ResponseBody'
-        elif isinstance(item, Note):
-            collectionName = 'Note'
-        elif isinstance(item, CommonSense):
-            collectionName = 'CommonSense'
-            
-        if(collectionName != None):
+        if item.collectionName:
             # 存到txt文件中
             # self.saveItem2File(item, collectionName)
-            self.saveItem2Mongodb(item, collectionName)
+            self.saveItem2Mongodb(item, item.collectionName)
         
     def saveItem2File(self,item, collectionName = None):
         values = collectionName + '\n'
@@ -58,5 +48,5 @@ class ZijiyouPipeline(object):
                 value = "%s" % v
             values[k] = value
         obj = self.mongoApt.saveItem(collectionName, values)
-        print '++++saveItem2Mongodb++++col:(%s/%s)' % (collectionName ,obj)
-        log.msg('++++saveItem2Mongodb++++col:(%s/%s)' % (collectionName ,obj), level = log.INFO)
+        print '++++saveItem2Mongodb++++col:%s,objectId:%s' % (collectionName ,obj)
+        log.msg('++++saveItem2Mongodb++++col:%s,objectId:%s+++++++++++' % (collectionName ,obj), level = log.INFO)

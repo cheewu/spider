@@ -46,7 +46,6 @@ class Parse(object):
             spiderName=p['spiderName']
             itemType=re.sub('[\r\n]', "", p['type'])
             response=HtmlResponse(str(p['pageUrl']), status=200, headers=heard, body=str(p['content']), flags=None, request=None )
-            print 'spiderName:%s, itemType:%s' %(spiderName,itemType)
             item = self.parseItem(extractorConfig[spiderName],itemType, response)
             whereJson={'_id':ObjectId(p['_id'])}
             if item:

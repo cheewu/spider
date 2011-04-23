@@ -6,6 +6,8 @@ from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
 from zijiyou.spiders.offlineCrawl.parse import Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
+from zijiyou.items.zijiyouItem import Attraction,CommonSense
+
 
 mon=MongoDbApt()
 '''

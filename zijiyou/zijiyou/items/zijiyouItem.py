@@ -11,6 +11,8 @@ class ResponseBody(Item):
     '''
     Content of Target page. the content field represent the boy of a response
     '''
+    collectionName="ResponseBody"
+    
     spiderName=Field()
     type = Field() # indicate the type of target page. such as note attractions... and so on
     pageUrl = Field()
@@ -25,6 +27,8 @@ class Attraction(Item):
     '''
     景点元数据结构
     '''
+    collectionName="Attraction"
+    
     area=Field()
     name=Field()
     address=Field()
@@ -51,6 +55,8 @@ class Note(Item):
     '''
     游记攻略
     '''  
+    collectionName="Note"
+    
     title = Field()
     author = Field()
     area = Field()
@@ -82,6 +88,8 @@ class CommonSense(Item):
     '''
     常识。如气候、文化等
     '''  
+    collectionName="CommonSense"
+    
     area = Field()
     author = Field()
     type = Field()
@@ -104,6 +112,8 @@ class MemberInfo(Item):
     '''
     会员主页信息
     '''
+    collectionName="MemberInfo"
+    
     pageUrl = Field()    
     name=Field() 
     currentAddress=Field() #现居
@@ -125,6 +135,8 @@ class MemberTrack(Item):
     '''
     会员足迹
     '''
+    collectionName="MemberTrack"
+    
     pageUrl = Field()    
     name=Field()
     track=Field() # like {friendName:address,friendName:address}
@@ -139,6 +151,8 @@ class MemberFriend(Item):
     '''
     会员好友
     '''
+    collectionName="MemberFriend"
+    
     pageUrl = Field()    
     friends=Field() # like {friendName:address,friendName:address}
     
@@ -152,6 +166,8 @@ class MemberNoteList(Item):
     '''
     会员游记
     '''
+    collectionName="MemberNoteList"
+    
     pageUrl = Field()
     
     title = Field()
@@ -172,6 +188,8 @@ class CrawlUrl(Item):
     '''
     CrawlDB
     '''
+    collectionName="CrawlUrl"
+    
     spiderName=Field()
     url=Field()
     callBack=Field() # the name of CallBackFunction Method Object

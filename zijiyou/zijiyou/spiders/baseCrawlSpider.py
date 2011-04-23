@@ -105,7 +105,7 @@ class BaseCrawlSpider(CrawlSpider):
                     pagePriority=p["priority"]
                     req=self.makeRequest(url, callBackFunctionName,priority=pagePriority)
                     self.pendingRequest.append(req)
-                
+                print "获得pendingRequest，数量=%s" % len(self.pendingRequest)
                 log.msg("获得pendingRequest，数量=%s" % len(self.pendingRequest),level=log.INFO)
             else:
                 log.msg("pendingRequest为空，交由scrapy从startUrl启动" ,level=log.ERROR)

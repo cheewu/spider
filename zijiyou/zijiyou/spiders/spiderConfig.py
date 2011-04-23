@@ -10,7 +10,7 @@ spiderConfig = {
                                     {'regex':r'Attractions-g\d+-Activities-.*\.html$', 'priority':50},
                                     {'regex':r'Tourism-g\d+-c\d+-[^n].*\.html((\?pg=\d+)?|(\?kw=.*&st=8))$', 'priority':50} #包括游记列表、标签
                                     ],
-                     #item页正则表达式
+                     #item页正则表达式 type对应item存放的数据表名
                      'itemRegex':[{'type':'Attraction','regex':r'Attraction_Review-g\d+-.*-Reviews-.*\.html$', 'priority':600},  #AttractionItem
                                   {'type':'Note','regex':r'Tourism-g\d+-c\d+-n\d+.*\.html$', 'priority':500},              #NoteItem
                                   {'type':'CommonSense','regex':r'Changshi-g\d+-.*\.html$', 'priority':500}                       #CommonSenseItem
@@ -39,7 +39,7 @@ spiderConfig = {
                                     {'regex':r'(http://www.lvping.com/)?(journals-)+(d\d)+(-s\d)+(-p\d)+(-g/\w)+\.html$', 'priority':50}, #攻略列表
                                     {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':50}# 会员游记列表
                                     ],
-                     #item页正则表达式
+                     #item页正则表达式 type对应item存放的数据表名
                      'itemRegex':[{'type':'CommonSense','regex':r'(http://www.lvping.com/)?(travel-)+(d\d-)+\w+[:]\w+\.html$', 'priority':600},  #国家介绍 概况、气候等常识
                                   {'type':'Note','regex':r'(http://www.lvping.com/)?(travel-)+(d1-)+(s\d)+/\w:\w\.html$', 'priority':500}, #短文攻略(类别 内容 目的地)
                                   {'type':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+(s\d-)+detail\.html$', 'priority':500}, #景点
