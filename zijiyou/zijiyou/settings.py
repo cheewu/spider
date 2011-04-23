@@ -23,6 +23,7 @@ DB_COLLECTIONS = ['ResponseBody',
                   'Attraction',
                   'Note',
                   'CrawlUrl',
+                  'test',
                   'CommonSense']
 
 LOG_FILE='./zijiyou.log'

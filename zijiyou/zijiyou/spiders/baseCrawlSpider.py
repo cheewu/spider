@@ -12,12 +12,13 @@ from scrapy.http import Request
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.contrib_exp.crawlspider import Rule
+import datetime
+import re
 
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.spiders.spiderConfig import spiderConfig
 from zijiyou.items.zijiyouItem import ResponseBody
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-import re
 
 class BaseCrawlSpider(CrawlSpider):
     '''
@@ -38,13 +39,14 @@ class BaseCrawlSpider(CrawlSpider):
     mongoApt=None
     hasInit=False
 
-    def __init__(self, *a, **kw):
+    def __init__(self, *a, **kw):      
+        super(BaseCrawlSpider, self).__init__(*a, **kw)
+          
+        self.functionDic["parseItem"]=self.parseItem
         if(not self.initConfig()):
             print 'not self.initConfig()'
             log.msg('not self.initConfig()', level=log.INFO)
             raise NotConfigured
-        super(BaseCrawlSpider, self).__init__(*a, **kw)
-        print '初始化 baseCrawlSpider2'
         
     def getStartUrls(self,spiderName=None,colName=None):
         """
@@ -82,15 +84,14 @@ class BaseCrawlSpider(CrawlSpider):
     def initRequest(self):
         '''
         initiate the functionDictionary and request
-        '''        
-        self.functionDic["parseItem"]=self.parseItem
+        '''
         print 'initiateRequest'
         # load the recentRequest from db
         if not self.mongoApt:
             print 'self.mongoApt为空，初始化mongod链接，并查询recentequest'
             log.msg("self.mongoApt为空，初始化mongod链接，并查询recentequest" ,level=log.INFO)
             self.mongoApt=MongoDbApt()
-            pendingRrls = self.getStartUrls()
+            pendingRrls = self.getStartUrls(spiderName=self.name)
             if pendingRrls and len(pendingRrls)>0:
                 self.pendingRequest=[]
                 maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
@@ -108,7 +109,34 @@ class BaseCrawlSpider(CrawlSpider):
                 log.msg("获得pendingRequest，数量=%s" % len(self.pendingRequest),level=log.INFO)
             else:
                 log.msg("pendingRequest为空，交由scrapy从startUrl启动" ,level=log.ERROR)
-        self.hasInit=True
+
+    def myParse(self, response):
+        '''start to parse response link'''
+        print '解析link'
+        
+        if not self.hasInit:
+            self.initRequest()
+            self.hasInit=True
+            if self.pendingRequest and len(self.pendingRequest)>0:
+                log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
+                return self.pendingRequest
+        
+        log.msg('解析link: %s' % response.url, log.INFO)
+        reqs = []
+        '''普通页link'''
+        for v in self.normalRegex:
+            reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
+           
+        log.msg("%s parse 产生 普通页 url 数量：%s" % (response.url, len(reqs)), level=log.INFO)
+ 
+        '''item页link'''
+        for v in self.itemRegex:
+            reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
+            
+        item = self.parseItem(response)
+        if item:
+            reqs.append(item)
+        return reqs
 
     def parseItem(self, response):
         '''start to parse parse item'''
@@ -129,9 +157,12 @@ class BaseCrawlSpider(CrawlSpider):
         log.msg('start to parse item, the type of content is %s' % contentType, level=log.INFO)            
         '''ResponseBody'''
         loader = ZijiyouItemLoader(ResponseBody(),response=response)
+        loader.add_value('spiderName', self.name)
         loader.add_value('pageUrl', response.url)
         loader.add_value('type', contentType)
         loader.add_value('content', response.body_as_unicode())
+        loader.add_value('dateTime', datetime.datetime.now())
+        loader.add_value('status', 100)
         responseBody = loader.load_item()
         return responseBody
     

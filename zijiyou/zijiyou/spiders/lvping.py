@@ -6,12 +6,12 @@ Created on 2011-3-28
 '''
 from scrapy import log
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-class Daodao(BaseCrawlSpider):
+class Lvping(BaseCrawlSpider):
     '''
     Spider for www.daodao.com
     '''
-    print '启动爬虫：daodaoSpider'
-    log.msg('启动爬虫：daodaoSpider', level=log.INFO)
-    name ="daodaoSpider"
+    print '启动爬虫：lvpingSpider'
+    log.msg('启动爬虫：lvpingSpider', level=log.INFO)
+    name ="lvpingSpider"
     
-SPIDER = Daodao()
+SPIDER = Lvping()

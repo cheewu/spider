@@ -36,10 +36,12 @@ class ResponseBody(Item):
     '''
     Content of Target page. the content field represent the boy of a response
     '''
+    spiderName=Field()
     type = Field() # indicate the type of target page. such as note attractions... and so on
     pageUrl = Field()
     content = Field()
     status=Field()     # log the operation. default is 100, indicates initial status
+    dateTime=Field()
     
     def __str__(self):
         return 'ResponseBodyItem'
@@ -97,6 +99,7 @@ class CrawlUrl(Item):
     '''
     CrawlDB
     '''
+    spiderName=Field()
     url=Field()
     callBack=Field() # the name of CallBackFunction Method Object
     status=Field()   # http status code , type is int

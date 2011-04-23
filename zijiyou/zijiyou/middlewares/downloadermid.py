@@ -30,6 +30,8 @@ class RequestedUrlSaveAndUpdate(object):
             recentReq["callBack"]=request.meta["callBack"]
         recentReq["priority"]=request.priority
         recentReq["status"]=1000
+        if spider.name:
+            recentReq["spiderName"]=spider.name
         
         queJson={"url":request.url}
         if not self.mongoApt.isExist(self.colName, queJson):

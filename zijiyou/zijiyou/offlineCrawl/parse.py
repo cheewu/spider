@@ -4,9 +4,10 @@ Created on 2011-4-20
 
 @author: shiym
 '''
-from scrapy.http import HtmlResponse 
-from scrapy.selector import HtmlXPathSelector
+from bson.objectid import ObjectId
 from scrapy.exceptions import NotConfigured
+from scrapy.http import HtmlResponse
+from scrapy.selector import HtmlXPathSelector
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.offlineCrawl.extractorConfig import extractorConfig
 import re
@@ -21,9 +22,9 @@ class Parse(object):
         Constructor
         '''
         self.mon=MongoDbApt()
-        colName="ResponseBody"
-        queJson={}
-        self.responseBodys=self.mon.findByDictionaryAndSort(colName, queJson, None)
+        self.colName="ResponseBody"
+        queJson={'status':100}
+        self.responseBodys=self.mon.findByDictionaryAndSort(self.colName, queJson, None)
         print 'length of response:%s' % len(self.responseBodys)
     
     def parse(self):
@@ -40,15 +41,27 @@ class Parse(object):
         items={}
         count=0;
         for p in self.responseBodys:
+            if not ('spiderName' in p and 'type' in p):
+                print '缺失spiderName 或 type. Url:%s' % p['pageUrl']
+            spiderName=p['spiderName']
             itemType=re.sub('[\r\n]', "", p['type'])
             response=HtmlResponse(str(p['pageUrl']), status=200, headers=heard, body=str(p['content']), flags=None, request=None )
-            print itemType
-            item = self.parseItem(itemType, response)
+            print 'spiderName:%s, itemType:%s' %(spiderName,itemType)
+            item = self.parseItem(extractorConfig[spiderName],itemType, response)
+            whereJson={'_id':ObjectId(p['_id'])}
             if item:
                 count+=1
                 if not itemType in items:
                     items[itemType]=[]
                 items[itemType].append(item)
+                # parse item successful, and then update the status to 200
+                updateJson={'status':200}
+                self.mon.updateItem(self.colName, whereJson, updateJson)
+            else:
+                # fail in parsing item , and then update the status to 101
+                updateJson={'status':101}
+                self.mon.updateItem(self.colName, whereJson, updateJson)
+                
         print '解析成功items数：%s' % count
         print items
         if items and len(items)>0:
@@ -58,7 +71,7 @@ class Parse(object):
                 self.mon.saveItem(k, v)
         print '保存成功'
         
-    def parseItem(self, itemType, response):
+    def parseItem(self,config, itemType, response):
         '''
         parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
@@ -66,10 +79,10 @@ class Parse(object):
         hxs=HtmlXPathSelector(response)
         
         #define xpath rule
-        if not itemType in extractorConfig:
+        if not itemType in config:
             print '类型没有找到：%s ' % itemType
             raise NotConfigured
-        xpathItem = extractorConfig[itemType]
+        xpathItem = config[itemType]
         item={}
         item['itemType']=itemType
         for k,v in xpathItem.items():

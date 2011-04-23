@@ -7,23 +7,23 @@ import datetime
 from zijiyou.offlineCrawl.parse import Parse
 
 mon=MongoDbApt()
-colName="CrawlUrl"
-
 '''
 查看数据
 '''
 #colSource=['ResponseBody',
-#                  'Attraction',
-#                  'Note',
+##                  'Attraction',
+##                  'Note',
 #                  'CrawlUrl',
 #                  'CommonSense']
 #for i in range(0,len(colSource)):
 #    print '(%s:%s)' %(colSource[i],mon.count(colSource[i]))
+#    print mon.findOne(colSource[i])
 '''
 测试离线爬虫的解析
 '''
-parse=Parse()
-parse.parse()
+#parse=Parse()
+#parse.parse()
+
 '''模糊查询 日本'''
 #regexAttraction='Attractions-g\d+-Activities-[oa\d-]+.*\.html$'#Attractions-g294232-Activities-oa1315-Japan.html Attractions-g\d+-Activities[-oa\d]+.*[Japan]+\.html$
 ##regexAttraction=r'^http:.*.html' Attractions-g\d+-Activities[-oa\d-]+.*\.html$
@@ -32,12 +32,14 @@ parse.parse()
 ##queJson={"url":{"$regex":regexAttraction}}
 #queJson={"url":pattern}
 #results = mon.findByDictionaryAndSort(colName, queJson, None)
-#print len(results)
-#i=0
-#for p in results:
-#    i+=1
-#    if i <5:
-#        print p
+jq={'status': {'$gte': 300}, 'spiderName': 'daodaoSpider'}
+results =mon.findByDictionaryAndSort("CrawlUrl", jq,None)
+print len(results)
+i=0
+for p in results:
+    i+=1
+    if i <5:
+        print p
 
 ''''精确查询'''
 #reg=r'http://www.daodao.com/Attraction_Review-g1066443-d1373705-Reviews-Chidorigafuchi-Chiyoda_Tokyo_Tokyo_Prefecture_Kanto.html'
