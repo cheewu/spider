@@ -32,17 +32,20 @@ class BaseCrawlSpider(CrawlSpider):
     colName="CrawlUrl"
     pendingRequest=[]
     functionDic={}
-    '''普通页 regex'''
+    #普通页 regex
     normalRegex = None
-    '''item页 regex'''
+    #item页 regexx
     itemRegex = None
     mongoApt=None
+    #验证数据库是否和type配置对应
+    dbCollecions=[]
     hasInit=False
 
     def __init__(self, *a, **kw):      
         super(BaseCrawlSpider, self).__init__(*a, **kw)
           
         self.functionDic["parseItem"]=self.parseItem
+        self.dbCollecions=settings.get('DB_COLLECTIONS', [])
         if(not self.initConfig()):
             print '爬虫配置文件加载失败！'
             log.msg('爬虫配置文件加载失败！', level=log.INFO)
@@ -148,6 +151,11 @@ class BaseCrawlSpider(CrawlSpider):
         if contentType == None:
             log.msg("不是item的urlLink：%s" %  response.url, level=log.INFO)
             return None
+        #验证数据库是否和type配置对应
+        if not contentType in self.dbCollecions:
+            print 'Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % contentType
+            log.msg('Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % contentType, level=log.ERROR)
+            raise NotConfigured
         
         log.msg('保存item页，类型： %s' % contentType, level=log.INFO)            
         '''ResponseBody'''
