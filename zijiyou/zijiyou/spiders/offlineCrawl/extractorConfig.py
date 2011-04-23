@@ -89,6 +89,14 @@ extractorConfig = {
                                                 #第二部分不一样
                                                 r'area':r'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li[4]/a/text()',
                                                 r'type':r'//div[@class="article-title borderBom"]/div/h1/text()'   
-                                    }
+                                    },
+                                    "MemberInfo":{
+                                        },
+                                    "MemberTrack":{
+                                        },
+                                    "MemberFriend":{
+                                        },
+                                    "MemberNoteList":{
+                                        }
                 }
 }

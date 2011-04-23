@@ -44,8 +44,8 @@ class BaseCrawlSpider(CrawlSpider):
           
         self.functionDic["parseItem"]=self.parseItem
         if(not self.initConfig()):
-            print 'not self.initConfig()'
-            log.msg('not self.initConfig()', level=log.INFO)
+            print '爬虫配置文件加载失败！'
+            log.msg('爬虫配置文件加载失败！', level=log.INFO)
             raise NotConfigured
         
     def getStartUrls(self,spiderName=None,colName=None):
@@ -78,7 +78,7 @@ class BaseCrawlSpider(CrawlSpider):
             self.itemRegex = config['itemRegex']
             return True
         else:
-            log.msg("there is sth wrong with the config of spider:%s" % self.name, level=log.ERROR)
+            log.msg("spider配置异常，缺少必要的配置信息。爬虫名:%s" % self.name, level=log.ERROR)
             return False
 
     def initRequest(self):
@@ -141,20 +141,15 @@ class BaseCrawlSpider(CrawlSpider):
     def parseItem(self, response):
         '''start to parse parse item'''
         contentType = None
-        for v in range(len(self.itemRegex)):
-            if re.search(self.itemRegex[v]['regex'], response.url):
-                if v == 0:
-                    contentType = "Attraction"
-                elif v == 1:
-                    contentType = "Note"
-                elif v == 2:
-                    contentType = "CommonSense"
+        for v in self.itemRegex:
+            if re.search(v['regex'], response.url):
+                contentType=v['type']
                     
         if contentType == None:
-            log.msg("the url is not item link：%s" %  response.url, level=log.INFO)
+            log.msg("不是item的urlLink：%s" %  response.url, level=log.INFO)
             return None
         
-        log.msg('start to parse item, the type of content is %s' % contentType, level=log.INFO)            
+        log.msg('保存item页，类型： %s' % contentType, level=log.INFO)            
         '''ResponseBody'''
         loader = ZijiyouItemLoader(ResponseBody(),response=response)
         loader.add_value('spiderName', self.name)

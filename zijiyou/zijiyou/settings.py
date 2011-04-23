@@ -23,8 +23,8 @@ DB_COLLECTIONS = ['ResponseBody',
                   'Attraction',
                   'Note',
                   'CrawlUrl',
-                  'test',
-                  'CommonSense']
+                  'CommonSense',
+                  'test']
 
 LOG_FILE='./zijiyou.log'
 DOWNLOAD_DELAY = 1.2

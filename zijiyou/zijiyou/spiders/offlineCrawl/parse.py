@@ -9,7 +9,7 @@ from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
 from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.offlineCrawl.extractorConfig import extractorConfig
+from zijiyou.spiders.offlineCrawl.extractorConfig import extractorConfig
 import re
 
 class Parse(object):

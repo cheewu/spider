@@ -4,7 +4,8 @@
 from bson.objectid import ObjectId
 from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
-from zijiyou.offlineCrawl.parse import Parse
+from zijiyou.spiders.offlineCrawl.parse import Parse
+from zijiyou.spiders.spiderConfig import spiderConfig
 
 mon=MongoDbApt()
 '''
@@ -32,14 +33,14 @@ mon=MongoDbApt()
 ##queJson={"url":{"$regex":regexAttraction}}
 #queJson={"url":pattern}
 #results = mon.findByDictionaryAndSort(colName, queJson, None)
-jq={'status': {'$gte': 300}, 'spiderName': 'daodaoSpider'}
-results =mon.findByDictionaryAndSort("CrawlUrl", jq,None)
-print len(results)
-i=0
-for p in results:
-    i+=1
-    if i <5:
-        print p
+#jq={'status': {'$gte': 300}, 'spiderName': 'daodaoSpider'}
+#results =mon.findByDictionaryAndSort("CrawlUrl", jq,None)
+#print len(results)
+#i=0
+#for p in results:
+#    i+=1
+#    if i <5:
+#        print p
 
 ''''精确查询'''
 #reg=r'http://www.daodao.com/Attraction_Review-g1066443-d1373705-Reviews-Chidorigafuchi-Chiyoda_Tokyo_Tokyo_Prefecture_Kanto.html'
@@ -102,11 +103,12 @@ for p in results:
 #                  'Attraction',
 #                  'Note',
 #                  'CrawlUrl',
-#                  'CommonSense']
+#                  'CommonSense',
+#                  'test']
 #print '清空...'
 #for i in range(0,len(colSource)):
-#    mon.removeAll(colSource[i])
 #    print mon.count(colSource[i])
+#    mon.removeAll(colSource[i])
 #print '完成清空...'
 #
 ##爬虫启动url
