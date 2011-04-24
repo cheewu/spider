@@ -61,15 +61,15 @@ class MongoDbApt(object):
         else:
             return False
     
-    def findByDictionaryAndSort(self,colName,queJson,sortField):
+    def findByDictionaryAndSort(self,colName,whereJson,sortField):
         '''
         find and sort result(option) of mongodb
         '''
         mycursor=None
         if sortField:
-            mycursor = self.db[colName].find(queJson).sort(sortField,direction=DESCENDING);            
+            mycursor = self.db[colName].find(whereJson).sort(sortField,direction=DESCENDING);            
         else:
-            mycursor = self.db[colName].find(queJson)
+            mycursor = self.db[colName].find(whereJson)
         
         results=[]
         if mycursor:

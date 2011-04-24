@@ -7,7 +7,7 @@ import datetime
 from zijiyou.spiders.offlineCrawl.parse import Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
 from zijiyou.items.zijiyouItem import Attraction,CommonSense
-
+import re
 
 mon=MongoDbApt()
 '''
@@ -57,18 +57,75 @@ mon=MongoDbApt()
 #        for p1 in p.keys():
 #            print  p[p1]
 '''造数据'''
-#mon.removeAll(colName)
-#value=[{"url":"http://www.daodao.com/Lvyou","order":1},
-#       {"url":"http://www.daodao.com/Tourism-g294232-Japan-Vacations.html","order":2},
-#       {"url":"http://www.daodao.com/Attractions-g294232-Activities-Japan.html","order":3},
-#       {"url":"http://www.daodao.com/Attractions-g294232-Activities-oa15-Japan.html","order":4},
-#       {"url":"http://www.daodao.com/Attractions-g298184-Activities-Tokyo_Tokyo_Prefecture_Kanto.html","order":5},
-#       {"url":"http://www.daodao.com/Attractions-g298115-Activities-oa15-Kanazawa_Ishikawa_Prefecture_Chubu.html","order":6},
-#       {"url":"http://www.daodao.com/Attraction_Review-g1066443-d1373705-Reviews-Chidorigafuchi-Chiyoda_Tokyo_Tokyo_Prefecture_Kanto.html","order":7}
-#       ]
-#print mon.saveItem(colName, value)
-#print mon.count(colName)
-#print mon.findOne(colName)
+mon.removeAll('test')
+values=[
+#        {"url":"http://www.lvping.com/tourism-g29-Canada.html","order": 1},
+#        {"url":"http://www.lvping.com/tourism-g90-ireland.html","order": 1},
+#        {"url":"http://www.lvping.com/tourism-g44-philippine.html","order": 1},
+#        {"reg":"(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$","type":"国家","order": 1},
+        
+#        {"url":"http://www.lvping.com/travel-d29-sg1973/canada:Introduction.html","order": 2},
+#        {"url":"http://www.lvping.com/travel-d90-sg13095/ireland:culture.html","order": 2},
+#        {"url":"http://www.lvping.com/travel-d44-sg13141/philippine:climate.html","order": 2},
+#        {"reg":"(http://www.lvping.com/)?(travel)+-d\d+-sg\d+/\w+:+\w+.*\.html$","type":"国家介绍 概况、气候等常识","order": 2},
+
+#        {"url":"http://www.lvping.com/tourism-d1-beijing.html","order": 3},
+#        {"url":"http://www.lvping.com/tourism-d356-Ottawa.html","order": 3},
+#        {"url":"http://www.lvping.com/tourism-d352-MexicoCit.html","order": 3},
+#        {"reg":"(http://www.lvping.com/)?(tourism-)+d\d+-\w+\.html$","type":"城市景区 a 介绍（目的地 介绍）","order": 3},
+#        
+#        {"url":"http://www.lvping.com/travel-d1-s11/Beijing:history.html","order": 4},
+#        {"url":"http://www.lvping.com/travel-d1-s11118/Beijing:climate.html","order": 4},
+#        {"url":"http://www.lvping.com/travel-d1-s12095/Beijing:culture.html","order": 4},
+#        {"url":"http://www.lvping.com/travel-d1-s12095/Beijing:culture.html","order": 4},
+#        {"reg":"(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$","type":"b.短文攻略(类别 内容 目的地)","order": 4},
+#        
+#        {"url":"http://www.lvping.com/attractions-d1-beijing.html","order": 5},
+#        {"url":"http://www.lvping.com/attractions-d356-ottawa.html","order": 5},
+#        {"url":"http://www.lvping.com/attractions-d352-mexicocity.html","order": 5},
+#        {"reg":"(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$","type":"景点列表","order": 5},
+#        
+#        {"url":"http://www.lvping.com/attraction_review-d1-s52626-detail.html","order": 6},
+#        {"url":"http://www.lvping.com/attraction_review-d1-s230-detail.html","order": 6},
+#        {"url":"http://www.lvping.com/attraction_review-d9-s1655-detail.html","order": 6},
+#        {"reg":"(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-detail\.html$","type":"a.介绍 经纬度","order": 6},
+#        
+#        {"url":"http://www.lvping.com/journals-d6158-s00-p1-g/laosjournals.html","order": 7},
+#        {"reg":"(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$","type":"攻略列表","order": 7},
+#        
+#        {"url":"http://www.lvping.com/showjournal-d6158-r1322216-journals.html","order": 8},
+#        {"reg":"(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$","type":"a 作者 发表时间 浏览次数 评论次数","order": 8},
+#        
+#        {"url":"http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23","order": 9},
+#        {"url":"http://www.lvping.com/members/pplvxingbao","order": 9},
+#        {"reg":"(http://www.lvping.com/)?(members/)+\w+$","type":"用户","order": 9},
+#        
+#        {"url":"http://www.lvping.com/members/9EA06A1AF6DC4650A1F2A5C025A3ABA3/travelmap-public","order": 10},
+#        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$","type":"足迹","order": 10},
+#        
+#        {"url":"http://www.lvping.com/members/pplvxingbao/friends","order":11},
+#        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$","type":"好友","order":11},
+#        
+#        {"url":"http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals","order":12},
+#        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$","type":"游记","order":12}
+       ]
+mon.saveItem('test', values)
+#print 'count=%s:len=%s' %(mon.count('test'),len(values))
+
+'''测试url的reg'''
+regsJQ={'reg':re.compile(r".*")}#{"url":{"$regex":regexAttraction}}
+regs=mon.findByDictionaryAndSort("test", regsJQ,'order')
+for reg in regs:
+    print '*******************'
+    print 'order=%s,reg=%s' %(reg['order'],reg['reg'])
+    p = reg['reg']
+    pattern=re.compile(p)
+    results=mon.findByDictionaryAndSort('test', {'url':pattern}, None)
+    for result in results:
+        print result
+    print '------------------'
+    
+
 
 '''备份数据'''
 #colSource=[

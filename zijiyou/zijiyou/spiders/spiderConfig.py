@@ -33,17 +33,17 @@ spiderConfig = {
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
-                                    {'regex':r'(http://www.lvping.com/)?(tourism-)+(g\d-)+\w\.html$', 'priority':10}, #国家
-                                    {'regex':r'(http://www.lvping.com/)?(tourism-)+(d\d-)+\w+\.html$', 'priority':50}, #城市景区
-                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+(d\d-)+\w\.html$', 'priority':50}, #景点列表
-                                    {'regex':r'(http://www.lvping.com/)?(journals-)+(d\d)+(-s\d)+(-p\d)+(-g/\w)+\.html$', 'priority':50}, #攻略列表
+                                    {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':10}, #国家
+                                    {'regex':r'(http://www.lvping.com/)?(tourism-)+d\d+-\w+\.html$', 'priority':50}, #城市景区
+                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':50}, #景点列表
+                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':50}, #攻略列表
                                     {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':50}# 会员游记列表
                                     ],
                      #item页正则表达式 type对应item存放的数据表名
-                     'itemRegex':[{'type':'CommonSense','regex':r'(http://www.lvping.com/)?(travel-)+(d\d-)+\w+[:]\w+\.html$', 'priority':600},  #国家介绍 概况、气候等常识
-                                  {'type':'Note','regex':r'(http://www.lvping.com/)?(travel-)+(d1-)+(s\d)+/\w:\w\.html$', 'priority':500}, #短文攻略(类别 内容 目的地)
-                                  {'type':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+(s\d-)+detail\.html$', 'priority':500}, #景点
-                                  {'type':'Note','regex':r'(http://www.lvping.com/)?(showjournal-)+(d\d-)+(r\d-)+(-journals)+\.html$', 'priority':600}, #攻略 作者 发表时间 浏览次数 评论次数
+                     'itemRegex':[{'type':'CommonSense','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-sg\d+/\w+:+\w+.*\.html$', 'priority':600},  #国家介绍 概况、气候等常识
+                                  {'type':'Note','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':500}, #短文攻略(类别 内容 目的地)
+                                  {'type':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-detail\.html$', 'priority':500}, #景点
+                                  {'type':'Note','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':600}, #攻略 作者 发表时间 浏览次数 评论次数
                                   {'type':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':600}, #用户
                                   {'type':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':600}, #足迹
                                   {'type':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':600}, #好友

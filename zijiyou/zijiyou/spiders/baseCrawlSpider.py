@@ -27,7 +27,7 @@ class BaseCrawlSpider(CrawlSpider):
     '''
     allowed_domains = ["daodao.com"]
     start_urls = []
-    rules = [Rule(r'.*', 'myParse')]
+    rules = [Rule(r'.*', 'baseParse')]
     
     colName="CrawlUrl"
     pendingRequest=[]
@@ -113,19 +113,21 @@ class BaseCrawlSpider(CrawlSpider):
             else:
                 log.msg("pendingRequest为空，交由scrapy从startUrl启动" ,level=log.ERROR)
 
-    def myParse(self, response):
+    def baseParse(self, response):
         '''start to parse response link'''
         print '解析link'
+        reqs = []
         
         if not self.hasInit:
             self.initRequest()
             self.hasInit=True
             if self.pendingRequest and len(self.pendingRequest)>0:
+                reqs.extend(self.pendingRequest)
                 log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
-                return self.pendingRequest
+            else:
+                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' % len(self.pendingRequest), log.INFO)
         
         log.msg('解析link: %s' % response.url, log.INFO)
-        reqs = []
         '''普通页link'''
         for v in self.normalRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))

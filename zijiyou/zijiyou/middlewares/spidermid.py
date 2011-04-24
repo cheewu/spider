@@ -27,7 +27,7 @@ class DuplicateUrlFilter(object):
         for result in results:
             if "url" in result:
                 self.urlDump.append(result["url"])
-        log.msg("initiate the urlDump. length of the dump=%s" % len(self.urlDump), level=log.INFO)
+        log.msg("初始化urlDump. length of the dump=%s" % len(self.urlDump), level=log.INFO)
 
     def process_spider_output(self, response, result, spider):
         '''drop the request which appear in urlDump'''
@@ -35,12 +35,14 @@ class DuplicateUrlFilter(object):
         for p in result:
             if isinstance(p, Request):
                 if p.url and (p.url in self.urlDump):
-                    log.msg("duplicate url=%s" % p.url, level=log.INFO)
+                    log.msg("排除重复 url=%s" % p.url, level=log.INFO)
                     continue
                 else:
                     newResult.append(p)
             else:
                 newResult.append(p)
+        if len(newResult)<len(result):
+            log.msg("排重数量：%s" % (len(result)-len(newResult)), level=log.INFO)
         return newResult
         
     def process_spider_input(self, response, spider):
