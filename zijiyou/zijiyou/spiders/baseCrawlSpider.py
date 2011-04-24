@@ -30,6 +30,7 @@ class BaseCrawlSpider(CrawlSpider):
     rules = [Rule(r'.*', 'baseParse')]
     
     colName="CrawlUrl"
+    pendingUrl=[]
     pendingRequest=[]
     functionDic={}
     #普通页 regex
@@ -59,13 +60,12 @@ class BaseCrawlSpider(CrawlSpider):
             #查数据库
             if colName:
                 self.colName=colName
-            recentRrls=[]
             queJson={"status":{"$gte":300}}
             if spiderName:
                 queJson['spiderName']=spiderName
             sortField="priority"
-            recentRrls=self.mongoApt.findByDictionaryAndSort(self.colName, queJson, sortField)
-            return recentRrls
+            self.pendingUrl=self.mongoApt.findByDictionaryAndSort(self.colName, queJson, sortField)
+            return self.pendingUrl
         except (IOError,EOFError):
             log.msg("查数据库异常" ,level=log.ERROR)
             return None
@@ -137,7 +137,7 @@ class BaseCrawlSpider(CrawlSpider):
         '''item页link'''
         for v in self.itemRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
-            
+                    
         item = self.parseItem(response)
         if item:
             reqs.append(item)

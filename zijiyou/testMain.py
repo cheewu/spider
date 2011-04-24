@@ -57,7 +57,9 @@ mon=MongoDbApt()
 #        for p1 in p.keys():
 #            print  p[p1]
 '''造数据'''
-mon.removeAll('test')
+newResult=[]
+print len(newResult)
+#mon.removeAll('test')
 values=[
 #        {"url":"http://www.lvping.com/tourism-g29-Canada.html","order": 1},
 #        {"url":"http://www.lvping.com/tourism-g90-ireland.html","order": 1},
@@ -109,21 +111,21 @@ values=[
 #        {"url":"http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals","order":12},
 #        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$","type":"游记","order":12}
        ]
-mon.saveItem('test', values)
-#print 'count=%s:len=%s' %(mon.count('test'),len(values))
-
-'''测试url的reg'''
-regsJQ={'reg':re.compile(r".*")}#{"url":{"$regex":regexAttraction}}
-regs=mon.findByDictionaryAndSort("test", regsJQ,'order')
-for reg in regs:
-    print '*******************'
-    print 'order=%s,reg=%s' %(reg['order'],reg['reg'])
-    p = reg['reg']
-    pattern=re.compile(p)
-    results=mon.findByDictionaryAndSort('test', {'url':pattern}, None)
-    for result in results:
-        print result
-    print '------------------'
+#mon.saveItem('test', values)
+##print 'count=%s:len=%s' %(mon.count('test'),len(values))
+#
+#'''测试url的reg'''
+#regsJQ={'reg':re.compile(r".*")}#{"url":{"$regex":regexAttraction}}
+#regs=mon.findByDictionaryAndSort("test", regsJQ,'order')
+#for reg in regs:
+#    print '*******************'
+#    print 'order=%s,reg=%s' %(reg['order'],reg['reg'])
+#    p = reg['reg']
+#    pattern=re.compile(p)
+#    results=mon.findByDictionaryAndSort('test', {'url':pattern}, None)
+#    for result in results:
+#        print result
+#    print '------------------'
     
 
 
