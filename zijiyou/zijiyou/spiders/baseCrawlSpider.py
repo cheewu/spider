@@ -125,7 +125,7 @@ class BaseCrawlSpider(CrawlSpider):
                 reqs.extend(self.pendingRequest)
                 log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
             else:
-                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' % len(self.pendingRequest), log.INFO)
+                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , log.INFO)
         
         log.msg('解析link: %s' % response.url, log.INFO)
         '''普通页link'''
