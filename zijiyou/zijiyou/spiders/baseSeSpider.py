@@ -51,10 +51,8 @@ class BaseSeSpider(BaseCrawlSpider):
                 url=format % keyWord['keyWord'];
                 meta={'type':keyWord['type'],
                       'sePageNum':v['sePageNum'],
-                      'resultAreaXpath':v['resultAreaXpath'],
-                      'resultItemXpath':v['resultItemXpath'],
-                      'nextPageAreaXpath':v['nextPageAreaXpath'],
-                      'nextPageItemXpath':v['nextPageItemXpath'],
+                      'resultItemLinkXpath':v['resultItemLinkXpath'],
+                      'nextPageLinkXpath':v['nextPageLinkXpath'],
                       'seName':v['seName']}
                 request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
                 reqs.append(request)
@@ -90,23 +88,18 @@ class BaseSeSpider(BaseCrawlSpider):
         print meta
         #item页链接请求
         itemsReq=[]
-        resultAreaXpath=meta['resultAreaXpath']
-        resultItemXpath=meta['resultItemXpath']
+        resultItemLinkXpath=meta['resultItemLinkXpath']
         type=meta['type']
         itemMeta={'type':type}
         hxs=HtmlXPathSelector(response)
-        resultArea=hxs.select(resultAreaXpath)
-        if resultArea:
-            links=resultArea.select(resultItemXpath)
+        links=hxs.select(resultItemLinkXpath).extract()
+        if links and len(links)>0:
             print links
-            if links and len(links)>0:
-                for link in links:
-                    req=self.makeRequestWithMeta(link, callBackFunctionName='parseItem', meta=itemMeta,priority=self.itemPriority)
-                    itemsReq.append(req)
-            else:
-                log.msg("没有抓取到任何目标页链接！resultItemXpath：%s；url：%s" % (resultItemXpath,response.url), level=log.ERROR)
+            for link in links:
+                req=self.makeRequestWithMeta(link, callBackFunctionName='parseItem', meta=itemMeta,priority=self.itemPriority)
+                itemsReq.append(req)
         else:
-            log.msg("没有定位到任何目标区域！resultAreaXpath：%s；url：%s" % (resultAreaXpath,response.url), level=log.ERROR)
+            log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
         reqs.extend(itemsReq)
         log.msg("%s parse 产生item页的Request数量：%s" % (response.url, len(itemsReq)), level=log.INFO)
         
@@ -114,23 +107,20 @@ class BaseSeSpider(BaseCrawlSpider):
         if not ('sePageNum' in meta and meta['sePageNum']):
             return reqs
         sePageNum=meta['sePageNum']
-        listReq=[]
-        nextPageAreaXpath=meta['nextPageAreaXpath']
-        nextPageItemXpath=meta['nextPageItemXpath']
-        nextPageArea=hxs.select(nextPageAreaXpath)
-        if nextPageArea:
-            links=nextPageArea.select(nextPageItemXpath)
-            print links
-            if links and len(links)>0:
-                for link in links:
-                    req=self.makeRequestWithMeta(link, callBackFunctionName='baseParse', meta=meta,priority=10)
-                    listReq.append(req)
-            else:
-                log.msg("没有抓取到任何下一页链接！resultItemXpath：%s；url：%s" % (resultItemXpath,response.url), level=log.ERROR)
+        metaNext={'type':meta['meta']}
+        nextPageReqs=[]
+        nextPageLinkXpath=meta['nextPageLinkXpath']
+        nextPagelinks=hxs.select(nextPageLinkXpath)
+        if nextPagelinks and len(nextPagelinks)>0:
+            for link in links:
+                sePageNum-=1
+                if sePageNum>0:
+                    req=self.makeRequestWithMeta(link, callBackFunctionName='baseParse', meta=metaNext,priority=10)
+                    nextPageReqs.append(req)
         else:
-            log.msg("没有定位到任何下一页区域！resultAreaXpath：%s；url：%s" % (resultAreaXpath,response.url), level=log.ERROR)
-        reqs.extend(listReq)
-        log.msg("%s parse 产生下一页的Request数量：%s" % (response.url, len(listReq)), level=log.INFO)
+            log.msg("没有抓取到任何下一页链接！nextPageLinkXpath：%s；url：%s" % (nextPageLinkXpath,response.url), level=log.ERROR)
+        reqs.extend(nextPageReqs)
+        log.msg("%s parse 产生下一页的Request数量：%s" % (response.url, len(nextPageReqs)), level=log.INFO)
 
         return reqs
     

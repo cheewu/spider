@@ -5,12 +5,10 @@ spiderConfig = {
                      'allowedDomains':[],
                      'startUrls':['www.baidu.com'],
                      'seUrlFormat':[{'seName':'qihooBlog',
-                                     'format':'http://www.qihoo.com/wenda.php?kw=%s&do=search&area=1&src=blog',#搜索格式
+                                     'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s',#搜索格式
                                      'sePageNum':5,
-                                     'resultAreaXpath':'//*[@id="clk_result_list"]',
-                                     'resultItemXpath':'.//table/tbody/tr/td/a/@href',
-                                     'nextPageAreaXpath':'//body/table/tbody/tr/td[2]/div[4]/div',
-                                     'nextPageItemXpath':'.//div/a/@href'
+                                     'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
+                                     'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href'
                                      }],
                      #普通list页正则表达式
                      'normalRegex':[],
