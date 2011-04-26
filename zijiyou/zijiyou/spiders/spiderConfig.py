@@ -19,18 +19,18 @@ spiderConfig = {
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
                      'startUrls':[
-#                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
-#                                  'http://www.lvping.com/EuropeNavigation.aspx',
-#                                  'http://www.lvping.com/AsiaNavigation.aspx',
-#                                  'http://www.lvping.com/ChinaNavigation.aspx',
-#                                  'http://www.lvping.com/OceaniaNavigation.aspx',
-#                                  'http://www.lvping.com/southAmericaNavigation.aspx',
-#                                  'http://www.lvping.com/AfricaNavigation.aspx',
-#
-#                                  #游记攻略
-#                                  'http://www.lvping.com/Journals.aspx?type=1',
-#                                  'http://www.lvping.com/Journals.aspx?selecttype=2',
-                                  'http://www.lvping.com/members/jacobok'
+                                  'http://www.lvping.com/members/jacobok',
+                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
+                                  'http://www.lvping.com/EuropeNavigation.aspx',
+                                  'http://www.lvping.com/AsiaNavigation.aspx',
+                                  'http://www.lvping.com/ChinaNavigation.aspx',
+                                  'http://www.lvping.com/OceaniaNavigation.aspx',
+                                  'http://www.lvping.com/southAmericaNavigation.aspx',
+                                  'http://www.lvping.com/AfricaNavigation.aspx',
+
+                                  #游记攻略
+                                  'http://www.lvping.com/Journals.aspx?type=1',
+                                  'http://www.lvping.com/Journals.aspx?selecttype=2',
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
@@ -43,7 +43,7 @@ spiderConfig = {
                                     {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':50}# 攻略列表
                                     ],
                      #item页正则表达式 type对应item存放的数据表名
-                     'itemRegex':[{'type':'CommonSense','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-sg\d+/\w+:+\w+.*\.html$', 'priority':600},  #国家介绍 概况、气候等常识
+                     'itemRegex':[{'type':'CommonSense','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-s\w?\d+/\w+:+\w+.*\.html$', 'priority':600},  #国家介绍 概况、气候等常识
                                   {'type':'Note','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':500}, #短文攻略(类别 内容 目的地)
                                   {'type':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-detail\.html$', 'priority':500}, #景点
                                   {'type':'Note','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':600}, #攻略 作者 发表时间 浏览次数 评论次数
