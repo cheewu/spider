@@ -22,12 +22,18 @@ class DuplicateUrlFilter(object):
         if self.urlDump !=None:
             return
         self.urlDump=[]
-        queJson={"status":{"$lt":201}}
-        results=self.mon.findByDictionaryAndSort(self.colName, queJson, None)
-        for result in results:
-            if "url" in result:
-                self.urlDump.append(result["url"])
-        log.msg("初始化urlDump. length of the dump=%s" % len(self.urlDump), level=log.INFO)
+        whereJson={"status":{"$lt":301}}
+        fieldsJson={'url':1}
+        crawlUrls=self.mon.findFieldsAndSort('CrawlUrl', whereJson=whereJson, fieldsJson=fieldsJson)
+        responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson=fieldsJson)
+        log.msg('加载排重的urlDump，从CrawlUrl加载%s个；从ResponseBody加载%s个' %(len(crawlUrls),len(responses)), level=log.INFO)
+        for p in crawlUrls:
+            if "url" in p and (not p['url'] in self.urlDump):
+                self.urlDump.append(p['url'])
+        for p in responses:
+            if "pageUrl" in p and (not p['pageUrl'] in self.urlDump):
+                self.urlDump.append(p['pageUrl'])
+        log.msg("初始化urlDump. dump的长度=%s" % len(self.urlDump), level=log.INFO)
 
     def process_spider_output(self, response, result, spider):
         '''drop the request which appear in urlDump'''
