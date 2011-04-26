@@ -3,18 +3,19 @@
 
 from bson.objectid import ObjectId
 from zijiyou.db.mongoDbApt import MongoDbApt
-import datetime
 from zijiyou.spiders.offlineCrawl.parse import Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
-from zijiyou.items.zijiyouItem import Attraction,CommonSense
+import datetime
 import re
+import sys
+import urllib
 
 mon=MongoDbApt()
 
-#url = '九寨沟'
-#print url   
-#data = urllib.quote(url.decode(sys.stdin.encoding).encode('gbk')) 
-#print data
+url = '九寨沟'
+print url   
+data = urllib.quote(url.decode(sys.stdin.encoding).encode('gbk')) 
+print data
 
 '''
 查看数据
