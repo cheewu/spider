@@ -37,7 +37,9 @@ spiderConfig = {
                                     {'regex':r'(http://www.lvping.com/)?(tourism-)+d\d+-\w+\.html$', 'priority':50}, #城市景区
                                     {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':50}, #景点列表
                                     {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':50}, #攻略列表
-                                    {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':50}# 会员游记列表
+                                    {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':50},# 会员游记列表
+                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?type=1.*selecttype=0.*', 'priority':50},# 精品游记列表
+                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':50}# 攻略列表
                                     ],
                      #item页正则表达式 type对应item存放的数据表名
                      'itemRegex':[{'type':'CommonSense','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-sg\d+/\w+:+\w+.*\.html$', 'priority':600},  #国家介绍 概况、气候等常识
