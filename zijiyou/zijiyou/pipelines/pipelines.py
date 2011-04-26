@@ -41,11 +41,14 @@ class ZijiyouPipeline(object):
         values = {}
         value = ''
         for k,v in item.items():
-            try:
-                '''if v is not a dic or list, a exception will be thrown'''
-                value = "-".join("%s" % p for p in v)
-            except Exception:
-                value = "%s" % v
+            if k != 'status':
+                try:
+                    '''if v is not a dic or list, a exception will be thrown'''
+                    value = "-".join("%s" % p for p in v)
+                except Exception:
+                    value = "%s" % v
+            else:
+                value = v
             values[k] = value
         obj = self.mongoApt.saveItem(collectionName, values)
         print '++++saveItem2Mongodb++++col:%s,objectId:%s' % (collectionName ,obj)
