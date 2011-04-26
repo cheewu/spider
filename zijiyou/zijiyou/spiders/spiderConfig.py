@@ -19,7 +19,6 @@ spiderConfig = {
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
                      'startUrls':[
-                                  'http://www.lvping.com/members/jacobok',
                                   'http://www.lvping.com/NorthAmericaNavigation.aspx',
                                   'http://www.lvping.com/EuropeNavigation.aspx',
                                   'http://www.lvping.com/AsiaNavigation.aspx',

@@ -49,7 +49,7 @@ extractorConfig = {
                 "lvpingSpider":{                                    
                                     "Attraction":{
                                                r'name':r'//h1[@property="v:name"]/text()',
-                                               r'area':r'//div[@class="breadBar"]/a[3]/text()',
+                                               r'area':r'//div[@class="breadBar"]/a//text()',
                                                #r'address':r'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
                                                r'desc':r'//div[@id="hiddenContent"]',
                                                #r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
@@ -69,7 +69,7 @@ extractorConfig = {
                                                 #r'unhelpfulNum':r'',
                                                 #第二部分不一样
                                                 r'title':r'//div[@class="viewnameShow"]/h1/text()',
-                                                r'area':r'//div[@class="breadBar"]/a[4]/text()',
+                                                r'area':r'//div[@class="breadBar"]/a//text()',
                                                 r'type':r'//div[@class="breadBar"]/a[5]/text()',
                                                 #r'tag':r'',
                                                 #r'attractions':r'',
@@ -87,20 +87,20 @@ extractorConfig = {
                                                 #r'helpfulNum':r'//em[@id="helpfulNum"]/text()',
                                                 #r'unhelpfulNum':r'//em[@id="unhelpfulNum"]/text()',
                                                 #第二部分不一样
-                                                r'area':r'//div[@class="breadBar"]/a[4]/text()',
+                                                r'area':r'//div[@class="breadBar"]/a//text()',
                                                 r'type':r'//div[@class="viewnameShow"]/h1/text()'   
                                     },
                                     "MemberInfo":{
                                                 r'name':r'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
                                                 r'ageRange':r'//div[@class="aboutmecon"]/dl/dd[5]/em/text()',
                                                 r'gender':r'//div[@class="aboutmecon"]/dl/dd[6]/em/text()',
-                                                r'currentAddress':r'//div[@class="aboutmecon"]/dl/dd/em/text()',
+                                                r'currentAddress':r'//div[@class="aboutmecon"]/dl/dd[1]/em/text()',
                                                 r'joinDate':r'//div[@class="personalinfor"]/ul/li[2]/p[3]/strong/text()',
-                                                r'selfIntroduction':r'//div[@class="aboutmecon"]/dl/dd[2]/em',
+                                                r'selfIntroduction':r'//div[@class="aboutmecon"]/dl/dd[2]/em/text()',
                                                 r'comsumptionLevel':r'//div[@class="aboutmecon"]/dl/dd[3]/em/text()',
                                                 r'travalPurpose':r'//div[@class="aboutmecon"]/dl/dd[4]/em/text()',
-                                                r'travelPreference':r'//div[@class="aboutmecon"]/dl/dd[7]/span',
-                                                r'travelPartner':r'//div[@class="aboutmecon"]/dl/dd[8]/span',
+                                                r'travelPreference':r'//div[@class="aboutmecon"]/dl/dd[7]/span//text()',
+                                                r'travelPartner':r'//div[@class="aboutmecon"]/dl/dd[8]/span//text()',
                                     },
                                     #js方式，暂时爬不到数据
                                     "MemberTrack":{
@@ -113,7 +113,7 @@ extractorConfig = {
                                     "MemberFriend":{
                                                 r'name':r'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
                                                 r'nameList':r'//li[@class="two"]/a/text()',
-                                                r'cityList':r'//div[@class="my_fri_infor"]/li[class="two"]/span/text()',
+                                                r'cityList':r'//li[@class="two"]/span/text()',
 #                                                r'goneNumList':r'//li[@class="three"]/text()',
 #                                                r'discoverList':r'//li[@class="three"]/span/text()',
                                                 r'linkList':r'//li[@class="two"]/a/@href',
