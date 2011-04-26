@@ -64,12 +64,30 @@ class MongoDbApt(object):
     def findByDictionaryAndSort(self,colName,whereJson,sortField):
         '''
         find and sort result(option) of mongodb
+        sortField:排序字段，None表示不排序
         '''
         mycursor=None
         if sortField:
             mycursor = self.db[colName].find(whereJson).sort(sortField,direction=DESCENDING);            
         else:
             mycursor = self.db[colName].find(whereJson)
+        
+        results=[]
+        if mycursor:
+            for p in mycursor:
+                results.append(p)
+        return results
+        
+    def findFieldsAndSort(self,colName,whereJson={},fieldsJson=None,sortField=None):
+        '''
+        find and sort result(option) of mongodb
+        sortField:排序字段，None表示不排序
+        '''
+        mycursor=None
+        if sortField:
+            mycursor = self.db[colName].find(whereJson,fieldsJson).sort(sortField,direction=DESCENDING);            
+        else:
+            mycursor = self.db[colName].find(whereJson,fieldsJson)
         
         results=[]
         if mycursor:
