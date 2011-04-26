@@ -25,7 +25,7 @@ class DuplicateUrlFilter(object):
         whereJson={"status":{"$lt":301}}
         fieldsJson={'url':1}
         crawlUrls=self.mon.findFieldsAndSort('CrawlUrl', whereJson=whereJson, fieldsJson=fieldsJson)
-        responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson=fieldsJson)
+        responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson={'pageUrl':1})
         log.msg('加载排重的urlDump，从CrawlUrl加载%s个；从ResponseBody加载%s个' %(len(crawlUrls),len(responses)), level=log.INFO)
         for p in crawlUrls:
             if "url" in p and (not p['url'] in self.urlDump):

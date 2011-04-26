@@ -10,6 +10,7 @@ from zijiyou.items.zijiyouItem import Attraction,CommonSense
 import re
 
 mon=MongoDbApt()
+
 '''
 查看数据
 '''

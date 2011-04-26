@@ -29,14 +29,16 @@ class BaseCrawlSpider(CrawlSpider):
     start_urls = []
     rules = [Rule(r'.*', 'baseParse')]
     
-    colName="CrawlUrl"
+    #最近一次的spider断点
     pendingUrl=[]
     pendingRequest=[]
+    #parse函数字典
     functionDic={}
     #普通页 regex
     normalRegex = None
     #item页 regexx
     itemRegex = None
+    #数据库操作类
     mongoApt=None
     #验证数据库是否和type配置对应
     dbCollecions=[]
@@ -47,6 +49,7 @@ class BaseCrawlSpider(CrawlSpider):
           
         self.functionDic["parseItem"]=self.parseItem
         self.dbCollecions=settings.get('DB_COLLECTIONS', [])
+        self.initRequest()
         if(not self.initConfig()):
             print '爬虫配置文件加载失败！'
             log.msg('爬虫配置文件加载失败！', level=log.INFO)
@@ -58,13 +61,13 @@ class BaseCrawlSpider(CrawlSpider):
         """
         try:
             #查数据库
-            if colName:
-                self.colName=colName
+            if not colName:
+                colName="CrawlUrl"
             queJson={"status":{"$gte":300}}
             if spiderName:
                 queJson['spiderName']=spiderName
             sortField="priority"
-            self.pendingUrl=self.mongoApt.findByDictionaryAndSort(self.colName, queJson, sortField)
+            self.pendingUrl=self.mongoApt.findByDictionaryAndSort(colName, queJson, sortField)
             return self.pendingUrl
         except (IOError,EOFError):
             log.msg("查数据库异常" ,level=log.ERROR)
@@ -88,13 +91,13 @@ class BaseCrawlSpider(CrawlSpider):
         '''
         initiate the functionDictionary and request
         '''
-        print 'initiateRequest'
+        print '初始化Request：initiateRequest'
         # load the recentRequest from db
         if not self.mongoApt:
             print 'self.mongoApt为空，初始化mongod链接，并查询recentequest'
             log.msg("self.mongoApt为空，初始化mongod链接，并查询recentequest" ,level=log.INFO)
             self.mongoApt=MongoDbApt()
-            pendingRrls = self.getStartUrls(spiderName=self.name)
+            pendingRrls = self.getStartUrls(spiderName=self.name,colName='CrawlUrl')
             if pendingRrls and len(pendingRrls)>0:
                 self.pendingRequest=[]
                 maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
@@ -119,7 +122,6 @@ class BaseCrawlSpider(CrawlSpider):
         reqs = []
         
         if not self.hasInit:
-            self.initRequest()
             self.hasInit=True
             if self.pendingRequest and len(self.pendingRequest)>0:
                 reqs.extend(self.pendingRequest)
@@ -128,7 +130,7 @@ class BaseCrawlSpider(CrawlSpider):
                 log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , log.INFO)
         
         log.msg('解析link: %s' % response.url, log.INFO)
-        '''普通页link'''
+        #普通页link
         for v in self.normalRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
            
@@ -145,6 +147,7 @@ class BaseCrawlSpider(CrawlSpider):
 
     def parseItem(self, response):
         '''start to parse parse item'''
+        print '解析目标页'
         contentType = None
         for v in self.itemRegex:
             if re.search(v['regex'], response.url):
@@ -196,4 +199,17 @@ class BaseCrawlSpider(CrawlSpider):
             kw.setdefault('callback', self.functionDic[callBackFunctionName])
         metaDic={'callBack':callBackFunctionName}
         kw.setdefault('meta',metaDic)
+        return Request(url, **kw)
+    
+    def makeRequestWithMeta(self, url, callBackFunctionName=None,meta=None, **kw): 
+        '''
+        make request, the metaDic indicates the name of call back function
+        '''
+        if(callBackFunctionName != None):
+            kw.setdefault('callback', self.functionDic[callBackFunctionName])
+        if meta:
+            meta['callBack']=callBackFunctionName
+        else:
+            meta={'callBack':callBackFunctionName}
+        kw.setdefault('meta',meta)
         return Request(url, **kw)
