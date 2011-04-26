@@ -11,6 +11,11 @@ import re
 
 mon=MongoDbApt()
 
+#url = '九寨沟'
+#print url   
+#data = urllib.quote(url.decode(sys.stdin.encoding).encode('gbk')) 
+#print data
+
 '''
 查看数据
 '''
