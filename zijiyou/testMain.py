@@ -13,14 +13,20 @@ mon=MongoDbApt()
 '''
 查看数据
 '''
-#colSource=['ResponseBody',
+#colSource=[
+##           'ResponseBody',
 ##                  'Attraction',
 ##                  'Note',
-#                  'CrawlUrl',
-#                  'CommonSense']
+##                  'CrawlUrl',
+##                  'CommonSense'
+##                  'MemberInfo',
+##                  'MemberTrack',
+##                  'MemberFriend',
+#                  'MemberNoteList',
+#                  ]
 #for i in range(0,len(colSource)):
 #    print '(%s:%s)' %(colSource[i],mon.count(colSource[i]))
-#    print mon.findOne(colSource[i])
+#    print ("%s" % mon.find(colSource[i], '', {'type':1}).limit(1)).encode('utf-8')
 '''
 测试离线爬虫的解析
 '''
@@ -57,10 +63,10 @@ mon=MongoDbApt()
 #        for p1 in p.keys():
 #            print  p[p1]
 '''造数据'''
-newResult=[]
-print len(newResult)
+#newResult=[]
+#print len(newResult)
 #mon.removeAll('test')
-values=[
+#values=[
 #        {"url":"http://www.lvping.com/tourism-g29-Canada.html","order": 1},
 #        {"url":"http://www.lvping.com/tourism-g90-ireland.html","order": 1},
 #        {"url":"http://www.lvping.com/tourism-g44-philippine.html","order": 1},
@@ -110,7 +116,7 @@ values=[
 #        
 #        {"url":"http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals","order":12},
 #        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$","type":"游记","order":12}
-       ]
+#       ]
 #mon.saveItem('test', values)
 ##print 'count=%s:len=%s' %(mon.count('test'),len(values))
 #
@@ -160,11 +166,16 @@ values=[
 '''
 清空爬到的数据
 '''
-#colSource=['ResponseBody',
+#colSource=[
+##                'ResponseBody',
 #                  'Attraction',
 #                  'Note',
 #                  'CrawlUrl',
 #                  'CommonSense',
+#                  'MemberInfo',
+#                  'MemberTrack',
+#                  'MemberFriend',
+#                  'MemberNoteList',
 #                  'test']
 #print '清空...'
 #for i in range(0,len(colSource)):
@@ -173,10 +184,11 @@ values=[
 #print '完成清空...'
 #
 ##爬虫启动url
-#mon.remove(colName, {"url":"http://www.daodao.com/Lvyou"})
-#value={"url":"http://www.daodao.com/Lvyou","callBack":None,"status":400,"priority":1,"dateTime":datetime.datetime.now()}
-#mon.saveItem(colName, value)
-#print mon.count("crawlCol")
+#startUrl = "http://www.lvping.com/members/jacobok"
+#mon.remove('CrawlUrl', {"url":startUrl})
+#value={"url":startUrl,"callBack":None,"status":400,"priority":1,"dateTime":datetime.datetime.now()}
+#mon.saveItem('CrawlUrl', value)
+#print mon.count("CrawlUrl")
 
 
 

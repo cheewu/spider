@@ -19,17 +19,18 @@ spiderConfig = {
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
                      'startUrls':[
-                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
-                                  'http://www.lvping.com/EuropeNavigation.aspx',
-                                  'http://www.lvping.com/AsiaNavigation.aspx',
-                                  'http://www.lvping.com/ChinaNavigation.aspx',
-                                  'http://www.lvping.com/OceaniaNavigation.aspx',
-                                  'http://www.lvping.com/southAmericaNavigation.aspx',
-                                  'http://www.lvping.com/AfricaNavigation.aspx',
-
-                                  #游记攻略
-                                  'http://www.lvping.com/Journals.aspx?type=1',
-                                  'http://www.lvping.com/Journals.aspx?selecttype=2'
+#                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
+#                                  'http://www.lvping.com/EuropeNavigation.aspx',
+#                                  'http://www.lvping.com/AsiaNavigation.aspx',
+#                                  'http://www.lvping.com/ChinaNavigation.aspx',
+#                                  'http://www.lvping.com/OceaniaNavigation.aspx',
+#                                  'http://www.lvping.com/southAmericaNavigation.aspx',
+#                                  'http://www.lvping.com/AfricaNavigation.aspx',
+#
+#                                  #游记攻略
+#                                  'http://www.lvping.com/Journals.aspx?type=1',
+#                                  'http://www.lvping.com/Journals.aspx?selecttype=2',
+                                  'http://www.lvping.com/members/jacobok'
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[

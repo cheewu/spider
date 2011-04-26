@@ -139,7 +139,10 @@ class MemberTrack(Item):
     
     pageUrl = Field()    
     name=Field()
-    track=Field() # like {friendName:address,friendName:address}
+    gone=Field()
+    know=Field()
+    like=Field()
+    plan=Field()
     
     status=Field()     # log the operation. default is 100, indicates initial status
     pushDate=Field()    #最近一次推送日期
@@ -154,7 +157,13 @@ class MemberFriend(Item):
     collectionName="MemberFriend"
     
     pageUrl = Field()    
-    friends=Field() # like {friendName:address,friendName:address}
+    #friends=Field() # like {friendName:address,friendName:address}
+    name=Field()
+    nameList = Field()
+    cityList = Field()
+    linkList = Field()
+#    goneNumList = Field()
+#    discoverList = Field()
     
     status=Field()     # log the operation. default is 100, indicates initial status
     pushDate=Field()    #最近一次推送日期
@@ -170,13 +179,13 @@ class MemberNoteList(Item):
     
     pageUrl = Field()
     
-    title = Field()
     author = Field()
-    date = Field()
+    titleList = Field()
+    dateList = Field()
     
-    pvNum = Field()     #浏览量
-    replyNum = Field()  #回复    
-    destination=Field() #旅游目的地
+    pvNumList = Field()     #浏览量
+    replyNumList = Field()  #回复    
+    destinationList=Field() #旅游目的地
     
     status=Field()     # log the operation. default is 100, indicates initial status
     pushDate=Field()   #最近一次推送日期

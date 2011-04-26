@@ -23,6 +23,8 @@ class ZijiyouPipeline(object):
             # 存到txt文件中
             # self.saveItem2File(item, collectionName)
             self.saveItem2Mongodb(item, item.collectionName)
+        else:
+            log.msg("Item的collectionName空！请检查zijiyouItem中是否有未定义collectionName的Item！", level=log.ERROR)
         
     def saveItem2File(self,item, collectionName = None):
         values = collectionName + '\n'

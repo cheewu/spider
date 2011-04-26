@@ -1,94 +1,29 @@
-2011-04-24 17:49:13+0800 [scrapy] INFO: Scrapy 0.12.0.2539 started (bot: zijiyou)
-2011-04-24 17:49:13+0800 [scrapy] DEBUG: Enabled extensions: TelnetConsole, SpiderContext, WebService, CoreStats, MemoryUsage, CloseSpider
-2011-04-24 17:49:13+0800 [scrapy] INFO: 启动爬虫：daodaoSpider
-2011-04-24 17:49:13+0800 [scrapy] INFO: 初始配置 initConfig
-2011-04-24 17:49:13+0800 [scrapy] INFO: 启动爬虫：lvpingSpider
-2011-04-24 17:49:13+0800 [scrapy] INFO: 初始配置 initConfig
-2011-04-24 17:49:13+0800 [scrapy] DEBUG: Enabled scheduler middlewares: DuplicatesFilterMiddleware
-2011-04-24 17:49:13+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-04-24 17:49:13+0800 [scrapy] DEBUG: Enabled downloader middlewares: HttpAuthMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, DefaultHeadersMiddleware, RedirectMiddleware, CookiesMiddleware, RandomHttpProxy, HttpCompressionMiddleware, DownloaderStats, RequestedUrlSaveAndUpdate
-2011-04-24 17:49:13+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-04-24 17:49:13+0800 [scrapy] INFO: 初始化urlDump. length of the dump=403
-2011-04-24 17:49:13+0800 [scrapy] DEBUG: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, DuplicateUrlFilter, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
-2011-04-24 17:49:13+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-04-24 17:49:13+0800 [scrapy] DEBUG: Enabled item pipelines: ZijiyouPipeline
-2011-04-24 17:49:13+0800 [scrapy] INFO: 初始配置 initConfig
-2011-04-24 17:49:13+0800 [scrapy] DEBUG: Telnet console listening on 0.0.0.0:6023
-2011-04-24 17:49:13+0800 [scrapy] DEBUG: Web service listening on 0.0.0.0:6080
-2011-04-24 17:49:13+0800 [lvpingSpider] INFO: Spider opened
-2011-04-24 17:49:13+0800 [scrapy] INFO: change proxy:http://127.0.0.1:8081
-2011-04-24 17:49:13+0800 [scrapy] INFO: change proxy:http://125.210.188.36:80
-2011-04-24 17:49:13+0800 [scrapy] INFO: change proxy:http://221.179.35.89:80
-2011-04-24 17:49:13+0800 [lvpingSpider] DEBUG: Retrying <GET http://www.lvping.com/Journals.aspx?selecttype=2> (failed 1 times): Connection was refused by other side: 111: Connection refused.
-2011-04-24 17:49:13+0800 [scrapy] INFO: change proxy:http://211.139.10.173:80
-2011-04-24 17:49:16+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx?type=1
-2011-04-24 17:49:16+0800 [lvpingSpider] DEBUG: Crawled (200) <GET http://www.lvping.com/Journals.aspx?type=1> (referer: None)
-2011-04-24 17:49:16+0800 [scrapy] INFO: change proxy:http://60.28.212.184:80
-2011-04-24 17:49:16+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
-2011-04-24 17:49:16+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-04-24 17:49:16+0800 [scrapy] INFO: 开始crawl，第一个url : {u'status': 1000, u'url': u'http://www.lvping.com/members/66A736A87A1241DFAAB8E51DDC5672B8/friends', u'dateTime': datetime.datetime(2011, 4, 23, 23, 16, 0, 870000), u'priority': 600, u'callBack': None, u'spiderName': u'lvpingSpider', u'_id': ObjectId('4db2ed30834fc02e3b00006c')}
-2011-04-24 17:49:16+0800 [scrapy] INFO: 获得pendingRequest，数量=40
-2011-04-24 17:49:16+0800 [scrapy] INFO: 从数据库查询的url开始crawl，len(pendingRequest)= 40
-2011-04-24 17:49:16+0800 [scrapy] INFO: 解析link: http://www.lvping.com/Journals.aspx?type=1
-2011-04-24 17:49:16+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?type=1 parse 产生 普通页 url 数量：40
-2011-04-24 17:49:16+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx?type=1
-2011-04-24 17:49:16+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/E514CD6D6ECB4AD19592073B07545D68/journals
-2011-04-24 17:49:16+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/B112100816BD47F0A08A471663631133/journals
-2011-04-24 17:49:16+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/AC828F5FDBDD492F92C544939E2BD23B/journals
-2011-04-24 17:49:16+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/shangyitang/journals
-2011-04-24 17:49:16+0800 [scrapy] INFO: 排重数量：4
-2011-04-24 17:49:18+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/AfricaNavigation.aspx
-2011-04-24 17:49:18+0800 [lvpingSpider] DEBUG: Crawled (200) <GET http://www.lvping.com/AfricaNavigation.aspx> (referer: None)
-2011-04-24 17:49:18+0800 [scrapy] INFO: change proxy:http://202.171.253.70:80
-2011-04-24 17:49:18+0800 [scrapy] INFO: 保存新request：http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
-2011-04-24 17:49:18+0800 [scrapy] INFO: 解析link: http://www.lvping.com/AfricaNavigation.aspx
-2011-04-24 17:49:18+0800 [scrapy] INFO: http://www.lvping.com/AfricaNavigation.aspx parse 产生 普通页 url 数量：19
-2011-04-24 17:49:18+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/AfricaNavigation.aspx
-2011-04-24 17:49:19+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/southAmericaNavigation.aspx
-2011-04-24 17:49:19+0800 [lvpingSpider] DEBUG: Crawled (200) <GET http://www.lvping.com/southAmericaNavigation.aspx> (referer: None)
-2011-04-24 17:49:19+0800 [scrapy] INFO: change proxy:http://211.139.195.23:80
-2011-04-24 17:49:19+0800 [scrapy] INFO: 保存新request：http://www.lvping.com/members/yangtaoyt/journals
-2011-04-24 17:49:19+0800 [scrapy] INFO: 解析link: http://www.lvping.com/southAmericaNavigation.aspx
-2011-04-24 17:49:19+0800 [scrapy] INFO: http://www.lvping.com/southAmericaNavigation.aspx parse 产生 普通页 url 数量：7
-2011-04-24 17:49:19+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/southAmericaNavigation.aspx
-2011-04-24 17:49:20+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/OceaniaNavigation.aspx
-2011-04-24 17:49:20+0800 [lvpingSpider] DEBUG: Crawled (200) <GET http://www.lvping.com/OceaniaNavigation.aspx> (referer: None)
-2011-04-24 17:49:20+0800 [scrapy] INFO: change proxy:http://218.195.101.80:3128
-2011-04-24 17:49:20+0800 [scrapy] INFO: 保存新request：http://www.lvping.com/members/448EE50092334DF687368986E8DEBB6B/journals
-2011-04-24 17:49:20+0800 [scrapy] INFO: 解析link: http://www.lvping.com/OceaniaNavigation.aspx
-2011-04-24 17:49:20+0800 [scrapy] INFO: http://www.lvping.com/OceaniaNavigation.aspx parse 产生 普通页 url 数量：22
-2011-04-24 17:49:20+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/OceaniaNavigation.aspx
-2011-04-24 17:49:22+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
-2011-04-24 17:49:22+0800 [lvpingSpider] DEBUG: Crawled (200) <GET http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals> (referer: http://www.lvping.com/Journals.aspx?type=1)
-2011-04-24 17:49:22+0800 [scrapy] INFO: new url=http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
-2011-04-24 17:49:22+0800 [scrapy] INFO: change proxy:http://221.204.246.161:8001
-2011-04-24 17:49:22+0800 [scrapy] INFO: 保存新request：http://www.lvping.com/members/17A4C562B3194C9D8B2CEDA30A91AB5D/journals
-2011-04-24 17:49:22+0800 [scrapy] INFO: 解析link: http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
-2011-04-24 17:49:23+0800 [scrapy] INFO: http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals parse 产生 普通页 url 数量：16
-2011-04-24 17:49:23+0800 [scrapy] INFO: 保存item页，类型： MemberNoteList
-2011-04-24 17:49:23+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6
-2011-04-24 17:49:23+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/zhaopeng6280
-2011-04-24 17:49:23+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/travelmap-public
-2011-04-24 17:49:23+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/friends
-2011-04-24 17:49:23+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
-2011-04-24 17:49:23+0800 [scrapy] INFO: 排重数量：5
-2011-04-24 17:49:23+0800 [lvpingSpider] DEBUG: Scraped ResponseBodyItem in <http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals>
-2011-04-24 17:49:23+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4db3f223834fc02687000004+++++++++++
-2011-04-24 17:49:23+0800 [lvpingSpider] INFO: Passed None
-2011-04-24 17:49:30+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/members/yangtaoyt/journals
-2011-04-24 17:49:30+0800 [lvpingSpider] DEBUG: Crawled (200) <GET http://www.lvping.com/members/yangtaoyt/journals> (referer: http://www.lvping.com/Journals.aspx?type=1)
-2011-04-24 17:49:30+0800 [scrapy] INFO: new url=http://www.lvping.com/members/yangtaoyt/journals
-2011-04-24 17:49:30+0800 [scrapy] INFO: change proxy:http://218.207.217.226:80
-2011-04-24 17:49:30+0800 [scrapy] INFO: 保存新request：http://www.lvping.com/members/7AEECD1D1F914ACF92FDB7E7ACE43BFA
-2011-04-24 17:49:30+0800 [scrapy] INFO: 解析link: http://www.lvping.com/members/yangtaoyt/journals
-2011-04-24 17:49:30+0800 [scrapy] INFO: http://www.lvping.com/members/yangtaoyt/journals parse 产生 普通页 url 数量：9
-2011-04-24 17:49:30+0800 [scrapy] INFO: 保存item页，类型： MemberNoteList
-2011-04-24 17:49:30+0800 [scrapy] INFO: 排除重复 url=http://www.lvping.com/members/yangtaoyt/journals
-2011-04-24 17:49:30+0800 [scrapy] INFO: 排重数量：1
-2011-04-24 17:49:30+0800 [lvpingSpider] DEBUG: Scraped ResponseBodyItem in <http://www.lvping.com/members/yangtaoyt/journals>
-2011-04-24 17:49:30+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4db3f22a834fc02687000006+++++++++++
-2011-04-24 17:49:30+0800 [lvpingSpider] INFO: Passed None
-2011-04-24 17:49:39+0800 [scrapy] INFO: Received SIGINT, shutting down gracefully. Send again to force unclean shutdown
-2011-04-24 17:49:39+0800 [lvpingSpider] INFO: Closing spider (shutdown)
-2011-04-24 17:50:01+0800 [lvpingSpider] DEBUG: Crawled while closing spider: <GET http://www.lvping.com/members/448EE50092334DF687368986E8DEBB6B/journals>
-2011-04-24 17:50:01+0800 [lvpingSpider] INFO: Spider closed (shutdown)
+2011-04-26 15:13:01+0800 [scrapy] INFO: Scrapy 0.12.0.2539 started (bot: zijiyou)
+2011-04-26 15:13:01+0800 [scrapy] DEBUG: Enabled extensions: TelnetConsole, SpiderContext, WebService, CoreStats, MemoryUsage, CloseSpider
+2011-04-26 15:13:01+0800 [scrapy] INFO: 启动爬虫：daodaoSpider
+2011-04-26 15:13:01+0800 [scrapy] INFO: 初始配置 initConfig
+2011-04-26 15:13:01+0800 [scrapy] INFO: 启动爬虫：lvpingSpider
+2011-04-26 15:13:01+0800 [scrapy] INFO: 初始配置 initConfig
+2011-04-26 15:13:01+0800 [scrapy] DEBUG: Enabled scheduler middlewares: DuplicatesFilterMiddleware
+2011-04-26 15:13:01+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-04-26 15:13:01+0800 [scrapy] DEBUG: Enabled downloader middlewares: HttpAuthMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, DefaultHeadersMiddleware, RedirectMiddleware, CookiesMiddleware, RandomHttpProxy, HttpCompressionMiddleware, DownloaderStats, RequestedUrlSaveAndUpdate
+2011-04-26 15:13:01+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-04-26 15:13:01+0800 [scrapy] INFO: 初始化urlDump. length of the dump=0
+2011-04-26 15:13:01+0800 [scrapy] DEBUG: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, DuplicateUrlFilter, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
+2011-04-26 15:13:01+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-04-26 15:13:01+0800 [scrapy] DEBUG: Enabled item pipelines: ZijiyouPipeline
+2011-04-26 15:13:01+0800 [scrapy] INFO: 初始配置 initConfig
+2011-04-26 15:13:01+0800 [scrapy] DEBUG: Telnet console listening on 0.0.0.0:6024
+2011-04-26 15:13:01+0800 [scrapy] DEBUG: Web service listening on 0.0.0.0:6081
+2011-04-26 15:13:01+0800 [lvpingSpider] INFO: Spider opened
+2011-04-26 15:13:01+0800 [scrapy] INFO: change proxy:http://127.0.0.1:8081
+2011-04-26 15:13:01+0800 [lvpingSpider] DEBUG: Retrying <GET http://www.lvping.com/members/jacobok> (failed 1 times): Connection was refused by other side: 111: Connection refused.
+2011-04-26 15:13:01+0800 [scrapy] INFO: change proxy:http://125.210.188.36:80
+2011-04-26 15:13:02+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/members/jacobok
+2011-04-26 15:13:02+0800 [lvpingSpider] DEBUG: Retrying <GET http://www.lvping.com/members/jacobok> (failed 2 times): 503 Service Unavailable
+2011-04-26 15:13:02+0800 [scrapy] INFO: change proxy:http://221.179.35.89:80
+2011-04-26 15:13:33+0800 [lvpingSpider] DEBUG: Discarding <GET http://www.lvping.com/members/jacobok> (failed 3 times): User timeout caused connection failure.
+2011-04-26 15:13:33+0800 [lvpingSpider] ERROR: Error downloading <http://www.lvping.com/members/jacobok>: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.error.TimeoutError'>: User timeout caused connection failure.
+	]
+2011-04-26 15:13:33+0800 [lvpingSpider] INFO: Closing spider (finished)
+2011-04-26 15:13:35+0800 [lvpingSpider] INFO: Spider closed (finished)
