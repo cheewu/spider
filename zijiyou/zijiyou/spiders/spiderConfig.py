@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+ 
 spiderConfig = {
                 "daodaoSpider":{
                      'allowedDomains':["daodao.com"],
