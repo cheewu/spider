@@ -48,7 +48,10 @@ class ZijiyouPipeline(object):
                 except Exception:
                     value = "%s" % v
             else:
-                value = v
+                if v[0]:
+                    value = v[0]
+                else:
+                    value = 100
             values[k] = value
         obj = self.mongoApt.saveItem(collectionName, values)
         print '++++saveItem2Mongodb++++col:%s,objectId:%s' % (collectionName ,obj)
