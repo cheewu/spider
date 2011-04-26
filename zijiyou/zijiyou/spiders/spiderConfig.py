@@ -1,6 +1,22 @@
 # -*- coding: utf-8 -*-
 
 spiderConfig = {
+                "baseSeSpider":{
+                     'allowedDomains':[],
+                     'startUrls':['www.baidu.com'],
+                     'seUrlFormat':[{'seName':'qihooBlog',
+                                     'format':'http://www.qihoo.com/wenda.php?kw=%s&do=search&area=1&src=blog',#搜索格式
+                                     'sePageNum':5,
+                                     'resultAreaXpath':'//*[@id="clk_result_list"]',
+                                     'resultItemXpath':'.//table/tbody/tr/td/a/@href',
+                                     'nextPageAreaXpath':'//body/table/tbody/tr/td[2]/div[4]/div',
+                                     'nextPageItemXpath':'.//div/a/@href'
+                                     }],
+                     #普通list页正则表达式
+                     'normalRegex':[],
+                     #item页正则表达式 type对应item存放的数据表名
+                     'itemRegex':[]
+                     },
                 "daodaoSpider":{
                      'allowedDomains':["daodao.com"],
                      'startUrls':['http://www.daodao.com/Attractions-g294211-Activities-China.html'],
