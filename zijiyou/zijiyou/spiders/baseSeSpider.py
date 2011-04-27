@@ -5,36 +5,43 @@ Created on 2011-3-28
 @author: shiym
 '''
 from scrapy import log
-import datetime
-
-from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-from zijiyou.spiders.spiderConfig import spiderConfig
-from zijiyou.items.zijiyouItem import ResponseBody,Note
-from zijiyou.items.itemLoader import ZijiyouItemLoader
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
+from zijiyou.items.itemLoader import ZijiyouItemLoader
+from zijiyou.items.zijiyouItem import ResponseBody, Note
+from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
+from zijiyou.spiders.spiderConfig import spiderConfig
+import datetime
+import re
+import time
+import urllib
+
 
 class BaseSeSpider(BaseCrawlSpider):
     '''
     Spider for www.daodao.com
     '''
-    name ="BaseSeSpider"
+    name ="baseSeSpider"
     
     #搜索引擎格式
     seUrlFormat=[]
     searchPageNum=5
     itemPriority=1000
+    config=None
     
     def __init__(self,*a,**kw):
         super(BaseSeSpider,self).__init__(*a,**kw)
         
-        config=spiderConfig[self.name]
-        if not 'seUrlFormat' in config:
+        self.config=spiderConfig[self.name]
+        if not 'seUrlFormat' in self.config:
             log.msg("baseSeSpider的配置文件没有seUrlFormat!", level=log.ERROR)
             raise NotConfigured        
-        self.seUrlFormat=config['seUrlFormat']
+        self.seUrlFormat=self.config['seUrlFormat']
+        self.functionDic['baseParse'] = self.baseParse
         
     def makeRequestByKeywordForSEs(self):
+        print '生成关键字搜索请求'
+        log.msg("生成关键字搜索请求", level=log.INFO)
         '''
         由关键字创建SE的请求
         '''
@@ -46,22 +53,28 @@ class BaseSeSpider(BaseCrawlSpider):
             return []        
         for keyWord in keyWords:
             for v in self.seUrlFormat:
-                format=v['format']
-                pagePriority=keyWord['priority']
-                url=format % keyWord['keyWord'];
-                meta={'type':keyWord['type'],
-                      'sePageNum':v['sePageNum'],
-                      'resultItemLinkXpath':v['resultItemLinkXpath'],
-                      'nextPageLinkXpath':v['nextPageLinkXpath'],
-                      'seName':v['seName']}
-                request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
-                reqs.append(request)
+                for i in range(1, v['sePageNum']+1):
+                    format=v['format']
+                    encodeType=v['encode']
+                    encodeWords=urllib.quote(keyWord['keyWord'].encode(encodeType))
+                    pagePriority=keyWord['priority']
+                    url=format % (encodeWords, i)
+#                    print url
+                    meta={'type':keyWord['type'],
+                          'sePageNum':v['sePageNum'],
+                          'resultItemLinkXpath':v['resultItemLinkXpath'],
+                          'nextPageLinkXpath':v['nextPageLinkXpath'],
+                          'seName':v['seName'],
+                          'homePage':v['homePage']}
+                    request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
+                    reqs.append(request)
         log.msg('生成了%s个关键字搜索请求' % len(reqs), level=log.INFO)
         return reqs
     
     def baseParse(self,response):
         print '解析搜索引擎结果'
-        log.msg('解析link: %s' % response.url, log.INFO)
+        log.msg("解析搜索引擎结果", level=log.INFO)
+        log.msg('解析link: %s' % response.url, level=log.INFO)
         reqs = []
         
         if not self.hasInit:
@@ -70,7 +83,7 @@ class BaseSeSpider(BaseCrawlSpider):
                 reqs.extend(self.pendingRequest)
                 log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
             else:
-                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , log.INFO)
+                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , level=log.INFO)
             seReqs=self.makeRequestByKeywordForSEs()
             if seReqs and len(seReqs)>0:
                 reqs.extend(seReqs)
@@ -85,62 +98,83 @@ class BaseSeSpider(BaseCrawlSpider):
             log.msg("没有meta的Response，无法进行目标页和下一页的定位：%s" % response.url, level=log.ERROR)
             return reqs
         meta=response.meta
-        print meta
+#        print meta
         #item页链接请求
         itemsReq=[]
+        homePage=meta['homePage']
+        print homePage
         resultItemLinkXpath=meta['resultItemLinkXpath']
-        type=meta['type']
-        itemMeta={'type':type}
         hxs=HtmlXPathSelector(response)
         links=hxs.select(resultItemLinkXpath).extract()
         if links and len(links)>0:
-            print links
             for link in links:
-                req=self.makeRequestWithMeta(link, callBackFunctionName='parseItem', meta=itemMeta,priority=self.itemPriority)
+                link = homePage + link
+                log.msg("%s"%link, log.INFO)
+                req=self.makeRequestWithMeta(link, callBackFunctionName='parseItem', meta=meta,priority=self.itemPriority)
                 itemsReq.append(req)
         else:
             log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
         reqs.extend(itemsReq)
         log.msg("%s parse 产生item页的Request数量：%s" % (response.url, len(itemsReq)), level=log.INFO)
-        
-        #下一页链接
-        if not ('sePageNum' in meta and meta['sePageNum']):
-            return reqs
-        sePageNum=meta['sePageNum']
-        metaNext={'type':meta['meta']}
-        nextPageReqs=[]
-        nextPageLinkXpath=meta['nextPageLinkXpath']
-        nextPagelinks=hxs.select(nextPageLinkXpath)
-        if nextPagelinks and len(nextPagelinks)>0:
-            for link in links:
-                sePageNum-=1
-                if sePageNum>0:
-                    req=self.makeRequestWithMeta(link, callBackFunctionName='baseParse', meta=metaNext,priority=10)
-                    nextPageReqs.append(req)
-        else:
-            log.msg("没有抓取到任何下一页链接！nextPageLinkXpath：%s；url：%s" % (nextPageLinkXpath,response.url), level=log.ERROR)
-        reqs.extend(nextPageReqs)
-        log.msg("%s parse 产生下一页的Request数量：%s" % (response.url, len(nextPageReqs)), level=log.INFO)
 
         return reqs
     
     def parseItem(self,response):
+        '''解析搜索目标页'''
         print '解析搜索目标页'
-        
+        log.msg("解析搜索目标页", level=log.INFO)
         items=[]
-        contentType=''
-        log.msg('保存item页，类型： %s' % contentType, level=log.INFO)            
+        
+        meta=response.meta
+        if not ('type' in meta and meta['type']):
+            log.msg("没有type的item页！不能确定保存到那张表。url：%s" % response.url, level=log.ERROR)
+            return items
+        
+        type=meta['type']
+        log.msg("%s"%type , level=log.INFO)
         #ResponseBody
         loader = ZijiyouItemLoader(ResponseBody(),response=response)
         loader.add_value('spiderName', self.name)
         loader.add_value('pageUrl', response.url)
-        loader.add_value('type', contentType)
+        loader.add_value('type', type)
         loader.add_value('content', response.body_as_unicode())
         loader.add_value('dateTime', datetime.datetime.now())
-        loader.add_value('status', 100)
         responseBody = loader.load_item()
         items.append(responseBody)
-                
+        
+        #解析搜索引擎NoteItem
+        noteItem = self.parseNoteItem(response)    
+        if noteItem:
+            items.append(noteItem)
+        
         return items
+    
+    def parseNoteItem(self, response):
+        '''解析搜索引擎NoteItem'''
+        log.msg("解析搜索引擎NoteItem", level=log.INFO)
+        #判断配置是否正确
+        if not ('seXpath' in self.config and response.meta['seName'] in self.config['seXpath']):
+            log.msg("配置文件中缺少seXpath配置或seXpath中缺少%s的配置" % response.meta['seName'], level=log.ERROR)
+            return
+        
+        xpathItems = self.config['seXpath'][response.meta['seName']]
+        hxs=HtmlXPathSelector(response)
+        loader = ZijiyouItemLoader(Note(),response=response)
+        for k,v in xpathItems.items():
+            values = hxs.select(v).extract()
+            value=("-".join("%s" % p for p in values)).encode("utf-8")
+            if value:
+                if(k == 'date'):
+                    value = re.search(r"\d{4}年\d{2}月\d{2}日$", value)
+                    if value:
+                        loader.add_value(k, value.group(0))
+                    else:
+                        loader.add_value(k, time.strftime("%Y年%m月%d日"))
+                else:
+                    loader.add_value(k, value)
+        loader.add_value('pageUrl', response.url)
+        noteItem = loader.load_item()
+        return noteItem
+        
     
 SPIDER = BaseSeSpider()
