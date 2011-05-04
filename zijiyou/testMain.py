@@ -345,7 +345,8 @@ testResponse = testSpiderDb[colSource[0]]
 serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
 serverSpiderDb = serverCon[dbName]
 serverResponse = serverSpiderDb[colSource[0]]
-print serverResponse.count()
+
+print "合并前，服务器数据库Response的count：", serverResponse.count()
 
 counter = 0;
 for o in testResponse.find():
@@ -356,3 +357,5 @@ for o in testResponse.find():
             counter += 1
             
 print "总共插入的记录数为：", counter
+print "183测试服务器数据库Response的count：", testResponse.count()
+print "服务器数据库Response的count：", serverResponse.count()
