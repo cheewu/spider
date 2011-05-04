@@ -44,10 +44,13 @@ class Diagnoser(object):
     
     def onSpiderOpen(self,spider):
         self.biginTime=datetime.datetime.now()
+        log.msg('onSpiderOpen %s' % spider.name,level=log.INFO)
                 
     def onSpiderClose(self,spider,reson):
         endTime=datetime.datetime.now()
-        interval=endTime - self.biginTime
+        intervalTemp=endTime - self.biginTime
+        log.msg('onSpiderClose %s,intervalTemp=%s' % (spider.name,intervalTemp),level=log.INFO)
+        interval=intervalTemp.hour * 3600 + intervalTemp.minute * 60 +intervalTemp.second
         if interval<self.thresholdRuntime:
             log.msg("警告：错误-运行时间小于阀值。运行时间：%s，间隔时间：%s" % (interval,self.closeSpiderTimeout), level=log.ERROR)
         elif (interval + 100) < self.closeSpiderTimeout:
@@ -57,15 +60,12 @@ class Diagnoser(object):
         untouchedUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
         if untouchedUrlNum<self.thresholdUntouchedUrl:
             log.msg("警告：错误-待爬取的网页数量低于阀值：%s" % untouchedUrlNum, level=log.ERROR)
+        log.msg('onSpiderClose %s,intervalTemp=%s' % (spider.name,intervalTemp),level=log.INFO)
             
     def onResponseReceived(self,response,request,spider):
         if response.status in self.errorStatus:
             self.errorCounter+=1
         if self.errorCounter>self.thresholdError:
             log.msg("警告：错误-某些错误出现次数大于阀值：%s" % self.errorCounter, level=log.ERROR)
+        print 'onResponseReceived %s,%s' % (spider.name,self.errorCounter)
             
-    
-        
-        
-        
-    

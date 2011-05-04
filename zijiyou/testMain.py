@@ -11,7 +11,12 @@ import os
 import re
 import urllib
 
-mon=MongoDbApt()
+d1=datetime.datetime.now()
+d2=datetime.datetime(2011,5,4,17,10,10)
+d3=d1-d2
+print 'd1=%s,d2=%s,d3=%s' % (d1,d2,d3)
+
+#mon=MongoDbApt()
 
 #for i in os.sys.path:
 #    print i
