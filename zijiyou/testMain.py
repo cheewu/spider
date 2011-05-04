@@ -3,20 +3,32 @@
 
 from bson.objectid import ObjectId
 from zijiyou.db.mongoDbApt import MongoDbApt
+from zijiyou.items.zijiyouItem import Attraction, CommonSense
 from zijiyou.spiders.offlineCrawl.parse import Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
+import os
 import re
-import sys
 import urllib
 
 mon=MongoDbApt()
 
-url = '九寨沟'
-print url   
-data = urllib.quote(url.decode(sys.stdin.encoding).encode('gbk')) 
-print data
+#for i in os.sys.path:
+#    print i
 
+
+#if not keyWords and len(keyWords)<1:
+#    print ("没有关键字！")
+#for keyWord in keyWords:
+#    word='test' #=keyWord['keyWord']
+#    encodeType='GBK' 
+#    print word
+#    encodeWords=urllib.quote(word.encode(encodeType))
+#    print encodeWords
+    
+#%BE%C9%BD%F0%C9%BD
+#%BE%C9%BD%F0%C9%BD
+    
 '''
 查看数据
 '''
@@ -174,7 +186,7 @@ print data
 清空爬到的数据
 '''
 #colSource=[
-##                'ResponseBody',
+#                'ResponseBody',
 #                  'Attraction',
 #                  'Note',
 #                  'CrawlUrl',
@@ -183,21 +195,25 @@ print data
 #                  'MemberTrack',
 #                  'MemberFriend',
 #                  'MemberNoteList',
+#                  'KeyWord',
 #                  'test']
 #print '清空...'
 #for i in range(0,len(colSource)):
 #    print mon.count(colSource[i])
 #    mon.removeAll(colSource[i])
 #print '完成清空...'
-#
-##爬虫启动url
+
+#爬虫启动url
 #startUrl = "http://www.lvping.com/members/jacobok"
 #mon.remove('CrawlUrl', {"url":startUrl})
 #value={"url":startUrl,"callBack":None,"status":400,"priority":1,"dateTime":datetime.datetime.now()}
 #mon.saveItem('CrawlUrl', value)
 #print mon.count("CrawlUrl")
 
-
+#item=[{'keyWord':'北京','type':'Note','priority':100}]
+#mon.saveItem('KeyWord', item)
+#keyWords=mon.findByDictionaryAndSort('KeyWord', {}, 'priority')
+#print len(keyWords)
 
 
 #mon.removeAll(colName)

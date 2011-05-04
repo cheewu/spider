@@ -77,7 +77,7 @@ class BaseCrawlSpider(CrawlSpider):
         print '初始配置 initConfig'
         log.msg('初始配置 initConfig', level=log.INFO)
         config = spiderConfig[self.name]
-        if config and config['startUrls'] and config['allowedDomains'] and config['normalRegex'] and config['itemRegex']: 
+        if config and config['startUrls'] and 'allowedDomains' in config and 'normalRegex' in config and 'itemRegex' in config: 
             self.start_urls = config['startUrls']
             self.allowed_domains = config['allowedDomains']
             self.normalRegex = config['normalRegex']
@@ -170,7 +170,7 @@ class BaseCrawlSpider(CrawlSpider):
         loader.add_value('type', contentType)
         loader.add_value('content', response.body_as_unicode())
         loader.add_value('dateTime', datetime.datetime.now())
-        loader.add_value('status', 100)
+#        loader.add_value('status', 100)
         responseBody = loader.load_item()
         return responseBody
     

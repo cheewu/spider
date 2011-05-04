@@ -28,6 +28,7 @@ DB_COLLECTIONS = ['ResponseBody',
                   'MemberTrack',
                   'MemberFriend',
                   'MemberNoteList',
+                  'KeyWord',
                   'test']
 
 LOG_FILE='./zijiyou.log'
@@ -48,24 +49,4 @@ DOWNLOADER_MIDDLEWARES = {
 SPIDER_MIDDLEWARES = {'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501}
 
 #proxy server
-PROXY = ['http://127.0.0.1:8081', 
-         'http://125.210.188.36:80',
-         'http://221.179.35.89:80',
-         'http://211.139.10.173:80',
-         'http://60.28.212.184:80',
-         'http://202.171.253.70:80',
-         'http://211.139.195.23:80',
-         'http://218.195.101.80:3128',
-         'http://221.204.246.161:8001',
-         'http://218.207.217.226:80',
-         'http://218.207.217.227:80',
-         'http://123.125.156.92:80',
-         'http://221.204.246.21:8080',
-         'http://114.255.171.231:80',
-         'http://211.139.10.182:80',
-         'http://124.248.34.50:3128',
-         'http://124.248.34.51:3128',
-         'http://221.204.246.161:80',
-         'http://211.139.10.183:80',
-         'http://218.14.227.197:3128',
-         'local']
+PROXY = ['local']

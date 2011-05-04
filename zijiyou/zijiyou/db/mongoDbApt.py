@@ -108,9 +108,11 @@ class MongoDbApt(object):
         '''
         return self.db[colName].remove({})
     
-    def remove(self,colName,queJson):
+    def remove(self,colName,whereJson):
         '''
         remove of mongodb
         '''
-        return self.db[colName].remove(queJson)
+        if not (whereJson and len(whereJson)>0):
+            return
+        return self.db[colName].remove(whereJson)
     

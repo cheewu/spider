@@ -11,6 +11,8 @@ from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import ResponseBody, Note
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 from zijiyou.spiders.spiderConfig import spiderConfig
+from scrapy.xlib.pydispatch import dispatcher
+from scrapy import signals
 import datetime
 import re
 import time
@@ -28,6 +30,8 @@ class BaseSeSpider(BaseCrawlSpider):
     searchPageNum=5
     itemPriority=1000
     config=None
+    seResultList=[]
+    crawlUrl='CrawlUrl'
     
     def __init__(self,*a,**kw):
         super(BaseSeSpider,self).__init__(*a,**kw)
@@ -38,6 +42,18 @@ class BaseSeSpider(BaseCrawlSpider):
             raise NotConfigured        
         self.seUrlFormat=self.config['seUrlFormat']
         self.functionDic['baseParse'] = self.baseParse
+        dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
+        
+    def onSeSpiderClosed(self):
+        '''清空数据库中的SeSpider中的搜索页列表'''
+        log.msg('开始清空数据库中的SeSpider中的搜索页列表，长度：%s' %len(self.seResultList), level=log.INFO)
+        if len(self.seResultList)>0:
+            whereJson={}
+            for url in self.seResultList :
+                whereJson['url']=url
+                self.mongoApt.remove(self.crawlUrl,whereJson)
+                print '删除url:%s' % url
+        self.seResultList=[]
         
     def makeRequestByKeywordForSEs(self):
         print '生成关键字搜索请求'
@@ -68,6 +84,8 @@ class BaseSeSpider(BaseCrawlSpider):
                           'homePage':v['homePage']}
                     request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
                     reqs.append(request)
+                    
+                    self.seResultList.append(url)
         log.msg('生成了%s个关键字搜索请求' % len(reqs), level=log.INFO)
         return reqs
     
@@ -131,7 +149,7 @@ class BaseSeSpider(BaseCrawlSpider):
             return items
         
         type=meta['type']
-        log.msg("%s"%type , level=log.INFO)
+        log.msg("保存item页，类型:%s"%str(type) , level=log.INFO)
         #ResponseBody
         loader = ZijiyouItemLoader(ResponseBody(),response=response)
         loader.add_value('spiderName', self.name)

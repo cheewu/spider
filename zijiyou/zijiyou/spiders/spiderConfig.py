@@ -3,13 +3,24 @@
 spiderConfig = {
                 "baseSeSpider":{
                      'allowedDomains':[],
-                     'startUrls':['www.baidu.com'],
-                     'seUrlFormat':[{'seName':'qihooBlog',
-                                     'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s',#搜索格式
-                                     'sePageNum':5,
+                     'startUrls':['http://www.baidu.com'],
+                     'seUrlFormat':[{'seName':'sosoBlog',
+                                     'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s&pg=%s',#搜索格式
+                                     'sePageNum':1,
+                                     'encode':'GBK',
                                      'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
-                                     'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href'
+                                     'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',
+                                     'nextPagePattern':'http://blog.soso.com/qz.q?w=keyWord&sc=qz&ty=blog&sd=0&st=r&cid=&op=blog.blog&pid=qz.s.res&pg=pageNum',#无法通过xpath获得js动态生成的下一页区域，使用模板
+                                     'homePage':'http://blog.soso.com'                                  
                                      }],
+                    'seXpath':{
+                               "sosoBlog":{
+                                    r'title':r'//div[@id="main"]/h3/text()',
+                                    r'date':r'//div[@id="main"]/text()[2]',
+                                    r'content':r'//div[@id="main"]',
+                                    r'originUrl':r'//div[@id="header"]/a/text()'
+                                    }
+                               },
                      #普通list页正则表达式
                      'normalRegex':[],
                      #item页正则表达式 type对应item存放的数据表名
@@ -60,6 +71,7 @@ spiderConfig = {
                                   {'type':'Note','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':500}, #短文攻略(类别 内容 目的地)
                                   {'type':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-detail\.html$', 'priority':500}, #景点
                                   {'type':'Note','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':600}, #攻略 作者 发表时间 浏览次数 评论次数
+                                  {'type':'Note','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+', 'priority':600}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
                                   {'type':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':600}, #用户
                                   {'type':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':600}, #足迹
                                   {'type':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':600}, #好友
