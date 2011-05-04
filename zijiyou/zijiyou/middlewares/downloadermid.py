@@ -22,24 +22,6 @@ class RequestedUrlSaveAndUpdate(object):
         if not self.mongoApt:
             self.mongoApt=MongoDbApt()
     
-    def process_request(self, request, spider):
-        recentReq={"url":"","callBack":None,"status":"","priority":1,"dateTime":datetime.datetime.now()}
-        recentReq["url"]=request.url
-        meta=request.meta
-        if meta and "callBack" in meta:
-            recentReq["callBack"]=request.meta["callBack"]
-        recentReq["priority"]=request.priority
-        recentReq["status"]=1000
-        if spider.name:
-            recentReq["spiderName"]=spider.name
-        
-        queJson={"url":request.url}
-        if not self.mongoApt.isExist(self.colName, queJson):
-            self.mongoApt.saveItem(self.colName,recentReq)
-            log.msg("保存新request：%s" % request.url,level=log.INFO)
-            
-        return None
-    
     def process_response(self, request, response, spider):
         whereJson={"url":request.url}
         responseStatus=response.status

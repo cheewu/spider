@@ -46,7 +46,10 @@ DOWNLOADER_MIDDLEWARES = {
                             }
 
 #SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.RequestSaver': 502}
-SPIDER_MIDDLEWARES = {'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501}
+SPIDER_MIDDLEWARES = {
+                      'zijiyou.middlewares.spidermid.RequestSaver': 500,
+                      'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501
+                      }
 
 #proxy server
 PROXY = ['local']

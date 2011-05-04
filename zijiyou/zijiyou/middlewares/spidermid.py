@@ -4,13 +4,14 @@ Created on 2011-4-12
 
 @author: shiym
 '''
-from zijiyou.db.mongoDbApt import MongoDbApt
 from scrapy import log
 from scrapy.http.request import Request
+from zijiyou.db.mongoDbApt import MongoDbApt
+import datetime
 
 class DuplicateUrlFilter(object):
     '''
-    新产生的ulr请求存入数据库，在访问之后更新其状态
+    新产生的url进行去重，在访问爬取之后更新其状态
     '''
     mon=None
     urlDump=None
@@ -37,6 +38,7 @@ class DuplicateUrlFilter(object):
 
     def process_spider_output(self, response, result, spider):
         '''drop the request which appear in urlDump'''
+        log.msg("对request进行排重",level=log.INFO)
         newResult=[]
         counter=0
         for p in result:
@@ -60,5 +62,36 @@ class DuplicateUrlFilter(object):
             if not dupUrl in self.urlDump:
                 log.msg("new url=%s" % dupUrl, level=log.INFO)
                 self.urlDump.append(dupUrl)
+    
+    
+class RequestSaver(object):
+    '''
+    新产生的url在去重之后进行保存到数据库
+    '''            
+    mongoApt=None
+    colName="CrawlUrl"
+    def __init__(self):
+        if not self.mongoApt:
+            self.mongoApt=MongoDbApt()
+            
+    def process_spider_output(self, response, result, spider):
+        log.msg("将新的request存入数据库",level=log.INFO)
+        for req in result:
+            if isinstance(req, Request):
+                recentReq={"url":"","callBack":None,"status":"","priority":1,"dateTime":datetime.datetime.now()}
+                recentReq["url"]=req.url
+                meta=req.meta
+                if meta and "callBack" in meta:
+                    recentReq["callBack"]=req.meta["callBack"]
+                recentReq["priority"]=req.priority
+                recentReq["status"]=1000
+                if spider.name:
+                    recentReq["spiderName"]=spider.name
+                
+                queJson={"url":req.url}
+                if not self.mongoApt.isExist(self.colName, queJson):
+                    self.mongoApt.saveItem(self.colName,recentReq)
+                    log.msg("保存新request：%s" % req.url,level=log.INFO)
+        return result
         
         
