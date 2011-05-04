@@ -53,6 +53,9 @@ class MongoDbApt(object):
         '''
         return self.db[colName].count()
     
+    def countByWhere(self,colName,whereJson):
+        return self.db[colName].find(whereJson).count()
+    
     def isExist(self,colName,queJson):
         num=self.db[colName].find(queJson).count()
 #        return num
