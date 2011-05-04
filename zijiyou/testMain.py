@@ -10,8 +10,9 @@ import datetime
 import os
 import re
 import urllib
+import pymongo
 
-mon=MongoDbApt()
+#mon=MongoDbApt()
 
 #for i in os.sys.path:
 #    print i
@@ -333,3 +334,25 @@ mon=MongoDbApt()
 ##li2.append("%s" % p.encode("utf-8") for p in li)
 #
 #'''
+
+colSource=['ResponseBody']
+dbName = "spiderV20"
+urlAttr = "url";
+testCon = pymongo.Connection("192.168.0.183", 27017)
+testSpiderDb = testCon[dbName]
+testResponse = testSpiderDb[colSource[0]]
+
+serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
+serverSpiderDb = serverCon[dbName]
+serverResponse = serverSpiderDb[colSource[0]]
+print serverResponse.count()
+
+counter = 0;
+for o in testResponse.find():
+    if urlAttr in o:
+        r = serverResponse.find({urlAttr:o[urlAttr]})
+        if not r.count():
+            serverResponse.insert(r)
+            counter += 1
+            
+print "总共插入的记录数为：", counter

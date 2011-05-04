@@ -63,7 +63,7 @@ class BaseCrawlSpider(CrawlSpider):
             #查数据库
             if not colName:
                 colName="CrawlUrl"
-            queJson={"status":{"$gte":300}}
+            queJson={"status":{"$gte":400}}
             if spiderName:
                 queJson['spiderName']=spiderName
             sortField="priority"
