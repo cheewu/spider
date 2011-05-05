@@ -131,13 +131,17 @@ class BaseCrawlSpider(CrawlSpider):
         #普通页link
         for v in self.normalRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
-           
+        
+        normalNum = len(reqs)
         log.msg("%s parse 产生 普通页 url 数量：%s" % (response.url, len(reqs)), level=log.INFO)
  
         '''item页link'''
         for v in self.itemRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
-                    
+        
+        itemNum = len(reqs) - normalNum   
+        log.msg("%s parse 产生 Item页 url 数量：%s" % (response.url, itemNum), level=log.INFO)
+                 
         item = self.parseItem(response)
         if item:
             reqs.append(item)
