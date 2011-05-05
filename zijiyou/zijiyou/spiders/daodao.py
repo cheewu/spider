@@ -14,4 +14,8 @@ class Daodao(BaseCrawlSpider):
     log.msg('启动爬虫：daodaoSpider', level=log.INFO)
     name ="daodaoSpider"
     
+    def __init__(self,*a,**kw):
+        super(Daodao,self).__init__(*a,**kw)
+        self.initRequest()
+        
 SPIDER = Daodao()

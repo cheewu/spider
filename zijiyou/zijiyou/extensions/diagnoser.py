@@ -45,28 +45,28 @@ class Diagnoser(object):
     
     def onSpiderOpen(self,spider):
         self.biginTime=datetime.datetime.now()
-        log.msg('onSpiderOpen %s' % spider.name,level=log.INFO)
+        log.msg('爬虫：%s 扩展diagnoser：onSpiderOpen ' % spider.name,level=log.INFO)
                 
     def onSpiderClose(self,spider):
         endTime=datetime.datetime.now()
         intervalTemp=endTime - self.biginTime
-        log.msg('onSpiderClose %s,intervalTemp=%s' % (spider.name,intervalTemp),level=log.INFO)
-        interval=intervalTemp.hour * 3600 + intervalTemp.minute * 60 +intervalTemp.second
+        interval=intervalTemp.seconds
+        log.msg('爬虫：%s 扩展diagnoser:onSpiderClose 运行时间=%s秒' % (spider.name,interval),level=log.INFO)
         if interval<self.thresholdRuntime:
-            log.msg("警告：错误-运行时间小于阀值。运行时间：%s，间隔时间：%s" % (interval,self.closeSpiderTimeout), level=log.ERROR)
+            log.msg("爬虫：%s 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：%s秒，间隔阀值：%s秒" % (spider.name,interval,self.thresholdRuntime), level=log.ERROR)
         elif (interval + 100) < self.closeSpiderTimeout:
-            log.msg("警告：运行时间小于setting的时间间隔。运行时间：%s，间隔时间：%s" % (interval,self.closeSpiderTimeout), level=log.WARNING)
+            log.msg("爬虫：%s 扩展diagnoser警告：运行时间小于setting的时间间隔。运行时间：%s秒，setting的时间间隔：%s秒" % (spider.name,interval,self.closeSpiderTimeout), level=log.WARNING)
         
-        whereJson={'status':1000}
+        whereJson={'status':{'$gte':400}}
         untouchedUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
+        log.msg("爬虫：%s 扩展diagnoser信息：剩余待爬取的网页数量：%s" % (spider.name,untouchedUrlNum), level=log.INFO)
         if untouchedUrlNum<self.thresholdUntouchedUrl:
-            log.msg("警告：错误-待爬取的网页数量低于阀值：%s" % untouchedUrlNum, level=log.ERROR)
-        log.msg('onSpiderClose %s,intervalTemp=%s' % (spider.name,intervalTemp),level=log.INFO)
+            log.msg("爬虫：%s 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：%s" % (spider.name,untouchedUrlNum), level=log.ERROR)
             
     def onResponseReceived(self,response,request,spider):
         if response.status in self.errorStatus:
             self.errorCounter+=1
         if self.errorCounter>self.thresholdError:
-            log.msg("警告：错误-某些错误出现次数大于阀值：%s" % self.errorCounter, level=log.ERROR)
-        log.msg('onResponseReceived %s,%s' % (spider.name,self.errorCounter), level=log.INFO)
+            log.msg("扩展diagnoser警告：错误-某些错误出现次数大于阀值：%s" % self.errorCounter, level=log.ERROR)
+        log.msg('扩展diagnoser:onResponseReceived %s,%s' % (spider.name,self.errorCounter), level=log.INFO)
             

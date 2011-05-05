@@ -36,6 +36,7 @@ class BaseSeSpider(BaseCrawlSpider):
     def __init__(self,*a,**kw):
         super(BaseSeSpider,self).__init__(*a,**kw)
         
+        self.initRequest()
         self.config=spiderConfig[self.name]
         if not 'seUrlFormat' in self.config:
             log.msg("baseSeSpider的配置文件没有seUrlFormat!", level=log.ERROR)

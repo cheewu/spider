@@ -49,7 +49,6 @@ class BaseCrawlSpider(CrawlSpider):
           
         self.functionDic["parseItem"]=self.parseItem
         self.dbCollecions=settings.get('DB_COLLECTIONS', [])
-        self.initRequest()
         if(not self.initConfig()):
             print '爬虫配置文件加载失败！'
             log.msg('爬虫配置文件加载失败！', level=log.INFO)
@@ -111,10 +110,9 @@ class BaseCrawlSpider(CrawlSpider):
                     pagePriority=p["priority"]
                     req=self.makeRequest(url, callBackFunctionName,priority=pagePriority)
                     self.pendingRequest.append(req)
-                print "获得pendingRequest，数量=%s" % len(self.pendingRequest)
-                log.msg("获得pendingRequest，数量=%s" % len(self.pendingRequest),level=log.INFO)
+                log.msg("爬虫%s获得pendingRequest，数量=%s" % (self.name,len(self.pendingRequest)),level=log.INFO)
             else:
-                log.msg("pendingRequest为空，交由scrapy从startUrl启动" ,level=log.ERROR)
+                log.msg("爬虫%s 的pendingRequest为空，交由scrapy从startUrl启动" % self.name,level=log.ERROR)
 
     def baseParse(self, response):
         '''start to parse response link'''

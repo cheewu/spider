@@ -14,4 +14,8 @@ class Lvping(BaseCrawlSpider):
     log.msg('启动爬虫：lvpingSpider', level=log.INFO)
     name ="lvpingSpider"
     
+    def __init__(self,*a,**kw):
+        super(Lvping,self).__init__(*a,**kw)
+        self.initRequest()
+        
 SPIDER = Lvping()
