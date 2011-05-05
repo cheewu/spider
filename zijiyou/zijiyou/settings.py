@@ -32,6 +32,7 @@ DB_COLLECTIONS = ['ResponseBody',
                   'test']
 
 LOG_FILE='./zijiyou.log'
+LOG_LEVEL='INFO'
 DOWNLOAD_DELAY = 1.2
 CONCURRENT_REQUESTS_PER_SPIDER=1
 RECENT_URLS_SIZE = 3000
