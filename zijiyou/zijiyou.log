@@ -1,0 +1,644 @@
+2011-05-04 21:10:04+0800 [scrapy] INFO: Scrapy 0.12.0.2539 started (bot: zijiyou)
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] DEBUG: Enabled extensions: TelnetConsole, SpiderContext, WebService, CoreStats, MemoryUsage, CloseSpider, Diagnoser
+2011-05-04 21:10:04+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] ERROR: pendingRequest为空，交由scrapy从startUrl启动
+2011-05-04 21:10:04+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-04 21:10:04+0800 [scrapy] INFO: 启动爬虫：daodaoSpider
+2011-05-04 21:10:04+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] ERROR: pendingRequest为空，交由scrapy从startUrl启动
+2011-05-04 21:10:04+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-04 21:10:04+0800 [scrapy] INFO: 启动爬虫：lvpingSpider
+2011-05-04 21:10:04+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] INFO: 开始crawl，第一个url : {u'status': 1000, u'url': u'http://www.lvping.com/members/8C22F588C7F44FF9BEBBF291213EB1C6/travelmap-public', u'dateTime': datetime.datetime(2011, 5, 4, 18, 16, 4, 277000), u'priority': 600, u'callBack': None, u'spiderName': u'lvpingSpider', u'_id': ObjectId('4dc12764834fc02178000029')}
+2011-05-04 21:10:04+0800 [scrapy] INFO: 获得pendingRequest，数量=3
+2011-05-04 21:10:04+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-04 21:10:04+0800 [scrapy] DEBUG: Enabled scheduler middlewares: DuplicatesFilterMiddleware
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] DEBUG: Enabled downloader middlewares: HttpAuthMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, DefaultHeadersMiddleware, RedirectMiddleware, CookiesMiddleware, RandomHttpProxy, HttpCompressionMiddleware, DownloaderStats, RequestedUrlSaveAndUpdate
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] INFO: 加载排重的urlDump，从CrawlUrl加载105个；从ResponseBody加载178个
+2011-05-04 21:10:04+0800 [scrapy] INFO: 初始化urlDump. dump的长度=213
+2011-05-04 21:10:04+0800 [scrapy] DEBUG: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, RequestSaver, DuplicateUrlFilter, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] DEBUG: Enabled item pipelines: ZijiyouPipeline
+2011-05-04 21:10:04+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-04 21:10:04+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-04 21:10:04+0800 [scrapy] ERROR: pendingRequest为空，交由scrapy从startUrl启动
+2011-05-04 21:10:04+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-04 21:10:04+0800 [scrapy] DEBUG: Telnet console listening on 0.0.0.0:6023
+2011-05-04 21:10:04+0800 [scrapy] DEBUG: Web service listening on 0.0.0.0:6080
+2011-05-04 21:10:04+0800 [daodaoSpider] INFO: Spider opened
+2011-05-04 21:10:04+0800 [scrapy] INFO: onSpiderOpen daodaoSpider
+2011-05-04 21:10:04+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:05+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-05-04 21:10:05+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attractions-g294211-Activities-China.html> (referer: None)
+2011-05-04 21:10:05+0800 [scrapy] INFO: new url=http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:05+0800 [scrapy] INFO: 没有从数据库获得合适的url，将从stat_url开始crawl
+2011-05-04 21:10:05+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: http://www.daodao.com/Attractions-g294211-Activities-China.html parse 产生 普通页 url 数量：28
+2011-05-04 21:10:05+0800 [scrapy] INFO: 不是item的urlLink：http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:05+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294211-China-Vacations.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297430-Qinhuangdao_Hebei-Vacations.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294220-Nanjing_Jiangsu-Vacations.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g317093-Taiyuan_Shanxi-Vacations.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g2-Asia-Vacations.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g294211-Activities-oa15-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g294212-Activities-Beijing.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g308272-Activities-Shanghai.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g294217-Activities-Hong_Kong.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g298555-Activities-Guangzhou_Guangdong.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g294213-Activities-Chongqing.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g297452-Activities-Dalian_Liaoning.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g297415-Activities-Shenzhen_Guangdong.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g298557-Activities-Xi_an_Shaanxi.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g311293-Activities-Tianjin.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g293913-Activities-Taipei_Taiwan.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g298559-Activities-Hangzhou_Zhejiang.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g294220-Activities-Nanjing_Jiangsu.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g297458-Activities-Qingdao_Shandong.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g297463-Activities-Chengdu_Sichuan.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g494927-Activities-Foshan_Guangdong.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g294211-Activities-oa2015-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294211-c0-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294211-c1-China_Lvyouluxian.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294211-c2-China_Meishi.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294211-c3-China_Gouwu.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294211-c4-China_Yule.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1851009-d1851860-Reviews-Mt_Qilin_Scenic_Resort-Jidong_County_Heilongjiang.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303778-d1372934-Reviews-Grape_Valley-Turpan_Xinjiang_Uygur.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303712-d548919-Reviews-Yangshuo_Park-Yangshuo_County_Guangxi_Zhuang.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294213-d1814785-Reviews-Jinyun_Mountain-Chongqing.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d637146-Reviews-Anantara_Spa_By_The_Great_Wall-Beijing.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g658712-d1807964-Reviews-Egret_Island-Quzhou_Zhejiang.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Changshi-g294211-China.html
+2011-05-04 21:10:05+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:05+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:05+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:06+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html
+2011-05-04 21:10:06+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html> (referer: http://www.daodao.com/Attractions-g294211-Activities-China.html)
+2011-05-04 21:10:06+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:06+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:06+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html parse 产生 普通页 url 数量：6
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:06+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:06+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294212-Beijing-Vacations.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297427-Sanya_Hainan-Vacations.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294212-c0-Beijing.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g317090-d503332-Reviews-Hongfu_Temple-Guiyang_Guizhou.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g679675-d1807802-Reviews-Zhujiazhuang_Village-Shangyu_Zhejiang.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303783-d513537-Reviews-Lugu_Lake-Lijiang_Yunnan.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g325575-d1814459-Reviews-Ancient_City_of_Pingyao-Pingyao_County_Shanxi.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1927945-Reviews-The_Great_Wall-Beijing.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152399-d1852100-Reviews-Songhua_River-Yichun_Heilongjiang.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d311566-Reviews-Hong_Kong_and_Shanghai_Bank_HSBC-Hong_Kong.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1017001-d1799226-Reviews-Hengshui_Lake-Hengshui_Hebei.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795773-d1801602-Reviews-Changqing_Nature_reserve-Yang_County_Shaanxi.html
+2011-05-04 21:10:06+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html
+2011-05-04 21:10:06+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html>
+2011-05-04 21:10:06+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1502e834fc02773000033+++++++++++
+2011-05-04 21:10:06+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:07+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html
+2011-05-04 21:10:07+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html> (referer: http://www.daodao.com/Attractions-g294211-Activities-China.html)
+2011-05-04 21:10:07+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:07+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:07+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:07+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:07+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297467-Yunnan-Vacations.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g303783-Lijiang_Yunnan-Vacations.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297412-Dongguan_Guangdong-Vacations.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g303783-Activities-Lijiang_Yunnan.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g303783-c0-Lijiang_Yunnan.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152372-d1848256-Reviews-Hongshan_Culture_Site-Lingyuan_Liaoning.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298555-d1842963-Reviews-Yingzhou_Ecological_Park-Guangzhou_Guangdong.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298559-d1807744-Reviews-Duan_Bridge-Hangzhou_Zhejiang.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298559-d1807742-Reviews-Baoshi_Liuxia_Scenic_Resort-Hangzhou_Zhejiang.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d506198-Reviews-Eight_Great_Temples_Badachu-Beijing.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1409351-d1799242-Reviews-Dazhao_Li_Memorial-Leting_County_Hebei.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1745942-d1805843-Reviews-Iron_Buddha_Temple-Dongguang_County_Hebei.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1652133-d1826804-Reviews-Gaotang_Lake-Fengtai_County_Anhui.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152353-d1825263-Reviews-Haosengou_National_Forest_Park-Aershan_Inner_Mongolia.html
+2011-05-04 21:10:07+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html
+2011-05-04 21:10:07+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html>
+2011-05-04 21:10:07+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1502f834fc02773000043+++++++++++
+2011-05-04 21:10:07+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:08+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html
+2011-05-04 21:10:08+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html> (referer: http://www.daodao.com/Attractions-g294211-Activities-China.html)
+2011-05-04 21:10:08+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:08+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:08+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:08+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:08+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297434-Henan-Vacations.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g303731-Luoyang_Henan-Vacations.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g317092-Nanning_Guangxi_Zhuang-Vacations.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g303731-Activities-Luoyang_Henan.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g303731-c0-Luoyang_Henan.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795752-d2003223-Reviews-Xiangjiang_River-Wangcheng_County_Hunan.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1979794-Reviews-Beijing_Babaoshan_Revolutionary_Cemetery-Beijing.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1122107-d321163-Reviews-Wutai_Shan_Five_Terrace_Mountain-Wutai_County_Shanxi.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298559-d1411213-Reviews-Xi_Ling_Yin_She-Hangzhou_Zhejiang.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g317092-d1834472-Reviews-Guangxi_Science_and_Technology_Museum-Nanning_Guangxi_Zhuang.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1409453-d1827062-Reviews-Zhaojun_Village-Xingshan_County_Hubei.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297442-d2003206-Reviews-Shihu_Lake-Suzhou_Jiangsu.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g659921-d799251-Reviews-Wuzhen_Town-Tongxiang_Zhejiang.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g660726-d1839262-Reviews-Huang_Yongyu_s_Painting_Studio-Fenghuang_County_Hunan.html
+2011-05-04 21:10:08+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html
+2011-05-04 21:10:08+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html>
+2011-05-04 21:10:08+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15030834fc02773000053+++++++++++
+2011-05-04 21:10:08+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:12+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html
+2011-05-04 21:10:12+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html> (referer: http://www.daodao.com/Attractions-g294211-Activities-China.html)
+2011-05-04 21:10:12+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:12+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:12+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:12+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:12+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297445-Jiangxi-Vacations.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1373136-Xingzi_County_Jiangxi-Vacations.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g298559-Hangzhou_Zhejiang-Vacations.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g1373136-Activities-Xingzi_County_Jiangxi.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1373136-c0-Xingzi_County_Jiangxi.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152542-d1805507-Reviews-Hongjiang_Ancient_Commercial_City-Hongjiang_Hunan.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1865147-Reviews-Beijing_Longquan_Temple-Beijing.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1793488-Reviews-The_Imperial_Garden_of_The_Palace_Museum-Beijing.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298557-d1839660-Reviews-Huifang_Style_Street-Xi_an_Shaanxi.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297428-d1859613-Reviews-Huishan_Forest_Nature_Reserve-Qionghai_Hainan.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152531-d1805263-Reviews-Liuyang_River-Liuyang_Hunan.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g608463-d1813969-Reviews-Yangxian_Scenic-Yixing_Jiangsu.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g424920-d1871311-Reviews-Shiba_Village-Wuyi_Shan_Fujian.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1829254-d1832001-Reviews-Houtu_Ancestral_Hall-Wanrong_County_Shanxi.html
+2011-05-04 21:10:12+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html
+2011-05-04 21:10:12+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html>
+2011-05-04 21:10:12+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15034834fc02773000063+++++++++++
+2011-05-04 21:10:12+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:13+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html
+2011-05-04 21:10:13+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html> (referer: http://www.daodao.com/Attraction_Review-g294212-d1979718-Reviews-Beijing_Ancestral_Hall_of_Yang_Jiaoshan-Beijing.html)
+2011-05-04 21:10:13+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html
+2011-05-04 21:10:13+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:13+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:13+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html
+2011-05-04 21:10:13+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:14+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:14+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297468-Zhejiang-Vacations.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297470-Ningbo_Zhejiang-Vacations.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297697-Kuta_Bali-Vacations.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g297470-Activities-Ningbo_Zhejiang.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297470-c0-Ningbo_Zhejiang.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152474-d2003566-Reviews-Shandong_Penglai_Pavilion-Penglai_Shandong.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1813823-d1814578-Reviews-Huangya_Cave-Licheng_County_Shanxi.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294213-d1814683-Reviews-Zhazi_Cave-Chongqing.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297433-d1851789-Reviews-Hulan_River_Forestry_Reserve-Harbin_Heilongjiang.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1468193-d1795903-Reviews-Daying_Dead_Sea-Daying_County_Sichuan.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1871296-Reviews-Shanghai_Stadium-Shanghai.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d553959-Reviews-Huabiao-Beijing.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g608462-d1864741-Reviews-Dangui_Garden-Kunshan_Jiangsu.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1017005-d1805065-Reviews-Shandong_Shanxi_Venues-Liaocheng_Shandong.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html
+2011-05-04 21:10:14+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html>
+2011-05-04 21:10:14+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15036834fc02773000073+++++++++++
+2011-05-04 21:10:14+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:14+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html
+2011-05-04 21:10:14+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html> (referer: http://www.daodao.com/Attraction_Review-g303783-d1553267-Reviews-Lijiang_Impressions_Show-Lijiang_Yunnan.html)
+2011-05-04 21:10:14+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:14+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:14+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html parse 产生 普通页 url 数量：6
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:14+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:14+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g311293-Tianjin-Vacations.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1161308-Ninghai_County_Zhejiang-Vacations.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g311293-c0-Tianjin.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795658-d1848565-Reviews-Yangshan_Ancient_Dwellings-Guiyang_County_Hunan.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152511-d1834636-Reviews-Former_Residence_of_Yuan_Shih_kai-Xiangcheng_Henan.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297407-d502857-Reviews-Nanputuo_Temple-Xiamen_Fujian.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g679671-d498848-Reviews-Mao_Zedong_s_Former_Residence_Shao_Shan-Shaoshan_Hunan.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d325667-Reviews-Grand_View_Garden_Daguanyuan-Beijing.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1829256-d1832028-Reviews-Biluo_Monument-Xinjiang_County_Shanxi.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g664891-d487312-Reviews-Grand_Prix_Museum-Macau.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152544-d1805349-Reviews-Sanshiliu_Bay-Lianyuan_Hunan.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1858937-d1865177-Reviews-Jinzhanghan_Mongolia_Tribe-Chenbaerhu_Qi_Inner_Mongolia.html
+2011-05-04 21:10:14+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html
+2011-05-04 21:10:14+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html>
+2011-05-04 21:10:14+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15036834fc02773000081+++++++++++
+2011-05-04 21:10:14+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:16+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html
+2011-05-04 21:10:16+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html> (referer: http://www.daodao.com/Attraction_Review-g303731-d1864779-Reviews-China_National_Flower_Garden-Luoyang_Henan.html)
+2011-05-04 21:10:16+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html
+2011-05-04 21:10:16+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:16+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:16+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html parse 产生 普通页 url 数量：6
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:17+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:17+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294217-Hong_Kong-Vacations.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g303703-Zhaoqing_Guangdong-Vacations.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294217-c0-Hong_Kong.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d2039777-Reviews-Aqua_Luna-Hong_Kong.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d2039788-Reviews-Fifty2_Lounge-Hong_Kong.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d2072039-Reviews-Big_Bus_Tours_Hong_Kong-Hong_Kong.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1858974-d1859347-Reviews-Ulanhu_Memorial_Hall-Tumotezuo_Qi_Inner_Mongolia.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1404100-Reviews-Henglung_Plaza-Shanghai.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303703-d1795856-Reviews-Hidden_Dragon_Groove-Zhaoqing_Guangdong.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1787877-Reviews-Expo_2010_Somalia_Pavilion-Shanghai.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1771784-Reviews-Expo_2010_China_Pavilion-Shanghai.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1372337-d1833888-Reviews-Hanguan_Pass-Xin_an_County_Henan.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d311610-Reviews-Yuyuantan_Park-Beijing.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d549395-Reviews-Century_Park-Shanghai.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g608464-d674500-Reviews-Han_Yang_Ling_Museum-Xianyang_Shaanxi.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html
+2011-05-04 21:10:17+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html>
+2011-05-04 21:10:17+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15039834fc02773000092+++++++++++
+2011-05-04 21:10:17+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:17+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html
+2011-05-04 21:10:17+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html> (referer: http://www.daodao.com/Attraction_Review-g1373136-d1855428-Reviews-Zhouyu_Point_Set_Platform-Xingzi_County_Jiangxi.html)
+2011-05-04 21:10:17+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:17+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:17+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html
+2011-05-04 21:10:17+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:18+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:18+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1152457-Guixi_Jiangxi-Vacations.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g308272-Shanghai-Vacations.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g1152457-Activities-Guixi_Jiangxi.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1152457-c0-Guixi_Jiangxi.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297454-d488834-Reviews-Shenyang_Imperial_Palace_Gu_Gong-Shenyang_Liaoning.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g608462-d1516314-Reviews-Jinxi_Town-Kunshan_Jiangsu.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1740841-d1824001-Reviews-Jialing_River-Wusheng_County_Sichuan.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297437-d2003082-Reviews-Donghu_Scenic_Resort-Wuhan_Hubei.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g644033-d1864630-Reviews-Zengyuan_Garden-Changshu_Jiangsu.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303760-d1871162-Reviews-Confucius_Parents_Cemetery-Qufu_Shandong.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g644039-d1808066-Reviews-Dahan_72_Peaks-Anji_County_Zhejiang.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1793465-Reviews-Shidu-Beijing.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303695-d1774311-Reviews-Crescent_Moon_Pool-Dunhuang_Gansu.html
+2011-05-04 21:10:18+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html
+2011-05-04 21:10:18+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html>
+2011-05-04 21:10:18+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1503a834fc027730000a1+++++++++++
+2011-05-04 21:10:18+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:18+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html
+2011-05-04 21:10:18+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html> (referer: http://www.daodao.com/Attraction_Review-g297470-d2003618-Reviews-Ningbo_Wulong_Pond-Ningbo_Zhejiang.html)
+2011-05-04 21:10:18+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:19+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:19+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:19+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:19+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297441-Jiangsu-Vacations.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g608463-Yixing_Jiangsu-Vacations.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g608463-Activities-Yixing_Jiangsu.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g608463-c0-Yixing_Jiangsu.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1409351-d1799300-Reviews-Yuetuo_Island-Leting_County_Hebei.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g303761-d1814270-Reviews-Heaven_Park-Tai_an_Shandong.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152541-d1808255-Reviews-Wuman_Xiaodongjiang_Scenic_Resort-Zixing_Hunan.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1793438-Reviews-Hou_Lake-Beijing.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1160969-d1871370-Reviews-Tianmu_Mountain-Xinchang_County_Zhejiang.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g644034-d1864715-Reviews-Jinta_Tower_of_Huaxi-Jiangyin_Jiangsu.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1870854-d1871545-Reviews-Lhasa_Railway_Station-Doilungdeqen_County_Tibet.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1805650-Reviews-Zhujiajiao_Ancient_Town-Shanghai.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1016998-d1824873-Reviews-Dajing_Gate-Zhangjiakou_Hebei.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html
+2011-05-04 21:10:19+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html>
+2011-05-04 21:10:19+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1503b834fc027730000b0+++++++++++
+2011-05-04 21:10:19+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:19+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html
+2011-05-04 21:10:19+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html> (referer: http://www.daodao.com/Attraction_Review-g311293-d488883-Reviews-Confucian_Temple_of_Tianjin-Tianjin.html)
+2011-05-04 21:10:19+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:19+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:19+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html
+2011-05-04 21:10:19+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:20+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:20+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1203543-Tengchong_County_Yunnan-Vacations.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297415-Shenzhen_Guangdong-Vacations.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g1203543-Activities-Tengchong_County_Yunnan.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1203543-c0-Tengchong_County_Yunnan.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298555-d1371635-Reviews-Xiangjiang_Safari_Park-Guangzhou_Guangdong.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1793347-Reviews-798_Art_Zone-Beijing.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g644039-d1807976-Reviews-Hibiscus_Canyon-Anji_County_Zhejiang.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1773460-Reviews-Expo_2010_Qinghai_Pavilion-Shanghai.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1203543-d1801186-Reviews-North_Sea_Marsh-Tengchong_County_Yunnan.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1847954-d1848504-Reviews-Yaoshan_Mountain-Xiuyan_County_Liaoning.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1161063-d1808032-Reviews-Shouxian_Canyon_of_Wuyi-Wuyi_County_Zhejiang.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1545215-d1851892-Reviews-Lindian_Hot_Spring-Lindian_County_Heilongjiang.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1568950-d1805693-Reviews-Dadong_Mountain_Jingye_Temple-Yangxi_County_Guangdong.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html
+2011-05-04 21:10:20+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html>
+2011-05-04 21:10:20+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1503c834fc027730000bf+++++++++++
+2011-05-04 21:10:20+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:20+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html
+2011-05-04 21:10:20+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html> (referer: http://www.daodao.com/Attraction_Review-g294217-d1464200-Reviews-TANGS-Hong_Kong.html)
+2011-05-04 21:10:20+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:20+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:20+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:20+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:20+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g294222-Tibet-Vacations.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1795707-Mainling_County_Tibet-Vacations.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297908-Kaohsiung-Vacations.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g1795707-Activities-Mainling_County_Tibet.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1795707-c0-Mainling_County_Tibet.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d311575-Reviews-Shanghai_Art_Museum_Shanghai_Meishu_Guan-Shanghai.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d548202-Reviews-Xizhengmeng-Beijing.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d459914-Reviews-Shanghai_Circus_World-Shanghai.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297446-d1865199-Reviews-Youmin_Temple-Nanchang_Jiangxi.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152622-d1859891-Reviews-Tajike_Herdsman_Village-Kashi_Xinjiang_Uygur.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1793299-Reviews-Dianshan_Lake-Shanghai.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294220-d505678-Reviews-Nanjing_Yangtze_River_Bridge-Nanjing_Jiangsu.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297452-d553596-Reviews-Labor_Park-Dalian_Liaoning.html
+2011-05-04 21:10:20+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html
+2011-05-04 21:10:20+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html>
+2011-05-04 21:10:20+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1503c834fc027730000ce+++++++++++
+2011-05-04 21:10:20+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:21+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html
+2011-05-04 21:10:21+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html> (referer: http://www.daodao.com/Attraction_Review-g1152457-d1893722-Reviews-Longhu_Mountain-Guixi_Jiangxi.html)
+2011-05-04 21:10:21+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html
+2011-05-04 21:10:21+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:21+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:21+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html
+2011-05-04 21:10:21+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:22+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:22+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297411-Guangdong-Vacations.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297418-Zhuhai_Guangdong-Vacations.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g790186-Jiaxing_Zhejiang-Vacations.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g297418-Activities-Zhuhai_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297418-c0-Zhuhai_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297418-d1843591-Reviews-Zhuhai_Museum-Zhuhai_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297418-d1843583-Reviews-Mt_Shijing_Village-Zhuhai_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297418-d1795876-Reviews-Tour_around_the_island_of_Macau-Zhuhai_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297420-d502993-Reviews-Wenchang_Pagoda-Beihai_Guangxi_Zhuang.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294220-d1799087-Reviews-The_Memorial_of_the_Nanjing_Massacre-Nanjing_Jiangsu.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1856087-Reviews-Hanshiqiao_Wetland_Nature_Reserve-Beijing.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152586-d1824350-Reviews-Shifang_Arhat_Temple-Shifang_Sichuan.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795743-d1801615-Reviews-Yanxiang_Cave-Shiquan_County_Shaanxi.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297415-d1843169-Reviews-Dongjiang_Troops_Northward_Retreat_Memorial_Pavilion-Shenzhen_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298559-d1147350-Reviews-Hangzhou_Paradise_Park-Hangzhou_Zhejiang.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1016920-d1825072-Reviews-Nanhuwan_Scenic_Resort-Xinyang_Henan.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1016988-d1824834-Reviews-Shehu_Xueji_Scenic_Resort-Shaoyang_Hunan.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html
+2011-05-04 21:10:22+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html>
+2011-05-04 21:10:22+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1503e834fc027730000e1+++++++++++
+2011-05-04 21:10:22+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:22+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html
+2011-05-04 21:10:22+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html> (referer: http://www.daodao.com/Attraction_Review-g608463-d1865006-Reviews-Linggu_Cave-Yixing_Jiangsu.html)
+2011-05-04 21:10:22+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:22+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:22+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:22+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:22+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1787947-Reviews-Expo_2010_UBPA_Display_South-Shanghai.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297461-d319089-Reviews-Yungang_Grottoes-Datong_Shanxi.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g308272-d1865111-Reviews-Shanghai_New_International_Exhibition_Hall-Shanghai.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1400992-d1843110-Reviews-Xiantang_Hakka_Residence-Dongyuan_County_Guangdong.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1217225-d1813940-Reviews-Hai_an_Slate_Street-Hai_an_County_Jiangsu.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152319-d1799180-Reviews-Bailu_Fountain-Luquan_Hebei.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1409415-d1834721-Reviews-Mt_Ganshan_Forest_Park-Shan_County_Henan.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1793539-Reviews-China_Aviation_Museum-Beijing.html
+2011-05-04 21:10:22+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html
+2011-05-04 21:10:22+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html>
+2011-05-04 21:10:22+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1503e834fc027730000eb+++++++++++
+2011-05-04 21:10:22+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:23+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html
+2011-05-04 21:10:23+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html> (referer: http://www.daodao.com/Attraction_Review-g1203543-d1831779-Reviews-Guanlong_Lake-Tengchong_County_Yunnan.html)
+2011-05-04 21:10:23+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:23+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:23+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:23+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:23+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g298570-Kuala_Lumpur_Wilayah_Persekutuan-Vacations.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152508-d1834312-Reviews-Xiaoqinling_Mountain-Lingbao_Henan.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795736-d1824828-Reviews-Baishui_Stone_Horse_Statue-Shaoyang_County_Hunan.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g494934-d1814098-Reviews-Qionghua_View-Yangzhou_Jiangsu.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1223789-d1848478-Reviews-Huanlong_Lake-Huanren_County_Liaoning.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297470-d547702-Reviews-Venus-Ningbo_Zhejiang.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1409399-d1893718-Reviews-Taining_Danxia_Landform-Taining_County_Fujian.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1753423-d1848657-Reviews-Yongchang_Old_City-Qidong_County_Hunan.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g659917-d1810469-Reviews-Qiaojia_Dunzi_Vacation_Village-Rizhao_Shandong.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297452-d1848064-Reviews-World_Peace_Park-Dalian_Liaoning.html
+2011-05-04 21:10:23+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297418-d1825181-Reviews-Lost_City-Zhuhai_Guangdong.html
+2011-05-04 21:10:23+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g297470-d1834165-Reviews-Qing_an_Hall-Ningbo_Zhejiang.html>
+2011-05-04 21:10:23+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc1503f834fc027730000f7+++++++++++
+2011-05-04 21:10:23+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:24+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html
+2011-05-04 21:10:24+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html> (referer: http://www.daodao.com/Attraction_Review-g1795707-d1801129-Reviews-Yarlung_Zangbo_Rive_Canyon-Mainling_County_Tibet.html)
+2011-05-04 21:10:24+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:24+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:24+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html parse 产生 普通页 url 数量：6
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:24+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 排重数量：2
+2011-05-04 21:10:24+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d1908136-Reviews-Ching_Shu_Hin-Hong_Kong.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d1903837-Reviews-Yeung_Hau_Temple-Hong_Kong.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d548055-Reviews-Hong_Kong_Wetland_Park-Hong_Kong.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152474-d2003841-Reviews-Penglai_Ocean_World_And_Pole_World-Penglai_Shandong.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298557-d1839887-Reviews-Qinglong_Temple_of_Xi_an-Xi_an_Shaanxi.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1979347-Reviews-Wangfujing_Main_Streeet-Beijing.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1454406-d1855341-Reviews-Relic_of_Shangrao_Concentration_Camp-Shangrao_County_Jiangxi.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1217315-d1864201-Reviews-Dongguan_Village-Qianshan_County_Anhui.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g635519-d1826878-Reviews-Jiangling_Bonsai_Garden-Jingzhou_Hubei.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1795686-d1805592-Reviews-Qinglian_Mountain_Park-Linyou_County_Shaanxi.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1017024-d1851081-Reviews-Jiangshan_Mountain-Longyan_Fujian.html
+2011-05-04 21:10:24+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g494934-d1814069-Reviews-Hong_Bridge-Yangzhou_Jiangsu.html
+2011-05-04 21:10:24+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g294217-d1902937-Reviews-Kun_Ting_Study_Hall-Hong_Kong.html>
+2011-05-04 21:10:24+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15040834fc02773000104+++++++++++
+2011-05-04 21:10:24+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:25+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html
+2011-05-04 21:10:25+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html> (referer: http://www.daodao.com/Attraction_Review-g297418-d1843587-Reviews-Vientiane_Theme_Park-Zhuhai_Guangdong.html)
+2011-05-04 21:10:25+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:25+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:25+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html parse 产生 普通页 url 数量：7
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:25+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:25+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297462-Sichuan-Vacations.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1795698-Luojiang_County_Sichuan-Vacations.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1795661-Heqing_County_Yunnan-Vacations.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attractions-g1795698-Activities-Luojiang_County_Sichuan.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g1795698-c0-Luojiang_County_Sichuan.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g494927-d1864484-Reviews-Nanfeng_Old_Stove-Foshan_Guangdong.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1757094-d1979696-Reviews-Heze_Fangshan_Cemetery-Dingtao_County_Shandong.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g494927-d1842703-Reviews-Tongji_Bridge_of_Foshan-Foshan_Guangdong.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1557890-d1824706-Reviews-Tiantang_Village-Jinzhai_County_Anhui.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297409-d1851247-Reviews-Zhuangyan_Temple-Lanzhou_Gansu.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g311293-d2003338-Reviews-Nankai_University-Tianjin.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g776965-d1980171-Reviews-Great_Wall_Museum-Yanqing_County.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d1793532-Reviews-China_Agricultural_Museum-Beijing.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294212-d553954-Reviews-Gong_Wang_Fu-Beijing.html
+2011-05-04 21:10:25+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g298555-d1843689-Reviews-Yuexiu_Mountain-Guangzhou_Guangdong.html
+2011-05-04 21:10:25+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g1795698-d1823830-Reviews-Baimaguan_Cultural_Tourist_Area-Luojiang_County_Sichuan.html>
+2011-05-04 21:10:25+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15041834fc02773000114+++++++++++
+2011-05-04 21:10:25+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:26+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html
+2011-05-04 21:10:26+0800 [daodaoSpider] DEBUG: Crawled (200) <GET http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html> (referer: http://www.daodao.com/Attraction_Review-g297470-d2003343-Reviews-The_University_of_Nottingham_Ningbo-Ningbo_Zhejiang.html)
+2011-05-04 21:10:26+0800 [scrapy] INFO: new url=http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: change proxy:use local network
+2011-05-04 21:10:26+0800 [scrapy] INFO: 对request进行排重
+2011-05-04 21:10:26+0800 [scrapy] INFO: 解析link: http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html parse 产生 普通页 url 数量：6
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-04 21:10:26+0800 [scrapy] INFO: 排除重复 url=http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 排重数量：1
+2011-05-04 21:10:26+0800 [scrapy] INFO: 将新的request存入数据库
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Tourism-g297471-Shaoxing_Zhejiang-Vacations.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d311570-Reviews-Star_Ferry-Hong_Kong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d1036338-Reviews-Lei_Yu_Mun_Fish_Market-Hong_Kong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g294217-d593094-Reviews-The_Center-Hong_Kong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297420-d1834074-Reviews-Beibuwan_Square-Beihai_Guangxi_Zhuang.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152495-d1834532-Reviews-Zheng_Hang_Old_City-Xinzheng_Henan.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152320-d386930-Reviews-Eastern_Royal_Tombs_of_the_Qing_Dynasty-Zunhua_Hebei.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1152430-d1808084-Reviews-Dalong_Waterfall-Yueqing_Zhejiang.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1017045-d1843337-Reviews-Baihua_Mountain-Jieyang_Guangdong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297417-d2003572-Reviews-Zhongshan_Zhan_Park-Zhongshan_Guangdong.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1793638-d1825071-Reviews-Nanjie_Village-Linying_County_Henan.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1214696-d1793216-Reviews-Dongping_National_Forest_Park-Chongming_County.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g297442-d505721-Reviews-Lion_Forest_Garden-Suzhou_Jiangsu.html
+2011-05-04 21:10:26+0800 [scrapy] INFO: 保存新request：http://www.daodao.com/Attraction_Review-g1203543-d1801183-Reviews-Guoshang_Cemetery-Tengchong_County_Yunnan.html
+2011-05-04 21:10:26+0800 [daodaoSpider] DEBUG: Scraped ResponseBodyItem in <http://www.daodao.com/Attraction_Review-g294217-d583584-Reviews-Red_Bar-Hong_Kong.html>
+2011-05-04 21:10:26+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc15042834fc02773000123+++++++++++
+2011-05-04 21:10:26+0800 [daodaoSpider] INFO: Passed None
+2011-05-04 21:10:26+0800 [scrapy] INFO: Received SIGINT, shutting down gracefully. Send again to force unclean shutdown
+2011-05-04 21:10:26+0800 [daodaoSpider] INFO: Closing spider (shutdown)
+2011-05-04 21:10:27+0800 [daodaoSpider] DEBUG: Crawled while closing spider: <GET http://www.daodao.com/Attraction_Review-g297418-d1825181-Reviews-Lost_City-Zhuhai_Guangdong.html>
+2011-05-04 21:10:27+0800 [daodaoSpider] ERROR: Error caught on signal handler: <bound method ?.onResponseReceived of <zijiyou.extensions.diagnoser.Diagnoser object at 0x913a16c>>
+	Traceback (most recent call last):
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 345, in errback
+	    self._startRunCallbacks(fail)
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 424, in _startRunCallbacks
+	    self._runCallbacks()
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 441, in _runCallbacks
+	    self.result = callback(self.result, *args, **kw)
+	  File "/usr/lib/pymodules/python2.6/scrapy/core/downloader/__init__.py", line 98, in _deactivate
+	    response=response, request=request, spider=spider)
+	--- <exception caught here> ---
+	  File "/usr/lib/pymodules/python2.6/scrapy/utils/signal.py", line 22, in send_catch_log
+	    *arguments, **named)
+	  File "/usr/lib/pymodules/python2.6/scrapy/xlib/pydispatch/robustapply.py", line 47, in robustApply
+	    return receiver(*arguments, **named)
+	  File "/home/shiym/workspace/zijiyou/zijiyou/zijiyou/extensions/diagnoser.py", line 66, in onResponseReceived
+	    if response.status in self.errorStatus:
+	exceptions.AttributeError: Failure instance has no attribute 'status'
+	
+2011-05-04 21:10:28+0800 [daodaoSpider] ERROR: Error caught on signal handler: <bound method ?.onResponseReceived of <zijiyou.extensions.diagnoser.Diagnoser object at 0x913a16c>>
+	Traceback (most recent call last):
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 345, in errback
+	    self._startRunCallbacks(fail)
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 424, in _startRunCallbacks
+	    self._runCallbacks()
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 441, in _runCallbacks
+	    self.result = callback(self.result, *args, **kw)
+	  File "/usr/lib/pymodules/python2.6/scrapy/core/downloader/__init__.py", line 98, in _deactivate
+	    response=response, request=request, spider=spider)
+	--- <exception caught here> ---
+	  File "/usr/lib/pymodules/python2.6/scrapy/utils/signal.py", line 22, in send_catch_log
+	    *arguments, **named)
+	  File "/usr/lib/pymodules/python2.6/scrapy/xlib/pydispatch/robustapply.py", line 47, in robustApply
+	    return receiver(*arguments, **named)
+	  File "/home/shiym/workspace/zijiyou/zijiyou/zijiyou/extensions/diagnoser.py", line 66, in onResponseReceived
+	    if response.status in self.errorStatus:
+	exceptions.AttributeError: Failure instance has no attribute 'status'
+	
+2011-05-04 21:10:28+0800 [daodaoSpider] ERROR: Error caught on signal handler: <bound method ?.onResponseReceived of <zijiyou.extensions.diagnoser.Diagnoser object at 0x913a16c>>
+	Traceback (most recent call last):
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 345, in errback
+	    self._startRunCallbacks(fail)
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 424, in _startRunCallbacks
+	    self._runCallbacks()
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 441, in _runCallbacks
+	    self.result = callback(self.result, *args, **kw)
+	  File "/usr/lib/pymodules/python2.6/scrapy/core/downloader/__init__.py", line 98, in _deactivate
+	    response=response, request=request, spider=spider)
+	--- <exception caught here> ---
+	  File "/usr/lib/pymodules/python2.6/scrapy/utils/signal.py", line 22, in send_catch_log
+	    *arguments, **named)
+	  File "/usr/lib/pymodules/python2.6/scrapy/xlib/pydispatch/robustapply.py", line 47, in robustApply
+	    return receiver(*arguments, **named)
+	  File "/home/shiym/workspace/zijiyou/zijiyou/zijiyou/extensions/diagnoser.py", line 66, in onResponseReceived
+	    if response.status in self.errorStatus:
+	exceptions.AttributeError: Failure instance has no attribute 'status'
+	
+2011-05-04 21:10:28+0800 [daodaoSpider] ERROR: Error caught on signal handler: <bound method ?.onSpiderClose of <zijiyou.extensions.diagnoser.Diagnoser object at 0x913a16c>>
+	Traceback (most recent call last):
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 441, in _runCallbacks
+	    self.result = callback(self.result, *args, **kw)
+	  File "/usr/lib/pymodules/python2.6/scrapy/core/engine.py", line 233, in <lambda>
+	    dfd.addBoth(lambda _: self._finish_closing_spider(spider))
+	  File "/usr/lib/pymodules/python2.6/scrapy/core/engine.py", line 249, in _finish_closing_spider
+	    spider=spider, reason=reason)
+	  File "/usr/lib/pymodules/python2.6/scrapy/utils/signal.py", line 53, in send_catch_log_deferred
+	    *arguments, **named)
+	--- <exception caught here> ---
+	  File "/usr/lib/python2.6/dist-packages/twisted/internet/defer.py", line 125, in maybeDeferred
+	    result = f(*args, **kw)
+	  File "/usr/lib/pymodules/python2.6/scrapy/xlib/pydispatch/robustapply.py", line 47, in robustApply
+	    return receiver(*arguments, **named)
+	exceptions.TypeError: onSpiderClose() takes exactly 3 non-keyword arguments (2 given)
+	
+2011-05-04 21:10:28+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
+2011-05-04 21:10:28+0800 [daodaoSpider] INFO: Spider closed (shutdown)

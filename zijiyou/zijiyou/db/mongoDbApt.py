@@ -71,7 +71,7 @@ class MongoDbApt(object):
         '''
         mycursor=None
         if sortField:
-            mycursor = self.db[colName].find(whereJson).sort(sortField,direction=DESCENDING);            
+            mycursor = self.db[colName].find(whereJson).sort(sortField,direction=DESCENDING)           
         else:
             mycursor = self.db[colName].find(whereJson)
         

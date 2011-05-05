@@ -10,11 +10,7 @@ import datetime
 import os
 import re
 import urllib
-
-d1=datetime.datetime.now()
-d2=datetime.datetime(2011,5,4,17,10,10)
-d3=d1-d2
-print 'd1=%s,d2=%s,d3=%s' % (d1,d2,d3)
+import pymongo
 
 #mon=MongoDbApt()
 
@@ -338,3 +334,54 @@ print 'd1=%s,d2=%s,d3=%s' % (d1,d2,d3)
 ##li2.append("%s" % p.encode("utf-8") for p in li)
 #
 #'''
+
+colSource=['ResponseBody']
+dbName = "spiderV20"
+urlAttr = "url";
+testCon = pymongo.Connection("192.168.0.183", 27017)
+testSpiderDb = testCon[dbName]
+testResponse = testSpiderDb[colSource[0]]
+
+serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
+serverSpiderDb = serverCon[dbName]
+serverResponse = serverSpiderDb[colSource[0]]
+
+print "合并前，服务器数据库Response的count：", serverResponse.count()
+
+counter = 0
+for o in testResponse.find():
+    if urlAttr in o:
+        r = serverResponse.find({urlAttr:o[urlAttr]})
+        if not r.count():
+            serverResponse.insert(o)
+            counter += 1
+
+print "总共插入的记录数为：", counter
+print "183测试服务器数据库Response的count：", testResponse.count()
+print "服务器数据库Response的count：", serverResponse.count()
+#'''
+
+colSource=['ResponseBody']
+dbName = "spiderV20"
+urlAttr = "url";
+testCon = pymongo.Connection("192.168.0.183", 27017)
+testSpiderDb = testCon[dbName]
+testResponse = testSpiderDb[colSource[0]]
+
+serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
+serverSpiderDb = serverCon[dbName]
+serverResponse = serverSpiderDb[colSource[0]]
+
+print "合并前，服务器数据库Response的count：", serverResponse.count()
+
+counter = 0;
+for o in testResponse.find():
+    if urlAttr in o:
+        r = serverResponse.find({urlAttr:o[urlAttr]})
+        if not r.count():
+            serverResponse.insert(r)
+            counter += 1
+            
+print "总共插入的记录数为：", counter
+print "183测试服务器数据库Response的count：", testResponse.count()
+print "服务器数据库Response的count：", serverResponse.count()

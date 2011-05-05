@@ -38,7 +38,8 @@ class Diagnoser(object):
         self.mongo=MongoDbApt()
         self.crawlCol='CrawlUrl'
         
-        dispatcher.connect(self.onResponseReceived,signal=signals.response_received)
+        #回调函数声明未知
+#        dispatcher.connect(self.onResponseReceived,signal=signals.response_received)
         dispatcher.connect(self.onSpiderClose,signal=signals.spider_closed)
         dispatcher.connect(self.onSpiderOpen,signal=signals.spider_opened)
     
@@ -46,7 +47,7 @@ class Diagnoser(object):
         self.biginTime=datetime.datetime.now()
         log.msg('onSpiderOpen %s' % spider.name,level=log.INFO)
                 
-    def onSpiderClose(self,spider,reson):
+    def onSpiderClose(self,spider):
         endTime=datetime.datetime.now()
         intervalTemp=endTime - self.biginTime
         log.msg('onSpiderClose %s,intervalTemp=%s' % (spider.name,intervalTemp),level=log.INFO)
@@ -67,5 +68,5 @@ class Diagnoser(object):
             self.errorCounter+=1
         if self.errorCounter>self.thresholdError:
             log.msg("警告：错误-某些错误出现次数大于阀值：%s" % self.errorCounter, level=log.ERROR)
-        print 'onResponseReceived %s,%s' % (spider.name,self.errorCounter)
+        log.msg('onResponseReceived %s,%s' % (spider.name,self.errorCounter), level=log.INFO)
             
