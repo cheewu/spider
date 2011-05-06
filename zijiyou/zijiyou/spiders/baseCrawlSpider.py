@@ -157,7 +157,8 @@ class BaseCrawlSpider(CrawlSpider):
         for v in self.itemRegex:
             if re.search(v['regex'], response.url):
                 contentType=v['type']
-                    
+                break
+        
         if contentType == None:
             log.msg("不是item的urlLink：%s" %  response.url, level=log.INFO)
             return None
