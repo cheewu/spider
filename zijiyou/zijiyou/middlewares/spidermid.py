@@ -7,6 +7,8 @@ Created on 2011-4-12
 from zijiyou.db.mongoDbApt import MongoDbApt
 from scrapy import log
 from scrapy.http.request import Request
+import datetime
+import re
 
 class DuplicateUrlFilter(object):
     '''
@@ -17,23 +19,25 @@ class DuplicateUrlFilter(object):
     colName="CrawlUrl"
     def __init__(self):
         '''init the dump of url which request successful'''
+        log.msg('DuplicateUrlFilter11111111111111111111', level=log.INFO)
         if self.mon== None:
             self.mon=MongoDbApt()
         if self.urlDump !=None:
             return
         self.urlDump=[]
-        whereJson={"status":{"$lt":301}}
+        whereJson={"status":{"$lt":400}}
         fieldsJson={'url':1}
+        log.msg('spider中间件从数据库加载CrawlUrl和ResponseBody.url，时间：%s' % datetime.datetime.now(), level=log.INFO)
         crawlUrls=self.mon.findFieldsAndSort('CrawlUrl', whereJson=whereJson, fieldsJson=fieldsJson)
         responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson={'pageUrl':1})
-        log.msg('加载排重的urlDump，从CrawlUrl加载%s个；从ResponseBody加载%s个' %(len(crawlUrls),len(responses)), level=log.INFO)
+        log.msg('spider中间件加载排重的urlDump，从CrawlUrl加载%s个；从ResponseBody加载%s个；时间：%s' %(len(crawlUrls),len(responses),datetime.datetime.now()), level=log.INFO)
         for p in crawlUrls:
             if "url" in p and (not p['url'] in self.urlDump):
                 self.urlDump.append(p['url'])
         for p in responses:
             if "pageUrl" in p and (not p['pageUrl'] in self.urlDump):
                 self.urlDump.append(p['pageUrl'])
-        log.msg("初始化urlDump. dump的长度=%s" % len(self.urlDump), level=log.INFO)
+        log.msg("spider中间件完成初始化urlDump. dump的长度=%s；时间：%s" % (len(self.urlDump),datetime.datetime.now()), level=log.INFO)
 
     def process_spider_output(self, response, result, spider):
         '''drop the request which appear in urlDump'''
@@ -61,4 +65,47 @@ class DuplicateUrlFilter(object):
                 log.msg("new url=%s" % dupUrl, level=log.INFO)
                 self.urlDump.append(dupUrl)
         
+class SaveNewRequestUrl(object):
+    '''
+    保存新产生的url
+    '''
+    mongoApt=None
+    colName="CrawlUrl"
+    def __init__(self):
+        if not self.mongoApt:
+            self.mongoApt=MongoDbApt()
+        log.msg('SaveNewRequestUrl2222222222222222', level=log.INFO)
         
+    def process_spider_output(self, response, result, spider):
+        counter=0
+#        newResult=[]#test
+        for p in result:
+            if isinstance(p, Request):
+                queJson={"url":p.url}
+                if not self.mongoApt.isExist(self.colName, queJson):
+                    counter+=1
+                    recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
+                    meta=p.meta
+                    if not meta:
+                        log.msg('错误：meta为空，url:%s' % p.url, level=log.ERROR)
+                    if meta and 'callBack' in meta:
+                        recentReq["callBack"]=meta["callBack"]
+                    else:
+                        log.msg('错误：meta.callBack为空，url:%s' % p.url, level=log.ERROR)
+                    if meta and 'reference' in meta:
+                        recentReq["reference"]=meta["reference"]
+                    else:
+                        log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
+                    recentReq["spiderName"]=spider.name
+                    self.mongoApt.saveItem(self.colName,recentReq)
+                    log.msg("保存新request：%s" % p.url,level=log.INFO)
+                    
+                #test
+#                urlTest=p.url
+#                matches = re.search(r'.*(attraction_review)+.*', urlTest)
+#                if not matches:
+#                    newResult.append(p)
+        
+        log.msg("spider中间件保存新request数量：%s,url:%s" % (counter,response.url),level=log.INFO)
+        return result
+    
