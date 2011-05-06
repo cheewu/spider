@@ -43,7 +43,7 @@ class DuplicateUrlFilter(object):
             counter+=1
             if isinstance(p, Request):
                 if p.url and (p.url in self.urlDump):
-                    log.msg("排除重复 url=%s" % p.url, level=log.INFO)
+                    log.msg("排除重复 url=%s" % p.url, level=log.DEBUG)
                     continue
                 else:
                     newResult.append(p)

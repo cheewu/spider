@@ -46,7 +46,7 @@ EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
               }
 
 DOWNLOADER_MIDDLEWARES = {
-                            'zijiyou.middlewares.downloadermid.RandomHttpProxy': 750,
+#                            'zijiyou.middlewares.downloadermid.RandomHttpProxy': 750,
                             'zijiyou.middlewares.downloadermid.RequestedUrlSaveAndUpdate':901
                             }
 

@@ -17,7 +17,7 @@ class ResponseBody(Item):
     type = Field() # indicate the type of target page. such as note attractions... and so on
     pageUrl = Field()
     content = Field()
-    status=100     # log the operation. default is 100, indicates initial status
+    status=100 # log the operation. default is 100, indicates initial status
     dateTime=Field()
     
     def __str__(self):

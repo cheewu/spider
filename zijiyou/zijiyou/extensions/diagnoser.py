@@ -39,7 +39,7 @@ class Diagnoser(object):
         self.crawlCol='CrawlUrl'
         
         #回调函数声明未知
-#        dispatcher.connect(self.onResponseReceived,signal=signals.response_received)
+        dispatcher.connect(self.onResponseReceived,signal=signals.response_received)
         dispatcher.connect(self.onSpiderClose,signal=signals.spider_closed)
         dispatcher.connect(self.onSpiderOpen,signal=signals.spider_opened)
     

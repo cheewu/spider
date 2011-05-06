@@ -64,6 +64,9 @@ class MongoDbApt(object):
         else:
             return False
     
+    def findTestCursor(self,colName,whereJson):
+        return self.db[colName].find(whereJson)
+    
     def findByDictionaryAndSort(self,colName,whereJson,sortField):
         '''
         find and sort result(option) of mongodb

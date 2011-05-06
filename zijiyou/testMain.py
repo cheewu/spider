@@ -12,13 +12,7 @@ import re
 import urllib
 import pymongo
 
-d1=datetime.datetime.now()
-d2=datetime.datetime(2011,5,5,10,0,0)
-d3=d1-d2
-print d3
-print d3.seconds
-
-#mon=MongoDbApt()
+mon=MongoDbApt()
 
 #for i in os.sys.path:
 #    print i
