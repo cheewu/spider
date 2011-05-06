@@ -9,6 +9,8 @@ from scrapy import log
 from zijiyou.db.mongoDbApt import MongoDbApt
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
+#from scrapy.core.scheduler import SchedulerpendingReqNum=len(Scheduler.pending_requests)
+        
 import datetime
 
 class Diagnoser(object):
@@ -62,7 +64,7 @@ class Diagnoser(object):
         log.msg("爬虫：%s 扩展diagnoser信息：剩余待爬取的网页数量：%s" % (spider.name,untouchedUrlNum), level=log.INFO)
         if untouchedUrlNum<self.thresholdUntouchedUrl:
             log.msg("爬虫：%s 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：%s" % (spider.name,untouchedUrlNum), level=log.ERROR)
-            
+        
     def onResponseReceived(self,response,request,spider):
         if response.status in self.errorStatus:
             self.errorCounter+=1

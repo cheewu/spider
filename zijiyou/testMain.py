@@ -354,8 +354,8 @@ import pymongo
 #
 #for o in testResponse.find():
 #    if urlAttr in o:
-#        r = serverResponse.find({urlAttr:o[urlAttr]})
-#        if not r.count():
+#        num = serverResponse.find({urlAttr:o[urlAttr]}).count()
+#        if num<1:
 #            serverResponse.insert(o)
 #            counter += 1
 #            print counter

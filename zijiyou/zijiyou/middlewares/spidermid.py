@@ -53,7 +53,7 @@ class DuplicateUrlFilter(object):
             else:
                 newResult.append(p)
         if len(newResult)<counter:
-            log.msg("排重数量：%s" % (counter-len(newResult)), level=log.INFO)
+            log.msg("排重数量：%s，通过数量：%s" % (counter-len(newResult),len(newResult)), level=log.INFO)
         else:
             log.msg("排重中间件所有的url均不重复！数量：%s" % len(newResult), level=log.INFO)
         return newResult
@@ -78,8 +78,9 @@ class SaveNewRequestUrl(object):
         
     def process_spider_output(self, response, result, spider):
         counter=0
-#        newResult=[]#test
+        newResult=[]
         for p in result:
+            newResult.append(p)
             if isinstance(p, Request):
                 queJson={"url":p.url}
                 if not self.mongoApt.isExist(self.colName, queJson):
@@ -106,6 +107,6 @@ class SaveNewRequestUrl(object):
 #                if not matches:
 #                    newResult.append(p)
         
-        log.msg("spider中间件保存新request数量：%s,url:%s" % (counter,response.url),level=log.INFO)
-        return result
+        log.msg("spider中间件保存新request数量：%s,result长度：%s,url:%s" % (counter,len(newResult),response.url),level=log.INFO)
+        return newResult
     

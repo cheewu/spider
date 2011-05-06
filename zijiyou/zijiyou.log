@@ -1,0 +1,78 @@
+2011-05-06 15:47:10+0800 [scrapy] INFO: Scrapy 0.12.0.2539 started (bot: zijiyou)
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-06 15:47:11+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] ERROR: 爬虫baseSeSpider 的pendingRequest为空，交由scrapy从startUrl启动
+2011-05-06 15:47:11+0800 [scrapy] INFO: 启动爬虫：daodaoSpider
+2011-05-06 15:47:11+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-06 15:47:11+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: 开始crawl，第一个url : {u'status': 1000, u'reference': u'http://www.daodao.com/Attractions-g294211-Activities-China.html', u'url': u'http://www.daodao.com/Attraction_Review-g1851009-d1851860-Reviews-Mt_Qilin_Scenic_Resort-Jidong_County_Heilongjiang.html', u'dateTime': datetime.datetime(2011, 5, 6, 15, 39, 50, 729000), u'priority': 600, u'callBack': None, u'spiderName': u'daodaoSpider', u'_id': ObjectId('4dc3a5c6834fc022bc00001b')}
+2011-05-06 15:47:11+0800 [scrapy] INFO: 爬虫daodaoSpider获得pendingRequest，数量=38
+2011-05-06 15:47:11+0800 [scrapy] INFO: 启动爬虫：lvpingSpider
+2011-05-06 15:47:11+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-06 15:47:11+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: 开始crawl，第一个url : {u'status': 1000, u'reference': u'http://www.lvping.com/attractions-d152-guangzhou.html', u'url': u'http://www.lvping.com/attraction_review-d152-s6772-detail.html', u'dateTime': datetime.datetime(2011, 5, 6, 15, 38, 25, 729000), u'priority': 1000, u'callBack': None, u'spiderName': u'lvpingSpider', u'_id': ObjectId('4dc3a571834fc02288000019')}
+2011-05-06 15:47:11+0800 [scrapy] INFO: 爬虫lvpingSpider获得pendingRequest，数量=45
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: spider中间件从数据库加载CrawlUrl和ResponseBody.url，时间：2011-05-06 15:47:11.172070
+2011-05-06 15:47:11+0800 [scrapy] INFO: spider中间件加载排重的urlDump，从CrawlUrl加载0个；从ResponseBody加载0个；时间：2011-05-06 15:47:11.172930
+2011-05-06 15:47:11+0800 [scrapy] INFO: spider中间件完成初始化urlDump. dump的长度=0；时间：2011-05-06 15:47:11.173035
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-06 15:47:11+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-06 15:47:11+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-06 15:47:11+0800 [scrapy] INFO: 开始crawl，第一个url : {u'status': 1000, u'reference': u'http://www.lvping.com/attractions-d152-guangzhou.html', u'url': u'http://www.lvping.com/attraction_review-d152-s6772-detail.html', u'dateTime': datetime.datetime(2011, 5, 6, 15, 38, 25, 729000), u'priority': 1000, u'callBack': None, u'spiderName': u'lvpingSpider', u'_id': ObjectId('4dc3a571834fc02288000019')}
+2011-05-06 15:47:11+0800 [scrapy] INFO: 爬虫lvpingSpider获得pendingRequest，数量=45
+2011-05-06 15:47:11+0800 [lvpingSpider] INFO: Spider opened
+2011-05-06 15:47:11+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser：onSpiderOpen 
+2011-05-06 15:47:11+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/attractions-d152-guangzhou.html
+2011-05-06 15:47:11+0800 [scrapy] INFO: new url=http://www.lvping.com/attractions-d152-guangzhou.html
+2011-05-06 15:47:11+0800 [scrapy] INFO: 从数据库查询的url开始crawl，len(pendingRequest)= 45
+2011-05-06 15:47:11+0800 [scrapy] INFO: 解析link: http://www.lvping.com/attractions-d152-guangzhou.html
+2011-05-06 15:47:12+0800 [scrapy] INFO: http://www.lvping.com/attractions-d152-guangzhou.html parse 产生 普通页 url 数量：71
+2011-05-06 15:47:12+0800 [scrapy] INFO: http://www.lvping.com/attractions-d152-guangzhou.html parse 产生 Item页 url 数量：20
+2011-05-06 15:47:12+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/attractions-d152-guangzhou.html
+2011-05-06 15:47:12+0800 [scrapy] INFO: 排重数量：1，通过数量：90
+2011-05-06 15:47:12+0800 [scrapy] INFO: spider中间件保存新request数量：0,result长度：90,url:http://www.lvping.com/attractions-d152-guangzhou.html
+2011-05-06 15:47:14+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/attraction_review-d152-s6822-detail.html
+2011-05-06 15:47:14+0800 [scrapy] INFO: new url=http://www.lvping.com/attraction_review-d152-s6822-detail.html
+2011-05-06 15:47:14+0800 [scrapy] INFO: 解析link: http://www.lvping.com/attraction_review-d152-s6822-detail.html
+2011-05-06 15:47:14+0800 [scrapy] INFO: http://www.lvping.com/attraction_review-d152-s6822-detail.html parse 产生 普通页 url 数量：9
+2011-05-06 15:47:15+0800 [scrapy] INFO: http://www.lvping.com/attraction_review-d152-s6822-detail.html parse 产生 Item页 url 数量：1
+2011-05-06 15:47:15+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-06 15:47:15+0800 [scrapy] INFO: 排重数量：2，通过数量：9
+2011-05-06 15:47:15+0800 [scrapy] INFO: spider中间件保存新request数量：0,result长度：9,url:http://www.lvping.com/attraction_review-d152-s6822-detail.html
+2011-05-06 15:47:15+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc3a783834fc023a6000000+++++++++++
+2011-05-06 15:47:15+0800 [lvpingSpider] INFO: Passed None
+2011-05-06 15:47:15+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/attraction_review-d152-s64983-detail.html
+2011-05-06 15:47:15+0800 [scrapy] INFO: new url=http://www.lvping.com/attraction_review-d152-s64983-detail.html
+2011-05-06 15:47:15+0800 [scrapy] INFO: 解析link: http://www.lvping.com/attraction_review-d152-s64983-detail.html
+2011-05-06 15:47:16+0800 [scrapy] INFO: http://www.lvping.com/attraction_review-d152-s64983-detail.html parse 产生 普通页 url 数量：9
+2011-05-06 15:47:16+0800 [scrapy] INFO: http://www.lvping.com/attraction_review-d152-s64983-detail.html parse 产生 Item页 url 数量：1
+2011-05-06 15:47:16+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-06 15:47:16+0800 [scrapy] INFO: 排重数量：2，通过数量：9
+2011-05-06 15:47:16+0800 [scrapy] INFO: spider中间件保存新request数量：0,result长度：9,url:http://www.lvping.com/attraction_review-d152-s64983-detail.html
+2011-05-06 15:47:16+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc3a784834fc023a6000001+++++++++++
+2011-05-06 15:47:16+0800 [lvpingSpider] INFO: Passed None
+2011-05-06 15:47:16+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/attraction_review-d152-s6810-detail.html
+2011-05-06 15:47:16+0800 [scrapy] INFO: new url=http://www.lvping.com/attraction_review-d152-s6810-detail.html
+2011-05-06 15:47:16+0800 [scrapy] INFO: 解析link: http://www.lvping.com/attraction_review-d152-s6810-detail.html
+2011-05-06 15:47:17+0800 [scrapy] INFO: http://www.lvping.com/attraction_review-d152-s6810-detail.html parse 产生 普通页 url 数量：9
+2011-05-06 15:47:17+0800 [scrapy] INFO: http://www.lvping.com/attraction_review-d152-s6810-detail.html parse 产生 Item页 url 数量：1
+2011-05-06 15:47:17+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-05-06 15:47:17+0800 [scrapy] INFO: 排重数量：2，通过数量：9
+2011-05-06 15:47:17+0800 [scrapy] INFO: spider中间件保存新request数量：0,result长度：9,url:http://www.lvping.com/attraction_review-d152-s6810-detail.html
+2011-05-06 15:47:17+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:ResponseBody,objectId:4dc3a785834fc023a6000002+++++++++++
+2011-05-06 15:47:17+0800 [lvpingSpider] INFO: Passed None
+2011-05-06 15:47:17+0800 [scrapy] INFO: Received SIGINT, shutting down gracefully. Send again to force unclean shutdown
+2011-05-06 15:47:17+0800 [lvpingSpider] INFO: Closing spider (shutdown)
+2011-05-06 15:47:18+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser:onSpiderClose 运行时间=7秒
+2011-05-06 15:47:18+0800 [scrapy] ERROR: 爬虫：lvpingSpider 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：7秒，间隔阀值：200秒
+2011-05-06 15:47:18+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser信息：剩余待爬取的网页数量：80
+2011-05-06 15:47:18+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
+2011-05-06 15:47:18+0800 [lvpingSpider] INFO: Spider closed (shutdown)

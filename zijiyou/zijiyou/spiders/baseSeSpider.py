@@ -17,6 +17,7 @@ import datetime
 import re
 import time
 import urllib
+from scrapy.core.scheduler import Scheduler
 
 
 class BaseSeSpider(BaseCrawlSpider):
@@ -56,6 +57,10 @@ class BaseSeSpider(BaseCrawlSpider):
                 print '删除url:%s' % url
         self.seResultList=[]
         
+#        pendingReqNum=len(Scheduler.pending_requests)
+#        if pendingReqNum >0:
+#            log.msg("爬虫：%s 扩展diagnoser警告：爬虫调度有效request队列不未空：%s" % pendingReqNum, level=log.WARNING)
+                
     def makeRequestByKeywordForSEs(self):
         print '生成关键字搜索请求'
         log.msg("生成关键字搜索请求", level=log.INFO)

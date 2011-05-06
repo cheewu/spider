@@ -44,14 +44,14 @@ spiderConfig = {
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
                      'startUrls':[
-                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
-                                  'http://www.lvping.com/EuropeNavigation.aspx',
-                                  'http://www.lvping.com/AsiaNavigation.aspx',
-                                  'http://www.lvping.com/ChinaNavigation.aspx',
-#                                  'http://www.lvping.com/attractions-d152-guangzhou.html',#测试
-                                  'http://www.lvping.com/OceaniaNavigation.aspx',
-                                  'http://www.lvping.com/southAmericaNavigation.aspx',
-                                  'http://www.lvping.com/AfricaNavigation.aspx',
+#                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
+#                                  'http://www.lvping.com/EuropeNavigation.aspx',
+#                                  'http://www.lvping.com/AsiaNavigation.aspx',
+#                                  'http://www.lvping.com/ChinaNavigation.aspx',
+                                  'http://www.lvping.com/attractions-d152-guangzhou.html',#测试
+#                                  'http://www.lvping.com/OceaniaNavigation.aspx',
+#                                  'http://www.lvping.com/southAmericaNavigation.aspx',
+#                                  'http://www.lvping.com/AfricaNavigation.aspx',
 
                                   #游记攻略
 #                                  'http://www.lvping.com/Journals.aspx?type=1',
