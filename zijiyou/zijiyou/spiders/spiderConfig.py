@@ -6,7 +6,7 @@ spiderConfig = {
                      'startUrls':['http://www.baidu.com'],
                      'seUrlFormat':[{'seName':'sosoBlog',
                                      'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s&pg=%s',#搜索格式
-                                     'sePageNum':1,
+                                     'sePageNum':5,
                                      'encode':'GBK',
                                      'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
                                      'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',

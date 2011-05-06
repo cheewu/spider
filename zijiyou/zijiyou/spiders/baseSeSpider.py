@@ -48,19 +48,16 @@ class BaseSeSpider(BaseCrawlSpider):
         
     def onSeSpiderClosed(self):
         '''清空数据库中的SeSpider中的搜索页列表'''
-        log.msg('开始清空数据库中的SeSpider中的搜索页列表，长度：%s' %len(self.seResultList), level=log.INFO)
+        log.msg('开始清空数据库中的SeSpider中的搜索页列表，长度：%s' % len(self.seResultList), level=log.INFO)
         if len(self.seResultList)>0:
             whereJson={}
             for url in self.seResultList :
                 whereJson['url']=url
                 self.mongoApt.remove(self.crawlUrl,whereJson)
-                print '删除url:%s' % url
+#                print '删除url:%s' % url
+            log.msg('清空数据库中的SeSpider中的搜索链接数量：%s' % len(self.seResultList), level=log.INFO)
         self.seResultList=[]
         
-#        pendingReqNum=len(Scheduler.pending_requests)
-#        if pendingReqNum >0:
-#            log.msg("爬虫：%s 扩展diagnoser警告：爬虫调度有效request队列不未空：%s" % pendingReqNum, level=log.WARNING)
-                
     def makeRequestByKeywordForSEs(self):
         print '生成关键字搜索请求'
         log.msg("生成关键字搜索请求", level=log.INFO)
@@ -87,7 +84,8 @@ class BaseSeSpider(BaseCrawlSpider):
                           'resultItemLinkXpath':v['resultItemLinkXpath'],
                           'nextPageLinkXpath':v['nextPageLinkXpath'],
                           'seName':v['seName'],
-                          'homePage':v['homePage']}
+                          'homePage':v['homePage'],
+                          'reference':None}
                     request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
                     reqs.append(request)
                     
@@ -122,6 +120,7 @@ class BaseSeSpider(BaseCrawlSpider):
             log.msg("没有meta的Response，无法进行目标页和下一页的定位：%s" % response.url, level=log.ERROR)
             return reqs
         meta=response.meta
+        meta['reference']=response.url
 #        print meta
         #item页链接请求
         itemsReq=[]

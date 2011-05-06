@@ -54,7 +54,7 @@ extractorConfig = {
                                                r'desc':r'//div[@id="hiddenContent"]',
                                                #r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
                                                #r'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
-                                               #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'    
+                                               #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'
                                     },
                                     
                                     "Note":{
