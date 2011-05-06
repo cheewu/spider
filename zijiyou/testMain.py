@@ -12,7 +12,14 @@ import re
 import urllib
 import pymongo
 
-mon=MongoDbApt()
+#mon=MongoDbApt()
+
+#urlTest='http://www.lvping.com/attractions-d152-guangzhou.html'
+#matches = re.search(r'.*(attraction_review)+.*', urlTest)
+#if not matches:
+#    print 'cat'
+#else:
+#    print matches.group(0)
 
 #for i in os.sys.path:
 #    print i
@@ -26,9 +33,6 @@ mon=MongoDbApt()
 #    print word
 #    encodeWords=urllib.quote(word.encode(encodeType))
 #    print encodeWords
-    
-#%BE%C9%BD%F0%C9%BD
-#%BE%C9%BD%F0%C9%BD
     
 '''
 查看数据
@@ -333,33 +337,33 @@ mon=MongoDbApt()
 ##    li2.append(p.encode("utf-8"))
 ##li2.append("%s" % p.encode("utf-8") for p in li)
 #
-colSource=['ResponseBody']
-dbName = "spiderV20"
-urlAttr = "pageUrl";
-testCon = pymongo.Connection("192.168.0.183", 27017)
-testSpiderDb = testCon[dbName]
-testResponse = testSpiderDb[colSource[0]]
-
-#serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
-serverCon = pymongo.Connection("58.83.134.166", 27017)
-serverSpiderDb = serverCon[dbName]
-serverResponse = serverSpiderDb[colSource[0]]
-
-print "合并前，服务器数据库Response的count：", serverResponse.count()
-counter = 0
-
-for o in testResponse.find():
-    if urlAttr in o:
-        r = serverResponse.find({urlAttr:o[urlAttr]})
-        if not r.count():
-            serverResponse.insert(o)
-            counter += 1
-            print counter
-#            if counter == 2:
-#                break
-    else:
-        print "没有pageUrl属性的记录ID：", o["_id"]
-            
-print "总共插入的记录数为：", counter
-print "183测试服务器数据库Response的count：", testResponse.count()
-print "服务器数据库Response的count：", serverResponse.count()
+#colSource=['ResponseBody']
+#dbName = "spiderV20"
+#urlAttr = "pageUrl";
+#testCon = pymongo.Connection("192.168.0.183", 27017)
+#testSpiderDb = testCon[dbName]
+#testResponse = testSpiderDb[colSource[0]]
+#
+##serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
+#serverCon = pymongo.Connection("58.83.134.166", 27017)
+#serverSpiderDb = serverCon[dbName]
+#serverResponse = serverSpiderDb[colSource[0]]
+#
+#print "合并前，服务器数据库Response的count：", serverResponse.count()
+#counter = 0
+#
+#for o in testResponse.find():
+#    if urlAttr in o:
+#        r = serverResponse.find({urlAttr:o[urlAttr]})
+#        if not r.count():
+#            serverResponse.insert(o)
+#            counter += 1
+#            print counter
+##            if counter == 2:
+##                break
+#    else:
+#        print "没有pageUrl属性的记录ID：", o["_id"]
+#            
+#print "总共插入的记录数为：", counter
+#print "183测试服务器数据库Response的count：", testResponse.count()
+#print "服务器数据库Response的count：", serverResponse.count()
