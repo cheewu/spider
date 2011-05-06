@@ -62,7 +62,7 @@ class BaseCrawlSpider(CrawlSpider):
             #查数据库
             if not colName:
                 colName="CrawlUrl"
-            queJson={"status":{"$gte":300}}
+            queJson={"status":{"$gte":400}}
             if spiderName:
                 queJson['spiderName']=spiderName
             sortField="priority"
@@ -108,7 +108,10 @@ class BaseCrawlSpider(CrawlSpider):
                     url=p["url"]
                     callBackFunctionName=p["callBack"]
                     pagePriority=p["priority"]
-                    req=self.makeRequest(url, callBackFunctionName,priority=pagePriority)
+                    reference=None
+                    if 'reference' in p :
+                        reference=p['reference']
+                    req=self.makeRequest(url, callBackFunctionName=callBackFunctionName,reference=reference,priority=pagePriority)
                     self.pendingRequest.append(req)
                 log.msg("爬虫%s获得pendingRequest，数量=%s" % (self.name,len(self.pendingRequest)),level=log.INFO)
             else:
@@ -190,16 +193,17 @@ class BaseCrawlSpider(CrawlSpider):
         extract links identified by extra, then makeRequests 
         '''
         links = self.extractLinks(response, **extra)
-        reqs = [self.makeRequest(link.url, callBackFunctionName, priority=pagePriority) for link in links]
+        reqs = [self.makeRequest(link.url, callBackFunctionName,response.url, priority=pagePriority) for link in links]
         return reqs
 
-    def makeRequest(self, url, callBackFunctionName=None, **kw): 
+    def makeRequest(self, url, callBackFunctionName=None,reference=None, **kw): 
         '''
         make request, the metaDic indicates the name of call back function
         '''
         if(callBackFunctionName != None):
             kw.setdefault('callback', self.functionDic[callBackFunctionName])
-        metaDic={'callBack':callBackFunctionName}
+        metaDic={'callBack':callBackFunctionName,
+                 'reference':reference}
         kw.setdefault('meta',metaDic)
         return Request(url, **kw)
     
