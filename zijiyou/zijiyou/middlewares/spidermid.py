@@ -19,7 +19,6 @@ class DuplicateUrlFilter(object):
     colName="CrawlUrl"
     def __init__(self):
         '''init the dump of url which request successful'''
-        log.msg('DuplicateUrlFilter11111111111111111111', level=log.INFO)
         if self.mon== None:
             self.mon=MongoDbApt()
         if self.urlDump !=None:
@@ -55,6 +54,8 @@ class DuplicateUrlFilter(object):
                 newResult.append(p)
         if len(newResult)<counter:
             log.msg("排重数量：%s" % (counter-len(newResult)), level=log.INFO)
+        else:
+            log.msg("排重中间件所有的url均不重复！数量：%s" % len(newResult), level=log.INFO)
         return newResult
         
     def process_spider_input(self, response, spider):
@@ -74,7 +75,6 @@ class SaveNewRequestUrl(object):
     def __init__(self):
         if not self.mongoApt:
             self.mongoApt=MongoDbApt()
-        log.msg('SaveNewRequestUrl2222222222222222', level=log.INFO)
         
     def process_spider_output(self, response, result, spider):
         counter=0
