@@ -49,6 +49,7 @@ class DuplicateUrlFilter(object):
                     log.msg("排除重复 url=%s" % p.url, level=log.DEBUG)
                     continue
                 else:
+                    self.urlDump.append(p.url)
                     newResult.append(p)
             else:
                 newResult.append(p)
@@ -109,6 +110,6 @@ class SaveNewRequestUrl(object):
 #                if not matches:
 #                    newResult.append(p)
         
-        log.msg("spider中间件保存新url.New=%s; Exist=%s ; result长度：%s,url:%s" % (counterNew,counterExist,len(newResult),response.url),level=log.INFO)
+        log.msg("spider中间件保存新url.NewUrl=%s; ExistUrl=%s ; result长度：%s,url:%s" % (counterNew,counterExist,len(newResult),response.url),level=log.INFO)
         return newResult
     
