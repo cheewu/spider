@@ -20,6 +20,8 @@ class ResponseBody(Item):
     status=100 # log the operation. default is 100, indicates initial status
     dateTime=Field()
     
+    reference=Field() #来源url
+    
     def __str__(self):
         return 'ResponseBodyItem'
 
