@@ -77,14 +77,15 @@ class SaveNewRequestUrl(object):
             self.mongoApt=MongoDbApt()
         
     def process_spider_output(self, response, result, spider):
-        counter=0
+        counterNew=0
+        counterExist=0
         newResult=[]
         for p in result:
             newResult.append(p)
             if isinstance(p, Request):
                 queJson={"url":p.url}
                 if not self.mongoApt.isExist(self.colName, queJson):
-                    counter+=1
+                    counterNew+=1
                     recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
                     meta=p.meta
                     if not meta:
@@ -100,13 +101,14 @@ class SaveNewRequestUrl(object):
                     recentReq["spiderName"]=spider.name
                     self.mongoApt.saveItem(self.colName,recentReq)
                     log.msg("保存新request：%s" % p.url,level=log.INFO)
-                    
+                else:
+                    counterExist+=1
                 #test
 #                urlTest=p.url
 #                matches = re.search(r'.*(attraction_review)+.*', urlTest)
 #                if not matches:
 #                    newResult.append(p)
         
-        log.msg("spider中间件保存新request数量：%s,result长度：%s,url:%s" % (counter,len(newResult),response.url),level=log.INFO)
+        log.msg("spider中间件保存新url.New=%s; Exist=%s ; result长度：%s,url:%s" % (counterNew,counterExist,len(newResult),response.url),level=log.INFO)
         return newResult
     
