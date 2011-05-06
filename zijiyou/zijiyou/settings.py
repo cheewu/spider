@@ -47,11 +47,12 @@ EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
 
 DOWNLOADER_MIDDLEWARES = {
 #                            'zijiyou.middlewares.downloadermid.RandomHttpProxy': 750,
-                            'zijiyou.middlewares.downloadermid.RequestedUrlSaveAndUpdate':901
+                            'zijiyou.middlewares.downloadermid.UpdateRequestedUrl':901
                             }
 
 #SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.RequestSaver': 502}
-SPIDER_MIDDLEWARES = {'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501}
+SPIDER_MIDDLEWARES = {'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
+                      'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499}
 
 #proxy server
 PROXY = ['local']
