@@ -30,7 +30,7 @@ class Parse(object):
         if os.path.exists(logFileName):
             self.loger=open(logFileName,'a')
         else:
-            self.loger=open(logFileName,'w+')
+            self.loger=open(logFileName,'w')
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
         self.mon=MongoDbApt()
         self.colName="ResponseBody"
