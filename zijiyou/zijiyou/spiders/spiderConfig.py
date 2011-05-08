@@ -59,12 +59,12 @@ spiderConfig = {
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
-                                    {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':200}, #国家
-                                    {'regex':r'(http://www.lvping.com/)?(tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
-                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':400}, #景点列表
-                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-s\d+-\w+\d+/\w+:\w+\.html$', 'priority':500}, #景点列表
-                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
-                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\d+-\w+\.html$', 'priority':450}, #景点列表
+#                                    {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':200}, #国家
+#                                    {'regex':r'(http://www.lvping.com/)?(tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':400}, #景点列表
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-s\d+-[r]+\w+\d+/\w+:\w+\.html$', 'priority':500}, #景点列表
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-[r]+\w+\d+-\w+\.html$', 'priority':450}, #景点列表
                                     
 #                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':1}, #攻略列表
 #                                    {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':1},# 会员游记列表

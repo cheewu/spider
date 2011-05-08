@@ -55,6 +55,14 @@ extractorConfig = {
                                                #r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
                                                #r'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
                                                #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'
+                                    },                                    
+                                    "AttractionRegex":{
+                                               #r'address':r'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
+                                               #r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
+                                               #r'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
+                                               #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
+                                               'center':'//div[@class="hotel_map_detail"]/div[@class="search_map_blk"]/a/img/@src',
+                                               'centerRegex':'center=(\d+[.]?\d*[,]\d+[.]\d*)'
                                     },
                                     
                                     "Note":{
@@ -73,8 +81,9 @@ extractorConfig = {
                                                 r'type':r'//div[@class="breadBar"]/a[5]/text()',
                                                 #r'tag':r'',
                                                 #r'attractions':r'',
-                                                #r'feature':r''
-                                    },
+                                                #r'feature':r'',
+                                                'center':r''
+                                    },                            
                                     
                                     "CommonSense":{
                                                 #第一部分和NoteItem的一样
