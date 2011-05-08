@@ -15,6 +15,7 @@ from zijiyou.items.enumModel import LogLevel
 
 import re
 import datetime
+import os
 
 class Parse(object):
     '''
@@ -25,8 +26,11 @@ class Parse(object):
         '''
         Constructor
         '''
-        logFileName=settings.get('OFFLINE_PARSE_LOG')
-        self.loger=open(logFileName,'a')
+        logFileName=settings.get('OFFLINE_PARSE_LOG','/data/configs/offlineParseLog.log')
+        if os.path.exists(logFileName):
+            self.loger=open(logFileName,'a')
+        else:
+            self.loger=open(logFileName,'w+')
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
         self.mon=MongoDbApt()
         self.colName="ResponseBody"
@@ -50,7 +54,7 @@ class Parse(object):
                }
         items={}
         for p in self.responseBodys:
-            print p
+#            print p
             if not ('spiderName' in p and 'type' in p):
                 self.parseLog( '缺失spiderName 或 type. Url:%s' % (p['pageUrl']), level=LogLevel.ERROR)
             spiderName=p['spiderName']
@@ -72,13 +76,13 @@ class Parse(object):
                 
         self.parseLog('解析成功items数：%s' % len(items), level=LogLevel.INFO)
         if items and len(items)>0:
-            print items
+#            print items
             for k,v in items.items():
                 
-                print v
-                print '++++++++++++++++++++++++++'
-                for p1,p2 in v[0].items():
-                    print 'key:%s,value:%s' % (p1,p2)
+#                print v
+#                print '++++++++++++++++++++++++++'
+#                for p1,p2 in v[0].items():
+#                    print 'key:%s,value:%s' % (p1,p2)
                 
                 if len(v)<1:
                     continue
@@ -86,7 +90,7 @@ class Parse(object):
                 if objId:
                     self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
                 else:
-                    print v
+#                    print v
                     self.parseLog('item保存失败！,collectionsName:%s ' % (k), level=LogLevel.ERROR)
         
         #关闭日志
@@ -168,3 +172,4 @@ class Parse(object):
         
     def ExtText(self,input):
         pass
+
