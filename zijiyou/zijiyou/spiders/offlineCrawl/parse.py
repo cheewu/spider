@@ -36,9 +36,9 @@ class Parse(object):
         self.colName="ResponseBody"
         self.requiredField= ['name','content']
         whereJson={'status':100}
-#        self.responseBodys=self.mon.findByDictionaryAndSort(self.colName, whereJson)
-        self.responseBodys=[]
-        self.responseBodys.append(self.mon.findOne(self.colName))#test
+        self.responseBodys=self.mon.findByDictionaryAndSort(self.colName, whereJson)
+#        self.responseBodys=[]
+#        self.responseBodys.append(self.mon.findOne(self.colName))#test
         self.parseLog( 'length of response:%s' % len(self.responseBodys), level=LogLevel.INFO)
     
     def parse(self):
