@@ -41,11 +41,12 @@ class Attraction(Item):
     pageUrl=Field()    
     telNum=Field()     #电话
     
-    openTime=Field()   #开发时间
+    openTime=Field()   #开放时间
     ticket=Field()     #票价
     type=Field()       #景点类型
     webAddress=Field() #网址
     replyNum = Field() #点评数
+    center=Field()  #坐标
     
     status=100      # log the operation. default is 100, indicates initial status
     pushDate=Field()    #最近一次推送日期
