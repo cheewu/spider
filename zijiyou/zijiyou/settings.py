@@ -32,6 +32,7 @@ DB_COLLECTIONS = ['ResponseBody',
                   'test']
 
 LOG_FILE='./zijiyou.log'
+#TESTLOG='/data/configs/test.txt'
 LOG_LEVEL='INFO'
 DOWNLOAD_DELAY = 0.2
 CONCURRENT_REQUESTS_PER_SPIDER=1
@@ -40,7 +41,9 @@ MAX_INII_REQUESTS_SIZE = 1000
 #CLOSESPIDER_TIMEOUT=1800
 #CLOSESPIDER_ITEMPASSED=3000
 SCHEDULER_ORDER='DFO'
-DIAGNOSER_PATH = ''
+
+DIAGNOSER_PATH = '/data/configs/diagnose.log'
+OFFLINE_PARSE_LOG = '/data/configs/offlineParseLog.log'
 
 EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
               }
