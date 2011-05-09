@@ -43,7 +43,7 @@ MAX_INII_REQUESTS_SIZE = 1000
 SCHEDULER_ORDER='DFO'
 
 DIAGNOSER_PATH = '/data/configs/diagnose.log'
-OFFLINE_PARSE_LOG = '/home/shiym/data/configs/offlineParseLog.log'#/home/shiym
+OFFLINE_PARSE_LOG = '/data/configs/offlineParseLog.log'#/home/shiym
 
 EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
               }
