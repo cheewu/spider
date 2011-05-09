@@ -1,8 +1,10 @@
-#Thu May 05 17:41:19 CST 2011
+#Sun May 08 23:27:10 CST 2011
 eclipse.preferences.version=1
 encoding//zijiyou/testMain.py=utf-8
 encoding//zijiyou/zijiyou/db/mongoDbApt.py=utf-8
 encoding//zijiyou/zijiyou/extensions/diagnoser.py=utf-8
+encoding//zijiyou/zijiyou/items/baseItem.py=utf-8
+encoding//zijiyou/zijiyou/items/enumModel.py=utf-8
 encoding//zijiyou/zijiyou/items/itemLoader.py=utf-8
 encoding//zijiyou/zijiyou/items/zijiyouItem.py=utf-8
 encoding//zijiyou/zijiyou/middlewares/downloadermid.py=utf-8
@@ -16,5 +18,4 @@ encoding//zijiyou/zijiyou/spiders/daodao.py=utf-8
 encoding//zijiyou/zijiyou/spiders/lvping.py=utf-8
 encoding//zijiyou/zijiyou/spiders/offlineCrawl/extractorConfig.py=utf-8
 encoding//zijiyou/zijiyou/spiders/offlineCrawl/parse.py=utf-8
-encoding//zijiyou/zijiyou/spiders/offlineCrawl/textExtract.py=utf-8
 encoding//zijiyou/zijiyou/spiders/spiderConfig.py=utf-8

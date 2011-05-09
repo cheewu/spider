@@ -49,9 +49,9 @@ extractorConfig = {
                 "lvpingSpider":{                                    
                                     "Attraction":{
                                                r'name':r'//h1[@property="v:name"]/text()',
-                                               r'area':r'//div[@class="breadBar"]/a//text()',
                                                #r'address':r'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
                                                r'desc':r'//div[@id="hiddenContent"]',
+                                               'area':'//div[@class="breadBar"]/a//text()', 
                                                #r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
                                                #r'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
                                                #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'
@@ -65,6 +65,8 @@ extractorConfig = {
                                                'centerRegex':'center=(\d+[.]?\d*)[,](\d+[.]\d*)[&]*',
                                                'englishName':r'//h1[@property="v:name"]/i/text()',
                                                'englishNameRegex':r'([\w _-]+)',      
+#                                               'area':'//div[@class="breadBar"]/a//text()',    
+#                                               'areaRegex':r'首页[ -]+(.*)-[^-]*景点'
                                     },
                                     
                                     "Note":{

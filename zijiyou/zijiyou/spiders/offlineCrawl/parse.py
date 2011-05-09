@@ -16,6 +16,7 @@ from zijiyou.items.enumModel import LogLevel
 import re
 import datetime
 import os
+import string
 
 class Parse(object):
     '''
@@ -26,24 +27,22 @@ class Parse(object):
         '''
         Constructor
         '''
-        print '1'
         logFileName=settings.get('OFFLINE_PARSE_LOG','/data/configs/offlineParseLog.log')
         if os.path.exists(logFileName):
             self.loger=open(logFileName,'a')
         else:
             self.loger=open(logFileName,'w')
-        print '2'
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
         self.mon=MongoDbApt()
         self.colName="ResponseBody"
         self.requiredField= ['name','content']
-        self.whereJson={'status':100}
+        self.specailField=['center','area']
+        self.whereJson={'type':'Attraction','spiderName':'lvpingSpider'}#'status':100,
         self.limitNum=50
         self.responseTotalNum=self.mon.countByWhere(self.colName, self.whereJson)
         self.responseBodys=self.mon.findFieldsWithLimit(self.colName, self.whereJson, self.limitNum)
         self.curSeek=len(self.responseBodys)
         self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
-        print '3'
     
     def parse(self):
         if not self.responseBodys or len(self.responseBodys)<1:
@@ -72,6 +71,7 @@ class Parse(object):
                 if not itemType in items:
                     items[itemType]=[]
                 items[itemType].append(item)
+                print item #test
                 # parse item successful, and then update the status to 200
                 updateJson={'status':200}
                 self.mon.updateItem(self.colName, whereJson, updateJson)
@@ -91,7 +91,6 @@ class Parse(object):
                 if objId:
                     self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
                 else:
-#                    print v
                     self.parseLog('item保存失败！,collectionsName:%s ' % (k), level=LogLevel.ERROR)
         
         #递归parse
@@ -103,8 +102,9 @@ class Parse(object):
         
         #关闭日志
 #        self.parseLog('解析出的items全部保存成功，关闭日志', level=LogLevel.INFO)
-        self.loger.close()
-        print 'OK'
+        if self.loger.closed :
+            self.loger.close()
+            print 'OK'
         
     def parseItem(self,config, itemType, response):
         '''
@@ -144,6 +144,8 @@ class Parse(object):
             if not value and k in self.requiredField:
                 self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemType,response.url), level=LogLevel.WARNING)                
                 return None
+            if k in self.specailField:
+                value=self.parseSpecialField(k, value)
             item[k]=value
             
         #用正则表达式
@@ -162,6 +164,7 @@ class Parse(object):
                 regex=regexItem[regex]
             values=hxs.select(v).re(regex)
             if not values or len(values)<1:
+                print '字段为空:%s  url：%s' %(k,response.url)
                 self.parseLog('字段为空:%s  url：%s' %(k,response.url) ,level=LogLevel.WARNING)
                 continue
             value=None
@@ -169,15 +172,43 @@ class Parse(object):
                 value=("-".join("%s" % p for p in values)).encode("utf-8")
             else:
                 value=values
-            '''有些属性是必选的，有些属性是可选的，若必选的属性未抽取到，则说明该页面不是item页，直接返回None，若是可选的，则在判断条件中加入可选的属性进行过滤，如：attractions，feature'''
             if not value and k in self.requiredField:
                 self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemType,response.url), level=LogLevel.WARNING)                
                 return None
+            if k in self.specailField:
+                value=self.parseSpecialField(k, value)
             print 'key:%s,value:%s' %(k,value)
             item[k]=value
         self.parseLog('成功解析出一个item，类型：%s' % itemType, level=LogLevel.INFO)
         return item
     
+    def parseSpecialField(self,name,content):
+        '''
+        特殊处理的字段解析
+        '''
+        if not name or not content:
+            return None
+        if name == 'center':
+            newContent=[]
+            for i in range(0,len(content)):
+                org=content[i]
+                value=string.atof(org)
+                newContent.append(value)
+            print content
+            print 'new Center:'            
+            print newContent
+            return newContent 
+        if name == 'area':
+            if len(content.split('-'))<3:
+                return content
+            areaRegex=r'-(.*)-'
+            matches=re.search(areaRegex,content,0)
+            if matches:
+                newContent = matches.group(1)
+                print content
+                print newContent
+                return newContent            
+        
     def parseLog(self,msg,level=None):
         if not msg or not level or len(msg)<2:
             return

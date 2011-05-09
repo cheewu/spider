@@ -14,10 +14,27 @@ import urllib
 import pymongo
 from scrapy.conf import settings
 from scrapy import log
+import string
 
+#content='首页-中国-22'
+#print content.split('-')
+#if len(content.split('-'))<3:
+#    print 1
+#else:
+#    print 2
 parse=Parse()
 parse.parse()
-
+#content='首页-中国-北京-北京景点'
+#areaRegex=r'-(.*)-'
+#p=re.compile(areaRegex)
+#v=re.search(areaRegex,content,0)
+#print v
+#if v and v.group(1):
+#    print v.group(1)
+#v2=re.match(p, content,0)
+#print v2
+#if v2:
+#    print v2.group(0)
 #mon=MongoDbApt()
 #colName='KeyWord'
 #cur = mon.findFieldWithLimit(colName, limitNum=2)
