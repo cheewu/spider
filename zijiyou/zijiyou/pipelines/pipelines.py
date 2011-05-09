@@ -40,20 +40,15 @@ class ZijiyouPipeline(object):
         self.fileApt.write(values+"\n")
         
     def saveItem2Mongodb(self,item, collectionName):
-        values = {}
+        values = {'status':100,
+                  'collectionName':item.collectionName}
         value = ''
         for k,v in item.items():
-            if k != 'status':
-                try:
-                    '''if v is not a dic or list, a exception will be thrown'''
-                    value = "-".join("%s" % p for p in v)
-                except Exception:
-                    value = "%s" % v
-            else:
-                if v[0]:
-                    value = v[0]
-                else:
-                    value = 100
+            try:
+                '''if v is not a dic or list, a exception will be thrown'''
+                value = "-".join("%s" % p for p in v)
+            except Exception:
+                value = "%s" % v
             values[k] = value
         obj = self.mongoApt.saveItem(collectionName, values)
         print '++++saveItem2Mongodb++++col:%s,objectId:%s' % (collectionName ,obj)

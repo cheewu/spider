@@ -33,6 +33,7 @@ class Attraction(Item):
     
     area=Field()
     name=Field()
+    englishName=Field()#景点英文名
     address=Field()
     photos=Field()
     desc=Field()        # description of the attraction

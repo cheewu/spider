@@ -61,8 +61,10 @@ extractorConfig = {
                                                #r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
                                                #r'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
                                                #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
-                                               'center':'//div[@class="hotel_map_detail"]/div[@class="search_map_blk"]/a/img/@src',
-                                               'centerRegex':'center=(\d+[.]?\d*[,]\d+[.]\d*)'
+                                               'center':r'//div[@class="hotel_map_detail"]/div[@class="search_map_blk"]/a/img/@src',
+                                               'centerRegex':'center=(\d+[.]?\d*)[,](\d+[.]\d*)[&]*',
+                                               'englishName':r'//h1[@property="v:name"]/i/text()',
+                                               'englishNameRegex':r'([\w _-]+)',      
                                     },
                                     
                                     "Note":{

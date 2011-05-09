@@ -37,8 +37,6 @@ class Parse(object):
         self.requiredField= ['name','content']
         whereJson={'status':100}
         self.responseBodys=self.mon.findByDictionaryAndSort(self.colName, whereJson)
-#        self.responseBodys=[]
-#        self.responseBodys.append(self.mon.findOne(self.colName))#test
         self.parseLog( 'length of response:%s' % len(self.responseBodys), level=LogLevel.INFO)
     
     def parse(self):
@@ -53,6 +51,8 @@ class Parse(object):
                'Cache-Control': ['no-cache,no-store,must-revalidate']
                }
         items={}
+        countSuc=0;
+        countFail=0
         for p in self.responseBodys:
 #            print p
             if not ('spiderName' in p and 'type' in p):
@@ -69,12 +69,14 @@ class Parse(object):
                 # parse item successful, and then update the status to 200
                 updateJson={'status':200}
                 self.mon.updateItem(self.colName, whereJson, updateJson)
+                countSuc+=1
             else:
                 # fail in parsing item , and then update the status to 101
                 updateJson={'status':101}
                 self.mon.updateItem(self.colName, whereJson, updateJson)
+                countFail+=1
                 
-        self.parseLog('解析成功items数：%s' % len(items), level=LogLevel.INFO)
+        self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (countSuc,countFail), level=LogLevel.INFO)
         if items and len(items)>0:
 #            print items
             for k,v in items.items():
@@ -110,8 +112,9 @@ class Parse(object):
             self.parseLog('类型没有找到：%s ' % itemType, level=LogLevel.ERROR)
             raise NotConfigured
         item={}
-        item['itemType']=itemType
+        item['collectionName']=itemType
         item['pageUrl']=response.url
+        item['status']=100
         xpathItem = config[itemType]
         for k,v in xpathItem.items():
             values = hxs.select(v).extract()
@@ -147,7 +150,7 @@ class Parse(object):
                 continue
             regex=k+'Regex'
             if not regex in regexItem:
-                self.parseLog('找不到匹配的正则表达式，配置文件的%s配置缺少相应的%s' %(k,regex) ,level=LogLevel.WARNING)
+                self.parseLog('找不到匹配的正则表达式，配置文件的%s配置缺少相应的%s' %(k,regex) ,level=LogLevel.ERROR)
                 continue
             else:
                 regex=regexItem[regex]
@@ -155,14 +158,18 @@ class Parse(object):
             if not values or len(values)<1:
                 self.parseLog('字段为空:%s  url：%s' %(k,response.url) ,level=LogLevel.WARNING)
                 continue
-            value=value=("-".join("%s" % p for p in values)).encode("utf-8")
-            
+            value=None
+            if len(values) == 1:
+                value=("-".join("%s" % p for p in values)).encode("utf-8")
+            else:
+                value=values
             '''有些属性是必选的，有些属性是可选的，若必选的属性未抽取到，则说明该页面不是item页，直接返回None，若是可选的，则在判断条件中加入可选的属性进行过滤，如：attractions，feature'''
             if not value and k in self.requiredField:
                 self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemType,response.url), level=LogLevel.WARNING)                
                 return None
+            print 'key:%s,value:%s' %(k,value)
             item[k]=value
-        self.parseLog('成功解析出一个item，类型：%s' % itemType, level=LogLevel.INFO)     
+        self.parseLog('成功解析出一个item，类型：%s' % itemType, level=LogLevel.INFO)
         return item
     
     def parseLog(self,msg,level=None):
