@@ -59,7 +59,6 @@ class Parse(object):
         countSuc=0;
         countFail=0
         for p in self.responseBodys:
-#            print p
             if not ('spiderName' in p and 'type' in p):
                 self.parseLog( '缺失spiderName 或 type. Url:%s' % (p['pageUrl']), level=LogLevel.ERROR)
             spiderName=p['spiderName']
@@ -68,10 +67,10 @@ class Parse(object):
             item = self.parseItem(extractorConfig[spiderName],itemType, response)
             whereJson={'_id':ObjectId(p['_id'])}
             if item:
+                print '新item %s' % itemType
                 if not itemType in items:
                     items[itemType]=[]
                 items[itemType].append(item)
-                print item #test
                 # parse item successful, and then update the status to 200
                 updateJson={'status':200}
                 self.mon.updateItem(self.colName, whereJson, updateJson)
@@ -164,7 +163,6 @@ class Parse(object):
                 regex=regexItem[regex]
             values=hxs.select(v).re(regex)
             if not values or len(values)<1:
-                print '字段为空:%s  url：%s' %(k,response.url)
                 self.parseLog('字段为空:%s  url：%s' %(k,response.url) ,level=LogLevel.WARNING)
                 continue
             value=None
@@ -177,7 +175,6 @@ class Parse(object):
                 return None
             if k in self.specailField:
                 value=self.parseSpecialField(k, value)
-            print 'key:%s,value:%s' %(k,value)
             item[k]=value
         self.parseLog('成功解析出一个item，类型：%s' % itemType, level=LogLevel.INFO)
         return item
@@ -194,9 +191,6 @@ class Parse(object):
                 org=content[i]
                 value=string.atof(org)
                 newContent.append(value)
-            print content
-            print 'new Center:'            
-            print newContent
             return newContent 
         if name == 'area':
             if len(content.split('-'))<3:
@@ -205,8 +199,6 @@ class Parse(object):
             matches=re.search(areaRegex,content,0)
             if matches:
                 newContent = matches.group(1)
-                print content
-                print newContent
                 return newContent            
         
     def parseLog(self,msg,level=None):
