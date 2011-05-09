@@ -37,7 +37,7 @@ class Parse(object):
         self.colName="ResponseBody"
         self.requiredField= ['name','content']
         self.specailField=['center','area']
-        self.whereJson={'type':'Attraction','spiderName':'lvpingSpider'}#'status':100,
+        self.whereJson={'status':100,'type':'Attraction','spiderName':'lvpingSpider'}#'status':100,
         self.limitNum=50
         self.responseTotalNum=self.mon.countByWhere(self.colName, self.whereJson)
         self.responseBodys=self.mon.findFieldsWithLimit(self.colName, self.whereJson, self.limitNum)
@@ -67,7 +67,6 @@ class Parse(object):
             item = self.parseItem(extractorConfig[spiderName],itemType, response)
             whereJson={'_id':ObjectId(p['_id'])}
             if item:
-                print '新item %s' % itemType
                 if not itemType in items:
                     items[itemType]=[]
                 items[itemType].append(item)
@@ -87,6 +86,7 @@ class Parse(object):
                 if len(v)<1:
                     continue
                 objId = self.mon.saveItem(k, v)
+                print '保存新item：%s, objId:%s' % (itemType,objId)
                 if objId:
                     self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
                 else:
