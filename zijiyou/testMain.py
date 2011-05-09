@@ -15,16 +15,14 @@ import pymongo
 from scrapy.conf import settings
 from scrapy import log
 
-#parse=Parse()
-#parse.parse()
+parse=Parse()
+parse.parse()
 
 #mon=MongoDbApt()
 #colName='KeyWord'
 #cur = mon.findFieldWithLimit(colName, limitNum=2)
 #for p in cur :
 #    print p
-t={}
-v= len(t.keys())>0 ? '1':'2'
 
 print 'ok'
 

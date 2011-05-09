@@ -38,7 +38,7 @@ class Parse(object):
         self.colName="ResponseBody"
         self.requiredField= ['name','content']
         self.whereJson={'status':100}
-        self.limitNum=1
+        self.limitNum=50
         self.responseTotalNum=self.mon.countByWhere(self.colName, self.whereJson)
         self.responseBodys=self.mon.findFieldsWithLimit(self.colName, self.whereJson, self.limitNum)
         self.curSeek=len(self.responseBodys)
@@ -102,7 +102,7 @@ class Parse(object):
             self.parse()
         
         #关闭日志
-        self.parseLog('解析出的items全部保存成功', level=LogLevel.INFO)
+#        self.parseLog('解析出的items全部保存成功，关闭日志', level=LogLevel.INFO)
         self.loger.close()
         print 'OK'
         
