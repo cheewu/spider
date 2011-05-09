@@ -37,7 +37,7 @@ class Parse(object):
         self.colName="ResponseBody"
         self.requiredField= ['name','content']
         self.specailField=['center','area']
-        self.whereJson={'status':100,'type':'Attraction','spiderName':'lvpingSpider'}#'status':100,
+        self.whereJson={'type':'Attraction','spiderName':'lvpingSpider'}#'status':100,
         self.limitNum=50
         self.responseTotalNum=self.mon.countByWhere(self.colName, self.whereJson)
         self.responseBodys=self.mon.findFieldsWithLimit(self.colName, self.whereJson, self.limitNum)
@@ -146,7 +146,6 @@ class Parse(object):
             if k in self.specailField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
-            
         #用正则表达式
         regexItem={}
         regexName=itemType+'Regex'
