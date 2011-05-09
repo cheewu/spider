@@ -26,18 +26,24 @@ class Parse(object):
         '''
         Constructor
         '''
+        print '1'
         logFileName=settings.get('OFFLINE_PARSE_LOG','/data/configs/offlineParseLog.log')
         if os.path.exists(logFileName):
             self.loger=open(logFileName,'a')
         else:
             self.loger=open(logFileName,'w')
+        print '2'
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
         self.mon=MongoDbApt()
         self.colName="ResponseBody"
         self.requiredField= ['name','content']
-        whereJson={'status':100}
-        self.responseBodys=self.mon.findByDictionaryAndSort(self.colName, whereJson)
-        self.parseLog( 'length of response:%s' % len(self.responseBodys), level=LogLevel.INFO)
+        self.whereJson={'status':100}
+        self.limitNum=1
+        self.responseTotalNum=self.mon.countByWhere(self.colName, self.whereJson)
+        self.responseBodys=self.mon.findFieldsWithLimit(self.colName, self.whereJson, self.limitNum)
+        self.curSeek=len(self.responseBodys)
+        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
+        print '3'
     
     def parse(self):
         if not self.responseBodys or len(self.responseBodys)<1:
@@ -78,14 +84,7 @@ class Parse(object):
                 
         self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (countSuc,countFail), level=LogLevel.INFO)
         if items and len(items)>0:
-#            print items
             for k,v in items.items():
-                
-#                print v
-#                print '++++++++++++++++++++++++++'
-#                for p1,p2 in v[0].items():
-#                    print 'key:%s,value:%s' % (p1,p2)
-                
                 if len(v)<1:
                     continue
                 objId = self.mon.saveItem(k, v)
@@ -94,6 +93,13 @@ class Parse(object):
                 else:
 #                    print v
                     self.parseLog('item保存失败！,collectionsName:%s ' % (k), level=LogLevel.ERROR)
+        
+        #递归parse
+        while (self.curSeek < self.responseTotalNum):
+            self.parseLog('成功完成一轮递归，curSeek:%s' % self.curSeek, level=LogLevel.INFO)
+            self.responseBodys=self.mon.findFieldsWithLimit(self.colName, self.whereJson, self.limitNum)
+            self.curSeek+=self.limitNum
+            self.parse()
         
         #关闭日志
         self.parseLog('解析出的items全部保存成功', level=LogLevel.INFO)

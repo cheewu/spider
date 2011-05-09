@@ -6,13 +6,37 @@ from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.zijiyouItem import Attraction, CommonSense
 from zijiyou.spiders.offlineCrawl.parse import Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
+from zijiyou.spiders.offlineCrawl.parse import Parse
 import datetime
 import os
 import re
 import urllib
 import pymongo
+from scrapy.conf import settings
+from scrapy import log
+
+#parse=Parse()
+#parse.parse()
 
 #mon=MongoDbApt()
+#colName='KeyWord'
+#cur = mon.findFieldWithLimit(colName, limitNum=2)
+#for p in cur :
+#    print p
+t={}
+v= len(t.keys())>0 ? '1':'2'
+
+print 'ok'
+
+#test = settings.get('TESTLOG', '/home/shiym/test.txt')
+#print test
+#f=open(test,'a')
+#f.write('test write3')
+#f.close()
+#f2=open(test,'r')
+#print f2.readline()
+#mon.removeAll(colName)
+
 
 #urlTest='http://www.lvping.com/attractions-d152-guangzhou.html'
 #matches = re.search(r'.*(attraction_review)+.*', urlTest)
@@ -39,15 +63,15 @@ import pymongo
 '''
 #colSource=[
 ##           'ResponseBody',
-##                  'Attraction',
-##                  'Note',
-##                  'CrawlUrl',
-##                  'CommonSense'
-##                  'MemberInfo',
-##                  'MemberTrack',
-##                  'MemberFriend',
-#                  'MemberNoteList',
-#                  ]
+##                '  'Attraction',
+##                '  'Note',
+##                '  'CrawlUrl',
+##                '  'CommonSense'
+##                '  'MemberInfo',
+##                '  'MemberTrack',
+##                '  'MemberFriend',
+#                '  'MemberNoteList',
+#                '  ]
 #for i in range(0,len(colSource)):
 #    print '(%s:%s)' %(colSource[i],mon.count(colSource[i]))
 #    print ("%s" % mon.find(colSource[i], '', {'type':1}).limit(1)).encode('utf-8')
@@ -60,7 +84,7 @@ import pymongo
 '''模糊查询 日本'''
 #regexAttraction='Attractions-g\d+-Activities-[oa\d-]+.*\.html$'#Attractions-g294232-Activities-oa1315-Japan.html Attractions-g\d+-Activities[-oa\d]+.*[Japan]+\.html$
 ##regexAttraction=r'^http:.*.html' Attractions-g\d+-Activities[-oa\d-]+.*\.html$
-#                #http://www.daodao.com/Attractions-g294232-Activities- Japan.html
+#                '#http://www.daodao.com/Attractions-g294232-Activities- Japan.html
 #pattern=re.compile(regexAttraction)
 ##queJson={"url":{"$regex":regexAttraction}}
 #queJson={"url":pattern}
@@ -139,7 +163,7 @@ import pymongo
 #        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$","type":"好友","order":11},
 #        
 #        {"url":"http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals","order":12},
-#        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$","type":"游记","order":12}
+#        {"reg":"(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$","type":"游记',","order":12}
 #       ]
 #mon.saveItem('test', values)
 ##print 'count=%s:len=%s' %(mon.count('test'),len(values))
@@ -191,17 +215,17 @@ import pymongo
 清空爬到的数据
 '''
 #colSource=[
-#                'ResponseBody',
-#                  'Attraction',
-#                  'Note',
-#                  'CrawlUrl',
-#                  'CommonSense',
-#                  'MemberInfo',
-#                  'MemberTrack',
-#                  'MemberFriend',
-#                  'MemberNoteList',
-#                  'KeyWord',
-#                  'test']
+#                ''ResponseBody',
+#                '  'Attraction',
+#                '  'Note',
+#                '  'CrawlUrl',
+#                '  'CommonSense',
+#                '  'MemberInfo',
+#                '  'MemberTrack',
+#                '  'MemberFriend',
+#                '  'MemberNoteList',
+#                '  'KeyWord',
+#                '  'test']
 #print '清空...'
 #for i in range(0,len(colSource)):
 #    print mon.count(colSource[i])
@@ -360,7 +384,7 @@ import pymongo
 #            counter += 1
 #            print counter
 ##            if counter == 2:
-##                break
+##                'break
 #    else:
 #        print "没有pageUrl属性的记录ID：", o["_id"]
 #            
