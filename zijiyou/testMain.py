@@ -22,8 +22,8 @@ import string
 #    print 1
 #else:
 #    print 2
-parse=Parse()
-parse.parse()
+#parse=Parse()
+#parse.parse()
 #content='首页-中国-北京-北京景点'
 #areaRegex=r'-(.*)-'
 #p=re.compile(areaRegex)
@@ -41,7 +41,7 @@ parse.parse()
 #for p in cur :
 #    print p
 
-print 'ok'
+#print 'ok'
 
 #test = settings.get('TESTLOG', '/home/shiym/test.txt')
 #print test
@@ -95,6 +95,8 @@ print 'ok'
 '''
 #parse=Parse()
 #parse.parse()
+#
+#print 'ok'
 
 '''模糊查询 日本'''
 #regexAttraction='Attractions-g\d+-Activities-[oa\d-]+.*\.html$'#Attractions-g294232-Activities-oa1315-Japan.html Attractions-g\d+-Activities[-oa\d]+.*[Japan]+\.html$
@@ -406,3 +408,38 @@ print 'ok'
 #print "总共插入的记录数为：", counter
 #print "183测试服务器数据库Response的count：", testResponse.count()
 #print "服务器数据库Response的count：", serverResponse.count()
+
+#清空国家、城市的列表页 CrawlUrl
+#colSource=['CrawlUrl']
+#dbName = "spiderV20"
+#urlAttr = "url";
+##
+#serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
+#serverCon = pymongo.Connection("58.83.134.166", 27017)
+#serverSpiderDb = serverCon[dbName]
+#serverResponse = serverSpiderDb[colSource[0]]
+##
+#counter = 0
+#
+#regex = [
+##         r'http://www.lvping.com/NorthAmericaNavigation.aspx$',
+##         r'http://www.lvping.com/EuropeNavigation.aspx$',
+##         r'http://www.lvping.com/AsiaNavigation.aspx$',
+##         r'http://www.lvping.com/ChinaNavigation.aspx$',
+##         r'http://www.lvping.com/OceaniaNavigation.aspx$',
+##         r'http://www.lvping.com/southAmericaNavigation.aspx$',
+##         r'http://www.lvping.com/AfricaNavigation.aspx$',
+#         r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', #国家
+#         r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$',  #城市:
+##         r'(http://www.lvping.com)?/Journals.aspx\?type=1.*selecttype=0.*',# 精品游记列表
+##         r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*'# 攻略列表
+#         ]
+#
+#print "更新前服务器数据库Response的count：", serverResponse.count()
+#
+#for r in regex:
+#    count = serverResponse.find({urlAttr:{'$regex': r}}).count()
+#    print count
+#    serverResponse.remove({urlAttr:{'$regex': r}})
+#            
+#print "删除后服务器数据库Response的count：", serverResponse.count()

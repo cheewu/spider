@@ -5,9 +5,10 @@ Created on 2011-3-28
 @author: shiym
 '''
 
-from scrapy.item import Item, Field, DictItem
+from scrapy.item import Field, DictItem, Item
+from zijiyou.items.baseItem import BaseItem
 
-class ResponseBody(Item):
+class ResponseBody(BaseItem):
     '''
     Content of Target page. the content field represent the boy of a response
     '''
@@ -17,7 +18,6 @@ class ResponseBody(Item):
     type = Field() # indicate the type of target page. such as note attractions... and so on
     pageUrl = Field()
     content = Field()
-    status=100 # log the operation. default is 100, indicates initial status
     dateTime=Field()
     
     reference=Field() #来源url
@@ -25,7 +25,7 @@ class ResponseBody(Item):
     def __str__(self):
         return 'ResponseBodyItem'
 
-class Attraction(Item):
+class Attraction(BaseItem):
     '''
     景点元数据结构
     '''
@@ -48,14 +48,11 @@ class Attraction(Item):
     webAddress=Field() #网址
     replyNum = Field() #点评数
     center=Field()  #坐标
-    
-    status=100      # log the operation. default is 100, indicates initial status
-    pushDate=Field()    #最近一次推送日期
         
     def __str__(self):
         return "AttractionItem"
-
-class Note(Item):
+    
+class Note(BaseItem):
     '''
     游记攻略
     '''  
@@ -83,13 +80,10 @@ class Note(Item):
     keyWords = Field()       #关键字  
     destination=Field() #旅游目的地
     
-    status=100      # log the operation. default is 100, indicates initial status
-    pushDate=Field()    #最近一次推送日期
-    
     def __str__(self):
         return "NoteItem"
     
-class CommonSense(Item):
+class CommonSense(BaseItem):
     '''
     常识。如气候、文化等
     '''  
@@ -101,19 +95,18 @@ class CommonSense(Item):
     content = Field()
     date = Field()
     pageUrl = Field()
+    source = Field()         #来源：网页；用户输入；长文本
     
     pvNum = Field()          #浏览量
     replyNum = Field()       #回复
     collectionNum = Field()  #收藏
     helpfulNum = Field()     #有用
     unhelpfulNum = Field()   #没有用
-    status=100     # log the operation. default is 100, indicates initial status
-    pushDate=Field()    #最近一次推送日期
 
     def __str__(self):
         return "CommonSenseItem"
     
-class MemberInfo(Item):
+class MemberInfo(BaseItem):
     '''
     会员主页信息
     '''
@@ -129,14 +122,11 @@ class MemberInfo(Item):
     gender=Field() #性别
     travelPreference=Field() #度假偏好
     travelPartner=Field() #通常和谁旅行
-    
-    status=100     # log the operation. default is 100, indicates initial status
-    pushDate=Field()    #最近一次推送日期
 
     def __str__(self):
         return "MemberInfo"
 
-class MemberTrack(Item):
+class MemberTrack(BaseItem):
     '''
     会员足迹
     '''
@@ -148,14 +138,11 @@ class MemberTrack(Item):
     know=Field()
     like=Field()
     plan=Field()
-    
-    status=100     # log the operation. default is 100, indicates initial status
-    pushDate=Field()    #最近一次推送日期
 
     def __str__(self):
         return "MemberTrack"
 
-class MemberFriend(Item):
+class MemberFriend(BaseItem):
     '''
     会员好友
     '''
@@ -169,14 +156,11 @@ class MemberFriend(Item):
     linkList = Field()
 #    goneNumList = Field()
 #    discoverList = Field()
-    
-    status=100     # log the operation. default is 100, indicates initial status
-    pushDate=Field()    #最近一次推送日期
 
     def __str__(self):
         return "MemberFriend"
 
-class MemberNoteList(Item):
+class MemberNoteList(BaseItem):
     '''
     会员游记
     '''
@@ -191,14 +175,20 @@ class MemberNoteList(Item):
     pvNumList = Field()     #浏览量
     replyNumList = Field()  #回复    
     destinationList=Field() #旅游目的地
-    
-    status=100     # log the operation. default is 100, indicates initial status
-    pushDate=Field()   #最近一次推送日期
 
     def __str__(self):
         return "MemberNoteList"
     
-class CrawlUrl(Item):
+class CityAttraction(BaseItem):
+    name=Field()
+    area=Field()
+    introduction=Field()
+    hotHotelLink=Field()
+    
+    def __str__(self):
+        return "CityAttraction"
+    
+class CrawlUrl(BaseItem):
     '''
     CrawlDB
     '''
@@ -207,11 +197,9 @@ class CrawlUrl(Item):
     spiderName=Field()
     url=Field()
     callBack=Field() # the name of CallBackFunction Method Object
-    status=100   # http status code , type is int
     priority=Field() # type is int
     dateTime=Field() # initiated by middleWare who save it to DB
     
-    pushDate=Field()   #最近一次推送日期
 
     def __str__(self):
         return "CrawlUrl"
@@ -220,6 +208,7 @@ class KeyWord(Item):
     '''
     搜索引擎关键字
     '''
+    collectionName="KeyWord"
     keyWord=Field()
     type=Field() #关键字搜索出的item类别。必须是现有item之一，否则无法存储。 与ResponseBody的type相同
     priority=Field() #关键字优先级

@@ -37,7 +37,7 @@ class Parse(object):
         self.colName="ResponseBody"
         self.requiredField= ['name','content']
         self.specailField=['center','area']
-        self.whereJson={'status':100,'type':'Attraction','spiderName':'lvpingSpider'}#'status':100,
+        self.whereJson={'status':100,'spiderName':'lvpingSpider'}#'status':100,
         self.limitNum=50
         self.responseTotalNum=self.mon.countByWhere(self.colName, self.whereJson)
         self.responseBodys=self.mon.findFieldsWithLimit(self.colName, self.whereJson, self.limitNum)
@@ -64,7 +64,7 @@ class Parse(object):
             spiderName=p['spiderName']
             itemType=re.sub('[\r\n]', "", p['type'])
             response=HtmlResponse(str(p['pageUrl']), status=200, headers=heard, body=str(p['content']), flags=None, request=None )
-            item = self.parseItem(extractorConfig[spiderName],itemType, response)
+            item = self.parseItem(extractorConfig[spiderName],itemType, response, spiderName)
             whereJson={'_id':ObjectId(p['_id'])}
             if item:
                 if not itemType in items:
@@ -104,8 +104,8 @@ class Parse(object):
         if self.loger.closed :
             self.loger.close()
             print 'OK'
-        
-    def parseItem(self,config, itemType, response):
+
+    def parseItem(self,config, itemType, response, spiderName=None):
         '''
         parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
@@ -120,6 +120,7 @@ class Parse(object):
         item['collectionName']=itemType
         item['pageUrl']=response.url
         item['status']=100
+        item['spiderName'] = spiderName
         xpathItem = config[itemType]
         for k,v in xpathItem.items():
             values = hxs.select(v).extract()
