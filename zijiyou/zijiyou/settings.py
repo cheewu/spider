@@ -62,3 +62,13 @@ SPIDER_MIDDLEWARES = {
 
 #proxy server
 PROXY = ['local']
+
+#EMail Configure
+MAIL_INTERVAL = 7200
+#发送对象列表
+MAIL_TO_LIST = ["465813018@qq.com", "1413614423@qq.com"]
+#设置服务器，用户名、口令以及邮箱的后缀
+MAIL_HOST = "smtp.sina.com"
+MAIL_USER = "zijiyou2011@sina.com"
+MAIL_PASS = "zijiyou"
+MAIL_POSTFIX = "sina.com"
