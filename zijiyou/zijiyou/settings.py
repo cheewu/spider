@@ -29,6 +29,7 @@ DB_COLLECTIONS = ['ResponseBody',
                   'MemberFriend',
                   'MemberNoteList',
                   'KeyWord',
+                  'CityAttraction',
                   'test']
 
 LOG_FILE='./zijiyou.log'

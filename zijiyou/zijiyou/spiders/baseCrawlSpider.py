@@ -141,7 +141,8 @@ class BaseCrawlSpider(CrawlSpider):
         '''item页link'''
         for v in self.itemRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
-        
+        for i in reqs:
+            log.msg("%s" % i, level=log.INFO)
         itemNum = len(reqs) - normalNum   
         log.msg("%s parse 产生 Item页 url 数量：%s" % (response.url, itemNum), level=log.INFO)
                  

@@ -139,6 +139,13 @@ extractorConfig = {
                                                 r'pvNumList':r'//dl[@id="showbgcolor"]/dd/span[2]/text()',
                                                 r'replyNumList':r'//dl[@id="showbgcolor"]/dd/span[3]/text()',
                                                 r'linkList':r'//dl[@id="showbgcolor"]/dd/strong/a/@href',
+                                    },
+                                    
+                                    "CityAttraction":{
+                                                r'name':r'//div[@class="citynameShow cf"]/strong/text()',
+                                                r'area':r'//div[@class="breadBar"]/a/text()',
+                                                r'introduction':r'//p[@id="city_intro02"]',
+                                                r'hotHotelLink':r'//a[@id="link_hotels_lc"]/@href',
                                     }
                 }
 }
