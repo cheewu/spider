@@ -25,16 +25,12 @@ class DuplicateUrlFilter(object):
     def __init__(self):
         '''init the dump of url which request successful'''
         self.mon=MongoDbApt()
-        self.urlDump=set()
+#        self.urlDump=set()
+        self.urlDump=[]
         self.colName=settings.get('CRAWL_DB')
         if not self.colName:
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
             raise NotConfigured
-#        if self.mon== None:
-#            self.mon=MongoDbApt()
-#        if self.urlDump !=None:
-#            return
-#        self.urlDump=[]
         whereJson={"status":{"$lt":400}}
         fieldsJson={'url':1}#需统一
         log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url，时间：%s' % datetime.datetime.now(), level=log.INFO)
@@ -43,19 +39,19 @@ class DuplicateUrlFilter(object):
         responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson={'pageUrl':1})
         log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；时间：%s' %(len(crawlUrls),len(responses),datetime.datetime.now()), level=log.INFO)
         for p in crawlUrls:
-            if "url" in p :#and (not p['url'] in self.urlDump):
-                hasher=hashlib.sha1(p['url'])
-                fp=hasher.hexdigest()
-                if not fp in self.urlDump:
-                    self.urlDump.append(fp)
+            if "url" in p and (not p['url'] in self.urlDump):
+                self.urlDump.append(p['url'])
+#                fp=self.getFingerPrint(p['url'])
+#                if not fp in self.urlDump:
+#                    self.urlDump.add(fp)
         for p in responses:
-            if "pageUrl" in p :#and (not p['pageUrl'] in self.urlDump):
-                hasher=hashlib.sha1(p['pageUrl'])
-                fp=hasher.hexdigest()
-                if not fp in self.urlDump:
-                    self.urlDump.append(fp)
+            if "pageUrl" in p and (not p['pageUrl'] in self.urlDump):
+                self.urlDump.append(p['pageUrl'])
+#                fp=self.getFingerPrint(p['pageUrl'])
+#                if not fp in self.urlDump:
+#                    self.urlDump.add(fp)
         log.msg("spider中间件完成初始化urlDump. dump的长度=%s；时间：%s" % (len(self.urlDump),datetime.datetime.now()), level=log.INFO)
-
+    
     def process_spider_output(self, response, result, spider):
         '''drop the request which appear in urlDump'''
         newResult=[]
@@ -63,15 +59,15 @@ class DuplicateUrlFilter(object):
         for p in result:
             counter+=1
             if isinstance(p, Request):
-                if p.url :#and (p.url in self.urlDump):
-                    hasher=hashlib.sha1(p.url)
-                    fp=hasher.hexdigest()
-                    if fp in self.urlDump:
-                        log.msg("排除重复 url=%s,finguiPrint:%s" % (p.url,fp), level=log.DEBUG)
+                if p.url and (p.url in self.urlDump):
+#                    fp=self.getFingerPrint(p.url)
+                    if p.url in self.urlDump:
+                        log.msg("排除重复 url=%s" % (p.url), level=log.DEBUG)
                         continue
                     else:
                         #更新urlDump
-                        self.urlDump.append(fp)
+                        self.urlDump.append(p.url)
+#                        self.urlDump.add(fp)
                         
                         #保存到数据库
                         recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
@@ -153,4 +149,12 @@ class SaveNewRequestUrl(object):
         
         log.msg("spider中间件保存新url.NewUrl=%s; ExistUrl=%s ; result长度：%s,url:%s" % (counterNew,counterExist,len(newResult),response.url),level=log.INFO)
         return newResult
-    
+
+def getFingerPrint(self,input):
+    '''
+        指纹
+    '''
+    hasher=hashlib.sha1()
+    hasher.update(canonicalize_url(str(input)))
+    fp=hasher.hexdigest()
+    return fp
