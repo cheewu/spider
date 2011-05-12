@@ -7,36 +7,53 @@ Created on 2011-4-12
 from zijiyou.db.mongoDbApt import MongoDbApt
 from scrapy import log
 from scrapy.http.request import Request
+from scrapy.conf import settings
+from scrapy.exceptions import NotConfigured
+from scrapy.utils.url import canonicalize_url
+
+import hashlib
 import datetime
-import re
+#import re
 
 class DuplicateUrlFilter(object):
     '''
     新产生的ulr请求存入数据库，在访问之后更新其状态
     '''
-    mon=None
-    urlDump=None
-    colName="CrawlUrl"
+#    mon=None
+#    urlDump=None
+#    colName="CrawlUrl"
     def __init__(self):
         '''init the dump of url which request successful'''
-        if self.mon== None:
-            self.mon=MongoDbApt()
-        if self.urlDump !=None:
-            return
-        self.urlDump=[]
+        self.mon=MongoDbApt()
+        self.urlDump=set()
+        self.colName=settings.get('CRAWL_DB')
+        if not self.colName:
+            log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
+            raise NotConfigured
+#        if self.mon== None:
+#            self.mon=MongoDbApt()
+#        if self.urlDump !=None:
+#            return
+#        self.urlDump=[]
         whereJson={"status":{"$lt":400}}
-        fieldsJson={'url':1}
+        fieldsJson={'url':1}#需统一
         log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url，时间：%s' % datetime.datetime.now(), level=log.INFO)
         crawlUrls=self.mon.findFieldsAndSort('CrawlUrl', whereJson=whereJson, fieldsJson=fieldsJson)
         log.msg('完成CrawlUrl加载，时间：%s' %datetime.datetime.now(), level=log.INFO)
         responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson={'pageUrl':1})
         log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；时间：%s' %(len(crawlUrls),len(responses),datetime.datetime.now()), level=log.INFO)
         for p in crawlUrls:
-            if "url" in p and (not p['url'] in self.urlDump):
-                self.urlDump.append(p['url'])
+            if "url" in p :#and (not p['url'] in self.urlDump):
+                hasher=hashlib.sha1(p['url'])
+                fp=hasher.hexdigest()
+                if not fp in self.urlDump:
+                    self.urlDump.append(fp)
         for p in responses:
-            if "pageUrl" in p and (not p['pageUrl'] in self.urlDump):
-                self.urlDump.append(p['pageUrl'])
+            if "pageUrl" in p :#and (not p['pageUrl'] in self.urlDump):
+                hasher=hashlib.sha1(p['pageUrl'])
+                fp=hasher.hexdigest()
+                if not fp in self.urlDump:
+                    self.urlDump.append(fp)
         log.msg("spider中间件完成初始化urlDump. dump的长度=%s；时间：%s" % (len(self.urlDump),datetime.datetime.now()), level=log.INFO)
 
     def process_spider_output(self, response, result, spider):
@@ -46,32 +63,35 @@ class DuplicateUrlFilter(object):
         for p in result:
             counter+=1
             if isinstance(p, Request):
-                if p.url and (p.url in self.urlDump):
-                    log.msg("排除重复 url=%s" % p.url, level=log.DEBUG)
-                    continue
-                else:
-                    #更新urlDump
-                    self.urlDump.append(p.url)
-                    
-                    #保存到数据库
-                    recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
-                    meta=p.meta
-                    if not meta:
-                        log.msg('错误：meta为空，url:%s' % p.url, level=log.ERROR)
-                    if meta and 'callBack' in meta:
-                        recentReq["callBack"]=meta["callBack"]
+                if p.url :#and (p.url in self.urlDump):
+                    hasher=hashlib.sha1(p.url)
+                    fp=hasher.hexdigest()
+                    if fp in self.urlDump:
+                        log.msg("排除重复 url=%s,finguiPrint:%s" % (p.url,fp), level=log.DEBUG)
+                        continue
                     else:
-                        log.msg('错误：meta.callBack为空，url:%s' % p.url, level=log.ERROR)
-                    if meta and 'reference' in meta:
-                        recentReq["reference"]=meta["reference"]
-                    else:
-                        log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
-                    recentReq["spiderName"]=spider.name
-                    self.mon.saveItem(self.colName,recentReq)
-                    log.msg("保存新request：%s" % p.url,level=log.DEBUG)
-                    
-                    #放回请求队列
-                    newResult.append(p)
+                        #更新urlDump
+                        self.urlDump.append(fp)
+                        
+                        #保存到数据库
+                        recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
+                        meta=p.meta
+                        if not meta:
+                            log.msg('错误：meta为空，url:%s' % p.url, level=log.ERROR)
+                        if meta and 'callBack' in meta:
+                            recentReq["callBack"]=meta["callBack"]
+                        else:
+                            log.msg('错误：meta.callBack为空，url:%s' % p.url, level=log.ERROR)
+                        if meta and 'reference' in meta:
+                            recentReq["reference"]=meta["reference"]
+                        else:
+                            log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
+                        recentReq["spiderName"]=spider.name
+                        self.mon.saveItem(self.colName,recentReq)
+                        log.msg("保存新request：%s" % p.url,level=log.DEBUG)
+                        
+                        #放回请求队列
+                        newResult.append(p)
             else:
                 newResult.append(p)
         if len(newResult)<counter:

@@ -31,7 +31,8 @@ DB_COLLECTIONS = ['ResponseBody',
                   'KeyWord',
                   'CityAttraction',
                   'test']
-
+CRAWL_DB = 'CrawlUrl'
+RESPONSE_DB = 'ResponseBody'
 LOG_FILE='./zijiyou.log'
 #TESTLOG='/data/configs/test.txt'
 LOG_LEVEL='INFO'
