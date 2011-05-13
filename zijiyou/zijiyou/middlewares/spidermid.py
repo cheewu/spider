@@ -38,17 +38,9 @@ class DuplicateUrlFilter(object):
         responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson={'pageUrl':1})
         log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；时间：%s' %(len(crawlUrls),len(responses),datetime.datetime.now()), level=log.INFO)
         for p in crawlUrls:
-#            if "url" in p and (not p['url'] in self.urlDump):
             self.urlDump.add(p['url'])
-#                fp=self.getFingerPrint(p['url'])
-#                if not fp in self.urlDump:
-#                    self.urlDump.add(fp)
         for p in responses:
-#            if "pageUrl" in p and (not p['pageUrl'] in self.urlDump):
             self.urlDump.add(p['pageUrl'])
-#                fp=self.getFingerPrint(p['pageUrl'])
-#                if not fp in self.urlDump:
-#                    self.urlDump.add(fp)
         log.msg("spider中间件完成初始化urlDump. dump的长度=%s；时间：%s" % (len(self.urlDump),datetime.datetime.now()), level=log.INFO)
     
     def process_spider_output(self, response, result, spider):
@@ -59,18 +51,13 @@ class DuplicateUrlFilter(object):
         for p in result:
             counter+=1
             if isinstance(p, Request):
-                if p.url and (p.url in self.urlDump):
-#                    fp=self.getFingerPrint(p.url)
-                    preCount = len(self.urlDump)
-                    self.urlDump.add(p.url)
-                    if preCount == len(self.urlDump):
+                if p.url:
+                    if p.url in self.urlDump:
                         log.msg("排除重复 url=%s" % (p.url), level=log.DEBUG)
                         continue
                     else:
                         #更新urlDump
-#                        self.urlDump.append(p.url)
-#                        self.urlDump.add(fp)
-                        
+                        self.urlDump.add(p.url)
                         #保存到数据库
                         recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
                         meta=p.meta
@@ -102,11 +89,9 @@ class DuplicateUrlFilter(object):
         responseStatus=response.status
         if responseStatus  in range(199,305) :
             dupUrl=response.url
-            preCount = len(self.urlDump)
-            self.urlDump.add(dupUrl)
-            if preCount < len(self.urlDump):
-#            if not dupUrl in self.urlDump:
+            if not dupUrl in self.urlDump:
                 log.msg("new url=%s" % dupUrl, level=log.INFO)
+                self.urlDump.add(dupUrl)
         
 class SaveNewRequestUrl(object):
     '''
