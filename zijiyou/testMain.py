@@ -536,8 +536,8 @@ for k,v in colMap.items():
                     if ck in oldItem:
                         item[cv] = oldItem[ck]
         
-        print oldItem
-        print item
+#        print oldItem
+#        print item
         newDb[v].insert(item)
         counter += 1
         print counter
