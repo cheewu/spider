@@ -16,30 +16,32 @@ DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ResponseBody'
 ITEM_PIPELINES=['zijiyou.pipelines.pipelines.ZijiyouPipeline']
 
 # mongodb setting
-DB_HOST = 'localhost'
+DB_HOST = 'localhost' #192.168.0.183
 DB_PORT=27017
-DB='spiderV20'
-DB_COLLECTIONS = ['ResponseBody',
+DB='spiderV21'
+DB_COLLECTIONS = ['PageDb',
+                  'UrlDb',
+                  'POI',
                   'Attraction',
+                  'Hotel',
+                  'Region',
+                  'Article',
                   'Note',
-                  'CrawlUrl',
-                  'CommonSense',
                   'MemberInfo',
                   'MemberTrack',
                   'MemberFriend',
                   'MemberNoteList',
                   'KeyWord',
-                  'CityAttraction',
                   'test']
-CRAWL_DB = 'CrawlUrl'
-RESPONSE_DB = 'ResponseBody'
+CRAWL_DB = 'UrlDb'
+RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
 #TESTLOG='/data/configs/test.txt'
 LOG_LEVEL='INFO'
 DOWNLOAD_DELAY = 0.2
 CONCURRENT_REQUESTS_PER_SPIDER=1
 RECENT_URLS_SIZE = 3000
-MAX_INII_REQUESTS_SIZE = 1000
+MAX_INII_REQUESTS_SIZE = 100000
 #CLOSESPIDER_TIMEOUT=1800
 #CLOSESPIDER_ITEMPASSED=3000
 SCHEDULER_ORDER='DFO'

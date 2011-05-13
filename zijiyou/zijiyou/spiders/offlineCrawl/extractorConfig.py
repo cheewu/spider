@@ -2,7 +2,7 @@
 
 extractorConfig = {
                     "daodaoSpider":{                                    
-                                    "Attraction":{
+                                    "POI":{
                                                r'name':r'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
                                                r'area':r'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li/a/text()',
                                                r'address':r'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
@@ -12,7 +12,7 @@ extractorConfig = {
                                                r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'    
                                     },
                                     
-                                    "Note":{
+                                    "Article":{
                                                 #第一部分和CommonSenseItem的一样
                                                 r'author':r'//div[@class="article-title borderBom"]/p/span/span[@class="fkLnk hvrIE6"]/text()',
                                                 r'date':r'//div[@class="article-title borderBom"]/p/span[2]/text()',
@@ -31,7 +31,7 @@ extractorConfig = {
                                                 r'feature':r'//ul[@class="article-senior-tags borderBom"]/li[2]/div/a/text()'
                                     },
                                     
-                                    "CommonSense":{
+                                    "Note":{
                                                 #第一部分和NoteItem的一样
                                                 r'author':r'//div[@class="article-title borderBom"]/p/span/span[@class="fkLnk hvrIE6"]/text()',
                                                 r'date':r'//div[@class="article-title borderBom"]/p/span[2]/text()',
@@ -69,10 +69,10 @@ extractorConfig = {
 #                                               'areaRegex':r'首页[ -]+(.*)-[^-]*景点'
                                     },
                                     
-                                    "Note":{
+                                    "Article":{
                                                 #第一部分和CommonSenseItem的一样
                                                 r'author':r'//div[@class="memberInfor cf desDistance"]/a[1]/text()',
-                                                r'date':r'//div[@class="memberInfor cf desDistance"]/em/text()',
+                                                r'publishDate':r'//div[@class="memberInfor cf desDistance"]/em/text()',
                                                 r'content':r'//div[@class="yjDetail cf"]',
                                                 #r'pvNum':r'',
                                                 r'replyNum':r'//div[@class="memberInfor cf desDistance"]/a[2]/text()',
@@ -89,10 +89,10 @@ extractorConfig = {
                                                 'center':r''
                                     },                            
                                     
-                                    "CommonSense":{
+                                    "Note":{
                                                 #第一部分和NoteItem的一样
                                                 #r'author':r'',
-                                                r'date':r'//h6[@class="cf"]/span[2]/text()',
+                                                r'publishDate':r'//h6[@class="cf"]/span[2]/text()',
                                                 r'content':r'//ul[@class="playAt_detail"]',
                                                 #r'pvNum':r'//em[@id="pvNum"]/text()',
                                                 r'replyNum':r'//h6[@class="cf"]/span[2]/a/text()',
@@ -141,7 +141,7 @@ extractorConfig = {
                                                 r'linkList':r'//dl[@id="showbgcolor"]/dd/strong/a/@href',
                                     },
                                     
-                                    "CityAttraction":{
+                                    "Region":{
                                                 r'name':r'//div[@class="citynameShow cf"]/strong/text()',
                                                 r'area':r'//div[@class="breadBar"]/a/text()',
                                                 r'introduction':r'//p[@id="city_intro02"]',

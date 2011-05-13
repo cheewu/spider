@@ -19,34 +19,31 @@ class DuplicateUrlFilter(object):
     '''
     新产生的ulr请求存入数据库，在访问之后更新其状态
     '''
-#    mon=None
-#    urlDump=None
-#    colName="CrawlUrl"
     def __init__(self):
         '''init the dump of url which request successful'''
         self.mon=MongoDbApt()
-#        self.urlDump=set()
-        self.urlDump=[]
-        self.colName=settings.get('CRAWL_DB')
-        if not self.colName:
+        self.urlDump=set()
+        self.CrawlDb=settings.get('CRAWL_DB')
+        self.ResponseDb=settings.get('RESPONSE_DB')
+        if not self.CrawlDb or not self.ResponseDb:
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
             raise NotConfigured
         whereJson={"status":{"$lt":400}}
-        fieldsJson={'url':1}#需统一
+        fieldsJson={'url':1}
         log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url，时间：%s' % datetime.datetime.now(), level=log.INFO)
-        crawlUrls=self.mon.findFieldsAndSort('CrawlUrl', whereJson=whereJson, fieldsJson=fieldsJson)
+        crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
         log.msg('完成CrawlUrl加载，时间：%s' %datetime.datetime.now(), level=log.INFO)
-        responses=self.mon.findFieldsAndSort('ResponseBody', whereJson={}, fieldsJson={'pageUrl':1})
-        log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；时间：%s' %(len(crawlUrls),len(responses),datetime.datetime.now()), level=log.INFO)
+        responsUrls=self.mon.findFieldsAndSort(self.ResponseDb, whereJson={}, fieldsJson=fieldsJson)
+        log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；时间：%s' %(len(crawlUrls),len(responsUrls),datetime.datetime.now()), level=log.INFO)
         for p in crawlUrls:
             if "url" in p and (not p['url'] in self.urlDump):
-                self.urlDump.append(p['url'])
+                self.urlDump.add(p['url'])
 #                fp=self.getFingerPrint(p['url'])
 #                if not fp in self.urlDump:
 #                    self.urlDump.add(fp)
-        for p in responses:
+        for p in responsUrls:
             if "pageUrl" in p and (not p['pageUrl'] in self.urlDump):
-                self.urlDump.append(p['pageUrl'])
+                self.urlDump.add(p['pageUrl'])
 #                fp=self.getFingerPrint(p['pageUrl'])
 #                if not fp in self.urlDump:
 #                    self.urlDump.add(fp)
@@ -59,14 +56,14 @@ class DuplicateUrlFilter(object):
         for p in result:
             counter+=1
             if isinstance(p, Request):
-                if p.url and (p.url in self.urlDump):
+                if p.url:
 #                    fp=self.getFingerPrint(p.url)
                     if p.url in self.urlDump:
                         log.msg("排除重复 url=%s" % (p.url), level=log.DEBUG)
                         continue
                     else:
                         #更新urlDump
-                        self.urlDump.append(p.url)
+                        self.urlDump.add(p.url)
 #                        self.urlDump.add(fp)
                         
                         #保存到数据库
@@ -83,7 +80,7 @@ class DuplicateUrlFilter(object):
                         else:
                             log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
                         recentReq["spiderName"]=spider.name
-                        self.mon.saveItem(self.colName,recentReq)
+                        self.mon.saveItem(self.CrawlDb,recentReq)
                         log.msg("保存新request：%s" % p.url,level=log.DEBUG)
                         
                         #放回请求队列
@@ -102,18 +99,19 @@ class DuplicateUrlFilter(object):
             dupUrl=response.url
             if not dupUrl in self.urlDump:
                 log.msg("new url=%s" % dupUrl, level=log.INFO)
-                self.urlDump.append(dupUrl)
+                self.urlDump.add(dupUrl)
         
 class SaveNewRequestUrl(object):
     '''
     保存新产生的url
     '''
-    mongoApt=None
-    colName="CrawlUrl"
     def __init__(self):
-        if not self.mongoApt:
-            self.mongoApt=MongoDbApt()
-        
+        self.mongoApt=MongoDbApt()
+        self.CrawlDb=settings.get('CRAWL_DB')
+        if not self.CrawlDb :
+            log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
+            raise NotConfigured
+                
     def process_spider_output(self, response, result, spider):
         counterNew=0
         counterExist=0
@@ -122,7 +120,7 @@ class SaveNewRequestUrl(object):
             newResult.append(p)
             if isinstance(p, Request):
                 queJson={"url":p.url}
-                if not self.mongoApt.isExist(self.colName, queJson):
+                if not self.mongoApt.isExist(self.CrawlDb, queJson):
                     counterNew+=1
                     recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
                     meta=p.meta
@@ -137,7 +135,7 @@ class SaveNewRequestUrl(object):
                     else:
                         log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
                     recentReq["spiderName"]=spider.name
-                    self.mongoApt.saveItem(self.colName,recentReq)
+                    self.mongoApt.saveItem(self.CrawlDb,recentReq)
                     log.msg("保存新request：%s" % p.url,level=log.INFO)
                 else:
                     counterExist+=1

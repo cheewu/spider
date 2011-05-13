@@ -13,3 +13,6 @@ class LogLevel(object):
     WARNING='WARNING'
     DEBUG='DEBUG'
     INFO='INFO'
+
+#class NoteType(object):
+#    

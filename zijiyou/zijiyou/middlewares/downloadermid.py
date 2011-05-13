@@ -6,8 +6,8 @@ Created on 2011-4-12
 '''
 from scrapy import log
 from scrapy.conf import settings
+from scrapy.exceptions import NotConfigured
 from zijiyou.db.mongoDbApt import MongoDbApt
-import datetime
 
 class ErrorFlag(object):
     ACCESS_DENY_FLAG = 0
@@ -16,39 +16,23 @@ class UpdateRequestedUrl(object):
     '''
     访问过的url更新数据库
     '''
-    colName="CrawlUrl"
-    mongoApt=None
     def __init__(self):
-        if not self.mongoApt:
-            self.mongoApt=MongoDbApt()
-    
-#    def process_request(self, request, spider):
-#        recentReq={"url":"","callBack":None,"status":"","priority":1,"dateTime":datetime.datetime.now()}
-#        recentReq["url"]=request.url
-#        meta=request.meta
-#        if meta and "callBack" in meta:
-#            recentReq["callBack"]=request.meta["callBack"]
-#        recentReq["priority"]=request.priority
-#        recentReq["status"]=1000
-#        if spider.name:
-#            recentReq["spiderName"]=spider.name
-#        
-#        queJson={"url":request.url}
-#        if not self.mongoApt.isExist(self.colName, queJson):
-#            self.mongoApt.saveItem(self.colName,recentReq)
-#            log.msg("保存新request：%s" % request.url,level=log.INFO)
-#            
-#        return None
+        self.mongoApt=MongoDbApt()
+        self.CrawlDb=settings.get('CRAWL_DB')
+        self.ResponseDb=settings.get('RESPONSE_DB')
+        if not self.CrawlDb or not self.ResponseDb:
+            log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
+            raise NotConfigured
     
     def process_response(self, request, response, spider):
         whereJson={"url":request.url}
         responseStatus=response.status
-        updateJson={"status":1}
+        updateJson={"status":200}
         if responseStatus:
             updateJson["status"]=responseStatus
         if responseStatus in [400, 403]:
             log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应" % responseStatus, level=log.ERROR)
-        self.mongoApt.updateItem(self.colName,whereJson,updateJson)
+        self.mongoApt.updateItem(self.CrawlDb,whereJson,updateJson)
         log.msg("recentRequests 更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
         return response
 

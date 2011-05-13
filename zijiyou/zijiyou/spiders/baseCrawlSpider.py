@@ -17,7 +17,7 @@ import re
 
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.spiders.spiderConfig import spiderConfig
-from zijiyou.items.zijiyouItem import ResponseBody
+from zijiyou.items.zijiyouItem import PageDb
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 
 class BaseCrawlSpider(CrawlSpider):
@@ -46,11 +46,15 @@ class BaseCrawlSpider(CrawlSpider):
 
     def __init__(self, *a, **kw):      
         super(BaseCrawlSpider, self).__init__(*a, **kw)
-          
+        
+        self.CrawlDb=settings.get('CRAWL_DB')
+        self.ResponseDb=settings.get('RESPONSE_DB')
+        if not self.CrawlDb or not self.ResponseDb:
+            log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
+            raise NotConfigured
         self.functionDic["parseItem"]=self.parseItem
         self.dbCollecions=settings.get('DB_COLLECTIONS', [])
         if(not self.initConfig()):
-            print '爬虫配置文件加载失败！'
             log.msg('爬虫配置文件加载失败！', level=log.INFO)
             raise NotConfigured
         
@@ -61,7 +65,7 @@ class BaseCrawlSpider(CrawlSpider):
         try:
             #查数据库
             if not colName:
-                colName="CrawlUrl"
+                colName="UrlDb" #CrawlUrl
             queJson={"status":{"$gte":400}}
             if spiderName:
                 queJson['spiderName']=spiderName
@@ -93,10 +97,9 @@ class BaseCrawlSpider(CrawlSpider):
         print '初始化Request：initiateRequest'
         # load the recentRequest from db
         if not self.mongoApt:
-            print 'self.mongoApt为空，初始化mongod链接，并查询recentequest'
             log.msg("self.mongoApt为空，初始化mongod链接，并查询recentequest" ,level=log.INFO)
             self.mongoApt=MongoDbApt()
-            pendingRrls = self.getStartUrls(spiderName=self.name,colName='CrawlUrl')
+            pendingRrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
             if pendingRrls and len(pendingRrls)>0:
                 self.pendingRequest=[]
                 maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
@@ -119,7 +122,6 @@ class BaseCrawlSpider(CrawlSpider):
 
     def baseParse(self, response):
         '''start to parse response link'''
-        print '解析link'
         reqs = []
         
         if not self.hasInit:
@@ -130,7 +132,7 @@ class BaseCrawlSpider(CrawlSpider):
             else:
                 log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , log.INFO)
         
-        log.msg('解析link: %s' % response.url, log.INFO)
+        log.msg('开始解析link: %s' % response.url, log.INFO)
         #普通页link
         for v in self.normalRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
@@ -143,9 +145,9 @@ class BaseCrawlSpider(CrawlSpider):
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
         for i in reqs:
             log.msg("%s" % i, level=log.DEBUG)
-        itemNum = len(reqs) - normalNum   
-        log.msg("%s parse 产生 Item页 url 数量：%s" % (response.url, itemNum), level=log.INFO)
-                 
+        itemNum = len(reqs) - normalNum
+        log.msg("解析完成 %s parse 产生 Item页 url 数量：%s" % (response.url, itemNum), level=log.INFO)
+        
         item = self.parseItem(response)
         if item:
             reqs.append(item)
@@ -154,32 +156,30 @@ class BaseCrawlSpider(CrawlSpider):
     def parseItem(self, response):
         '''start to parse parse item'''
         print '解析目标页'
-        contentType = None
+        itemCollectionName = None
         for v in self.itemRegex:
             if re.search(v['regex'], response.url):
-                contentType=v['type']
+                itemCollectionName=v['itemCollectionName']
                 break
         
-        if contentType == None:
+        if itemCollectionName == None:
             log.msg("不是item的urlLink：%s" %  response.url, level=log.INFO)
             return None
         #验证数据库是否和type配置对应
-        if not contentType in self.dbCollecions:
-            print 'Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % contentType
-            log.msg('Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % contentType, level=log.ERROR)
+        if not itemCollectionName in self.dbCollecions:
+            log.msg('Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % itemCollectionName, level=log.ERROR)
             raise NotConfigured
         
-        log.msg('保存item页，类型： %s' % contentType, level=log.INFO)            
+        log.msg('保存item页，类型： %s' % itemCollectionName, level=log.INFO)            
         '''ResponseBody'''
-        loader = ZijiyouItemLoader(ResponseBody(),response=response)
+        loader = ZijiyouItemLoader(PageDb(),response=response)
         loader.add_value('spiderName', self.name)
-        loader.add_value('pageUrl', response.url)
-        loader.add_value('type', contentType)
-        loader.add_value('content', response.body_as_unicode())
-        loader.add_value('dateTime', datetime.datetime.now())
-#        loader.add_value('status', 100)
-        responseBody = loader.load_item()
-        return responseBody
+        loader.add_value('url', response.url)
+        loader.add_value('itemCollectionName', itemCollectionName)
+        loader.add_value('responseBody', response.body_as_unicode())
+        loader.add_value('optDateTime', datetime.datetime.now())
+        pageResponse = loader.load_item()
+        return pageResponse
     
     def extractLinks(self, response, **extra): 
         """ 
@@ -209,7 +209,7 @@ class BaseCrawlSpider(CrawlSpider):
         kw.setdefault('meta',metaDic)
         return Request(url, **kw)
     
-    def makeRequestWithMeta(self, url, callBackFunctionName=None,meta=None, **kw): 
+    def makeRequestWithMeta(self, url, callBackFunctionName=None,meta=None, **kw):
         '''
         make request, the metaDic indicates the name of call back function
         '''

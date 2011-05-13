@@ -8,7 +8,7 @@ from scrapy import log
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import ResponseBody, Note
+from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 from zijiyou.spiders.spiderConfig import spiderConfig
 from scrapy.xlib.pydispatch import dispatcher
@@ -17,7 +17,7 @@ import datetime
 import re
 import time
 import urllib
-from scrapy.core.scheduler import Scheduler
+from scrapy.conf import settings
 
 
 class BaseSeSpider(BaseCrawlSpider):
@@ -32,18 +32,21 @@ class BaseSeSpider(BaseCrawlSpider):
     itemPriority=1000
     config=None
     seResultList=[]
-    crawlUrl='CrawlUrl'
     
     def __init__(self,*a,**kw):
         super(BaseSeSpider,self).__init__(*a,**kw)
         
-        self.initRequest()
+        self.CrawlDb=settings.get('CRAWL_DB')
+        if not self.CrawlDb :
+            log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
+            raise NotConfigured
         self.config=spiderConfig[self.name]
         if not 'seUrlFormat' in self.config:
             log.msg("baseSeSpider的配置文件没有seUrlFormat!", level=log.ERROR)
-            raise NotConfigured        
-        self.seUrlFormat=self.config['seUrlFormat']
+            raise NotConfigured
         self.functionDic['baseParse'] = self.baseParse
+        self.seUrlFormat=self.config['seUrlFormat']
+        self.initRequest()
         dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
         
     def onSeSpiderClosed(self):
@@ -53,34 +56,33 @@ class BaseSeSpider(BaseCrawlSpider):
             whereJson={}
             for url in self.seResultList :
                 whereJson['url']=url
-                self.mongoApt.remove(self.crawlUrl,whereJson)
-#                print '删除url:%s' % url
+                self.mongoApt.remove(self.CrawlDb,whereJson)
             log.msg('清空数据库中的SeSpider中的搜索链接数量：%s' % len(self.seResultList), level=log.INFO)
         self.seResultList=[]
         
     def makeRequestByKeywordForSEs(self):
-        print '生成关键字搜索请求'
-        log.msg("生成关键字搜索请求", level=log.INFO)
         '''
         由关键字创建SE的请求
         '''
+        log.msg("开始生成关键字搜索请求", level=log.INFO)
+        
         #load关键字
         reqs=[]
         keyWords=self.mongoApt.findByDictionaryAndSort('KeyWord', {}, 'priority')
         if not keyWords and len(keyWords)<1:
             log.msg("没有关键字！", level=log.ERROR)
-            return []        
+            return []
         for keyWord in keyWords:
             for v in self.seUrlFormat:
-                for i in range(1, v['sePageNum']+1):
+                for i in range(1, keyWord['pageNumber']+1):
                     format=v['format']
                     encodeType=v['encode']
                     encodeWords=urllib.quote(keyWord['keyWord'].encode(encodeType))
                     pagePriority=keyWord['priority']
                     url=format % (encodeWords, i)
 #                    print url
-                    meta={'type':keyWord['type'],
-                          'sePageNum':v['sePageNum'],
+                    meta={'itemCollectionName':keyWord['itemCollectionName'],
+                          'sePageNum':keyWord['pageNumber'],
                           'resultItemLinkXpath':v['resultItemLinkXpath'],
                           'nextPageLinkXpath':v['nextPageLinkXpath'],
                           'seName':v['seName'],
@@ -95,8 +97,7 @@ class BaseSeSpider(BaseCrawlSpider):
     
     def baseParse(self,response):
         print '解析搜索引擎结果'
-        log.msg("解析搜索引擎结果", level=log.INFO)
-        log.msg('解析link: %s' % response.url, level=log.INFO)
+        log.msg('解析搜索引擎结果link: %s' % response.url, level=log.INFO)
         reqs = []
         
         if not self.hasInit:
@@ -149,31 +150,31 @@ class BaseSeSpider(BaseCrawlSpider):
         items=[]
         
         meta=response.meta
-        if not ('type' in meta and meta['type']):
-            log.msg("没有type的item页！不能确定保存到那张表。url：%s" % response.url, level=log.ERROR)
+        if not ('itemCollectionName' in meta and meta['itemCollectionName']):
+            log.msg("没有itemCollectionName的item页！不能确定保存到那张表。url：%s" % response.url, level=log.ERROR)
             return items
         
-        type=meta['type']
-        log.msg("保存item页，类型:%s"%str(type) , level=log.INFO)
+        itemCollectionName=meta['itemCollectionName']
+        log.msg("保存item页，类型:%s"%str(itemCollectionName) , level=log.INFO)
         #ResponseBody
-        loader = ZijiyouItemLoader(ResponseBody(),response=response)
+        loader = ZijiyouItemLoader(PageDb(),response=response)
         loader.add_value('spiderName', self.name)
-        loader.add_value('pageUrl', response.url)
-        loader.add_value('type', type)
-        loader.add_value('content', response.body_as_unicode())
-        loader.add_value('dateTime', datetime.datetime.now())
-        responseBody = loader.load_item()
-        items.append(responseBody)
+        loader.add_value('url', response.url)
+        loader.add_value('itemCollectionName', itemCollectionName)
+        loader.add_value('responseBody', response.body_as_unicode())
+        loader.add_value('optDateTime', datetime.datetime.now())
+        pageResponse = loader.load_item()
+        return pageResponse
         
         #解析搜索引擎NoteItem
-        noteItem = self.parseNoteItem(response)    
-        if noteItem:
-            items.append(noteItem)
+        article = self.parseAcricleItem(response)    
+        if article:
+            items.append(article)
         
         return items
     
-    def parseNoteItem(self, response):
-        '''解析搜索引擎NoteItem'''
+    def parseAcricleItem(self, response):
+        '''解析搜索引擎AcricleItem'''
         log.msg("解析搜索引擎NoteItem", level=log.INFO)
         #判断配置是否正确
         if not ('seXpath' in self.config and response.meta['seName'] in self.config['seXpath']):
@@ -182,7 +183,7 @@ class BaseSeSpider(BaseCrawlSpider):
         
         xpathItems = self.config['seXpath'][response.meta['seName']]
         hxs=HtmlXPathSelector(response)
-        loader = ZijiyouItemLoader(Note(),response=response)
+        loader = ZijiyouItemLoader(Article(),response=response)
         for k,v in xpathItems.items():
             values = hxs.select(v).extract()
             value=("-".join("%s" % p for p in values)).encode("utf-8")
@@ -195,7 +196,7 @@ class BaseSeSpider(BaseCrawlSpider):
                         loader.add_value(k, time.strftime("%Y年%m月%d日"))
                 else:
                     loader.add_value(k, value)
-        loader.add_value('pageUrl', response.url)
+        loader.add_value('url', response.url)
         noteItem = loader.load_item()
         return noteItem
         

@@ -5,7 +5,6 @@
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 from scrapy import log
 from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.items.zijiyouItem import Attraction,ResponseBody,Note,CommonSense
 import re
 
 
