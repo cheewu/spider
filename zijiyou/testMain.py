@@ -512,14 +512,14 @@ customSchema = {
           'ResponseBody':{'pageUrl':'url', 'type':'itemCollectionName', 'content':'responseBody', newField:'updateInterval'}
           }
 
-serverCon = pymongo.Connection("58.83.134.166", 27017)
+serverCon = pymongo.Connection("192.168.0.183", 27017)
 oldDb = serverCon[oldDbName]
 newDb = serverCon[newDbName]
 
 
 counter = 0
 for k,v in colMap.items():
-    print "源集合：%s" % k, "新结合：%s" % v
+    print "源集合：%s" % k, "新集合：%s" % v
     counter = 0
     for oldItem in oldDb[k].find(): 
         item = {}
