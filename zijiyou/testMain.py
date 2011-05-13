@@ -2,19 +2,19 @@
 #!/usr/bin/env python
 
 from bson.objectid import ObjectId
+from scrapy import log
+from scrapy.conf import settings
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.zijiyouItem import Attraction, CommonSense
-from zijiyou.spiders.offlineCrawl.parse import Parse
+from zijiyou.spiders.offlineCrawl.parse import Parse, Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
-from zijiyou.spiders.offlineCrawl.parse import Parse
 import datetime
 import os
-import re
-import urllib
 import pymongo
-from scrapy.conf import settings
-from scrapy import log
+import re
 import string
+import time
+import urllib
 
 #content='首页-中国-22'
 #print content.split('-')
@@ -443,3 +443,109 @@ import string
 #    serverResponse.remove({urlAttr:{'$regex': r}})
 #            
 #print "删除后服务器数据库Response的count：", serverResponse.count()
+
+#print serverResponse.find({urlAttr:{'$regex': r'(http://www.lvping.com)?/Journals.aspx\?type=1.*selecttype=0.*'}}).count()
+
+
+#正则匹配测试
+#regex = [
+#                                    {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':200}, #国家
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':400}, #景点列表
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-s\d+-[r]+\w+\d+/\w+:\w+\.html$', 'priority':500}, #景点列表
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
+#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-[r]+\w+\d+-\w+\.html$', 'priority':450}, #景点列表
+#                                    
+##                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':1}, #攻略列表
+#                                    {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':1},# 会员游记列表
+#                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?type=1.*selecttype=0.*', 'priority':1},# 精品游记列表
+#                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':1},# 攻略列表
+#                                    {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+\.html$', 'priority':400},    #常识列表页1
+#                                    {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+:brochure\.html#\w+', 'priority':400}, #常识列表页2
+#                                    {'type':'CommonSense','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-s\w?\d+/\w+:+\w+.*\.html$', 'priority':1},  #国家介绍 概况、气候等常识
+#                                  {'type':'Note','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':1}, #短文攻略(类别 内容 目的地)
+#                                  {'type':'Note','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':1}, #攻略 作者 发表时间 浏览次数 评论次数
+#                                  {'type':'Note','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+', 'priority':1}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
+#                                  {'type':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+', 'priority':1}, #用户
+#                                  {'type':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':1}, #足迹
+#                                  {'type':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':1}, #好友
+#                                  {'type':'MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记
+#                                  
+#                                  {'type':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
+#                                  {'type':'CityAttraction', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
+#         ]
+#
+#
+#for r in regex:
+#    if re.search(r['regex'], 'http://www.lvping.com/members/memberlogin.aspx?url=http://www.lvping.com/members/default.aspx?screenname=82453902da154d5381bb3c514227ddea', 0):
+#        print r['regex']
+
+
+#colSource=['CrawlUrl']
+#dbName = "spiderV20"
+#urlAttr = "url";
+##
+#serverCon = pymongo.Connection("mongodb://zijiyou:zijiyou@58.83.134.166:27017/spiderV20")
+#serverCon = pymongo.Connection("58.83.134.166", 27017)
+#serverSpiderDb = serverCon[dbName]
+#serverResponse = serverSpiderDb[colSource[0]]
+#
+#i = 0
+#while i < 6:
+#    print serverResponse.find({'status':200}).count()
+#    i += 1
+#    time.sleep(60)
+
+#修改数据库shema   
+oldDbName = "spiderV20" 
+newDbName = "spiderV21"
+
+newField = 'newField'
+
+colMap = {
+          'CrawlUrl':'UrlDb',
+          'ResponseBody':'PageDb'
+          }
+
+baseSchema = {'status':'status', 'pushDate':'pushDateTime', 'spiderName':'spiderName', 'collectionName':'collectionName', 'dateTime':'optDateTime'}
+customSchema = {
+          'CrawlUrl':{'url':'url','reference':'reference', 'callBack':'callBack', 'priority':'priority'}, 
+          'ResponseBody':{'pageUrl':'url', 'type':'itemCollectionName', 'content':'responseBody', newField:'updateInterval'}
+          }
+
+serverCon = pymongo.Connection("192.168.0.183", 27017)
+oldDb = serverCon[oldDbName]
+newDb = serverCon[newDbName]
+
+
+counter = 0
+for k,v in colMap.items():
+    print "源集合：%s" % k, "新结合：%s" % v
+    counter = 0
+    for oldItem in oldDb[k].find(): 
+        item = {}
+        for bk, bv in  baseSchema.items():
+            if bk in oldItem:
+                item[bv] = oldItem[bk]
+        
+        custom = customSchema[k]
+        if custom:
+            for ck, cv in custom.items():
+                if ck == newField:
+                    item[cv] = None
+                else:
+                    if ck in oldItem:
+                        item[cv] = oldItem[ck]
+        
+        print oldItem
+        print item
+        newDb[v].insert(item)
+        counter += 1
+        print counter
+    print "新的集合：%s" % v, "共插入的数量为：%s" % counter
+        
+print "执行结束"
+    
+
+
+
+    
