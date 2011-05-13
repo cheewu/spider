@@ -31,7 +31,8 @@ DB_COLLECTIONS = ['ResponseBody',
                   'KeyWord',
                   'CityAttraction',
                   'test']
-
+CRAWL_DB = 'CrawlUrl'
+RESPONSE_DB = 'ResponseBody'
 LOG_FILE='./zijiyou.log'
 #TESTLOG='/data/configs/test.txt'
 LOG_LEVEL='INFO'
@@ -62,3 +63,13 @@ SPIDER_MIDDLEWARES = {
 
 #proxy server
 PROXY = ['local']
+
+#EMail Configure
+MAIL_INTERVAL = 7200
+#发送对象列表
+MAIL_TO_LIST = ["465813018@qq.com", "1413614423@qq.com"]
+#设置服务器，用户名、口令以及邮箱的后缀
+MAIL_HOST = "smtp.sina.com"
+MAIL_USER = "zijiyou2011@sina.com"
+MAIL_PASS = "zijiyou"
+MAIL_POSTFIX = "sina.com"
