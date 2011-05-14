@@ -1,0 +1,50 @@
+
+2011-05-14 11:33:46+0800 [scrapy] INFO: Scrapy 0.12.0.2539 started (bot: zijiyou)
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-14 11:33:46+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] ERROR: 爬虫baseSeSpider 的pendingRequest为空，交由scrapy从startUrl启动
+2011-05-14 11:33:46+0800 [scrapy] INFO: 启动爬虫：daodaoSpider
+2011-05-14 11:33:46+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-14 11:33:46+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] ERROR: 爬虫daodaoSpider 的pendingRequest为空，交由scrapy从startUrl启动
+2011-05-14 11:33:46+0800 [scrapy] INFO: 启动爬虫：lvpingSpider
+2011-05-14 11:33:46+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-14 11:33:46+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] ERROR: 爬虫lvpingSpider 的pendingRequest为空，交由scrapy从startUrl启动
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] INFO: spider中间件开始从数据库加载CrawlUrl和ResponseBody.url
+2011-05-14 11:33:46+0800 [scrapy] INFO: 完成CrawlUrl加载
+2011-05-14 11:33:46+0800 [scrapy] INFO: 完成ResponseBody加载.从CrawlUrl加载0个；从ResponseBody加载136个；加载数据时间花费：0:00:00.005810
+2011-05-14 11:33:46+0800 [scrapy] INFO: spider中间件完成初始化urlDump. dump的长度=136；初始化Dump花费时间：0:00:00.000805
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] INFO: 初始配置 initConfig
+2011-05-14 11:33:46+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接，并查询recentequest
+2011-05-14 11:33:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-05-14 11:33:46+0800 [scrapy] ERROR: 爬虫lvpingSpider 的pendingRequest为空，交由scrapy从startUrl启动
+2011-05-14 11:33:46+0800 [lvpingSpider] INFO: Spider opened
+2011-05-14 11:33:46+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser：onSpiderOpen 
+2011-05-14 11:33:47+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/attractions-d1-s00-rdp4/Beijing:attractions.html
+2011-05-14 11:33:47+0800 [scrapy] INFO: new url=http://www.lvping.com/attractions-d1-s00-rdp4/Beijing:attractions.html
+2011-05-14 11:33:47+0800 [scrapy] INFO: 没有从数据库获得合适的url，将从stat_url开始crawl
+2011-05-14 11:33:47+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/attractions-d1-s00-rdp4/Beijing:attractions.html
+2011-05-14 11:33:47+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/attractions-d1-s00-rdp4/Beijing:attractions.html
+2011-05-14 11:33:47+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/attractions-d1-s00-rdp4/Beijing:attractions.html parse 产生 Item页url数量：20 ,普通页数量:0 ,总数：20 ，花费时间：0:00:00.167685
+2011-05-14 11:33:47+0800 [scrapy] INFO: url总数量：20,排重数量：20，通过(添加到数据库)数量：0 排重花费时间：0:00:00.169222
+2011-05-14 11:33:47+0800 [lvpingSpider] INFO: Closing spider (finished)
+2011-05-14 11:33:47+0800 [scrapy] ERROR: 爬虫：lvpingSpider 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：1秒，间隔阀值：200秒
+2011-05-14 11:33:47+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser信息：剩余待爬取的网页数量：0
+2011-05-14 11:33:47+0800 [scrapy] ERROR: 爬虫：lvpingSpider 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：0
+2011-05-14 11:33:47+0800 [scrapy] INFO: 邮件内容 爬虫结束时邮件诊断信息
+	爬虫：lvpingSpider 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：1秒，间隔阀值：200秒
+	爬虫：lvpingSpider 扩展diagnoser信息：剩余待爬取的网页数量：0
+	爬虫：lvpingSpider 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：0
+2011-05-14 11:34:05+0800 [scrapy] ERROR: 邮件发送失败，[Errno 104] Connection reset by peer
+2011-05-14 11:34:05+0800 [scrapy] ERROR: 请检测settings中的email配置信息
+2011-05-14 11:34:05+0800 [scrapy] ERROR: 诊断邮件发送失败，请检查settings中的email配置信息
+2011-05-14 11:34:05+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
+2011-05-14 11:34:05+0800 [lvpingSpider] INFO: Spider closed (finished)

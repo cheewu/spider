@@ -70,11 +70,12 @@ class Diagnoser(object):
         if sendSucess:
             log.msg("诊断邮件发送成功 %s" %datetime.datetime.now() , level=log.INFO)
             print "诊断邮件发送成功%s" %datetime.datetime.now()
-            if not isClose:
-                reactor.callLater(self.mailInterval, self.onSendMail)
         else:
             print "诊断邮件发送失败%s" %datetime.datetime.now()
             log.msg("诊断邮件发送失败，请检查settings中的email配置信息", level=log.ERROR)
+        #若关闭spider则不再发送邮件
+        if not isClose:
+                reactor.callLater(self.mailInterval, self.onSendMail)
             
     def getDiagnoseContent(self, isClose=False):
         content = ""
@@ -83,6 +84,7 @@ class Diagnoser(object):
             endTime=datetime.datetime.now()
             intervalTemp=endTime - self.biginTime
             interval=intervalTemp.seconds
+            log.msg('爬虫：%s 扩展diagnoser:onSpiderClose 运行时间=%s秒' % (self.spiderName,interval),level=log.INFO)
             if interval<self.thresholdRuntime:
                 msg = "爬虫：%s 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：%s秒，间隔阀值：%s秒" % (self.spiderName,interval,self.thresholdRuntime)
                 content += "\r\n" + msg

@@ -38,14 +38,12 @@ class DuplicateUrlFilter(object):
         dtLoad=datetime.datetime.now()
         log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；加载数据时间花费：%s' %(len(crawlUrls),len(responsUrls),dtLoad-dtBegin), level=log.INFO)
         for p in crawlUrls:
-            if "url" in p :#and (not p['url'] in self.urlDump):
-#                self.urlDump.add(p['url'])
+            if "url" in p :
                 fp=getFingerPrint(p['url'])
                 if not fp in self.urlDump:
                     self.urlDump.add(fp)
         for p in responsUrls:
-            if "url" in p :#and (not p['pageUrl'] in self.urlDump):
-#                self.urlDump.add(p['pageUrl'])
+            if "url" in p :
                 fp=getFingerPrint(p['url'])
                 if not fp in self.urlDump:
                     self.urlDump.add(fp)
@@ -54,6 +52,7 @@ class DuplicateUrlFilter(object):
     
     def process_spider_output(self, response, result, spider):
         '''drop the request which appear in urlDump'''
+        log.msg("开始排重", level=log.INFO)
         newResult=[]
         counter=0
         dtBegin=datetime.datetime.now()
@@ -67,7 +66,6 @@ class DuplicateUrlFilter(object):
                         continue
                     else:
                         #更新urlDump
-#                        self.urlDump.add(p.url)
                         self.urlDump.add(fp)
                         
                         #保存到数据库
