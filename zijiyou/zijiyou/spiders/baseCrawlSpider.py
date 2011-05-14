@@ -132,13 +132,14 @@ class BaseCrawlSpider(CrawlSpider):
             else:
                 log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , log.INFO)
         
-        log.msg('开始解析link: %s' % response.url, log.INFO)
+        log.msg('解析开始link: %s' % response.url, log.INFO)
+        dtBegin=datetime.datetime.now()
         #普通页link
         for v in self.normalRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
         
         normalNum = len(reqs)
-        log.msg("%s parse 产生 普通页 url 数量：%s" % (response.url, len(reqs)), level=log.INFO)
+#        log.msg("%s parse 产生 普通页 url 数量：%s" % (response.url, len(reqs)), level=log.INFO)
  
         '''item页link'''
         for v in self.itemRegex:
@@ -146,16 +147,17 @@ class BaseCrawlSpider(CrawlSpider):
         for i in reqs:
             log.msg("%s" % i, level=log.DEBUG)
         itemNum = len(reqs) - normalNum
-        log.msg("解析完成 %s parse 产生 Item页 url 数量：%s" % (response.url, itemNum), level=log.INFO)
-        
         item = self.parseItem(response)
         if item:
             reqs.append(item)
+        dtEnd=datetime.datetime.now()
+        dtInterval=dtEnd - dtBegin
+        log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,总数：%s ，花费时间：%s" % (response.url, itemNum,normalNum,len(reqs),dtInterval), level=log.INFO)
+        
         return reqs
 
     def parseItem(self, response):
         '''start to parse parse item'''
-        print '解析目标页'
         itemCollectionName = None
         for v in self.itemRegex:
             if re.search(v['regex'], response.url):

@@ -2,8 +2,8 @@
 #!/usr/bin/env python
 
 from bson.objectid import ObjectId
-from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.items.zijiyouItem import Attraction, CommonSense
+#from zijiyou.db.mongoDbApt import MongoDbApt
+from zijiyou.items.zijiyouItem import Article,Note
 from zijiyou.spiders.offlineCrawl.parse import Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
 from zijiyou.spiders.offlineCrawl.parse import Parse
@@ -15,6 +15,60 @@ import pymongo
 from scrapy.conf import settings
 from scrapy import log
 import string
+import hashlib
+
+def getFingerPrint(input):
+    '''
+        指纹
+    '''
+    hasher=hashlib.sha1(input)
+#    hasher.update(canonicalize_url(str(input)))
+    fp=hasher.hexdigest()
+    return fp
+
+t=['www.baidu.com','www.baidu.com','www.google.com']
+v=set()
+for p in t:
+    fp=getFingerPrint(p)
+    if fp in v:
+        print '存在：%s' % p
+    else:
+        v.add(fp)
+        print '新的：%s' % p
+print v
+
+#collectionNameMap={'Attraction':'POI',
+#                                 'Hotel':'POI'}
+#if 'Attraction' in collectionNameMap:
+#    print collectionNameMap['Attraction']
+#test={'a':'a1','b':'b1'}
+#if 'a' in test:
+#    print test['a']
+#test=[]
+#f='http://baidu.com.cnzijiyou.helloenummode%s'
+#d1=datetime.datetime.now()
+#for i in range(1,1500000):
+#    test.append(f % i)
+#t=set()
+#for p in test:
+#    if not p in t:
+#        t.add(p)
+#d2=datetime.datetime.now()
+#print len(test)
+#d=d2-d1
+#print '%s,%s,%s' %(d1,d2, d.seconds)
+    
+#v=['aaa','bbb','aaa','abc']
+#for p in v:
+#    test.add(p)
+#print test
+#v1=['aaa','bbb','ccc']
+#for p in v1:
+#    if p in test:
+#        print p
+#    else:
+#        print 'not:'
+
 
 #content='首页-中国-22'
 #print content.split('-')

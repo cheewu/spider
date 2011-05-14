@@ -9,7 +9,7 @@ from scrapy import log
 from scrapy.http.request import Request
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-from scrapy.utils.url import canonicalize_url
+#from scrapy.utils.url import canonicalize_url
 
 import hashlib
 import datetime
@@ -30,41 +30,45 @@ class DuplicateUrlFilter(object):
             raise NotConfigured
         whereJson={"status":{"$lt":400}}
         fieldsJson={'url':1}
-        log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url，时间：%s' % datetime.datetime.now(), level=log.INFO)
+        dtBegin=datetime.datetime.now()
+        log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url' , level=log.INFO)
         crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
-        log.msg('完成CrawlUrl加载，时间：%s' %datetime.datetime.now(), level=log.INFO)
+        log.msg('完成CrawlUrl加载' ,level=log.INFO)
         responsUrls=self.mon.findFieldsAndSort(self.ResponseDb, whereJson={}, fieldsJson=fieldsJson)
-        log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；时间：%s' %(len(crawlUrls),len(responsUrls),datetime.datetime.now()), level=log.INFO)
+        dtLoad=datetime.datetime.now()
+        log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；加载数据时间花费：%s' %(len(crawlUrls),len(responsUrls),dtLoad-dtBegin), level=log.INFO)
         for p in crawlUrls:
-            if "url" in p and (not p['url'] in self.urlDump):
-                self.urlDump.add(p['url'])
-#                fp=self.getFingerPrint(p['url'])
-#                if not fp in self.urlDump:
-#                    self.urlDump.add(fp)
+            if "url" in p :#and (not p['url'] in self.urlDump):
+#                self.urlDump.add(p['url'])
+                fp=getFingerPrint(p['url'])
+                if not fp in self.urlDump:
+                    self.urlDump.add(fp)
         for p in responsUrls:
-            if "pageUrl" in p and (not p['pageUrl'] in self.urlDump):
-                self.urlDump.add(p['pageUrl'])
-#                fp=self.getFingerPrint(p['pageUrl'])
-#                if not fp in self.urlDump:
-#                    self.urlDump.add(fp)
-        log.msg("spider中间件完成初始化urlDump. dump的长度=%s；时间：%s" % (len(self.urlDump),datetime.datetime.now()), level=log.INFO)
+            if "url" in p :#and (not p['pageUrl'] in self.urlDump):
+#                self.urlDump.add(p['pageUrl'])
+                fp=getFingerPrint(p['url'])
+                if not fp in self.urlDump:
+                    self.urlDump.add(fp)
+        dtDump=datetime.datetime.now()
+        log.msg("spider中间件完成初始化urlDump. dump的长度=%s；初始化Dump花费时间：%s" % (len(self.urlDump),dtDump-dtLoad), level=log.INFO)
     
     def process_spider_output(self, response, result, spider):
         '''drop the request which appear in urlDump'''
         newResult=[]
         counter=0
+        dtBegin=datetime.datetime.now()
         for p in result:
             counter+=1
             if isinstance(p, Request):
                 if p.url:
-#                    fp=self.getFingerPrint(p.url)
-                    if p.url in self.urlDump:
+                    fp=getFingerPrint(p.url)
+                    if fp in self.urlDump:
                         log.msg("排除重复 url=%s" % (p.url), level=log.DEBUG)
                         continue
                     else:
                         #更新urlDump
-                        self.urlDump.add(p.url)
-#                        self.urlDump.add(fp)
+#                        self.urlDump.add(p.url)
+                        self.urlDump.add(fp)
                         
                         #保存到数据库
                         recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
@@ -87,10 +91,11 @@ class DuplicateUrlFilter(object):
                         newResult.append(p)
             else:
                 newResult.append(p)
+        dtEnd=datetime.datetime.now()
         if len(newResult)<counter:
-            log.msg("url总数量：%s,排重数量：%s，通过(添加到数据库)数量：%s" % (counter,counter-len(newResult),len(newResult)), level=log.INFO)
+            log.msg("url总数量：%s,排重数量：%s，通过(添加到数据库)数量：%s 排重花费时间：%s" % (counter,counter-len(newResult),len(newResult),dtEnd-dtBegin), level=log.INFO)
         else:
-            log.msg("排重中间件所有的url均不重复！数量：%s" % len(newResult), level=log.INFO)
+            log.msg("排重中间件所有的url均不重复！数量：%s ,排重花费时间：%s" % (len(newResult),dtEnd-dtBegin), level=log.INFO)
         return newResult
         
     def process_spider_input(self, response, spider):
@@ -148,11 +153,11 @@ class SaveNewRequestUrl(object):
         log.msg("spider中间件保存新url.NewUrl=%s; ExistUrl=%s ; result长度：%s,url:%s" % (counterNew,counterExist,len(newResult),response.url),level=log.INFO)
         return newResult
 
-def getFingerPrint(self,input):
+def getFingerPrint(input):
     '''
-        指纹
+    指纹
     '''
-    hasher=hashlib.sha1()
-    hasher.update(canonicalize_url(str(input)))
+    hasher=hashlib.sha1(input)
+#    hasher.update(canonicalize_url(str(input)))
     fp=hasher.hexdigest()
     return fp
