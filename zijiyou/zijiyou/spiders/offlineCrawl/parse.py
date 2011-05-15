@@ -44,7 +44,7 @@ class Parse(object):
         self.specailField=['center','area','content']
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
-        self.whereJson={}#{'status':100} 测试
+        self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50
         self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
         self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
