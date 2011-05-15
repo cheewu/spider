@@ -44,48 +44,48 @@ spiderConfig = {
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
                      'startUrls':[
-#                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
-#                                  'http://www.lvping.com/EuropeNavigation.aspx',
-#                                  'http://www.lvping.com/AsiaNavigation.aspx',
-#                                  'http://www.lvping.com/ChinaNavigation.aspx',
-#                                  'http://www.lvping.com/OceaniaNavigation.aspx',
-#                                  'http://www.lvping.com/southAmericaNavigation.aspx',
-#                                  'http://www.lvping.com/AfricaNavigation.aspx',
-#
-##                                  #游记攻略
-#                                  'http://www.lvping.com/Journals.aspx?type=1',
-#                                  'http://www.lvping.com/Journals.aspx?selecttype=2',
+                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
+                                  'http://www.lvping.com/EuropeNavigation.aspx',
+                                  'http://www.lvping.com/AsiaNavigation.aspx',
+                                  'http://www.lvping.com/ChinaNavigation.aspx',
+                                  'http://www.lvping.com/OceaniaNavigation.aspx',
+                                  'http://www.lvping.com/southAmericaNavigation.aspx',
+                                  'http://www.lvping.com/AfricaNavigation.aspx',
+
+#                                  #游记攻略
+                                  'http://www.lvping.com/Journals.aspx?type=1',
+                                  'http://www.lvping.com/Journals.aspx?selecttype=2',
                                    
-                                   'http://www.lvping.com/showjournal-d145-r1281402-journals.html'
+#                                   'http://www.lvping.com/showjournal-d145-r1281402-journals.html'
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
-#                                    {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':200}, #国家
-#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':400}, #景点列表
-#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-s\d+-[r]+\w+\d+/\w+:\w+\.html$', 'priority':500}, #景点列表
-#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
-#                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-[r]+\w+\d+-\w+\.html$', 'priority':450}, #景点列表
-#                                    
-##                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':1}, #攻略列表
-#                                    {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':700},# 会员游记列表
-#                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?type=1.*selecttype=0.*', 'priority':700},# 精品游记列表
-#                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':700},# 攻略列表
-#                                    {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+\.html$', 'priority':400},    #常识列表页1
-#                                    {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+:brochure\.html#\w+', 'priority':400} #常识列表页2
+                                    {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':200}, #国家
+                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':400}, #景点列表
+                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-s\d+-[r]+\w+\d+/\w+:\w+\.html$', 'priority':500}, #景点列表
+                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
+                                    {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-[r]+\w+\d+-\w+\.html$', 'priority':450}, #景点列表
+                                    
+#                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':1}, #攻略列表
+                                    {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':700},# 会员游记列表
+                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?type=1.*selecttype=0.*', 'priority':700},# 精品游记列表
+                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':700},# 攻略列表
+                                    {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+\.html$', 'priority':400},    #常识列表页1
+                                    {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+:brochure\.html#\w+', 'priority':400} #常识列表页2
                                     ],
                      #item页正则表达式 type对应item存放的数据表名
                      'itemRegex':[
-#                                  {'itemCollectionName':'Note','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-s\w?\d+/\w+:+\w+.*\.html$', 'priority':1000},  #国家介绍 概况、气候等常识
-#                                  {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':1000}, #短文攻略(类别 内容 目的地)
+                                  {'itemCollectionName':'Note','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-s\w?\d+/\w+:+\w+.*\.html$', 'priority':1000},  #国家介绍 概况、气候等常识
+                                  {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':1000}, #短文攻略(类别 内容 目的地)
                                   {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':1000}, #攻略 作者 发表时间 浏览次数 评论次数
-#                                  {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+$', 'priority':1000}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
-#                                  {'itemCollectionName':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':1}, #用户
-##                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':1}, #足迹
-#                                  {'itemCollectionName':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':1}, #好友
-#                                  {'itemCollectionName':'MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记
-#                                  
-#                                  {'itemCollectionName':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
-#                                  {'itemCollectionName':'Region', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
+                                  {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+$', 'priority':1000}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
+                                  {'itemCollectionName':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':1}, #用户
+#                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':1}, #足迹
+                                  {'itemCollectionName':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':1}, #好友
+                                  {'itemCollectionName':'MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记
+                                  
+                                  {'itemCollectionName':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
+                                  {'itemCollectionName':'Region', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
                                   ]
                      }
 }
