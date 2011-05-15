@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 extractorConfig = {
-                    "daodaoSpider":{                                    
+                    "daodaoSpider":{
                                     "POI":{
                                                r'name':r'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
                                                r'area':r'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li/a/text()',
@@ -86,7 +86,6 @@ extractorConfig = {
                                                 #r'tag':r'',
                                                 #r'attractions':r'',
                                                 #r'feature':r'',
-                                                'center':r''
                                     },                            
                                     
                                     "Note":{

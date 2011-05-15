@@ -12,7 +12,8 @@ from scrapy.conf import settings
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.spiders.offlineCrawl.extractorConfig import extractorConfig
 from zijiyou.items.enumModel import LogLevel
-#from zijiyou.spiders.offlineCrawl.extractText import extractMainText
+#from zijiyou.spiders.offlineCrawl.ExtMainText import doExtMainText
+from zijiyou.spiders.offlineCrawl.extractText import doExtract
 
 import re
 import datetime
@@ -43,7 +44,7 @@ class Parse(object):
         self.specailField=['center','area','content']
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
-        self.whereJson={'status':200}#'status':100, 'spiderName':'lvpingSpider'
+        self.whereJson={}#{'status':100} 测试
         self.limitNum=50
         self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
         self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
@@ -211,10 +212,11 @@ class Parse(object):
             if matches:
                 newContent = matches.group(1)
                 return newContent
-#        if name == 'content':
-#            print '正文抽取'
-#            mainText = extractMainText(content)
-#            print mainText
+        if name == 'content':
+            print '正文抽取'
+            mainText = doExtract(content,threshold=False)
+            print mainText
+            return mainText
         
     def parseLog(self,msg,level=None):
         if not msg or not level or len(msg)<2:
