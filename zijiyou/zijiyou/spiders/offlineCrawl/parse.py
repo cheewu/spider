@@ -12,6 +12,7 @@ from scrapy.conf import settings
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.spiders.offlineCrawl.extractorConfig import extractorConfig
 from zijiyou.items.enumModel import LogLevel
+#from zijiyou.spiders.offlineCrawl.extractText import extractMainText
 
 import re
 import datetime
@@ -39,7 +40,7 @@ class Parse(object):
             self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
             raise NotConfigured
         self.requiredField= ['name','content','title']
-        self.specailField=['center','area']
+        self.specailField=['center','area','content']
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
         self.whereJson={'status':200}#'status':100, 'spiderName':'lvpingSpider'
@@ -209,7 +210,11 @@ class Parse(object):
             matches=re.search(areaRegex,content,0)
             if matches:
                 newContent = matches.group(1)
-                return newContent            
+                return newContent
+#        if name == 'content':
+#            print '正文抽取'
+#            mainText = extractMainText(content)
+#            print mainText
         
     def parseLog(self,msg,level=None):
         if not msg or not level or len(msg)<2:

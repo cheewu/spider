@@ -17,7 +17,7 @@ class UrlDb(BaseItem):
     reference=Field() #来源url
     callBack=Field() # the name of CallBackFunction Method Object
     priority=Field() # type is int
-    optDateTime=Field() # initiated by middleWare who save it to DB
+    dateTime=Field() # initiated by middleWare who save it to DB
     updateInterval=Field() #更新间隔
 
     def __str__(self):
