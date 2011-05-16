@@ -16,7 +16,7 @@ spiderConfig = {
                     'seXpath':{
                                "sosoBlog":{
                                     r'title':r'//div[@id="main"]/h3/text()',
-                                    r'date':r'//div[@id="main"]/text()[2]',
+                                    r'publishDate':r'//div[@id="main"]/text()[2]',
                                     r'content':r'//div[@id="main"]',
                                     r'originUrl':r'//div[@id="header"]/a/text()'
                                     }

@@ -41,7 +41,7 @@ class Parse(object):
             self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
             raise NotConfigured
         self.requiredField= ['name','content','title']
-        self.specailField=['center','area','content']
+        self.specailField=['center','area']#,'content'
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
         self.whereJson={'status':100}#{'status':100} 测试

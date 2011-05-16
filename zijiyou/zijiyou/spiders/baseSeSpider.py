@@ -7,17 +7,20 @@ Created on 2011-3-28
 from scrapy import log
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
+from scrapy.xlib.pydispatch import dispatcher
+from scrapy import signals
+from scrapy.conf import settings
+
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 from zijiyou.spiders.spiderConfig import spiderConfig
-from scrapy.xlib.pydispatch import dispatcher
-from scrapy import signals
+from zijiyou.spiders.offlineCrawl.extractText import doExtract
+
 import datetime
 import re
 import time
 import urllib
-from scrapy.conf import settings
 
 
 class BaseSeSpider(BaseCrawlSpider):
@@ -46,6 +49,7 @@ class BaseSeSpider(BaseCrawlSpider):
             raise NotConfigured
         self.functionDic['baseParse'] = self.baseParse
         self.seUrlFormat=self.config['seUrlFormat']
+        self.specailField=['content','publishDate']#,'content'
         self.initRequest()
         dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
         
@@ -164,16 +168,16 @@ class BaseSeSpider(BaseCrawlSpider):
         loader.add_value('responseBody', response.body_as_unicode())
         loader.add_value('optDateTime', datetime.datetime.now())
         pageResponse = loader.load_item()
-        return pageResponse
+        items.append(pageResponse)
         
         #解析搜索引擎NoteItem
-        article = self.parseAcricleItem(response)    
+        article = self.parseArticleItem(response)    
         if article:
             items.append(article)
         
         return items
     
-    def parseAcricleItem(self, response):
+    def parseArticleItem(self, response):
         '''解析搜索引擎AcricleItem'''
         log.msg("解析搜索引擎NoteItem", level=log.INFO)
         #判断配置是否正确
@@ -187,18 +191,39 @@ class BaseSeSpider(BaseCrawlSpider):
         for k,v in xpathItems.items():
             values = hxs.select(v).extract()
             value=("-".join("%s" % p for p in values)).encode("utf-8")
+            if k in self.specailField:
+                value=self.parseSpecialField(k, value)
             if value:
-                if(k == 'date'):
-                    value = re.search(r"\d{4}年\d{2}月\d{2}日$", value)
-                    if value:
-                        loader.add_value(k, value.group(0))
-                    else:
-                        loader.add_value(k, time.strftime("%Y年%m月%d日"))
-                else:
-                    loader.add_value(k, value)
+                loader.add_value(k, value)
+#            if value:
+#                if(k == 'date'):
+#                    value = re.search(r"\d{4}年\d{2}月\d{2}日$", value)
+#                    if value:
+#                        loader.add_value(k, value.group(0))
+#                    else:
+#                        loader.add_value(k, time.strftime("%Y年%m月%d日"))
+#                else:
+#                    loader.add_value(k, value)
         loader.add_value('url', response.url)
         noteItem = loader.load_item()
         return noteItem
-        
+    
+    def parseSpecialField(self,name,content):
+        '''
+        特殊处理的字段解析
+        '''
+        if not name or not content:
+            return None
+        if name == 'publishDate':
+            value = re.search(r"\d{4}年\d{2}月\d{2}日$", content)
+            if value:
+                return value.group(0)
+            else:
+                return time.strftime("%Y年%m月%d日")
+        if name == 'content':
+            print '正文抽取'
+            mainText = doExtract(content,threshold=False)
+            print mainText
+            return mainText
     
 SPIDER = BaseSeSpider()
