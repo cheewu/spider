@@ -55,6 +55,8 @@ extractorConfig = {
                                                #r'descLink':r'//div[@class="clearfix"]/div/div[@class="review-intro"]',
                                                #r'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
                                                #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'
+                                               r'ticket':r'//div[@id="hiddenContent"]/span[2]/following-sibling::p/text()',
+                                               r'replyNum':r'//em[@property="v:count"]/text()',
                                     },                                    
                                     "AttractionRegex":{
                                                #r'address':r'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
@@ -67,6 +69,8 @@ extractorConfig = {
                                                'englishNameRegex':r'([\w _-]+)',      
 #                                               'area':'//div[@class="breadBar"]/a//text()',    
 #                                               'areaRegex':r'首页[ -]+(.*)-[^-]*景点'
+                                                'traffic':r'//div[@id="hiddenContent"]',
+                                                'trafficRegex':r'<span style="font-weight:bold;.*<span style="font-weight:bold;">',
                                     },
                                     
                                     "Article":{

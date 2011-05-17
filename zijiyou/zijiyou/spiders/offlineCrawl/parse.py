@@ -74,6 +74,8 @@ class Parse(object):
             item = self.parseItem(extractorConfig[spiderName],itemCollectionName, response, spiderName)
             whereJson={'_id':ObjectId(p['_id'])}
             if itemCollectionName in self.collectionNameMap:
+                #POI type
+                item['type'] = itemCollectionName
                 itemCollectionName=self.collectionNameMap[itemCollectionName]
             if item:
                 if not itemCollectionName in items:
