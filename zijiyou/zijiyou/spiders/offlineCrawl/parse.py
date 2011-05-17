@@ -111,6 +111,8 @@ class Parse(object):
             self.parse()
         
         #关闭日志
+        self.parseLog('parse 完成', level=LogLevel.INFO)
+        self.loger.close()
         if self.loger.closed :
             self.loger.close()
             print 'OK'
