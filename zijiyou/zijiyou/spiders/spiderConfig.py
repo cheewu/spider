@@ -55,6 +55,7 @@ spiderConfig = {
 #                                  #游记攻略
                                   'http://www.lvping.com/Journals.aspx?type=1',
                                   'http://www.lvping.com/Journals.aspx?selecttype=2',
+                                  'http://www.lvping.com/Journals.aspx'
                                    
 #                                   'http://www.lvping.com/showjournal-d145-r1281402-journals.html'
                                   ],
