@@ -57,6 +57,7 @@ extractorConfig = {
                                                #r'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'
                                                r'ticket':r'//div[@id="hiddenContent"]/span[2]/following-sibling::p/text()',
                                                r'replyNum':r'//em[@property="v:count"]/text()',
+                                               r'popularity':r'//div[@class="order_num"]/text()'
                                     },                                    
                                     "AttractionRegex":{
                                                #r'address':r'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
@@ -87,6 +88,7 @@ extractorConfig = {
                                                 r'title':r'//div[@class="viewnameShow"]/h1/text()',
                                                 r'area':r'//div[@class="breadBar"]/a//text()',
                                                 r'type':r'//div[@class="breadBar"]/a[5]/text()',
+                                                r'destination':r'//div[@class="breadBar"]/a[4]/text()',
                                                 #r'tag':r'',
                                                 #r'attractions':r'',
                                                 #r'feature':r'',
