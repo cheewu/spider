@@ -4,17 +4,40 @@
 from bson.objectid import ObjectId
 from scrapy import log
 from scrapy.conf import settings
+from urllib import urlencode
+from zijiyou.common.postTool import PostData
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.spiders.offlineCrawl.parse import Parse, Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
+import hashlib
 import os
 import pymongo
 import re
 import string
 import time
 import urllib
-import hashlib
+
+post=PostData()
+post.post()
+
+#mongo = MongoDbApt()
+#value=mongo.findFieldsWithLimit('Article',whereJson={}, limitNum=1)
+#print value
+##print str(value['_id'])
+#data={}
+#data['add']=value[0]
+#print value[0]['_id']
+#print data
+#encodeData=urlencode(data)
+#print encodeData
+
+#data=[{'add':{'id':1,'name':'a1'}},
+#      {'add':{'id':2,'name':'a2'}},]
+#data={'add':{'id':1,'name':'a1'},
+#      'add2':{'id':2,'name':'a2'}}
+#value=urlencode(data)
+#print value
 
 #def getFingerPrint(input):
 #    '''
