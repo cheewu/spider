@@ -41,15 +41,16 @@ class Parse(object):
             self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
             raise NotConfigured
         self.requiredField= ['name','content','title']
-        self.specailField=['center','area']#,'content'
+        self.specailField=['center','area','content']#,'content'
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
-        self.whereJson={'status':100}#{'status':100} 测试
+        self.whereJson={'status':100,'itemCollectionName':'Article','spiderName':'lvpingSpider'}#{'status':100} 测试
         self.limitNum=50
         self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
         self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
-        self.curSeek=len(self.responseBodys)
+        self.curSeek=0#len(self.responseBodys)
         self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
+        print 'init完成'
     
     def parse(self):
         if not self.responseBodys or len(self.responseBodys)<1:
@@ -62,56 +63,60 @@ class Parse(object):
                'Pragma': ['no-cache'], 
                'Cache-Control': ['no-cache,no-store,must-revalidate']
                }
-        items={}
-        countSuc=0;
-        countFail=0
-        for p in self.responseBodys:
-            if not ('spiderName' in p and 'itemCollectionName' in p):
-                self.parseLog( '缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
-            spiderName=p['spiderName']
-            itemCollectionName=re.sub('[\r\n]', "", p['itemCollectionName'])
-            response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(p['responseBody']), flags=None, request=None )
-            item = self.parseItem(extractorConfig[spiderName],itemCollectionName, response, spiderName)
-            whereJson={'_id':ObjectId(p['_id'])}
-            if itemCollectionName in self.collectionNameMap:
-                itemCollectionName=self.collectionNameMap[itemCollectionName]
-            if item:
-                if not itemCollectionName in items:
-                    items[itemCollectionName]=[]
-                items[itemCollectionName].append(item)
-                # parse item successful, and then update the status to 200
-                updateJson={'status':200}
-                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
-                countSuc+=1
-            else:
-                # fail in parsing item , and then update the status to 101
-                updateJson={'status':101}
-                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
-                countFail+=1
-                
-        self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (countSuc,countFail), level=LogLevel.INFO)
-        if items and len(items)>0:
-            for k,v in items.items():
-                if len(v)<1:
-                    continue
-                objId = self.mongoApt.saveItem(k, v)
-                print '保存新item：%s, objId:%s' % (itemCollectionName,objId)
-                if objId:
-                    self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
-                else:
-                    self.parseLog('item保存失败！,collectionsName:%s ' % (k), level=LogLevel.ERROR)
+        self.countSuc=0;
+        self.countFail=0
         
-        #递归parse
+        def _parse():
+            items={}
+            for p in self.responseBodys:
+                if not ('spiderName' in p and 'itemCollectionName' in p):
+                    self.parseLog( '缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
+                spiderName=p['spiderName']
+                itemCollectionName=re.sub('[\r\n]', "", p['itemCollectionName'])
+                response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(p['responseBody']), flags=None, request=None )
+                item = self.parseItem(extractorConfig[spiderName],itemCollectionName, response, spiderName)
+                whereJson={'_id':ObjectId(p['_id'])}
+                if itemCollectionName in self.collectionNameMap:
+                    itemCollectionName=self.collectionNameMap[itemCollectionName]
+                if item:
+                    if not itemCollectionName in items:
+                        items[itemCollectionName]=[]
+                    items[itemCollectionName].append(item)
+                    # parse item successful, and then update the status to 200
+                    updateJson={'status':200}
+                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                    self.countSuc+=1
+                else:
+                    # fail in parsing item , and then update the status to 101
+                    updateJson={'status':101}
+                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                    self.countFail+=1
+                    
+            if items and len(items)>0:
+                for k,v in items.items():
+                    if len(v)<1:
+                        continue
+                    else:
+                        print '新item的数量：%s，类型：%s' % (len(v),k)
+                    objId = self.mongoApt.saveItem(k, v)
+                    print '保存新item：%s, objId:%s' % (itemCollectionName,objId)
+                    if objId:
+                        self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
+                    else:
+                        self.parseLog('item保存失败！,collectionsName:%s ' % (k), level=LogLevel.ERROR)
+                items = {}
+            
+        #非递归parse
         while (self.curSeek < self.responseTotalNum):
             self.parseLog('成功完成一轮递归，curSeek:%s' % self.curSeek, level=LogLevel.INFO)
             self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
-            self.curSeek+=self.limitNum
-            self.parse()
-        
+            self.curSeek+=len(self.responseBodys)
+            _parse()
+        self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.INFO)
         #关闭日志
         if self.loger.closed :
             self.loger.close()
-            print 'OK'
+            print 'OK !关闭日志'
 
     def parseItem(self,config, itemCollectionName, response, spiderName=None):
         '''
@@ -126,7 +131,6 @@ class Parse(object):
             raise NotConfigured
         item={}
         item['collectionName']=itemCollectionName
-        print itemCollectionName
         if itemCollectionName in self.collectionNameMap:
             item['collectionName']=self.collectionNameMap[itemCollectionName]
 #            print '切换类型：%s' % item['collectionName']
@@ -226,3 +230,7 @@ class Parse(object):
     def ExtText(self,input):
         pass
 
+if __name__ == '__main__':
+    p=Parse()
+    p.parse()
+    print '解析完成了！'
