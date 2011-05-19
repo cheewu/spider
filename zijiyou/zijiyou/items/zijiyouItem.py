@@ -40,7 +40,7 @@ class POI(BaseItem):
     '''
     所有的poi 包括 景点 景区 酒店 机场 火车站.. 
     '''
-    collectionName="Attraction"
+    collectionName="POI"
     
     area=Field()
     name=Field()
