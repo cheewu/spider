@@ -55,6 +55,7 @@ spiderConfig = {
 #                                  #游记攻略
                                   'http://www.lvping.com/Journals.aspx?type=1',
                                   'http://www.lvping.com/Journals.aspx?selecttype=2',
+                                  'http://www.lvping.com/Journals.aspx'
                                    
 #                                   'http://www.lvping.com/showjournal-d145-r1281402-journals.html'
                                   ],
@@ -68,7 +69,7 @@ spiderConfig = {
                                     
 #                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':1}, #攻略列表
                                     {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':700},# 会员游记列表
-                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?type=1.*selecttype=0.*', 'priority':700},# 精品游记列表
+                                    {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=0.*', 'priority':700},# 游记列表
                                     {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':700},# 攻略列表
                                     {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+\.html$', 'priority':400},    #常识列表页1
                                     {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+:brochure\.html#\w+', 'priority':400} #常识列表页2

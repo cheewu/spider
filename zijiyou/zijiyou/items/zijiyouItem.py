@@ -54,6 +54,7 @@ class POI(BaseItem):
     
     openTime=Field()   #开放时间
     ticket=Field()     #票价
+    traffic=Field()    #交通
     type=Field()       #POI类型
     webAddress=Field() #网址
     replyNum = Field() #点评数
