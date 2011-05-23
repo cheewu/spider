@@ -41,10 +41,10 @@ class Parse(object):
             self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
             raise NotConfigured
         self.requiredField= ['name','content','title']
-        self.specailField=['center','area','content']#,'content'
+        self.specailField=['center','area','content','noteType']#,'content'
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
-        self.whereJson={'status':100,'itemCollectionName':'Article','spiderName':'lvpingSpider'}#{'status':100} 测试
+        self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50
         self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
         self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
@@ -193,6 +193,42 @@ class Parse(object):
             if k in self.specailField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
+            
+        #解析response中的数据
+        respItem={}
+        respName=itemCollectionName+'Resp'
+        if respName in config:
+            respItem=config[respName]
+        for k,v in respItem.items():
+            value = None
+            if v == 'url':
+                value = response.url
+            elif v == 'header':
+                if v.items():
+                    header = response.headers
+                    for hk, hv in v.items():
+                        value = header[hv]
+                        if not value:
+                            self.parseLog('response.headers中没有该属性：%s，类型： %s' % (hk,itemCollectionName), level=LogLevel.WARNING)
+                            continue
+                        if not value and hk in self.requiredField:
+                            self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (hk,itemCollectionName,response.url), level=LogLevel.WARNING)                
+                            return None
+                        if hk in self.specailField:
+                            value=self.parseSpecialField(hk, value)
+                        item[hk]=value
+                    continue
+                value = response.headers
+            elif k == 'status':
+                value = response.status
+            
+            if not value and k in self.requiredField:
+                self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
+                return None
+            if k in self.specailField:
+                value=self.parseSpecialField(k, value)
+            item[k]=value
+            
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
     
@@ -220,9 +256,17 @@ class Parse(object):
         if name == 'content':
             print '正文抽取'
             mainText = doExtract(content,threshold=False)
-            print mainText
+            #print mainText
             return mainText
-        
+        if name == 'noteType':
+            noteTypeRegex = r':([^:]*)\.html'
+            matches = re.search(noteTypeRegex,content,0)
+            if matches:
+                newContent = matches.group(1)
+                return newContent
+            
+        return content
+    
     def parseLog(self,msg,level=None):
         if not msg or not level or len(msg)<2:
             return

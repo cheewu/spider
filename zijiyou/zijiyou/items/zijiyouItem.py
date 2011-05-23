@@ -101,7 +101,7 @@ class Note(BaseItem):
     
     area = Field()
     author = Field()
-    type = Field()          #文本类型
+    noteType = Field()          #文本类型
     content = Field()
     publishDate = Field()   #发表日期
     source = Field()        #来源：网页；用户输入；长文本

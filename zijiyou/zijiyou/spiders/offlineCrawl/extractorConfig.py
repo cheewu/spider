@@ -106,8 +106,13 @@ extractorConfig = {
                                                 #r'unhelpfulNum':r'//em[@id="unhelpfulNum"]/text()',
                                                 #第二部分不一样
                                                 r'area':r'//div[@class="breadBar"]/a//text()',
-                                                r'type':r'//div[@class="viewnameShow"]/h1/text()'   
+                                                  
                                     },
+                                    
+                                    "NoteResp":{
+                                                'noteType':'url' 
+                                    },
+                                    
                                     "MemberInfo":{
                                                 r'name':r'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
                                                 r'ageRange':r'//div[@class="aboutmecon"]/dl/dd[5]/em/text()',
