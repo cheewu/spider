@@ -25,8 +25,12 @@ def getText(html):
 #    root = libxml2.html
     tagsIgnore=["head", "style", "script", "noscript", "<built-in function comment>", "option"],
     tagsNewline=["p", "div", "h1", "h2", "h3", "h4", "h5", "h6", "br", "li"]
+    tagsSave = ["img"]
     def _getText(tree):
         text = ''
+        hasChild = False
+        if len(tree) > 0:
+            hasChild = True
         tag = str(tree.tag).lower()
         if (tag == '<built-in function comment>' or 
             tag == 'style' or
@@ -34,11 +38,26 @@ def getText(html):
             tag == 'noscript' or
             str(tree.tag).lower() in tagsIgnore):
             return ''
+        #判断是否是保留标签
+        if tag in tagsSave:
+            text += "<" + tag + " "
+            #读取标签属性
+            for k,v in tree.attrib.items():
+                text += k + "='" + v + "' "
+            if tree.text or hasChild:
+                text += ">"
+            else:
+                text += "/>"
+        #添加文本和继续往下遍历
         if tree.text != None:
             text += tree.text
         for child in tree:
             text += _getText(child)
-        if str(tree.tag).lower() in tagsNewline:
+        #判断是否是保留标签,保留则添加关闭标签
+        if tag in tagsSave:
+            if tree.text or hasChild:
+                text += "</" + tag + ">"
+        elif str(tree.tag).lower() in tagsNewline:
             text += '\n'
         if tree.tail != None:
             text += tree.tail
