@@ -16,7 +16,7 @@ DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ResponseBody'
 ITEM_PIPELINES=['zijiyou.pipelines.pipelines.ZijiyouPipeline']
 
 # mongodb setting
-DB_HOST = 'localhost' #192.168.0.183
+DB_HOST = '127.0.0.1' #192.168.0.183
 DB_PORT=27017
 DB='spiderV21'
 DB_COLLECTIONS = ['PageDb',
@@ -37,7 +37,7 @@ CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
 #TESTLOG='/data/configs/test.txt'
-LOG_LEVEL='INFO'
+LOG_LEVEL='DEBUG'
 DOWNLOAD_DELAY = 0.2
 CONCURRENT_REQUESTS_PER_SPIDER=5
 RECENT_URLS_SIZE = 3000
@@ -57,7 +57,7 @@ DOWNLOADER_MIDDLEWARES = {
                             'zijiyou.middlewares.downloadermid.UpdateRequestedUrl':901
                             }
 
-#SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.RequestSaver': 502}
+SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.Cookies': 502}
 SPIDER_MIDDLEWARES = {
                       'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
                       #'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499

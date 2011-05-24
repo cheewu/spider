@@ -12,7 +12,6 @@ from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
 from scrapy.http import Request
 from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.items.cookies import cookies
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb
 from zijiyou.spiders.spiderConfig import spiderConfig
@@ -122,6 +121,7 @@ class BaseCrawlSpider(CrawlSpider):
 
     def baseParse(self, response):
         '''start to parse response link'''
+        print response.url
         reqs = []
         
         if not self.hasInit:
@@ -209,7 +209,7 @@ class BaseCrawlSpider(CrawlSpider):
         metaDic={'callBack':callBackFunctionName,
                  'reference':reference}
         kw.setdefault('meta',metaDic)
-        return Request(url, cookies = cookies.getCookies(self.name), **kw)
+        return Request(url, **kw)
     
     def makeRequestWithMeta(self, url, callBackFunctionName=None,meta=None, **kw):
         '''
