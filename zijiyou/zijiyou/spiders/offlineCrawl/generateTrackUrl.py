@@ -19,7 +19,7 @@ def generateTrackUrl():
     print 'MemberInfo count:', len(memberUrls)
     counter = 0
     for p in memberUrls:
-        print p['url']
+#        print p['url']
         if p['url']:
             tmp = p['url'].split('/')
             if tmp:
