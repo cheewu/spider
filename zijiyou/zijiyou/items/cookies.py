@@ -30,7 +30,9 @@ class Cookies(object):
                 conn = HTTPConnection(config["domain"])
                 conn.request("HEAD", config["url"])
                 resp = conn.getresponse()
+                conn.close()
                 cks = resp.getheader("set-cookie")
+                print "new cookies：", cks
                 if cks:
                     for v in cks.split(';'):
                         ck = v.split('=')
