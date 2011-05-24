@@ -15,10 +15,10 @@ spiderConfig = {
                                      }],
                     'seXpath':{
                                "sosoBlog":{
-                                    r'title':r'//div[@id="main"]/h3/text()',
+                                    r'title':r'//o/li/h3/a',
                                     r'publishDate':r'//div[@id="main"]/text()[2]',
                                     r'content':r'//div[@id="main"]',
-                                    r'originUrl':r'//div[@id="header"]/a/text()'
+                                    r'originUrl':r'//o/li/h3/a/@href'
                                     }
                                },
                      #普通list页正则表达式
@@ -51,13 +51,11 @@ spiderConfig = {
                                   'http://www.lvping.com/OceaniaNavigation.aspx',
                                   'http://www.lvping.com/southAmericaNavigation.aspx',
                                   'http://www.lvping.com/AfricaNavigation.aspx',
-
-#                                  #游记攻略
+#
+##                                  #游记攻略
                                   'http://www.lvping.com/Journals.aspx?type=1',
                                   'http://www.lvping.com/Journals.aspx?selecttype=2',
                                   'http://www.lvping.com/Journals.aspx'
-                                   
-#                                   'http://www.lvping.com/showjournal-d145-r1281402-journals.html'
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
@@ -81,7 +79,7 @@ spiderConfig = {
                                   {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':1000}, #攻略 作者 发表时间 浏览次数 评论次数
                                   {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+$', 'priority':1000}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
                                   {'itemCollectionName':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':1}, #用户
-#                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':1}, #足迹
+                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+ajax/GetMyMap\.ashx.*$', 'priority':1}, #足迹
                                   {'itemCollectionName':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':1}, #好友
                                   {'itemCollectionName':'MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记
                                   

@@ -6,19 +6,19 @@ Created on 2011-3-28
 '''
 
 from scrapy import log
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
-from scrapy.contrib_exp.crawlspider import CrawlSpider
-from scrapy.http import Request
 from scrapy.conf import settings
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
-from scrapy.contrib_exp.crawlspider import Rule
+from scrapy.http import Request
+from zijiyou.db.mongoDbApt import MongoDbApt
+from zijiyou.items.cookies import cookies
+from zijiyou.items.itemLoader import ZijiyouItemLoader
+from zijiyou.items.zijiyouItem import PageDb
+from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
 import re
 
-from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.spiders.spiderConfig import spiderConfig
-from zijiyou.items.zijiyouItem import PageDb
-from zijiyou.items.itemLoader import ZijiyouItemLoader
 
 class BaseCrawlSpider(CrawlSpider):
     '''
@@ -209,7 +209,7 @@ class BaseCrawlSpider(CrawlSpider):
         metaDic={'callBack':callBackFunctionName,
                  'reference':reference}
         kw.setdefault('meta',metaDic)
-        return Request(url, **kw)
+        return Request(url, cookies = cookies.getCookies(self.name), **kw)
     
     def makeRequestWithMeta(self, url, callBackFunctionName=None,meta=None, **kw):
         '''
