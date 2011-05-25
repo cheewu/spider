@@ -126,13 +126,13 @@ extractorConfig = {
                                                 r'travelPartner':r'//div[@class="aboutmecon"]/dl/dd[8]/span//text()',
                                     },
                                     #js方式，暂时爬不到数据
-                                    "MemberTrack":{
-                                                r'name':r'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
-                                                r'gone':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon01.gif"]/parent::*/a/text()',
-                                                r'know':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon02.gif"]/parent::*/a/text()',
-                                                r'like':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon03.gif"]/parent::*/a/text()',
-                                                r'plan':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon04.gif"]/parent::*/a/text()'
-                                    },
+#                                    "MemberTrack":{
+#                                                r'name':r'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
+#                                                r'gone':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon01.gif"]/parent::*/a/text()',
+#                                                r'know':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon02.gif"]/parent::*/a/text()',
+#                                                r'like':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon03.gif"]/parent::*/a/text()',
+#                                                r'plan':r'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon04.gif"]/parent::*/a/text()'
+#                                    },
                                     "MemberFriend":{
                                                 r'name':r'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
                                                 r'nameList':r'//li[@class="two"]/a/text()',
