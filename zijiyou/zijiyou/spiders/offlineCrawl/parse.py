@@ -283,6 +283,7 @@ class Parse(object):
             return None
         item = {}
         item['url'] = pageItem['url']
+        item['spiderName'] = pageItem['spiderName']
         responseBody = str(pageItem['responseBody'])
         if itemCollectionName == 'MemberTrack':
             if responseBody:
