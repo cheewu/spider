@@ -4,23 +4,22 @@ Created on 2011-3-28
 
 @author: shiym
 '''
-from scrapy import log
+from scrapy import log, signals
+from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
 from scrapy.xlib.pydispatch import dispatcher
-from scrapy import signals
-from scrapy.conf import settings
-
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
+from zijiyou.spiders.offlineCrawl.extractText import doExtract, getText
 from zijiyou.spiders.spiderConfig import spiderConfig
-from zijiyou.spiders.offlineCrawl.extractText import doExtract
-
 import datetime
 import re
 import time
 import urllib
+
+
 
 
 class BaseSeSpider(BaseCrawlSpider):
@@ -31,7 +30,7 @@ class BaseSeSpider(BaseCrawlSpider):
     
     #搜索引擎格式
     seUrlFormat=[]
-    searchPageNum=5
+    searchPageNum=20
     itemPriority=1000
     config=None
     seResultList=[]
@@ -50,6 +49,8 @@ class BaseSeSpider(BaseCrawlSpider):
         self.functionDic['baseParse'] = self.baseParse
         self.seUrlFormat=self.config['seUrlFormat']
         self.specailField=['content','publishDate']#,'content'
+        self.nextPageField=['content'] #在下一页取得的Field
+        self.articleMetaName = 'Article'
         self.initRequest()
         dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
         
@@ -78,6 +79,12 @@ class BaseSeSpider(BaseCrawlSpider):
             return []
         for keyWord in keyWords:
             for v in self.seUrlFormat:
+                #设置默认值
+                if not keyWord['pageNumber']:
+                    keyWord['pageNumber'] = self.searchPageNum
+                if not keyWord['priority']:
+                    keyWord['priority'] = self.itemPriority
+                    
                 for i in range(1, keyWord['pageNumber']+1):
                     format=v['format']
                     encodeType=v['encode']
@@ -134,10 +141,35 @@ class BaseSeSpider(BaseCrawlSpider):
         resultItemLinkXpath=meta['resultItemLinkXpath']
         hxs=HtmlXPathSelector(response)
         links=hxs.select(resultItemLinkXpath).extract()
+        
         if links and len(links)>0:
-            for link in links:
-                link = homePage + link
+            metaItem = {}
+            #判断配置是否正确
+            if self.checkXathConfig(response):
+                xpathItems = self.config['seXpath'][response.meta['seName']]
+                for k,v in xpathItems.items():
+                    if k in self.nextPageField:
+                        continue
+                    values = hxs.select(v).extract()
+                    if not values or len(values) != len(links):
+                        log.msg("%s未抓取到或是抓取到的数量没有和link数一样，可能是xpath有问题" % k, log.WARNING)
+                        continue
+                    for i in range(len(values)):
+                        values[i] = values[i].encode('utf-8')
+                        if k in self.specailField:
+                            values[i]=self.parseSpecialField(k, values[i])
+                    metaItem[k] = values
+                
+            for  i in range(len(links)):
+                link = links[i]
+                
                 log.msg("%s"%link, log.INFO)
+                if metaItem:
+                    item = {}
+                    for k,v in metaItem.items():
+                        item[k] = v[i]
+                    if item:
+                        meta[self.articleMetaName] = item
                 req=self.makeRequestWithMeta(link, callBackFunctionName='parseItem', meta=meta,priority=self.itemPriority)
                 itemsReq.append(req)
         else:
@@ -181,30 +213,28 @@ class BaseSeSpider(BaseCrawlSpider):
         '''解析搜索引擎AcricleItem'''
         log.msg("解析搜索引擎NoteItem", level=log.INFO)
         #判断配置是否正确
-        if not ('seXpath' in self.config and response.meta['seName'] in self.config['seXpath']):
-            log.msg("配置文件中缺少seXpath配置或seXpath中缺少%s的配置" % response.meta['seName'], level=log.ERROR)
-            return
+        if not self.checkXathConfig(response):
+            return None
         
         xpathItems = self.config['seXpath'][response.meta['seName']]
         hxs=HtmlXPathSelector(response)
         loader = ZijiyouItemLoader(Article(),response=response)
+        #添加前一页的field项
+        if self.articleMetaName in response.meta:
+            for k,v in response.meta[self.articleMetaName].items():
+                v = unicode(str(v), 'utf8')
+                loader.add_value(k, getText(v))
+        #添加下一页的field项
         for k,v in xpathItems.items():
-            values = hxs.select(v).extract()
-            value=("-".join("%s" % p for p in values)).encode("utf-8")
-            if k in self.specailField:
-                value=self.parseSpecialField(k, value)
-            if value:
-                loader.add_value(k, value)
-#            if value:
-#                if(k == 'date'):
-#                    value = re.search(r"\d{4}年\d{2}月\d{2}日$", value)
-#                    if value:
-#                        loader.add_value(k, value.group(0))
-#                    else:
-#                        loader.add_value(k, time.strftime("%Y年%m月%d日"))
-#                else:
-#                    loader.add_value(k, value)
+            if k in self.nextPageField:
+                values = hxs.select(v).extract()
+                value=("-".join("%s" % p for p in values)).encode("utf-8")
+                if k in self.specailField:
+                    value=self.parseSpecialField(k, value)
+                if value:
+                    loader.add_value(k, getText(value))
         loader.add_value('url', response.url)
+        loader.add_value('spiderName', self.name)
         noteItem = loader.load_item()
         return noteItem
     
@@ -215,7 +245,7 @@ class BaseSeSpider(BaseCrawlSpider):
         if not name or not content:
             return None
         if name == 'publishDate':
-            value = re.search(r"\d{4}年\d{2}月\d{2}日$", content)
+            value = re.search(r"(\d{4}年\d{2}月\d{2}日)|(\d{4}-\d{2}-\d{2})", content)
             if value:
                 return value.group(0)
             else:
@@ -223,7 +253,15 @@ class BaseSeSpider(BaseCrawlSpider):
         if name == 'content':
             print '正文抽取'
             mainText = doExtract(content,threshold=False)
-            print mainText
+#            print mainText
             return mainText
+        
+    
+    def checkXathConfig(self, response):
+        '''判断配置是否正确'''
+        if not ('seXpath' in self.config and response.meta['seName'] in self.config['seXpath']):
+            log.msg("配置文件中缺少seXpath配置或seXpath中缺少%s的配置" % response.meta['seName'], level=log.ERROR)
+            return False
+        return True
     
 SPIDER = BaseSeSpider()

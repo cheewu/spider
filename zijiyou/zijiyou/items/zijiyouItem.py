@@ -79,6 +79,7 @@ class Article(BaseItem):
     content = Field()       #文章内容
     publishDate = Field()   #发表日期
     originUrl = Field()     #文章原始链接 用于搜索引擎爬虫的快照爬取
+    abstract = Field()      #文章摘要
     
     pvNum = Field()          #浏览量
     replyNum = Field()       #回复

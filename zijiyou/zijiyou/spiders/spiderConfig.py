@@ -8,17 +8,17 @@ spiderConfig = {
                                      'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s&pg=%s',#搜索格式
 #                                     'sePageNum':5,
                                      'encode':'GBK',
-                                     'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
+                                     'resultItemLinkXpath':'//ol/li/h3/a/@href',
                                      'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',
                                      'nextPagePattern':'http://blog.soso.com/qz.q?w=keyWord&sc=qz&ty=blog&sd=0&st=r&cid=&op=blog.blog&pid=qz.s.res&pg=pageNum',#无法通过xpath获得js动态生成的下一页区域，使用模板
                                      'homePage':'http://blog.soso.com'                                  
                                      }],
                     'seXpath':{
                                "sosoBlog":{
-                                    r'title':r'//o/li/h3/a',
-                                    r'publishDate':r'//div[@id="main"]/text()[2]',
-                                    r'content':r'//div[@id="main"]',
-                                    r'originUrl':r'//o/li/h3/a/@href'
+                                    r'title':r'//ol/li/h3/a',
+                                    r'publishDate':r'//ol/li/h3/text()',
+                                    r'content':r'/',
+                                    r'abstract':r'//ol/li'
                                     }
                                },
                      #普通list页正则表达式

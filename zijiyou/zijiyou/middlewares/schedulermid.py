@@ -50,8 +50,8 @@ class Cookies(object):
     _cookiesStartTime = {}
     
     def enqueue_request(self,spider,request):
-        log.msg("开始调用cookies shedule中间件", log.INFO)
-        print "开始调用cookies shedule中间件"
+        log.msg("开始调用cookies shedule中间件", log.DEBUG)
+#        print "开始调用cookies shedule中间件"
         request.cookies = self.getCookies(spider.name)
     
     def getCookies(self, spiderName):
