@@ -2,26 +2,29 @@
 #!/usr/bin/env python
 
 from bson.objectid import ObjectId
+from httplib import HTTPConnection
 from scrapy import log
 from scrapy.conf import settings
 from urllib import urlencode
-from zijiyou.common.postTool import PostData
 from zijiyou.db.mongoDbApt import MongoDbApt
+from zijiyou.spiders.offlineCrawl.extractText import getText
 from zijiyou.spiders.offlineCrawl.parse import Parse, Parse
 from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
 import hashlib
+import json
 import os
 import pymongo
 import re
 import string
 import time
 import urllib
+#from zijiyou.common.postTool import PostData
 
-post=PostData()
-post.post()
+#post=PostData()
+#post.post()
 
-#mongo = MongoDbApt()
+mongo = MongoDbApt()
 #value=mongo.findFieldsWithLimit('Article',whereJson={}, limitNum=1)
 #print value
 ##print str(value['_id'])
@@ -307,34 +310,23 @@ post.post()
 '''
 清空爬到的数据
 '''
-#colSource=[
-#                ''ResponseBody',
-#                '  'Attraction',
-#                '  'Note',
-#                '  'CrawlUrl',
-#                '  'CommonSense',
-#                '  'MemberInfo',
-#                '  'MemberTrack',
-#                '  'MemberFriend',
-#                '  'MemberNoteList',
-#                '  'KeyWord',
-#                '  'test']
+#colSource=['KeyWord']
 #print '清空...'
 #for i in range(0,len(colSource)):
-#    print mon.count(colSource[i])
-#    mon.removeAll(colSource[i])
+#    print mongo.count(colSource[i])
+#    mongo.removeAll(colSource[i])
 #print '完成清空...'
 
 #爬虫启动url
-#startUrl = "http://www.lvping.com/members/jacobok"
-#mon.remove('CrawlUrl', {"url":startUrl})
-#value={"url":startUrl,"callBack":None,"status":400,"priority":1,"dateTime":datetime.datetime.now()}
-#mon.saveItem('CrawlUrl', value)
-#print mon.count("CrawlUrl")
+#startUrl = "http://www.lvping.com/members/ajax/GetMyMap.ashx?gettype=getlall&profileUrlNO=CC7FE0B41EEC4DB7AF9B0103E44712D9"
+#mongo.remove('UrlDb', {"url":startUrl})
+#value={"url":startUrl,"callBack":None,"status":1000,"priority":1000,"dateTime":datetime.datetime.now(), "spiderName":"lvpingSpider", "reference":None}
+#mongo.saveItem('UrlDb', value)
+#print mongo.count("UrlDb")
 
-#item=[{'keyWord':'北京','type':'Note','priority':100}]
-#mon.saveItem('KeyWord', item)
-#keyWords=mon.findByDictionaryAndSort('KeyWord', {}, 'priority')
+#item={'keyWord':'九寨沟','itemCollectionName':'Article','priority':100, 'pageNumber':5, 'collectionName':"KeyWord"}
+#mongo.saveItem('KeyWord', item)
+#keyWords=mongo.findByDictionaryAndSort('KeyWord', {}, 'priority')
 #print len(keyWords)
 
 
@@ -620,8 +612,55 @@ post.post()
 #    print "新的集合：%s" % v, "共插入的数量为：%s" % counter
 #        
 #print "执行结束"
+
+#newContent = None
+#noteTypeRegex = r':([^:]*)\.html'
+#matches = re.search(noteTypeRegex,'http://www.lvping.com/travel-d38-s136/hongkong:history.html',0)
+#if matches:
+#    newContent = matches.group(1)
+#print newContent
+
+#html = "<p><img src='http://www.' >32</p>"
+#print getText(html)
     
 
+#conn = HTTPConnection("www.lvping.com")
+#conn.request("HEAD", "/members/CC7FE0B41EEC4DB7AF9B0103E44712D9")
+#r1 = conn.getresponse()
+#print r1.getheader("set-cookie")
+#conn.close()
+#conn = HTTPConnection("www.lvping.com")
+#cookie = "ASP.NET_SessionId=1s3wzvbfe23rhf55oduhvp55; path=/; HttpOnly"
+#conn.request("GET", "/members/ajax/GetMyMap.ashx?gettype=getlall&profileUrlNO=CC7FE0B41EEC4DB7AF9B0103E44712D9", None, {"cookie":cookie})
+#r2 = conn.getresponse()
+#print r2.getheaders()
+#conn.close()
 
+#starttime = datetime.datetime.now()
+#endtime = datetime.datetime.now()
+#print (endtime-starttime).seconds
+#mapjson = json.loads('["foo", {"bar":["baz", null, 1.0, 2]}]')
+#print mapjson[1]
 
-    
+#value = re.search(r"(\d{4}年\d{2}月\d{2}日)|(\d{4}-\d{2}-\d{2})", " (2011-05-25 16:29:18)")
+#if value:
+#    print value.group(0)
+
+#添加keyword
+#colSource=['KeyWord']
+#print '清空...'
+#for i in range(0,len(colSource)):
+#    print mongo.count(colSource[i])
+#    mongo.removeAll(colSource[i])
+#print '完成清空...'
+#
+#counter = 0
+#f=open('wordList.txt')
+#for line in f.readlines():
+#    newLine = line.decode('GBK').encode('utf-8');
+##    print newLine
+#    item={'keyWord':'九寨沟','itemCollectionName':'Article','priority':1000, 'pageNumber':20, 'collectionName':"KeyWord"}
+#    mongo.saveItem('KeyWord', item)
+#    counter += 1
+#f.close()
+#print '总共插入的记录数', counter
