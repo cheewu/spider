@@ -10,6 +10,8 @@ spiderConfig = {
                                      'encode':'GBK',
                                      'resultItemLinkXpath':'//ol/li/h3/a/@href',
                                      'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',
+                                     'totalRecordXpath':'//div[@id="sNum"]/text()',
+                                     'totalRecordRegex':r'[\d|,]+',
                                      'nextPagePattern':'http://blog.soso.com/qz.q?w=keyWord&sc=qz&ty=blog&sd=0&st=r&cid=&op=blog.blog&pid=qz.s.res&pg=pageNum',#无法通过xpath获得js动态生成的下一页区域，使用模板
                                      'homePage':'http://blog.soso.com'                                  
                                      }],

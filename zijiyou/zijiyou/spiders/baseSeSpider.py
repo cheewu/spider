@@ -16,6 +16,7 @@ from zijiyou.spiders.offlineCrawl.extractText import doExtract, getText
 from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
 import re
+import string
 import time
 import urllib
 
@@ -51,6 +52,7 @@ class BaseSeSpider(BaseCrawlSpider):
         self.specailField=['content','publishDate']#,'content'
         self.nextPageField=['content'] #在下一页取得的Field
         self.articleMetaName = 'Article'
+        self.urlPatternMeta = 'urlPattern'
         self.initRequest()
         dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
         
@@ -65,11 +67,11 @@ class BaseSeSpider(BaseCrawlSpider):
             log.msg('清空数据库中的SeSpider中的搜索链接数量：%s' % len(self.seResultList), level=log.INFO)
         self.seResultList=[]
         
-    def makeRequestByKeywordForSEs(self):
+    def makeFirstPageRequestByKeywordForSEs(self):
         '''
         由关键字创建SE的请求
         '''
-        log.msg("开始生成关键字搜索请求", level=log.INFO)
+        log.msg("开始生成关键字第一页搜索请求", level=log.INFO)
         
         #load关键字
         reqs=[]
@@ -80,30 +82,79 @@ class BaseSeSpider(BaseCrawlSpider):
         for keyWord in keyWords:
             for v in self.seUrlFormat:
                 #设置默认值
-                if not keyWord['pageNumber']:
-                    keyWord['pageNumber'] = self.searchPageNum
+#                if not keyWord['pageNumber']:
+#                    keyWord['pageNumber'] = self.searchPageNum
                 if not keyWord['priority']:
                     keyWord['priority'] = self.itemPriority
                     
-                for i in range(1, keyWord['pageNumber']+1):
-                    format=v['format']
-                    encodeType=v['encode']
-                    encodeWords=urllib.quote(keyWord['keyWord'].encode(encodeType))
-                    pagePriority=keyWord['priority']
-                    url=format % (encodeWords, i)
+                format=v['format']
+                encodeType=v['encode']
+                encodeWords=urllib.quote(keyWord['keyWord'].encode(encodeType))
+                pagePriority=keyWord['priority']
+                url=format % (encodeWords, 1)
 #                    print url
-                    meta={'itemCollectionName':keyWord['itemCollectionName'],
-                          'sePageNum':keyWord['pageNumber'],
-                          'resultItemLinkXpath':v['resultItemLinkXpath'],
-                          'nextPageLinkXpath':v['nextPageLinkXpath'],
-                          'seName':v['seName'],
-                          'homePage':v['homePage'],
-                          'reference':None}
-                    request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
-                    reqs.append(request)
+                meta={'itemCollectionName':keyWord['itemCollectionName'],
+                      'sePageNum':keyWord['pageNumber'],
+                      'priority':keyWord['priority'],
+                      'resultItemLinkXpath':v['resultItemLinkXpath'],
+                      'nextPageLinkXpath':v['nextPageLinkXpath'],
+                      'totalRecordXpath':v['totalRecordXpath'],
+                      'totalRecordRegex':v['totalRecordRegex'],
+                      'seName':v['seName'],
+                      'homePage':v['homePage'],
+                      'reference':None}
+                meta[self.urlPatternMeta] = format % (encodeWords, '')
+                request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
+                reqs.append(request)
                     
-                    self.seResultList.append(url)
+                self.seResultList.append(url)
         log.msg('生成了%s个关键字搜索请求' % len(reqs), level=log.INFO)
+        return reqs
+    
+    def makeRequestByFirstPageForSEs(self, response, pageSize=10):
+        if not response or not self.urlPatternMeta in response.meta or not response.meta[self.urlPatternMeta]:
+            return None
+        
+        totalRecord = 0
+        urlPattern = response.meta[self.urlPatternMeta]
+        response.meta[self.urlPatternMeta] = None
+        meta = response.meta
+        meta['reference']=response.url
+        
+        #获得总的记录数
+        totalRecordXpath = meta['totalRecordXpath']
+        totalRecordRegex = meta['totalRecordRegex']
+        hxs=HtmlXPathSelector(response)
+        totalRecordValues = None
+        if totalRecordXpath and not totalRecordRegex:
+            totalRecordValues = hxs.select(totalRecordXpath).extract()
+        elif totalRecordXpath and totalRecordRegex:
+            totalRecordValues = hxs.select(totalRecordXpath).re(totalRecordRegex)
+        else:
+            log.msg("配置有误，totalRecordXpath是必须的，totalRecordRegex是可选的，%s" % response.url, level=log.ERROR)
+            return None
+        if totalRecordValues and len(totalRecordValues) > 0:
+            #将字符串中的逗号去掉，并转为整型
+            totalRecord = string.atoi(totalRecordValues[0].replace(',', ''))
+        else:
+            log.msg("抓取不到总搜索结果数，%s" % response.url, level=log.ERROR)
+            return None
+        totalPage = (totalRecord-1) / pageSize + 1 
+        log.msg("关键字第一页url:%s" % response.url, level=log.INFO)
+        log.msg("根据第一页获得搜索结果总数%s，每页%s项，总页数为%s" % (totalRecord, pageSize, totalPage), level=log.INFO)
+        if totalPage <= 1:
+            log.msg("%s，该关键字只有一个页面结果" % response.url, level=log.INFO)
+            return None
+        log.msg("开始生成关键字除第一页剩余的所有页面搜索请求", level=log.INFO)
+        reqs=[]
+        #递减
+        for i in range(totalPage, 1, -1):
+            url = urlPattern + str(i)
+            print url
+            request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=meta['priority'])
+            reqs.append(request)
+                    
+            self.seResultList.append(url)
         return reqs
     
     def baseParse(self,response):
@@ -118,7 +169,7 @@ class BaseSeSpider(BaseCrawlSpider):
                 log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
             else:
                 log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , level=log.INFO)
-            seReqs=self.makeRequestByKeywordForSEs()
+            seReqs=self.makeFirstPageRequestByKeywordForSEs()
             if seReqs and len(seReqs)>0:
                 reqs.extend(seReqs)
             else:
@@ -136,12 +187,20 @@ class BaseSeSpider(BaseCrawlSpider):
 #        print meta
         #item页链接请求
         itemsReq=[]
-        homePage=meta['homePage']
-        print homePage
+#        homePage=meta['homePage']
+#        print homePage
         resultItemLinkXpath=meta['resultItemLinkXpath']
         hxs=HtmlXPathSelector(response)
         links=hxs.select(resultItemLinkXpath).extract()
         
+        #判断是否是第一页搜索结果，是，则抽取出总搜索结果数，计算出总页数，生成剩余页数的request
+        if self.urlPatternMeta in response.meta:
+            pageLinks = self.makeRequestByFirstPageForSEs(response, len(links))
+            if pageLinks:
+                reqs.extend(pageLinks)
+                log.msg("第一页：%s，生成剩余的搜索页面数为：：%s" % (response.url, len(pageLinks)), level=log.INFO)
+        
+        #开始抓取页面上的搜索结果
         if links and len(links)>0:
             metaItem = {}
             #判断配置是否正确
@@ -174,9 +233,10 @@ class BaseSeSpider(BaseCrawlSpider):
                 itemsReq.append(req)
         else:
             log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
+        
         reqs.extend(itemsReq)
         log.msg("%s parse 产生item页的Request数量：%s" % (response.url, len(itemsReq)), level=log.INFO)
-
+        
         return reqs
     
     def parseItem(self,response):
