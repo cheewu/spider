@@ -38,7 +38,7 @@ class BaseSeSpider(BaseCrawlSpider):
     
     def __init__(self,*a,**kw):
         super(BaseSeSpider,self).__init__(*a,**kw)
-        
+        log.msg("爬虫开始了........................", level=log.INFO)
         self.CrawlDb=settings.get('CRAWL_DB')
         if not self.CrawlDb :
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
@@ -150,7 +150,7 @@ class BaseSeSpider(BaseCrawlSpider):
         #递减
         for i in range(totalPage, 1, -1):
             url = urlPattern + str(i)
-            print url
+#            print url
             request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=meta['priority'])
             reqs.append(request)
                     
@@ -287,8 +287,13 @@ class BaseSeSpider(BaseCrawlSpider):
         #添加下一页的field项
         for k,v in xpathItems.items():
             if k in self.nextPageField:
-                values = hxs.select(v).extract()
-                value=("-".join("%s" % p for p in values)).encode("utf-8")
+                value = None
+                if not v:
+                    values = hxs.extract()
+                    value=("".join("%s" % p for p in values)).encode("utf-8")
+                else:
+                    values = hxs.select(v).extract()
+                    value=("-".join("%s" % p for p in values)).encode("utf-8")
                 if k in self.specailField:
                     value=self.parseSpecialField(k, value)
                 if value:

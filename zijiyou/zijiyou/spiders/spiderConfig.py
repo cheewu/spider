@@ -19,7 +19,7 @@ spiderConfig = {
                                "sosoBlog":{
                                     r'title':r'//ol/li/h3/a',
                                     r'publishDate':r'//ol/li/h3/text()',
-                                    r'content':r'/',
+                                    r'content':None,
                                     r'abstract':r'//ol/li'
                                     }
                                },
