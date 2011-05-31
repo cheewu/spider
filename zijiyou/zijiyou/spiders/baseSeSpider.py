@@ -313,8 +313,8 @@ class BaseSeSpider(BaseCrawlSpider):
         if self.articleMetaName in response.meta:
             for k,v in response.meta[self.articleMetaName].items():
                 v = unicode(str(v), 'utf8')
-                print k
-                print getText(v)
+#                print k
+#                print getText(v)
                 loader.add_value(k, getText(v))
         #添加下一页的field项
         for k,v in xpathItems.items():
