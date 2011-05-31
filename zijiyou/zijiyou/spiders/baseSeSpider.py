@@ -74,23 +74,25 @@ class BaseSeSpider(BaseCrawlSpider):
             log.msg("self.mongoApt为空，初始化mongod链接" ,level=log.INFO)
             self.mongoApt=MongoDbApt()
         whereJsonItem = {"spiderName":self.name, "status":1000}
+#        log.msg("清除未完成的item和搜索引擎list页：",level=log.INFO)
+#        urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonItem)
+#        for u in urls:
+#            log.msg(u["url"] ,level=log.INFO)
         itemCount = self.mongoApt.countByWhere(self.CrawlDb, whereJsonItem)
-        log.msg("清除未完成的item和搜索引擎list页：%s" % itemCount ,level=log.INFO)
-        urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonItem)
-        for u in urls:
-            log.msg(u["url"] ,level=log.INFO)
         self.mongoApt.remove(self.CrawlDb, whereJsonItem)
+        log.msg("清除未完成的item和搜索引擎list页：%s" % itemCount ,level=log.INFO)
         normalRegex = "normalRegex"
         if normalRegex in self.config:
             regexes = ("|".join("%s" % p for p in self.config[normalRegex]))
             print regexes
             whereJsonList = {"spiderName":self.name, "url":{"$regex":regexes}}
+#            log.msg("清除已经完成的搜索引擎list页：",level=log.INFO)
+#            urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonList)
+#            for u in urls:
+#                log.msg(u["url"] ,level=log.INFO)
             listCount = self.mongoApt.countByWhere(self.CrawlDb, whereJsonList)
-            urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonList)
-            log.msg("清除已经完成的搜索引擎list页：%s" % listCount ,level=log.INFO)
-            for u in urls:
-                log.msg(u["url"] ,level=log.INFO)
             self.mongoApt.remove(self.CrawlDb, whereJsonList)
+            log.msg("清除已经完成的搜索引擎list页：%s" % listCount ,level=log.INFO)
         else:
             log.msg("配置文件中缺少 normalRegex配置，不能将数据库中的搜索引擎列表页清空" ,level=log.ERROR)
             raise NotConfigured
