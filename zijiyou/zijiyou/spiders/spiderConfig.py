@@ -25,8 +25,7 @@ spiderConfig = {
                                },
                      #普通list页正则表达式
                      'normalRegex':[
-                                    "http://blog.soso.com/qz\.q",
-                                    "http://www.lvping.com/members"
+                                    "http://blog.soso.com/qz\.q"
                                     ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[]
