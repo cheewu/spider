@@ -310,7 +310,7 @@ mongo = MongoDbApt()
 '''
 清空爬到的数据
 '''
-#colSource=['KeyWord']
+#colSource=['KeyWord', 'Article', "UrlDb"]
 #print '清空...'
 #for i in range(0,len(colSource)):
 #    print mongo.count(colSource[i])
@@ -318,14 +318,16 @@ mongo = MongoDbApt()
 #print '完成清空...'
 
 #爬虫启动url
-#startUrl = "http://www.lvping.com/members/ajax/GetMyMap.ashx?gettype=getlall&profileUrlNO=CC7FE0B41EEC4DB7AF9B0103E44712D9"
-#mongo.remove('UrlDb', {"url":startUrl})
-#value={"url":startUrl,"callBack":None,"status":1000,"priority":1000,"dateTime":datetime.datetime.now(), "spiderName":"lvpingSpider", "reference":None}
-#mongo.saveItem('UrlDb', value)
-#print mongo.count("UrlDb")
+startUrl = "http://www.lvping.com/members"
+mongo.remove('UrlDb', {"url":startUrl})
+value={"url":startUrl,"callBack":None,"status":200,"priority":1000,"dateTime":datetime.datetime.now(), "spiderName":"baseSeSpider", "reference":None}
+mongo.saveItem('UrlDb', value)
+print mongo.count("UrlDb")
 
 #item={'keyWord':'九寨沟','itemCollectionName':'Article','priority':100, 'pageNumber':5, 'collectionName':"KeyWord"}
+#item2={'keyWord':'八达岭','itemCollectionName':'Article','priority':100, 'pageNumber':5, 'collectionName':"KeyWord"}
 #mongo.saveItem('KeyWord', item)
+#mongo.saveItem('KeyWord', item2)
 #keyWords=mongo.findByDictionaryAndSort('KeyWord', {}, 'priority')
 #print len(keyWords)
 
@@ -659,7 +661,7 @@ mongo = MongoDbApt()
 #for line in f.readlines():
 #    newLine = line.decode('GBK').encode('utf-8');
 ##    print newLine
-#    item={'keyWord':'九寨沟','itemCollectionName':'Article','priority':1000, 'pageNumber':20, 'collectionName':"KeyWord"}
+#    item={'keyWord':newLine,'itemCollectionName':'Article','priority':1000, 'pageNumber':20, 'collectionName':"KeyWord"}
 #    mongo.saveItem('KeyWord', item)
 #    counter += 1
 #f.close()
