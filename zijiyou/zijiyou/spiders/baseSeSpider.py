@@ -84,7 +84,7 @@ class BaseSeSpider(BaseCrawlSpider):
         normalRegex = "normalRegex"
         if normalRegex in self.config:
             regexes = ("|".join("%s" % p for p in self.config[normalRegex]))
-            print regexes
+#            print regexes
             whereJsonList = {"spiderName":self.name, "url":{"$regex":regexes}}
 #            log.msg("清除已经完成的搜索引擎list页：",level=log.INFO)
 #            urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonList)
