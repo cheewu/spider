@@ -24,7 +24,10 @@ spiderConfig = {
                                     }
                                },
                      #普通list页正则表达式
-                     'normalRegex':[],
+                     'normalRegex':[
+                                    "http://blog.soso.com/qz\.q",
+                                    "http://www.lvping.com/members"
+                                    ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[]
                      },
@@ -46,18 +49,19 @@ spiderConfig = {
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
                      'startUrls':[
-                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
-                                  'http://www.lvping.com/EuropeNavigation.aspx',
-                                  'http://www.lvping.com/AsiaNavigation.aspx',
-                                  'http://www.lvping.com/ChinaNavigation.aspx',
-                                  'http://www.lvping.com/OceaniaNavigation.aspx',
-                                  'http://www.lvping.com/southAmericaNavigation.aspx',
-                                  'http://www.lvping.com/AfricaNavigation.aspx',
-#
-##                                  #游记攻略
-                                  'http://www.lvping.com/Journals.aspx?type=1',
-                                  'http://www.lvping.com/Journals.aspx?selecttype=2',
-                                  'http://www.lvping.com/Journals.aspx'
+#                                  'http://www.lvping.com/NorthAmericaNavigation.aspx',
+#                                  'http://www.lvping.com/EuropeNavigation.aspx',
+#                                  'http://www.lvping.com/AsiaNavigation.aspx',
+#                                  'http://www.lvping.com/ChinaNavigation.aspx',
+#                                  'http://www.lvping.com/OceaniaNavigation.aspx',
+#                                  'http://www.lvping.com/southAmericaNavigation.aspx',
+#                                  'http://www.lvping.com/AfricaNavigation.aspx',
+##
+###                                  #游记攻略
+#                                  'http://www.lvping.com/Journals.aspx?type=1',
+#                                  'http://www.lvping.com/Journals.aspx?selecttype=2',
+#                                  'http://www.lvping.com/Journals.aspx'
+                                    'http://blog.163.com/katetengteng@126/blog/static/99807129201071513718365'
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[

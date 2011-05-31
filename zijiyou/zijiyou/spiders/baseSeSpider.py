@@ -9,6 +9,7 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
 from scrapy.xlib.pydispatch import dispatcher
+from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
@@ -31,14 +32,13 @@ class BaseSeSpider(BaseCrawlSpider):
     
     #搜索引擎格式
     seUrlFormat=[]
-    searchPageNum=20
-    itemPriority=1000
+    maxPageNum=20
+    itemPriority=1200
     config=None
     seResultList=[]
     
     def __init__(self,*a,**kw):
         super(BaseSeSpider,self).__init__(*a,**kw)
-        log.msg("爬虫开始了........................", level=log.INFO)
         self.CrawlDb=settings.get('CRAWL_DB')
         if not self.CrawlDb :
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
@@ -53,6 +53,7 @@ class BaseSeSpider(BaseCrawlSpider):
         self.nextPageField=['content'] #在下一页取得的Field
         self.articleMetaName = 'Article'
         self.urlPatternMeta = 'urlPattern'
+        self.clearUrlDb()
         self.initRequest()
         dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
         
@@ -66,6 +67,34 @@ class BaseSeSpider(BaseCrawlSpider):
                 self.mongoApt.remove(self.CrawlDb,whereJson)
             log.msg('清空数据库中的SeSpider中的搜索链接数量：%s' % len(self.seResultList), level=log.INFO)
         self.seResultList=[]
+        
+    def clearUrlDb(self):
+        log.msg("开始清空搜索引擎数据" ,level=log.INFO)
+        if not self.mongoApt:
+            log.msg("self.mongoApt为空，初始化mongod链接" ,level=log.INFO)
+            self.mongoApt=MongoDbApt()
+        whereJsonItem = {"spiderName":self.name, "status":1000}
+        itemCount = self.mongoApt.countByWhere(self.CrawlDb, whereJsonItem)
+        log.msg("清除未完成的item和搜索引擎list页：%s" % itemCount ,level=log.INFO)
+        urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonItem)
+        for u in urls:
+            log.msg(u["url"] ,level=log.INFO)
+        self.mongoApt.remove(self.CrawlDb, whereJsonItem)
+        normalRegex = "normalRegex"
+        if normalRegex in self.config:
+            regexes = ("|".join("%s" % p for p in self.config[normalRegex]))
+            print regexes
+            whereJsonList = {"spiderName":self.name, "url":{"$regex":regexes}}
+            listCount = self.mongoApt.countByWhere(self.CrawlDb, whereJsonList)
+            urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonList)
+            log.msg("清除已经完成的搜索引擎list页：%s" % listCount ,level=log.INFO)
+            for u in urls:
+                log.msg(u["url"] ,level=log.INFO)
+            self.mongoApt.remove(self.CrawlDb, whereJsonList)
+        else:
+            log.msg("配置文件中缺少 normalRegex配置，不能将数据库中的搜索引擎列表页清空" ,level=log.ERROR)
+            raise NotConfigured
+        log.msg("清除搜索引擎数据完成" ,level=log.INFO)
         
     def makeFirstPageRequestByKeywordForSEs(self):
         '''
@@ -82,10 +111,6 @@ class BaseSeSpider(BaseCrawlSpider):
         for keyWord in keyWords:
             for v in self.seUrlFormat:
                 #设置默认值
-#                if not keyWord['pageNumber']:
-#                    keyWord['pageNumber'] = self.searchPageNum
-                if not keyWord['priority']:
-                    keyWord['priority'] = self.itemPriority
                     
                 format=v['format']
                 encodeType=v['encode']
@@ -139,9 +164,12 @@ class BaseSeSpider(BaseCrawlSpider):
         else:
             log.msg("抓取不到总搜索结果数，%s" % response.url, level=log.ERROR)
             return None
-        totalPage = (totalRecord-1) / pageSize + 1 
+        totalPage = (totalRecord-1) / pageSize + 1
+        #设定最多爬取页数
+        if totalPage > self.maxPageNum:
+            totalPage = self.maxPageNum
         log.msg("关键字第一页url:%s" % response.url, level=log.INFO)
-        log.msg("根据第一页获得搜索结果总数%s，每页%s项，总页数为%s" % (totalRecord, pageSize, totalPage), level=log.INFO)
+        log.msg("根据第一页获得搜索结果总数%s，每页%s项，最大的爬取页数为%s，总页数为%s" % (totalRecord, pageSize, self.maxPageNum, totalPage), level=log.INFO)
         if totalPage <= 1:
             log.msg("%s，该关键字只有一个页面结果" % response.url, level=log.INFO)
             return None
@@ -283,6 +311,8 @@ class BaseSeSpider(BaseCrawlSpider):
         if self.articleMetaName in response.meta:
             for k,v in response.meta[self.articleMetaName].items():
                 v = unicode(str(v), 'utf8')
+                print k
+                print getText(v)
                 loader.add_value(k, getText(v))
         #添加下一页的field项
         for k,v in xpathItems.items():

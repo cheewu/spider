@@ -67,7 +67,7 @@ SPIDER_MIDDLEWARES = {
 PROXY = ['local']
 
 #EMail Configure
-MAIL_INTERVAL = 7200
+#MAIL_INTERVAL = 7200
 #发送对象列表
 MAIL_TO_LIST = ["465813018@qq.com", "1413614423@qq.com"]
 #设置服务器，用户名、口令以及邮箱的后缀
