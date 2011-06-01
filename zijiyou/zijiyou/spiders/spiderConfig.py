@@ -90,5 +90,23 @@ spiderConfig = {
                                   {'itemCollectionName':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
                                   {'itemCollectionName':'Region', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
                                   ]
-                     }
+                     },
+                "bbsSpider":{
+                     'homePage':'http://www.go2eu.com/bbs/', #后面要加 /
+                     'allowedDomains':["go2eu.com"],
+                     'startUrls':['http://www.19lou.com/forum-1174-filter-type-typeid-566-1.html'],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    {'regex':r'forumdisplay.php\?fid=\d+.*page=\d+$|forum-\d+-\d+.html$', 'priority':700},
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  {'itemCollectionName':'Article','regex':r'viewthread.php\?.*tid=\d+.*$|thread-\d+-\d+-\d+.html$'},
+                                  ],
+                     'firstPageItemRegex':'viewthread.php\?(tid=\d+)?((?!page=).)*$|thread-\d+-1-\d+.html$',
+                     'maxPageNumXpath':'//span[@class="threadpages"]/a[last()]/@href',
+                     'maxPageNumRegex':None,
+                     'pagePattern':{'page=(\d+)':'page=%s', '-(\d)+-':'-%s-'},
+                     'itemPriority':1100
+                     },
 }
