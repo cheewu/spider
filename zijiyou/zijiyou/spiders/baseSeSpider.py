@@ -9,12 +9,12 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
 from scrapy.xlib.pydispatch import dispatcher
+from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 from zijiyou.spiders.offlineCrawl.extractText import doExtract, getText
-from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
 import re
 import string

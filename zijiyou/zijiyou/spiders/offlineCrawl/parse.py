@@ -9,10 +9,10 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
+from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.enumModel import LogLevel
 from zijiyou.spiders.offlineCrawl.extractText import doExtract
-from zijiyou.spiders.offlineCrawl.extractorConfig import extractorConfig
 import datetime
 import json
 import os

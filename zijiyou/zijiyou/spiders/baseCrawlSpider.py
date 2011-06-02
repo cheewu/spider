@@ -11,10 +11,10 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
 from scrapy.http import Request
+from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb
-from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
 import re
 

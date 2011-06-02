@@ -7,10 +7,10 @@ Created on 2011-3-28
 from scrapy import log
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
+from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-from zijiyou.spiders.spiderConfig import spiderConfig
 import datetime
 import re
 import string
