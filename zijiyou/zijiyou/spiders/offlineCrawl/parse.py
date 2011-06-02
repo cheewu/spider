@@ -5,20 +5,21 @@ Created on 2011-4-20
 @author: shiym
 '''
 from bson.objectid import ObjectId
+from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
-from scrapy.conf import settings
+from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.spiders.offlineCrawl.extractorConfig import extractorConfig
 from zijiyou.items.enumModel import LogLevel
-#from zijiyou.spiders.offlineCrawl.ExtMainText import doExtMainText
 from zijiyou.spiders.offlineCrawl.extractText import doExtract
-
-import re
 import datetime
+import json
 import os
+import re
 import string
+#from zijiyou.spiders.offlineCrawl.ExtMainText import doExtMainText
+
 
 class Parse(object):
     '''
@@ -41,10 +42,11 @@ class Parse(object):
             self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
             raise NotConfigured
         self.requiredField= ['name','content','title']
-        self.specailField=['center','area','content']#,'content'
+        self.specialField=['center','area','content','noteType']#,'content'
+        self.specialItem=['MemberTrack']
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
-        self.whereJson={'status':100,'itemCollectionName':'Article','spiderName':'lvpingSpider'}#{'status':100} 测试
+        self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50
         self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
         self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
@@ -72,8 +74,12 @@ class Parse(object):
                     self.parseLog( '缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
                 spiderName=p['spiderName']
                 itemCollectionName=re.sub('[\r\n]', "", p['itemCollectionName'])
-                response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(p['responseBody']), flags=None, request=None )
-                item = self.parseItem(extractorConfig[spiderName],itemCollectionName, response, spiderName)
+                item = None
+                if itemCollectionName in self.specialItem:
+                    item = self.parseSpecialItem(itemCollectionName, p)
+                else:
+                    response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(p['responseBody']), flags=None, request=None )
+                    item = self.parseItem(extractorConfig[spiderName],itemCollectionName, response, spiderName)
                 whereJson={'_id':ObjectId(p['_id'])}
                 if itemCollectionName in self.collectionNameMap:
                     itemCollectionName=self.collectionNameMap[itemCollectionName]
@@ -115,7 +121,7 @@ class Parse(object):
         #关闭日志
         self.parseLog('parse 完成', level=LogLevel.INFO)
         self.loger.close()
-        if self.loger.closed :
+        if not self.loger.closed :
             self.loger.close()
             print 'OK !关闭日志'
 
@@ -161,7 +167,7 @@ class Parse(object):
             if not value and k in self.requiredField:
                 self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
                 return None
-            if k in self.specailField:
+            if k in self.specialField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
         #用正则表达式
@@ -190,9 +196,45 @@ class Parse(object):
             if not value and k in self.requiredField:
                 self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
                 return None
-            if k in self.specailField:
+            if k in self.specialField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
+            
+        #解析response中的数据
+        respItem={}
+        respName=itemCollectionName+'Resp'
+        if respName in config:
+            respItem=config[respName]
+        for k,v in respItem.items():
+            value = None
+            if v == 'url':
+                value = response.url
+            elif v == 'header':
+                if v.items():
+                    header = response.headers
+                    for hk, hv in v.items():
+                        value = header[hv]
+                        if not value:
+                            self.parseLog('response.headers中没有该属性：%s，类型： %s' % (hk,itemCollectionName), level=LogLevel.WARNING)
+                            continue
+                        if not value and hk in self.requiredField:
+                            self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (hk,itemCollectionName,response.url), level=LogLevel.WARNING)                
+                            return None
+                        if hk in self.specialField:
+                            value=self.parseSpecialField(hk, value)
+                        item[hk]=value
+                    continue
+                value = response.headers
+            elif k == 'status':
+                value = response.status
+            
+            if not value and k in self.requiredField:
+                self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
+                return None
+            if k in self.specialField:
+                value=self.parseSpecialField(k, value)
+            item[k]=value
+            
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
     
@@ -220,9 +262,68 @@ class Parse(object):
         if name == 'content':
             print '正文抽取'
             mainText = doExtract(content,threshold=False)
-            print mainText
+            #print mainText
             return mainText
+        if name == 'noteType':
+            noteTypeRegex = r':([^:]*)\.html'
+            matches = re.search(noteTypeRegex,content,0)
+            if matches:
+                newContent = matches.group(1)
+                return newContent
+            
+        return content
+    
+    def parseSpecialItem(self, itemCollectionName, pageItem):
+        '''
+        特殊Item解析
+        '''
+        self.parseLog('解析special item ：%s' % itemCollectionName, level=LogLevel.INFO)
         
+        if not itemCollectionName or not pageItem or (not itemCollectionName in self.specialItem):
+            return None
+        item = {}
+        item['url'] = pageItem['url']
+        item['spiderName'] = pageItem['spiderName']
+        responseBody = str(pageItem['responseBody'])
+        if itemCollectionName == 'MemberTrack':
+            if responseBody:
+                bodyJson = json.loads(responseBody)
+                if bodyJson and bodyJson['list1'] and len(bodyJson['list1']) > 0:
+                    trackInfo = {'likeflag':[],
+                                 'goneflag':[],
+                                 'knowflag':[],
+                                 'planflag':[]
+                                 }
+                    fieldMap = {'likeflag':'like',
+                                'goneflag':'gone',
+                                'knowflag':'know',
+                                'planflag':'plan'
+                                }
+                    for value in bodyJson['list1']:
+                        country = value['countryname']
+                        region = value['regionname']
+                        district = value['districtname']
+                        track = country
+                        #去掉名字重复的
+                        if country != region:
+                            track += "-" + region
+                        if region != district:
+                            track += "-" + district
+                        for k,v in trackInfo.items():
+                            #T代表有，F代表没有
+                            if value[k] == 'T':
+                                v.append(track)
+                    
+                    for k,v in fieldMap.items():
+                        item[v] = trackInfo[k]
+                        
+#                    print item
+        else:
+            self.parseLog('%s 是一个specialItem，但是没被处理' % itemCollectionName, level=LogLevel.WARNING)
+            return None
+        
+        return item
+    
     def parseLog(self,msg,level=None):
         if not msg or not level or len(msg)<2:
             return

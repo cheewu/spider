@@ -8,21 +8,25 @@ spiderConfig = {
                                      'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s&pg=%s',#搜索格式
 #                                     'sePageNum':5,
                                      'encode':'GBK',
-                                     'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
+                                     'resultItemLinkXpath':'//ol/li/h3/a/@href',
                                      'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',
+                                     'totalRecordXpath':'//div[@id="sNum"]/text()',
+                                     'totalRecordRegex':r'[\d|,]+',
                                      'nextPagePattern':'http://blog.soso.com/qz.q?w=keyWord&sc=qz&ty=blog&sd=0&st=r&cid=&op=blog.blog&pid=qz.s.res&pg=pageNum',#无法通过xpath获得js动态生成的下一页区域，使用模板
                                      'homePage':'http://blog.soso.com'                                  
                                      }],
                     'seXpath':{
                                "sosoBlog":{
-                                    r'title':r'//div[@id="main"]/h3/text()',
-                                    r'publishDate':r'//div[@id="main"]/text()[2]',
-                                    r'content':r'//div[@id="main"]',
-                                    r'originUrl':r'//div[@id="header"]/a/text()'
+                                    r'title':r'//ol/li/h3/a',
+                                    r'publishDate':r'//ol/li/h3/text()',
+                                    r'content':None,
+                                    r'abstract':r'//ol/li'
                                     }
                                },
                      #普通list页正则表达式
-                     'normalRegex':[],
+                     'normalRegex':[
+                                    "http://blog.soso.com/qz\.q"
+                                    ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[]
                      },
@@ -51,13 +55,11 @@ spiderConfig = {
                                   'http://www.lvping.com/OceaniaNavigation.aspx',
                                   'http://www.lvping.com/southAmericaNavigation.aspx',
                                   'http://www.lvping.com/AfricaNavigation.aspx',
-
-#                                  #游记攻略
+#
+##                                  #游记攻略
                                   'http://www.lvping.com/Journals.aspx?type=1',
                                   'http://www.lvping.com/Journals.aspx?selecttype=2',
                                   'http://www.lvping.com/Journals.aspx'
-                                   
-#                                   'http://www.lvping.com/showjournal-d145-r1281402-journals.html'
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
@@ -81,12 +83,30 @@ spiderConfig = {
                                   {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':1000}, #攻略 作者 发表时间 浏览次数 评论次数
                                   {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+$', 'priority':1000}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
                                   {'itemCollectionName':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':1}, #用户
-#                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':1}, #足迹
+                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+ajax/GetMyMap\.ashx.*$', 'priority':1}, #足迹
                                   {'itemCollectionName':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':1}, #好友
                                   {'itemCollectionName':'MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记
                                   
                                   {'itemCollectionName':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
                                   {'itemCollectionName':'Region', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
                                   ]
-                     }
+                     },
+                "bbsSpider":{
+                     'homePage':'http://www.go2eu.com/bbs/', #后面要加 /
+                     'allowedDomains':["go2eu.com"],
+                     'startUrls':['http://www.19lou.com/forum-1174-filter-type-typeid-566-1.html'],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    {'regex':r'forumdisplay.php\?fid=\d+.*page=\d+$|forum-\d+-\d+.html$', 'priority':700},
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  {'itemCollectionName':'Article','regex':r'viewthread.php\?.*tid=\d+.*$|thread-\d+-\d+-\d+.html$'},
+                                  ],
+                     'firstPageItemRegex':'viewthread.php\?(tid=\d+)?((?!page=).)*$|thread-\d+-1-\d+.html$',
+                     'maxPageNumXpath':'//span[@class="threadpages"]/a[last()]/@href',
+                     'maxPageNumRegex':None,
+                     'pagePattern':{'page=(\d+)':'page=%s', '-(\d)+-':'-%s-'},
+                     'itemPriority':1100
+                     },
 }

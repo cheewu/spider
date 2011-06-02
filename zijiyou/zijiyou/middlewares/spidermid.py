@@ -4,15 +4,17 @@ Created on 2011-4-12
 
 @author: shiym
 '''
-from zijiyou.db.mongoDbApt import MongoDbApt
 from scrapy import log
-from scrapy.http.request import Request
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
+from scrapy.http.request import Request
+from scrapy.utils.url import canonicalize_url
+from zijiyou.db.mongoDbApt import MongoDbApt
+import datetime
+import hashlib
+import re
 #from scrapy.utils.url import canonicalize_url
 
-import hashlib
-import datetime
 #import re
 
 class DuplicateUrlFilter(object):
@@ -159,3 +161,36 @@ def getFingerPrint(input):
 #    hasher.update(canonicalize_url(str(input)))
     fp=hasher.hexdigest()
     return fp
+
+
+class UrlNormalizer(object):
+    '''url normalizer (归一化)'''
+    def __init__(self):
+        log.msg('UrlNormalizer 中间件初始化', level=log.INFO)
+        self.rules = settings.get('URLNORMALIZER_RULES')
+        if not self.rules:
+            log.msg('没有配置 URLNORMALIZER_RULES！，请检查settings', level=log.WARNING)
+    
+    def process_spider_output(self, response, result, spider):
+        if self.rules:
+            log.msg("url normalizer (归一化)", level=log.INFO)
+            counter = 0
+            newResult = []
+            for p in result:
+                if isinstance(p, Request): 
+                    originUrl = p.url
+                    #先进行url标准化
+                    tmpUrl = canonicalize_url(originUrl)
+                    #按规则的先后顺序进行归一化
+                    for k,v in self.rules.items():
+                        newUrl = re.sub(k, v, tmpUrl)
+                        if not newUrl == tmpUrl:
+                            p = p.replace(url=newUrl)
+                            tmpUrl = newUrl
+                    if not originUrl == p.url:
+                        counter += 1
+                        log.msg("原来的url：%s, 新的url：%s" % (originUrl, p.url), level=log.DEBUG)
+                newResult.append(p)
+            log.msg("总共归一化数量为：%s" % counter, level=log.INFO)
+        return newResult
+        

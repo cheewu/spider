@@ -6,19 +6,18 @@ Created on 2011-3-28
 '''
 
 from scrapy import log
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
-from scrapy.contrib_exp.crawlspider import CrawlSpider
-from scrapy.http import Request
 from scrapy.conf import settings
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
-from scrapy.contrib_exp.crawlspider import Rule
+from scrapy.http import Request
+from zijiyou.config.spiderConfig import spiderConfig
+from zijiyou.db.mongoDbApt import MongoDbApt
+from zijiyou.items.itemLoader import ZijiyouItemLoader
+from zijiyou.items.zijiyouItem import PageDb
 import datetime
 import re
 
-from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.spiders.spiderConfig import spiderConfig
-from zijiyou.items.zijiyouItem import PageDb
-from zijiyou.items.itemLoader import ZijiyouItemLoader
 
 class BaseCrawlSpider(CrawlSpider):
     '''
@@ -99,29 +98,30 @@ class BaseCrawlSpider(CrawlSpider):
         if not self.mongoApt:
             log.msg("self.mongoApt为空，初始化mongod链接，并查询recentequest" ,level=log.INFO)
             self.mongoApt=MongoDbApt()
-            pendingRrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
-            if pendingRrls and len(pendingRrls)>0:
-                self.pendingRequest=[]
-                maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
-                while len(pendingRrls) > maxInitRequestSize:
-                    pendingRrls.pop(0)
-                log.msg('开始crawl，第一个url : %s' % pendingRrls[0], level=log.INFO)
+        pendingRrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
+        if pendingRrls and len(pendingRrls)>0:
+            self.pendingRequest=[]
+            maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
+            while len(pendingRrls) > maxInitRequestSize:
+                pendingRrls.pop(0)
+            log.msg('开始crawl，第一个url : %s' % pendingRrls[0], level=log.INFO)
                 
-                for p in pendingRrls:
-                    url=p["url"]
-                    callBackFunctionName=p["callBack"]
-                    pagePriority=p["priority"]
-                    reference=None
-                    if 'reference' in p :
-                        reference=p['reference']
-                    req=self.makeRequest(url, callBackFunctionName=callBackFunctionName,reference=reference,priority=pagePriority)
-                    self.pendingRequest.append(req)
-                log.msg("爬虫%s获得pendingRequest，数量=%s" % (self.name,len(self.pendingRequest)),level=log.INFO)
-            else:
-                log.msg("爬虫%s 的pendingRequest为空，交由scrapy从startUrl启动" % self.name,level=log.ERROR)
+            for p in pendingRrls:
+                url=p["url"]
+                callBackFunctionName=p["callBack"]
+                pagePriority=p["priority"]
+                reference=None
+                if 'reference' in p :
+                    reference=p['reference']
+                req=self.makeRequest(url, callBackFunctionName=callBackFunctionName,reference=reference,priority=pagePriority)
+                self.pendingRequest.append(req)
+            log.msg("爬虫%s获得pendingRequest，数量=%s" % (self.name,len(self.pendingRequest)),level=log.INFO)
+        else:
+            log.msg("爬虫%s 的pendingRequest为空，交由scrapy从startUrl启动" % self.name,level=log.ERROR)
 
     def baseParse(self, response):
         '''start to parse response link'''
+        print response.url
         reqs = []
         
         if not self.hasInit:
