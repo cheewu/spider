@@ -10,7 +10,6 @@ class Lvping(BaseCrawlSpider):
     '''
     Spider for www.daodao.com
     '''
-    print '启动爬虫：lvpingSpider'
     log.msg('启动爬虫：lvpingSpider', level=log.INFO)
     name ="lvpingSpider"
     
