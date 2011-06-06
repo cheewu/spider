@@ -45,6 +45,7 @@ class Parse(object):
         self.requiredField= ['name','content','title']
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
+        self.needMd5=['Article']
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
         self.whereJson={'status':100}#{'status':100} 测试
@@ -143,7 +144,6 @@ class Parse(object):
             item['collectionName']=self.collectionNameMap[itemCollectionName]
 #            print '切换类型：%s' % item['collectionName']
         item['url']=response.url
-        item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
         item['status']=100
         item['spiderName'] = spiderName
         xpathItem = config[itemCollectionName]
@@ -237,6 +237,9 @@ class Parse(object):
                 value=self.parseSpecialField(k, value)
             item[k]=value
             
+        if itemCollectionName in self.needMd5:
+            item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
+        
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
     
