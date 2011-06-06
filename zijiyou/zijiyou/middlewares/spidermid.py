@@ -13,6 +13,7 @@ from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
 import hashlib
 import re
+from zijiyou.common import utilities
 #from scrapy.utils.url import canonicalize_url
 
 #import re
@@ -31,24 +32,26 @@ class DuplicateUrlFilter(object):
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
             raise NotConfigured
         whereJson={"status":{"$lt":400}}
-        fieldsJson={'url':1}
+        fieldsJson={'url':1,'md5':1}
         dtBegin=datetime.datetime.now()
         log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url' , level=log.INFO)
         crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
-        log.msg('完成CrawlUrl加载' ,level=log.INFO)
-        responsUrls=self.mon.findFieldsAndSort(self.ResponseDb, whereJson={}, fieldsJson=fieldsJson)
+#        log.msg('完成CrawlUrl加载' ,level=log.INFO)
+#        responsUrls=self.mon.findFieldsAndSort(self.ResponseDb, whereJson={}, fieldsJson=fieldsJson)
         dtLoad=datetime.datetime.now()
-        log.msg('完成ResponseBody加载.从CrawlUrl加载%s个；从ResponseBody加载%s个；加载数据时间花费：%s' %(len(crawlUrls),len(responsUrls),dtLoad-dtBegin), level=log.INFO)
+        log.msg('完成Url加载.从CrawlUrl加载%s个；加载数据时间花费：%s' %(len(crawlUrls),dtLoad-dtBegin), level=log.INFO)
         for p in crawlUrls:
             if "url" in p :
-                fp=getFingerPrint(p['url'])
-                if not fp in self.urlDump:
-                    self.urlDump.add(fp)
-        for p in responsUrls:
-            if "url" in p :
-                fp=getFingerPrint(p['url'])
-                if not fp in self.urlDump:
-                    self.urlDump.add(fp)
+#                fp=getFingerPrint(p['url'])
+                fp=p['md5']
+                self.urlDump.add(fp)
+#                if not fp in self.urlDump:
+#                    self.urlDump.add(fp)
+#        for p in responsUrls:
+#            if "url" in p :
+#                fp=getFingerPrint(p['url'])
+#                if not fp in self.urlDump:
+#                    self.urlDump.add(fp)
         dtDump=datetime.datetime.now()
         log.msg("spider中间件完成初始化urlDump. dump的长度=%s；初始化Dump花费时间：%s" % (len(self.urlDump),dtDump-dtLoad), level=log.INFO)
     
@@ -62,7 +65,7 @@ class DuplicateUrlFilter(object):
             counter+=1
             if isinstance(p, Request):
                 if p.url:
-                    fp=getFingerPrint(p.url)
+                    fp=utilities.getFingerPrint(inputs=p.url,isUrl=True)
                     if fp in self.urlDump:
                         log.msg("排除重复 url=%s" % (p.url), level=log.DEBUG)
                         continue
@@ -84,6 +87,7 @@ class DuplicateUrlFilter(object):
                         else:
                             log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
                         recentReq["spiderName"]=spider.name
+                        recentReq['md5']=fp
                         self.mon.saveItem(self.CrawlDb,recentReq)
                         log.msg("保存新request：%s" % p.url,level=log.DEBUG)
                         
@@ -153,14 +157,14 @@ class SaveNewRequestUrl(object):
         log.msg("spider中间件保存新url.NewUrl=%s; ExistUrl=%s ; result长度：%s,url:%s" % (counterNew,counterExist,len(newResult),response.url),level=log.INFO)
         return newResult
 
-def getFingerPrint(input):
-    '''
-    指纹
-    '''
-    hasher=hashlib.sha1(input)
-#    hasher.update(canonicalize_url(str(input)))
-    fp=hasher.hexdigest()
-    return fp
+#def getFingerPrint(input):
+#    '''
+#    指纹
+#    '''
+#    hasher=hashlib.sha1(input)
+##    hasher.update(canonicalize_url(str(input)))
+#    fp=hasher.hexdigest()
+#    return fp
 
 
 class UrlNormalizer(object):

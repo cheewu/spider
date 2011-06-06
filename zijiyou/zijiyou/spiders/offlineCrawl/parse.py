@@ -9,6 +9,7 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
+from zijiyou.common import utilities
 from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.enumModel import LogLevel
@@ -142,6 +143,7 @@ class Parse(object):
             item['collectionName']=self.collectionNameMap[itemCollectionName]
 #            print '切换类型：%s' % item['collectionName']
         item['url']=response.url
+        item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
         item['status']=100
         item['spiderName'] = spiderName
         xpathItem = config[itemCollectionName]
@@ -332,7 +334,8 @@ class Parse(object):
     def ExtText(self,input):
         pass
 
-if __name__ == '__main__':
-    p=Parse()
-    p.parse()
-    print '解析完成了！'
+#测试
+#if __name__ == '__main__':
+#    p=Parse()
+#    p.parse()
+#    print '解析完成了！'
