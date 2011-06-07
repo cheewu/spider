@@ -103,7 +103,7 @@ class BaseCrawlSpider(CrawlSpider):
         print '初始化Request：initiateRequest'
         # load the recentRequest from db
         if not self.mongoApt:
-            log.msg("self.mongoApt为空，初始化mongod链接，并查询recentequest" ,level=log.INFO)
+            log.msg("爬虫初始化：%s self.mongoApt为空，初始化mongod链接，并查询recentequest" % self.name ,level=log.INFO)
             self.mongoApt=MongoDbApt()
         pendingRrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
         if pendingRrls and len(pendingRrls)>0:
@@ -125,6 +125,7 @@ class BaseCrawlSpider(CrawlSpider):
             log.msg("爬虫%s获得pendingRequest，数量=%s" % (self.name,len(self.pendingRequest)),level=log.INFO)
         else:
             log.msg("爬虫%s 的pendingRequest为空，交由scrapy从startUrl启动" % self.name,level=log.ERROR)
+        log.msg("爬虫%s 初始化完成" % self.name,level=log.ERROR)
 
     def baseParse(self, response):
         '''start to parse response link'''
@@ -135,9 +136,9 @@ class BaseCrawlSpider(CrawlSpider):
             self.hasInit=True
             if self.pendingRequest and len(self.pendingRequest)>0:
                 reqs.extend(self.pendingRequest)
-                log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
+                log.msg('爬虫启动执行：%s 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(self.pendingRequest)), log.INFO)
             else:
-                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , log.INFO)
+                log.msg('爬虫启动执行：%s 没有从数据库获得合适的url，将从stat_url开始crawl' % self.name , log.INFO)
         
         log.msg('解析开始link: %s' % response.url, log.INFO)
         dtBegin=datetime.datetime.now()
