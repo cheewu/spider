@@ -38,8 +38,8 @@ RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
 #TESTLOG='/data/configs/test.txt'
 LOG_LEVEL='INFO'
-DOWNLOAD_DELAY = 0.2
-CONCURRENT_REQUESTS_PER_SPIDER=5
+DOWNLOAD_DELAY = 0.1
+CONCURRENT_REQUESTS_PER_SPIDER=10
 RECENT_URLS_SIZE = 3000
 MAX_INII_REQUESTS_SIZE = 1000000
 #CLOSESPIDER_TIMEOUT=1800
@@ -59,6 +59,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.Cookies': 502}
 SPIDER_MIDDLEWARES = {
+#                      'zijiyou.middlewares.spidermid.UrlNormalizer': 503, #先归一化再排重
                       'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
                       #'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499
                       }
@@ -67,7 +68,7 @@ SPIDER_MIDDLEWARES = {
 PROXY = ['local']
 
 #EMail Configure
-MAIL_INTERVAL = 7200
+#MAIL_INTERVAL = 7200
 #发送对象列表
 MAIL_TO_LIST = ["465813018@qq.com", "1413614423@qq.com"]
 #设置服务器，用户名、口令以及邮箱的后缀
@@ -75,3 +76,10 @@ MAIL_HOST = "smtp.sina.com"
 MAIL_USER = "zijiyou2011@sina.com"
 MAIL_PASS = "zijiyou"
 MAIL_POSTFIX = "sina.com"
+
+
+#URLNormallizer_Rules(URL 归一化)
+#URLNORMALIZER_RULES = {
+#                       r'(\?|\&amp;|\&amp;amp;)PHPSESSID=[a-zA-Z0-9]{32}$':r'',
+#                       r'(\?|&)PHPSESSID=[a-zA-Z0-9]{32}(&?)(.*)':r'\1\3'
+#                       }

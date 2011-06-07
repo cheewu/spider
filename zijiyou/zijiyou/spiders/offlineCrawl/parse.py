@@ -9,10 +9,11 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
+from zijiyou.common import utilities
+from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.enumModel import LogLevel
 from zijiyou.spiders.offlineCrawl.extractText import doExtract
-from zijiyou.spiders.offlineCrawl.extractorConfig import extractorConfig
 import datetime
 import json
 import os
@@ -44,6 +45,7 @@ class Parse(object):
         self.requiredField= ['name','content','title']
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
+        self.needMd5=['Article']
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
         self.whereJson={'status':100}#{'status':100} 测试
@@ -235,6 +237,9 @@ class Parse(object):
                 value=self.parseSpecialField(k, value)
             item[k]=value
             
+        if itemCollectionName in self.needMd5:
+            item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
+        
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
     
@@ -332,7 +337,8 @@ class Parse(object):
     def ExtText(self,input):
         pass
 
-if __name__ == '__main__':
-    p=Parse()
-    p.parse()
-    print '解析完成了！'
+#测试
+#if __name__ == '__main__':
+#    p=Parse()
+#    p.parse()
+#    print '解析完成了！'

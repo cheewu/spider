@@ -65,6 +65,8 @@ class Diagnoser(object):
     
     def onSendMail(self, isClose=False):
         content = self.getDiagnoseContent(isClose=isClose)
+        if not self.mailInterval:
+            return
         log.msg("邮件内容 %s" %content , level=log.INFO)
         sendSucess = sendMail(self.subject, content)
         if sendSucess:

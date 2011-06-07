@@ -34,7 +34,6 @@ cann't custom the scheduleMiddleWare, or spider cann't get start!
 #            self.mongoApt.saveItem(self.colName,recentReq)
 #            log.msg("保存新request：%s" % request.url,level=log.INFO)
 #        return None
-    
 '''
 Created on 2011-5-24
 
@@ -42,7 +41,7 @@ Created on 2011-5-24
 '''
 from httplib import HTTPConnection
 from scrapy import log
-from zijiyou.spiders.cookiesConfig import cookiesConfig
+from zijiyou.config.cookiesConfig import cookiesConfig
 import datetime
 
 class Cookies(object):

@@ -91,6 +91,8 @@ class Article(BaseItem):
     keyWords = Field()       #关键字  
     destination=Field()      #旅游目的地
     
+    md5=Field()             #MD5值
+    
     def __str__(self):
         return "ArticleItem"
     
@@ -112,6 +114,8 @@ class Note(BaseItem):
     collectNum = Field()    #收藏
     helpfulNum = Field()    #有用
     unhelpfulNum = Field()  #没有用
+    
+    md5=Field()             #MD5值
 
     def __str__(self):
         return "NoteItem"
