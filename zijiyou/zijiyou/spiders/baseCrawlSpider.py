@@ -65,11 +65,18 @@ class BaseCrawlSpider(CrawlSpider):
             #查数据库
             if not colName:
                 colName="UrlDb" #CrawlUrl
-            queJson={"status":{"$gte":400}}
+            queJson={"$or":[{"status":{"$gte":400}}, {"status:":200, "updateInterval":{"$exists":True}}]}
             if spiderName:
                 queJson['spiderName']=spiderName
             sortField="priority"
             self.pendingUrl=self.mongoApt.findByDictionaryAndSort(colName, queJson, sortField)
+            log.msg("过滤前pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            #过滤掉已经爬完但并不需要更新或是更新时间未到的记录
+            now = datetime.datetime.now()
+            self.pendingUrl = filter(lambda p:not (p["status"] == 200 and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]),self.pendingUrl)
+            log.msg("pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            for i in self.pendingUrl:
+                log.msg(i['url'], log.INFO)
             return self.pendingUrl
         except (IOError,EOFError):
             log.msg("查数据库异常" ,level=log.ERROR)
