@@ -53,13 +53,14 @@ def initUrlMd5(dbHost='localHost',port=27017,dbName='spiderV21',urlDbName='UrlDb
     urlCur=urlCol.find({'md5':None},{'url':1})
     tolNum=urlCol.find({'md5':None}).count()
     curNum=0
-    percents=0
+    percents=0.0
     print '开始初始化md5值...总数量：%s' % tolNum
     for p in urlCur:
         curNum+=1
-        if curNum/tolNum > 0.001:
+        temp=curNum/tolNum + 0.000001
+        if temp > 0.001:
             curNum=0
-            percents+=0.1
+            percents+=temp*100
             print '当前进度：百分之%s' % percents
         url=p['url']
         md5Val=utilities.getFingerPrint(url, isUrl=True)
@@ -68,5 +69,9 @@ def initUrlMd5(dbHost='localHost',port=27017,dbName='spiderV21',urlDbName='UrlDb
         urlCol.update(whereJson,uj,True,False)
     
 if __name__ == '__main__':
-    newNum = dumpUrlFromPageDb2UrlDb(dbHost='192.168.0.183')
+    newNum = dumpUrlFromPageDb2UrlDb()
     print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' %newNum
+    initUrlMd5()
+    print 'OK!-------------urlMD5初始化完成----------------------OK!' 
+    
+    
