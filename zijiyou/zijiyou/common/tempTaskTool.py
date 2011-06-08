@@ -38,6 +38,7 @@ def dumpUrlFromPageDb2UrlDb(dbHost='localHost',port=27017,dbName='spiderV21',pag
         if urlNum>0:
             continue
         newUrl={"url":url,"callBack":None,"reference":'PageDb',"status":200,"priority":1000,'spiderName':p['spiderName'],"dateTime":datetime.datetime.now()}
+        newUrl['md5']=utilities.getFingerPrint(url, isUrl=True)
         newId = urlCol.insert(newUrl)
         counter+=1
         print '插入成功，新id：%s' % newId
@@ -68,10 +69,12 @@ def initUrlMd5(dbHost='localHost',port=27017,dbName='spiderV21',urlDbName='UrlDb
         uj={'$set':{'md5':md5Val}}
         urlCol.update(whereJson,uj,True,False)
     
-if __name__ == '__main__':
-    newNum = dumpUrlFromPageDb2UrlDb()
-    print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' %newNum
-    initUrlMd5()
-    print 'OK!-------------urlMD5初始化完成----------------------OK!' 
+def run(needDumUrl=False,needInitUrl=False):
+    if needDumUrl:
+        newNum = dumpUrlFromPageDb2UrlDb()
+        print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' %newNum
+    if needInitUrl:
+        initUrlMd5()
+        print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     
     

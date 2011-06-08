@@ -12,58 +12,6 @@ import pymongo
 import re
 import time
 
-articles={}
-md5s={}
-delimeters='[，。：；？！……\r\n]'
-def getFingerPrint(inputs=[]):
-    '''
-    指纹
-    '''
-    if len(inputs)<1:
-        return 0; 
-    hasher=hashlib.md5(inputs[0])
-    for index in range(1,len(inputs)):
-        input=inputs[index]
-        hasher.update(input)
-    fp=hasher.hexdigest()
-    return fp
-
-def getKey(input):
-    length = len(unicode(input))
-    return length
-
-def getTopSegments(content='',topNum=10):
-    content=re.sub(unicode(delimeters), unicode(','), unicode(content))
-    topSegments=[];
-    segmentList=content.split(',');
-    segmentList = sorted(segmentList,key=getKey,reverse=True)
-    for segment in segmentList:
-        topSegments.append(segment)
-        topNum-=1
-        if topNum<=0:
-            break
-    return topSegments
-
-if __name__ == '__main__':
-    contents={}
-    for key, content in contents.items():
-        dt1=datetime.datetime.now()
-        input=getTopSegments(content, topNum=3)
-        md5Val=getFingerPrint(input);
-        if md5Val in md5s:
-            print 'duplicate key:%s,md5Vale:%s' %(key,md5Val)
-        else:
-            md5s[md5Val]=key
-        dt2=datetime.datetime.now()
-        dt=dt2-dt1
-        print '时间代价：%s' % dt
-        
-    print md5s
-
-
-
-
-
 
 #mongo = MongoDbApt()
 #value=mongo.findFieldsWithLimit('Article',whereJson={}, limitNum=1)
