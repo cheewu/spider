@@ -13,7 +13,10 @@ USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
 SPIDER_MODULES = ['zijiyou.spiders']
 NEWSPIDER_MODULE = 'zijiyou.spiders'
 DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ResponseBody'
-ITEM_PIPELINES=['zijiyou.pipelines.pipelines.ZijiyouPipeline']
+ITEM_PIPELINES=[
+                'zijiyou.pipelines.pipelines.ZijiyouPipeline',
+                'zijiyou.pipelines.pipelines.ZijiyouImagesPipeline'
+                ]
 
 # mongodb setting
 DB_HOST = '127.0.0.1' #192.168.0.183
@@ -32,6 +35,7 @@ DB_COLLECTIONS = ['PageDb',
                   'MemberFriend',
                   'MemberNoteList',
                   'KeyWord',
+                  'ImageDb',
                   'test']
 CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
@@ -48,6 +52,9 @@ SCHEDULER_ORDER='DFO'
 
 DIAGNOSER_PATH = '/data/configs/diagnose.log'
 OFFLINE_PARSE_LOG = '/data/configs/offlineParseLog.log'#/home/shiym
+
+IMAGES_STORE = '/data/images' #图片存放路径 /home/hy/data/images
+IMAGES_EXPIRES = 0 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999
 
 EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
               }

@@ -219,4 +219,11 @@ class KeyWord(Item):
     
     optDateTime=Field() #最后一次搜索时间
     
+class Image(Item):
+    '''
+    爬取结果中的图片
+    '''
+    collectionName="ImageDb"
+    imageUrl = Field() #图片原来的url
+    imagePath = Field() #图片存到本地的路径地址
     
