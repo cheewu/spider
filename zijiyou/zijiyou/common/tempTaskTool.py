@@ -21,14 +21,15 @@ def dumpUrlFromPageDb2UrlDb(dbHost='localHost',port=27017,dbName='spiderV21',pag
     whereJson={'url':''}
     counter=0
     tolNum=pageDbCur.count()
+    thredHold=tolNum/100
     curNum=0
-    percents=0
+    percents=0.0
     print '开始dump...总数量：%s' % tolNum
     for p in pageDbCur:
         curNum+=1
-        if curNum/tolNum > 0.001:
+        if curNum >= thredHold:
             curNum=0
-            percents+=0.1
+            percents+=1.0
             print '当前进度：百分之%s' % percents
         url=p['url']
         if url == None or len(url)<1:
@@ -38,6 +39,7 @@ def dumpUrlFromPageDb2UrlDb(dbHost='localHost',port=27017,dbName='spiderV21',pag
         if urlNum>0:
             continue
         newUrl={"url":url,"callBack":None,"reference":'PageDb',"status":200,"priority":1000,'spiderName':p['spiderName'],"dateTime":datetime.datetime.now()}
+        newUrl['md5']=utilities.getFingerPrint(url, isUrl=True)
         newId = urlCol.insert(newUrl)
         counter+=1
         print '插入成功，新id：%s' % newId
@@ -52,15 +54,15 @@ def initUrlMd5(dbHost='localHost',port=27017,dbName='spiderV21',urlDbName='UrlDb
     urlCol=db[urlDbName]
     urlCur=urlCol.find({'md5':None},{'url':1})
     tolNum=urlCol.find({'md5':None}).count()
+    thredHold=tolNum/100
     curNum=0
     percents=0.0
     print '开始初始化md5值...总数量：%s' % tolNum
     for p in urlCur:
         curNum+=1
-        temp=curNum/tolNum + 0.000001
-        if temp > 0.001:
+        if curNum >= thredHold:
             curNum=0
-            percents+=temp*100
+            percents+=1.0
             print '当前进度：百分之%s' % percents
         url=p['url']
         md5Val=utilities.getFingerPrint(url, isUrl=True)
@@ -68,10 +70,12 @@ def initUrlMd5(dbHost='localHost',port=27017,dbName='spiderV21',urlDbName='UrlDb
         uj={'$set':{'md5':md5Val}}
         urlCol.update(whereJson,uj,True,False)
     
-if __name__ == '__main__':
-    newNum = dumpUrlFromPageDb2UrlDb()
-    print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' %newNum
-    initUrlMd5()
-    print 'OK!-------------urlMD5初始化完成----------------------OK!' 
+def run(needDumUrl=False,needInitUrl=False):
+    if needDumUrl:
+        newNum = dumpUrlFromPageDb2UrlDb()
+        print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' %newNum
+    if needInitUrl:
+        initUrlMd5()
+        print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     
     
