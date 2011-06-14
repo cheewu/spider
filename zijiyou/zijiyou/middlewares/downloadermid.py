@@ -8,6 +8,7 @@ from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from zijiyou.db.mongoDbApt import MongoDbApt
+import datetime
 
 class ErrorFlag(object):
     ACCESS_DENY_FLAG = 0
@@ -27,7 +28,7 @@ class UpdateRequestedUrl(object):
     def process_response(self, request, response, spider):
         whereJson={"url":request.url}
         responseStatus=response.status
-        updateJson={"status":200}
+        updateJson={"status":200, "dateTime":datetime.datetime.now()}
         if responseStatus:
             updateJson["status"]=responseStatus
         if responseStatus in [400, 403]:

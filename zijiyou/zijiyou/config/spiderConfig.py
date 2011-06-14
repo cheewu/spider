@@ -424,7 +424,6 @@ spiderConfig = {
                                   'http://www.lvping.com/Journals.aspx?selecttype=2',
                                   'http://www.lvping.com/Journals.aspx'
                                    
-#                                   'http://www.lvping.com/showjournal-d145-r1281402-journals.html'
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
@@ -454,7 +453,8 @@ spiderConfig = {
                                   
                                   {'itemCollectionName':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
                                   {'itemCollectionName':'Region', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
-                                  ]
+                                  ],
+                     'imageXpath':['//div[@class="yjDetail cf"]//img/@src']
                      },
                 "bbsSpider":{
                      'homePage':'http://www.go2eu.com/bbs/', #后面要加 /

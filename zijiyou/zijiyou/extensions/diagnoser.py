@@ -8,7 +8,7 @@ from scrapy import log, signals
 from scrapy.conf import settings
 from scrapy.xlib.pydispatch import dispatcher
 from twisted.internet import reactor
-from zijiyou.common.emailtool import sendMail
+from zijiyou.common.emailTool import sendMail
 from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
 #from scrapy.core.scheduler import SchedulerpendingReqNum=len(Scheduler.pending_requests)

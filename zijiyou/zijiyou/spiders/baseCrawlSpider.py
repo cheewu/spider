@@ -11,10 +11,11 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
 from scrapy.http import Request
+from scrapy.selector import HtmlXPathSelector
 from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import PageDb
+from zijiyou.items.zijiyouItem import PageDb, Image
 import datetime
 import re
 
@@ -37,6 +38,8 @@ class BaseCrawlSpider(CrawlSpider):
     normalRegex = None
     #item页 regexx
     itemRegex = None
+    #imageXpath 图片xpath
+    imageXpath = None
     #数据库操作类
     mongoApt=None
     #验证数据库是否和type配置对应
@@ -65,11 +68,18 @@ class BaseCrawlSpider(CrawlSpider):
             #查数据库
             if not colName:
                 colName="UrlDb" #CrawlUrl
-            queJson={"status":{"$gte":400}}
+            queJson={"$or":[{"status":{"$gte":400}}, {"status":200, "updateInterval":{"$exists":True}}]}
             if spiderName:
                 queJson['spiderName']=spiderName
             sortField="priority"
             self.pendingUrl=self.mongoApt.findByDictionaryAndSort(colName, queJson, sortField)
+            log.msg("过滤前pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            #过滤掉已经爬完但并不需要更新或是更新时间未到的记录
+            now = datetime.datetime.now()
+            self.pendingUrl = filter(lambda p:not (p["status"] == 200 and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) < p["dateTime"]),self.pendingUrl)
+            log.msg("pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            for i in self.pendingUrl:
+                log.msg(i['url'], log.INFO)
             return self.pendingUrl
         except (IOError,EOFError):
             log.msg("查数据库异常" ,level=log.ERROR)
@@ -84,6 +94,9 @@ class BaseCrawlSpider(CrawlSpider):
             self.allowed_domains = config['allowedDomains']
             self.normalRegex = config['normalRegex']
             self.itemRegex = config['itemRegex']
+            #获得imageXpath 非必须
+            if 'imageXpath' in config:
+                self.imageXpath = config['imageXpath']
             return True
         else:
             log.msg("spider配置异常，缺少必要的配置信息。爬虫名:%s" % self.name, level=log.ERROR)
@@ -151,9 +164,16 @@ class BaseCrawlSpider(CrawlSpider):
         item = self.parseItem(response)
         if item:
             reqs.append(item)
+        
+        #解析图片
+        imageItems = self.parseImageItems(response)
+        imageNum = 0
+        if imageItems:
+            reqs.extend(imageItems)
+            imageNum = len(imageItems)
         dtEnd=datetime.datetime.now()
         dtInterval=dtEnd - dtBegin
-        log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,总数：%s ，花费时间：%s" % (response.url, itemNum,normalNum,len(reqs),dtInterval), level=log.INFO)
+        log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,图片数量：%s, 总数：%s ，花费时间：%s" % (response.url, itemNum, normalNum, imageNum, len(reqs),dtInterval), level=log.INFO)
         
         return reqs
 
@@ -183,6 +203,30 @@ class BaseCrawlSpider(CrawlSpider):
         loader.add_value('optDateTime', datetime.datetime.now())
         pageResponse = loader.load_item()
         return pageResponse
+    
+    def parseImageItems(self, response):
+        '''start to parse parse image item'''
+        if not self.imageXpath:
+            return None
+        
+        log.msg("解析图片", level=log.INFO)
+        print "图片解析"
+        imageItems = []
+        hxs = HtmlXPathSelector(response)
+        for xpath in self.imageXpath:
+            imageUrls = hxs.select(xpath).extract()
+            if not imageUrls:
+                continue
+            for url in imageUrls:
+                loader = ZijiyouItemLoader(Image(),response=response)
+                loader.add_value("imageUrl", unicode(str(url), 'utf8'))
+                imageItem = loader.load_item()
+                imageItems.append(imageItem)
+                print imageItem
+                log.msg(url, level=log.INFO)
+                
+        log.msg("共解析了%s张图片" % len(imageItems), level=log.INFO)
+        return imageItems
     
     def extractLinks(self, response, **extra): 
         """ 

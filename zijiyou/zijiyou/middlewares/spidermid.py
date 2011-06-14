@@ -32,7 +32,7 @@ class DuplicateUrlFilter(object):
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
             raise NotConfigured
         whereJson={"status":{"$lt":400}}
-        fieldsJson={'url':1,'md5':1}
+        fieldsJson={'url':1,'md5':1, 'status':1, 'updateInterval':1, 'dateTime':1} #status updateInterval用来判断
         dtBegin=datetime.datetime.now()
         log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url' , level=log.INFO)
         crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
@@ -40,9 +40,13 @@ class DuplicateUrlFilter(object):
 #        responsUrls=self.mon.findFieldsAndSort(self.ResponseDb, whereJson={}, fieldsJson=fieldsJson)
         dtLoad=datetime.datetime.now()
         log.msg('完成Url加载.从CrawlUrl加载%s个；加载数据时间花费：%s' %(len(crawlUrls),dtLoad-dtBegin), level=log.INFO)
+        now = datetime.datetime.now()
         for p in crawlUrls:
             if "url" in p :
 #                fp=getFingerPrint(p['url'])
+                #判断是否是到达需要重新爬取的时刻，若需要重新爬取，则不放入dump中
+                if 'status' in p and 'updateInterval' in p and 'dateTime' in p and p['status'] == 200 and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
+                    continue
                 fp=p['md5']
                 self.urlDump.add(fp)
 #                if not fp in self.urlDump:
