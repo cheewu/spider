@@ -10,12 +10,12 @@ class yiqiyou(BaseCrawlSpider):
     '''
     Spider for www.17u.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫17uSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫17uSpider', level=log.INFO)
+    print '17uSpider'
+    log.msg('17uSpider', level=log.INFO)
     name ="17uSpider"
     
-    def __init__(self,*a,**kw):
-        super(yiqiyou,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(yiqiyou,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER = yiqiyou()

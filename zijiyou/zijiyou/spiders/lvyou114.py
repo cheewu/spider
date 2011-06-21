@@ -10,12 +10,12 @@ class lvyou114(BaseCrawlSpider):
     '''
     Spider for www.lvyou114.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫lvyou114Spider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫lvyou114Spider', level=log.INFO)
+    print 'lvyou114Spider'
+    log.msg('lvyou114Spider', level=log.INFO)
     name ="lvyou114Spider"
     
-    def __init__(self,*a,**kw):
-        super(lvyou114,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(lvyou114,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =lvyou114()

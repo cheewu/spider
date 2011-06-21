@@ -10,12 +10,12 @@ class meishi(BaseCrawlSpider):
     '''
     Spider for meishiditu.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫meishiSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫meishiSpider', level=log.INFO)
+    print 'meishiSpider'
+    log.msg('meishiSpider', level=log.INFO)
     name ="meishiSpider"
     
-    def __init__(self,*a,**kw):
-        super(meishi,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(meishi,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =meishi()

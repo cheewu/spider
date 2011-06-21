@@ -14,9 +14,9 @@ class QQBlog(BaseCrawlSpider):
     log.msg('启动爬虫：qqBlogSpider', level=log.INFO)
     name ="QQBlogSpider"
     
-    def __init__(self,*a,**kw):
-        super(QQBlog,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(QQBlog,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER = QQBlog()
 

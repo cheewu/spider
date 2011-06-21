@@ -10,12 +10,12 @@ class lvren(BaseCrawlSpider):
     '''
     Spider for lvren.cn
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫lvrenSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫lvrenSpider', level=log.INFO)
+    print 'lvrenSpider'
+    log.msg('lvrenSpider', level=log.INFO)
     name ="lvrenSpider"
     
-    def __init__(self,*a,**kw):
-        super(lvren,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(lvren,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =lvren()

@@ -10,12 +10,12 @@ class mafengwo(BaseCrawlSpider):
     '''
     Spider for mafengwo.cn 
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫mafengwoSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫mafengwoSpider', level=log.INFO)
+    print 'mafengwoSpider'
+    log.msg('mafengwoSpider', level=log.INFO)
     name ="mafengwoSpider"
     
-    def __init__(self,*a,**kw):
-        super(mafengwo,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(mafengwo,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =mafengwo()

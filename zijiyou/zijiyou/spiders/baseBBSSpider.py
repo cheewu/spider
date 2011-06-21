@@ -8,8 +8,6 @@ from scrapy import log
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
 from zijiyou.config.spiderConfig import spiderConfig
-from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import PageDb
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import datetime
 import re
@@ -38,7 +36,7 @@ class BaseBBSSpider(BaseCrawlSpider):
                 raise NotConfigured
         self.functionDic['baseParse'] = self.baseParse
         self.functionDic['parseItem'] = self.parseItem
-        self.initRequest()
+#        self.initRequest()
         
     def baseParse(self,response):
         print '解析BBS List页结果'

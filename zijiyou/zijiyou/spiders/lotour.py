@@ -10,12 +10,12 @@ class lotour(BaseCrawlSpider):
     '''
     Spider for lotour.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫lotourSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫loturSpider', level=log.INFO)
+    print 'lotourSpider'
+    log.msg('loturSpider', level=log.INFO)
     name ="lotourSpider"
     
-    def __init__(self,*a,**kw):
-        super(lotour,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(lotour,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER = lotour()

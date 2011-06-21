@@ -28,6 +28,7 @@ class BaseCrawlSpider(CrawlSpider):
     allowed_domains = ["daodao.com"]
     start_urls = []
     rules = [Rule(r'.*', 'baseParse')]
+    name ="BaseCrawlSpider"
     
     #最近一次的spider断点
     pendingUrl=[]
@@ -57,7 +58,7 @@ class BaseCrawlSpider(CrawlSpider):
         self.functionDic["parseItem"]=self.parseItem
         self.dbCollecions=settings.get('DB_COLLECTIONS', [])
         if(not self.initConfig()):
-            log.msg('爬虫配置文件加载失败！', level=log.INFO)
+            log.msg('爬虫配置文件加载失败！' , level=log.ERROR)
             raise NotConfigured
         
     def getStartUrls(self,spiderName=None,colName=None):
@@ -83,11 +84,10 @@ class BaseCrawlSpider(CrawlSpider):
             return self.pendingUrl
         except (IOError,EOFError):
             log.msg("查数据库异常" ,level=log.ERROR)
-            return None
+            return []
 
     def initConfig(self):
-        print '初始配置 initConfig'
-        log.msg('初始配置 initConfig', level=log.INFO)
+        log.msg('爬虫%s初始配置信息spiderConfig' %self.name, level=log.INFO)
         config = spiderConfig[self.name]
         if config and config['startUrls'] and 'allowedDomains' in config and 'normalRegex' in config and 'itemRegex' in config: 
             self.start_urls = config['startUrls']
@@ -108,18 +108,22 @@ class BaseCrawlSpider(CrawlSpider):
         '''
         print '初始化Request：initiateRequest'
         # load the recentRequest from db
+        dtBegin=datetime.datetime.now();
         if not self.mongoApt:
-            log.msg("爬虫初始化：%s self.mongoApt为空，初始化mongod链接，并查询recentequest" % self.name ,level=log.INFO)
+            log.msg("%s爬虫恢复： 查询recentequest" % self.name ,level=log.INFO)
             self.mongoApt=MongoDbApt()
-        pendingRrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
-        if pendingRrls and len(pendingRrls)>0:
+        pendingUrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
+        dtRecentReq=datetime.datetime.now();
+        log.msg('%s爬虫恢复：完成查询recentequest，时间花费：%s,数量=%s' % (self.name,dtRecentReq-dtBegin,len(pendingUrls)), level=log.INFO)
+            
+        if pendingUrls and len(pendingUrls)>0:
             self.pendingRequest=[]
             maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
-            while len(pendingRrls) > maxInitRequestSize:
-                pendingRrls.pop(0)
-            log.msg('开始crawl，第一个url : %s' % pendingRrls[0], level=log.INFO)
+            while len(pendingUrls) > maxInitRequestSize:
+                pendingUrls.pop(0)
+            log.msg('第一个url : %s' % pendingUrls[0], level=log.INFO)
                 
-            for p in pendingRrls:
+            for p in pendingUrls:
                 url=p["url"]
                 callBackFunctionName=p["callBack"]
                 pagePriority=p["priority"]
@@ -128,23 +132,26 @@ class BaseCrawlSpider(CrawlSpider):
                     reference=p['reference']
                 req=self.makeRequest(url, callBackFunctionName=callBackFunctionName,reference=reference,priority=pagePriority)
                 self.pendingRequest.append(req)
-            log.msg("爬虫%s获得pendingRequest，数量=%s" % (self.name,len(self.pendingRequest)),level=log.INFO)
+            dtPendingReq=datetime.datetime.now();
+            log.msg("爬虫%s恢复：初始化pendingRequest，时间花费：%s，数量=%s" % (self.name,dtPendingReq-dtBegin,len(self.pendingRequest)),level=log.INFO)
         else:
-            log.msg("爬虫%s 的pendingRequest为空，交由scrapy从startUrl启动" % self.name,level=log.ERROR)
-        log.msg("爬虫%s 初始化完成" % self.name,level=log.ERROR)
+            log.msg("爬虫%s的pendingRequest为空，交由scrapy从startUrl开始" % self.name,level=log.ERROR)
+        log.msg("爬虫%s完成恢复" % self.name,level=log.ERROR)
 
     def baseParse(self, response):
         '''start to parse response link'''
-        print response.url
+#        print response.url
         reqs = []
         
         if not self.hasInit:
             self.hasInit=True
+            log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
+            self.initRequest();
             if self.pendingRequest and len(self.pendingRequest)>0:
                 reqs.extend(self.pendingRequest)
-                log.msg('爬虫启动执行：%s 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(self.pendingRequest)), log.INFO)
+                log.msg('爬虫%s启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(self.pendingRequest)), log.INFO)
             else:
-                log.msg('爬虫启动执行：%s 没有从数据库获得合适的url，将从stat_url开始crawl' % self.name , log.INFO)
+                log.msg('爬虫%s启动执行：没有从数据库获得合适的url，将从stat_url开始crawl' % self.name , log.INFO)
         
         log.msg('解析开始link: %s' % response.url, log.INFO)
         dtBegin=datetime.datetime.now()

@@ -10,12 +10,12 @@ class t21cn(BaseCrawlSpider):
     '''
     Spider for 21cn.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫21cnSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫21cnSpider', level=log.INFO)
+    print '21cnSpider'
+    log.msg('21cnSpider', level=log.INFO)
     name ="21cnSpider"
     
-    def __init__(self,*a,**kw):
-        super(t21cn,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(t21cn,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =t21cn()

@@ -10,12 +10,12 @@ class hexun(BaseCrawlSpider):
     '''
     Spider for travel.hexun.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫hexunSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫hexunSpider', level=log.INFO)
+    print 'hexunSpider'
+    log.msg('hexunSpider', level=log.INFO)
     name ="hexunSpider"
     
-    def __init__(self,*a,**kw):
-        super(hexun,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(hexun,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =hexun()

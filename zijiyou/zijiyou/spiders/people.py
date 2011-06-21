@@ -10,12 +10,12 @@ class people(BaseCrawlSpider):
     '''
     Spider for travel.people.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫peopleSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫peopleSpider', level=log.INFO)
+    print 'peopleSpider'
+    log.msg('peopleSpider', level=log.INFO)
     name ="peopleSpider"
     
-    def __init__(self,*a,**kw):
-        super(people,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(people,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =people()

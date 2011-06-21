@@ -9,12 +9,12 @@ class bytravel(BaseCrawlSpider):
     '''
     Spider for bytravel.cn
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫bytravelSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫bytravelSpider', level=log.INFO)
+    print 'bytravelSpider'
+    log.msg('bytravelSpider', level=log.INFO)
     name ="bytravelSpider"
     
-    def __init__(self,*a,**kw):
-        super(bytravel,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(bytravel,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER =bytravel()

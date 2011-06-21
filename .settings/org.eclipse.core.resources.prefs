@@ -1,4 +1,4 @@
-#Mon Jun 06 22:57:38 CST 2011
+#Tue Jun 21 19:37:34 CST 2011
 eclipse.preferences.version=1
 encoding//zijiyou/testMain.py=utf-8
 encoding//zijiyou/zijiyou/common/emailtool.py=utf-8
@@ -17,10 +17,25 @@ encoding//zijiyou/zijiyou/middlewares/schedulermid.py=utf-8
 encoding//zijiyou/zijiyou/middlewares/spidermid.py=utf-8
 encoding//zijiyou/zijiyou/pipelines/pipelines.py=utf-8
 encoding//zijiyou/zijiyou/settings.py=utf-8
+encoding//zijiyou/zijiyou/spiders/17u.py=utf-8
+encoding//zijiyou/zijiyou/spiders/21cn.py=utf-8
+encoding//zijiyou/zijiyou/spiders/55bbs.py=utf-8
+encoding//zijiyou/zijiyou/spiders/baseBBSSpider.py=utf-8
 encoding//zijiyou/zijiyou/spiders/baseCrawlSpider.py=utf-8
 encoding//zijiyou/zijiyou/spiders/baseSeSpider.py=utf-8
+encoding//zijiyou/zijiyou/spiders/bbker.py=utf-8
+encoding//zijiyou/zijiyou/spiders/bytravel.py=utf-8
 encoding//zijiyou/zijiyou/spiders/daodao.py=utf-8
+encoding//zijiyou/zijiyou/spiders/hexun.py=utf-8
+encoding//zijiyou/zijiyou/spiders/lotour.py=utf-8
 encoding//zijiyou/zijiyou/spiders/lvping.py=utf-8
+encoding//zijiyou/zijiyou/spiders/lvren.py=utf-8
+encoding//zijiyou/zijiyou/spiders/lvyou114.py=utf-8
+encoding//zijiyou/zijiyou/spiders/mafengwo.py=utf-8
+encoding//zijiyou/zijiyou/spiders/meishi.py=utf-8
 encoding//zijiyou/zijiyou/spiders/offlineCrawl/extractText.py=utf-8
 encoding//zijiyou/zijiyou/spiders/offlineCrawl/generateTrackUrl.py=utf-8
 encoding//zijiyou/zijiyou/spiders/offlineCrawl/parse.py=utf-8
+encoding//zijiyou/zijiyou/spiders/people.py=utf-8
+encoding//zijiyou/zijiyou/spiders/qqblog.py=utf-8
+encoding//zijiyou/zijiyou/spiders/sina.py=utf-8

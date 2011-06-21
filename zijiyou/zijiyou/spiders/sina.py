@@ -10,12 +10,12 @@ class Sina(BaseCrawlSpider):
     '''
     Spider for sina.com
     '''
-    print '∆Ù∂Ø≈¿≥Ê£∫sinaSpider'
-    log.msg('∆Ù∂Ø≈¿≥Ê£∫sinaSpider', level=log.INFO)
+    print 'sinaSpider'
+    log.msg('sinaSpider', level=log.INFO)
     name ="sinaSpider"
     
-    def __init__(self,*a,**kw):
-        super(Sina,self).__init__(*a,**kw)
-        self.initRequest()
+#    def __init__(self,*a,**kw):
+#        super(Sina,self).__init__(*a,**kw)
+#        self.initRequest()
         
 SPIDER = Sina()

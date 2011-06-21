@@ -54,7 +54,7 @@ class BaseSeSpider(BaseCrawlSpider):
         self.articleMetaName = 'Article'
         self.urlPatternMeta = 'urlPattern'
         self.clearUrlDb()
-        self.initRequest()
+#        self.initRequest()
         dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
         
     def onSeSpiderClosed(self):
