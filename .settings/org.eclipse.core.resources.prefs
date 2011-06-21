@@ -1,4 +1,4 @@
-#Tue Jun 21 19:37:34 CST 2011
+#Tue Jun 21 19:51:51 CST 2011
 eclipse.preferences.version=1
 encoding//zijiyou/testMain.py=utf-8
 encoding//zijiyou/zijiyou/common/emailtool.py=utf-8
@@ -6,6 +6,7 @@ encoding//zijiyou/zijiyou/common/postTool.py=utf-8
 encoding//zijiyou/zijiyou/common/tempTaskTool.py=utf-8
 encoding//zijiyou/zijiyou/common/utilities.py=utf-8
 encoding//zijiyou/zijiyou/common/zijiyouLoger.py=utf-8
+encoding//zijiyou/zijiyou/config/spiderConfig.py=utf-8
 encoding//zijiyou/zijiyou/db/mongoDbApt.py=utf-8
 encoding//zijiyou/zijiyou/extensions/diagnoser.py=utf-8
 encoding//zijiyou/zijiyou/items/baseItem.py=utf-8

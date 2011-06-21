@@ -10,7 +10,6 @@ class yiqiyou(BaseCrawlSpider):
     '''
     Spider for www.17u.com
     '''
-    print '17uSpider'
     log.msg('17uSpider', level=log.INFO)
     name ="17uSpider"
     

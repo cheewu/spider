@@ -1,0 +1,560 @@
+2011-06-21 20:08:46+0800 [scrapy] INFO: Scrapy 0.12.0.2541 started (bot: zijiyou)
+2011-06-21 20:08:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:47+0800 [scrapy] INFO: 17uSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫17uSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 21cnSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫21cnSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 55bbsSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫55BBSSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫bbsSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫baseSeSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 开始清空搜索引擎数据
+2011-06-21 20:08:47+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接
+2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:47+0800 [scrapy] INFO: 清除未完成的item和搜索引擎list页：0
+2011-06-21 20:08:47+0800 [scrapy] INFO: 清除已经完成的搜索引擎list页：0
+2011-06-21 20:08:47+0800 [scrapy] INFO: 清除搜索引擎数据完成
+2011-06-21 20:08:47+0800 [scrapy] INFO: bbkerSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫bbkerSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: bytravelSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫bytravelSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 启动爬虫：daodaoSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫daodaoSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: hexunSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫hexunSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: loturSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lotourSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 启动爬虫：lvpingSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvpingSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: lvrenSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvrenSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: lvyou114Spider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvyou114Spider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: mafengwoSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫mafengwoSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: meishiSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫meishiSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: peopleSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫peopleSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 启动爬虫：qqBlogSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫QQBlogSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: sinaSpider
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫sinaSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:47+0800 [scrapy] INFO: spider中间件开始从数据库加载CrawlUrl和ResponseBody.url
+2011-06-21 20:08:47+0800 [scrapy] INFO: 完成Url加载.从CrawlUrl加载0个；加载数据时间花费：0:00:00.000867
+2011-06-21 20:08:47+0800 [scrapy] INFO: spider中间件完成初始化urlDump. dump的长度=0；初始化Dump花费时间：0:00:00.000204
+2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvpingSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫17uSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫21cnSpider初始配置信息spiderConfig
+2011-06-21 20:08:47+0800 [lvpingSpider] INFO: Spider opened
+2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser：onSpiderOpen 
+2011-06-21 20:08:47+0800 [scrapy] INFO: lvpingSpider 获得新的cookies
+2011-06-21 20:08:48+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx
+2011-06-21 20:08:48+0800 [scrapy] INFO: new url=http://www.lvping.com/Journals.aspx
+2011-06-21 20:08:48+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:08:48+0800 [scrapy] INFO: 爬虫lvpingSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
+2011-06-21 20:08:48+0800 [scrapy] INFO: lvpingSpider爬虫恢复： 查询recentequest
+2011-06-21 20:08:48+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:48+0800 [scrapy] INFO: 过滤前pending长度为：281
+2011-06-21 20:08:48+0800 [scrapy] INFO: pending长度为：281
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d330-r1326215-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d308-r1326213-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326210-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326209-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326208-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d106-r1326206-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d7-r1326203-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d20354-r1326200-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326198-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326197-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d389-r1326195-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d702-r1326188-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326186-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100008-r1326184-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d599-r1326182-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d816-r1326181-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d32-r1326178-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d789-r1326165-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d61-r1326169-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316626
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316624
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326183
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326211-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326205-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326170-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d21-r1326166-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d104-r1326137-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326105-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326101-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d339-r1326054-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326031-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1326030-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326017-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326016-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326015-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326000-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d297-r1325973-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326207
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326173
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326171
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326168
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326060
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d917-r1285670-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d145-r1281402-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1279231-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d293-r1278970-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d128-r1278803-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1278085-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1272361-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d36-r1272189-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d434-r1269338-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d482-r1269069-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1268989-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d327-r1268894-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d527-r1268764-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d287-r1268687-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d239-r1268618-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1267028-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1266707-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1266782-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1268630
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1267050
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d330-r1326215-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d308-r1326213-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326210-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326209-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326208-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d106-r1326206-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d7-r1326203-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d20354-r1326200-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326198-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326197-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d389-r1326195-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d702-r1326188-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326186-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100008-r1326184-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d599-r1326182-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d816-r1326181-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d32-r1326178-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d789-r1326165-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d61-r1326169-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316626
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316624
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326183
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326211-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326205-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326170-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d21-r1326166-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d104-r1326137-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326105-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326101-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d339-r1326054-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326031-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1326030-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326017-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326016-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326015-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326000-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d297-r1325973-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326207
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326173
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326171
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326168
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326060
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d917-r1285670-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d145-r1281402-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1279231-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d293-r1278970-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d128-r1278803-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1278085-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1272361-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d36-r1272189-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d434-r1269338-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d482-r1269069-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1268989-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d327-r1268894-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d527-r1268764-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d287-r1268687-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d239-r1268618-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1267028-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1266707-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1266782-journals.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1268630
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1267050
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s1124/luoyang:history.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s11241/luoyang:climate.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s12218/luoyang:culture.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s23532/luoyang:traffic.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s21753/luoyang:traffic.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s22284/luoyang:traffic.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s3124/luoyang:holiday.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s31170/luoyang:shop.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s33298/luoyang:package.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=2&title=&type=0
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=1
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/attractions-d198-luoyang.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-luoyang:brochure.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d110000-china.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120001-asia.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120003-oceania.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120002-europe.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120006-africa.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120004-northamerica.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120005-southamerica.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d110000-china.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120001-asia.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120003-oceania.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120002-europe.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120006-africa.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120004-northamerica.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120005-southamerica.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d198-luoyang.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d157-Zhengzhou.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d165-Kaifeng.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d178-Songshan.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d183-Huashan.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d348-lintong.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d397-yuncheng.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d100058-henan.html
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/lvpingzhushou/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AFA635EC576449A39B60A98CA1BC3C14/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/5204A747DEF146C5AA282DDF8B0E6E94/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/8094C83DC772416DB3CCB0DBFC9899F1/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/102C4A58220F4B88857F89945D4BD9A1/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/DC276A599BE14453AA461139EAC2E3D6/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BAAD939F25EA408EA54F782F950B6007/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/04F0C13DDB4D4B07B7CDFE2AABE99931/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/7D241C484AD042D3825EE288BA3BD237/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BE2C7AA7A751454EBB288E2F92C4C9C7/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/2EC75DA5FEA444EABB5CB18BAB13BE62/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0AB2619516A2484FB3163CC672B02A90/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/926C08CBA443438B8938203ACEBFD0BF/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/FCF17FA2C10241C985215C78EBA45021/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/ttyyttyy/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0BEB57303A34433EB58FBC759BA66F7B/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CC7FE0B41EEC4DB7AF9B0103E44712D9/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CB1211A5D0864FE2A4326A8452306FFC/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/1D25F06896114534A5594AC4C8B5A0AC/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/C0E70639241447B3ACDCDB7C9AA4B827/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/69009BA560AB43DABFDCE6F613FEAC65/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/17A4C562B3194C9D8B2CEDA30A91AB5D/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/448EE50092334DF687368986E8DEBB6B/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/yangtaoyt/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/E514CD6D6ECB4AD19592073B07545D68/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/B112100816BD47F0A08A471663631133/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AC828F5FDBDD492F92C544939E2BD23B/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/shangyitang/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/lvpingzhushou/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AFA635EC576449A39B60A98CA1BC3C14/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/5204A747DEF146C5AA282DDF8B0E6E94/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/8094C83DC772416DB3CCB0DBFC9899F1/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/102C4A58220F4B88857F89945D4BD9A1/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/DC276A599BE14453AA461139EAC2E3D6/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BAAD939F25EA408EA54F782F950B6007/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/04F0C13DDB4D4B07B7CDFE2AABE99931/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/7D241C484AD042D3825EE288BA3BD237/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BE2C7AA7A751454EBB288E2F92C4C9C7/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/2EC75DA5FEA444EABB5CB18BAB13BE62/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0AB2619516A2484FB3163CC672B02A90/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/926C08CBA443438B8938203ACEBFD0BF/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/FCF17FA2C10241C985215C78EBA45021/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/ttyyttyy/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0BEB57303A34433EB58FBC759BA66F7B/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CC7FE0B41EEC4DB7AF9B0103E44712D9/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CB1211A5D0864FE2A4326A8452306FFC/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/1D25F06896114534A5594AC4C8B5A0AC/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/C0E70639241447B3ACDCDB7C9AA4B827/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/69009BA560AB43DABFDCE6F613FEAC65/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/17A4C562B3194C9D8B2CEDA30A91AB5D/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/448EE50092334DF687368986E8DEBB6B/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/yangtaoyt/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/E514CD6D6ECB4AD19592073B07545D68/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/B112100816BD47F0A08A471663631133/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AC828F5FDBDD492F92C544939E2BD23B/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/shangyitang/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/lovenhope/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/61CC0D26649F41FB9B4F3A783BAB7FFF/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/9DE08E1BA7DD441C835EB1BDD400C6F3/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BFCE9037D0BF43D8B058448734159631/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/EF00800BAF2F4917BFDB67A82CAF9E5B/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/4D4B6E79B2854B2BB0ED017E3F5D2B89/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/8433EBE8831F44BBA3D3C818FC99BE4A/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BA275DF50DBD43929166438823780BB1/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/ytpglyl/journals
+2011-06-21 20:08:48+0800 [scrapy] INFO: lvpingSpider爬虫恢复：完成查询recentequest，时间花费：0:00:00.156196,数量=281
+2011-06-21 20:08:48+0800 [scrapy] INFO: 第一个url : {u'status': 1000, u'reference': u'http://www.lvping.com/Journals.aspx', u'url': u'http://www.lvping.com/showjournal-d330-r1326215-journals.html', u'dateTime': datetime.datetime(2011, 6, 21, 19, 44, 30, 248000), u'priority': 1000, u'callBack': None, u'spiderName': u'lvpingSpider', u'_id': ObjectId('4e00841e834fc0229700000a'), u'md5': u'a44e29eb3416b853600ccab93fdc7387'}
+2011-06-21 20:08:48+0800 [scrapy] INFO: 爬虫lvpingSpider恢复：初始化pendingRequest，时间花费：0:00:00.165358，数量=281
+2011-06-21 20:08:48+0800 [scrapy] ERROR: 爬虫lvpingSpider完成恢复
+2011-06-21 20:08:48+0800 [scrapy] INFO: 爬虫lvpingSpider启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= 281
+2011-06-21 20:08:48+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx
+2011-06-21 20:08:49+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx
+2011-06-21 20:08:49+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:08:49+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:08:49+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx parse 产生 Item页url数量：43 ,普通页数量:290 ,图片数量：0, 总数：333 ，花费时间：0:00:00.581565
+2011-06-21 20:08:50+0800 [scrapy] INFO: url总数量：333,排重数量：176，通过(添加到数据库)数量：157 排重花费时间：0:00:01.477280
+2011-06-21 20:08:50+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-21 20:08:50+0800 [scrapy] INFO: new url=http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-21 20:08:50+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:08:50+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-21 20:08:51+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-21 20:08:51+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:08:51+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:08:51+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx?selecttype=2 parse 产生 Item页url数量：29 ,普通页数量:9 ,图片数量：0, 总数：38 ，花费时间：0:00:00.587972
+2011-06-21 20:08:51+0800 [scrapy] INFO: url总数量：38,排重数量：38，通过(添加到数据库)数量：0 排重花费时间：0:00:00.692522
+2011-06-21 20:08:52+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx?type=1
+2011-06-21 20:08:52+0800 [scrapy] INFO: new url=http://www.lvping.com/Journals.aspx?type=1
+2011-06-21 20:08:52+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:08:52+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx?type=1
+2011-06-21 20:08:52+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx?type=1
+2011-06-21 20:08:52+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:08:52+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:08:52+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx?type=1 parse 产生 Item页url数量：43 ,普通页数量:9 ,图片数量：0, 总数：52 ，花费时间：0:00:00.617986
+2011-06-21 20:08:53+0800 [scrapy] INFO: url总数量：52,排重数量：52，通过(添加到数据库)数量：0 排重花费时间：0:00:00.781652
+2011-06-21 20:08:53+0800 [17uSpider] INFO: Spider opened
+2011-06-21 20:08:53+0800 [scrapy] INFO: 爬虫：17uSpider 扩展diagnoser：onSpiderOpen 
+2011-06-21 20:08:53+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/AfricaNavigation.aspx
+2011-06-21 20:08:54+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
+2011-06-21 20:08:54+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
+2011-06-21 20:08:54+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:08:54+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
+2011-06-21 20:08:55+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-21 20:08:55+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:08:55+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:08:55+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41670/luoyang:dish.html parse 产生 Item页url数量：30 ,普通页数量:4 ,图片数量：0, 总数：35 ，花费时间：0:00:00.905109
+2011-06-21 20:08:55+0800 [scrapy] INFO: url总数量：35,排重数量：32，通过(添加到数据库)数量：3 排重花费时间：0:00:01.004944
+2011-06-21 20:08:55+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089d7834fc023980000a4+++++++++++
+2011-06-21 20:08:55+0800 [scrapy] INFO: 图片下载完成
+2011-06-21 20:08:55+0800 [lvpingSpider] INFO: Passed None
+2011-06-21 20:08:56+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
+2011-06-21 20:08:56+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
+2011-06-21 20:08:56+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:08:56+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
+2011-06-21 20:08:57+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-21 20:08:57+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:08:57+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:08:57+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41669/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.771296
+2011-06-21 20:08:57+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:00.860299
+2011-06-21 20:08:57+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089d9834fc023980000a6+++++++++++
+2011-06-21 20:08:57+0800 [scrapy] INFO: 图片下载完成
+2011-06-21 20:08:57+0800 [lvpingSpider] INFO: Passed None
+2011-06-21 20:08:57+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.17u.com/blog/
+2011-06-21 20:08:57+0800 [scrapy] INFO: new url=http://www.17u.com/blog/
+2011-06-21 20:08:57+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:08:57+0800 [scrapy] INFO: 爬虫17uSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
+2011-06-21 20:08:57+0800 [scrapy] INFO: 17uSpider爬虫恢复： 查询recentequest
+2011-06-21 20:08:57+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:08:57+0800 [scrapy] INFO: 过滤前pending长度为：0
+2011-06-21 20:08:57+0800 [scrapy] INFO: pending长度为：0
+2011-06-21 20:08:57+0800 [scrapy] INFO: 17uSpider爬虫恢复：完成查询recentequest，时间花费：0:00:00.003342,数量=0
+2011-06-21 20:08:57+0800 [scrapy] ERROR: 爬虫17uSpider的pendingRequest为空，交由scrapy从startUrl开始
+2011-06-21 20:08:57+0800 [scrapy] ERROR: 爬虫17uSpider完成恢复
+2011-06-21 20:08:57+0800 [scrapy] INFO: 爬虫17uSpider启动执行：没有从数据库获得合适的url，将从stat_url开始crawl
+2011-06-21 20:08:57+0800 [scrapy] INFO: 解析开始link: http://www.17u.com/blog/
+2011-06-21 20:08:58+0800 [scrapy] INFO: 不是item的urlLink：http://www.17u.com/blog/
+2011-06-21 20:08:58+0800 [scrapy] INFO: 解析完成 http://www.17u.com/blog/ parse 产生 Item页url数量：62 ,普通页数量:64 ,图片数量：0, 总数：126 ，花费时间：0:00:00.553277
+2011-06-21 20:08:58+0800 [scrapy] INFO: 排重中间件所有的url均不重复！数量：126 ,排重花费时间：0:00:00.727036
+2011-06-21 20:08:58+0800 [21cnSpider] INFO: Spider opened
+2011-06-21 20:08:58+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser：onSpiderOpen 
+2011-06-21 20:08:59+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.17u.com
+2011-06-21 20:08:59+0800 [scrapy] INFO: new url=http://www.17u.com
+2011-06-21 20:08:59+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:08:59+0800 [scrapy] INFO: 解析开始link: http://www.17u.com
+2011-06-21 20:09:00+0800 [scrapy] INFO: 不是item的urlLink：http://www.17u.com
+2011-06-21 20:09:00+0800 [scrapy] INFO: 解析完成 http://www.17u.com parse 产生 Item页url数量：69 ,普通页数量:38 ,图片数量：0, 总数：107 ，花费时间：0:00:00.937571
+2011-06-21 20:09:00+0800 [scrapy] INFO: url总数量：107,排重数量：17，通过(添加到数据库)数量：90 排重花费时间：0:00:01.092158
+2011-06-21 20:09:00+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
+2011-06-21 20:09:00+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
+2011-06-21 20:09:00+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:00+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
+2011-06-21 20:09:01+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-21 20:09:01+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:09:01+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:09:01+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41668/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.771624
+2011-06-21 20:09:01+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:00.866399
+2011-06-21 20:09:01+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/
+2011-06-21 20:09:01+0800 [scrapy] INFO: new url=http://travel.21cn.com/
+2011-06-21 20:09:01+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089dd834fc02398000183+++++++++++
+2011-06-21 20:09:01+0800 [scrapy] INFO: 图片下载完成
+2011-06-21 20:09:01+0800 [lvpingSpider] INFO: Passed None
+2011-06-21 20:09:01+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:01+0800 [scrapy] INFO: 爬虫21cnSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
+2011-06-21 20:09:01+0800 [scrapy] INFO: 21cnSpider爬虫恢复： 查询recentequest
+2011-06-21 20:09:01+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-21 20:09:01+0800 [scrapy] INFO: 过滤前pending长度为：0
+2011-06-21 20:09:01+0800 [scrapy] INFO: pending长度为：0
+2011-06-21 20:09:01+0800 [scrapy] INFO: 21cnSpider爬虫恢复：完成查询recentequest，时间花费：0:00:00.003125,数量=0
+2011-06-21 20:09:01+0800 [scrapy] ERROR: 爬虫21cnSpider的pendingRequest为空，交由scrapy从startUrl开始
+2011-06-21 20:09:01+0800 [scrapy] ERROR: 爬虫21cnSpider完成恢复
+2011-06-21 20:09:01+0800 [scrapy] INFO: 爬虫21cnSpider启动执行：没有从数据库获得合适的url，将从stat_url开始crawl
+2011-06-21 20:09:01+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/
+2011-06-21 20:09:02+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/
+2011-06-21 20:09:02+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/ parse 产生 Item页url数量：37 ,普通页数量:30 ,图片数量：0, 总数：67 ，花费时间：0:00:00.735718
+2011-06-21 20:09:02+0800 [scrapy] INFO: 排重中间件所有的url均不重复！数量：67 ,排重花费时间：0:00:00.865402
+2011-06-21 20:09:02+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
+2011-06-21 20:09:02+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
+2011-06-21 20:09:02+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:02+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
+2011-06-21 20:09:03+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-21 20:09:03+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:09:03+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:09:03+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41667/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.884199
+2011-06-21 20:09:03+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:00.990135
+2011-06-21 20:09:03+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089df834fc023980001c8+++++++++++
+2011-06-21 20:09:03+0800 [scrapy] INFO: 图片下载完成
+2011-06-21 20:09:03+0800 [lvpingSpider] INFO: Passed None
+2011-06-21 20:09:03+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/shanshui/list1.shtml
+2011-06-21 20:09:03+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/shanshui/list1.shtml
+2011-06-21 20:09:03+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:03+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/shanshui/list1.shtml
+2011-06-21 20:09:04+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/shanshui/list1.shtml
+2011-06-21 20:09:04+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/shanshui/list1.shtml parse 产生 Item页url数量：33 ,普通页数量:17 ,图片数量：0, 总数：50 ，花费时间：0:00:00.171012
+2011-06-21 20:09:04+0800 [scrapy] INFO: url总数量：50,排重数量：16，通过(添加到数据库)数量：34 排重花费时间：0:00:00.363225
+2011-06-21 20:09:05+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/tanxian/list1.shtml
+2011-06-21 20:09:05+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/tanxian/list1.shtml
+2011-06-21 20:09:05+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:05+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/tanxian/list1.shtml
+2011-06-21 20:09:05+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/tanxian/list1.shtml
+2011-06-21 20:09:05+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/tanxian/list1.shtml parse 产生 Item页url数量：35 ,普通页数量:17 ,图片数量：0, 总数：52 ，花费时间：0:00:00.127373
+2011-06-21 20:09:05+0800 [scrapy] INFO: url总数量：52,排重数量：16，通过(添加到数据库)数量：36 排重花费时间：0:00:00.215823
+2011-06-21 20:09:05+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41671/luoyang:dish.html
+2011-06-21 20:09:05+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41671/luoyang:dish.html
+2011-06-21 20:09:05+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:05+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41671/luoyang:dish.html
+2011-06-21 20:09:06+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-21 20:09:06+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:09:06+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:09:06+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41671/luoyang:dish.html parse 产生 Item页url数量：31 ,普通页数量:4 ,图片数量：0, 总数：36 ，花费时间：0:00:00.970439
+2011-06-21 20:09:06+0800 [scrapy] INFO: url总数量：36,排重数量：34，通过(添加到数据库)数量：2 排重花费时间：0:00:01.045101
+2011-06-21 20:09:06+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089e2834fc02398000213+++++++++++
+2011-06-21 20:09:06+0800 [scrapy] INFO: 图片下载完成
+2011-06-21 20:09:06+0800 [lvpingSpider] INFO: Passed None
+2011-06-21 20:09:06+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.17u.com/blog/cata/5065
+2011-06-21 20:09:06+0800 [scrapy] INFO: new url=http://www.17u.com/blog/cata/5065
+2011-06-21 20:09:06+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/wenquan/list1.shtml
+2011-06-21 20:09:06+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/wenquan/list1.shtml
+2011-06-21 20:09:06+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:06+0800 [scrapy] INFO: 解析开始link: http://www.17u.com/blog/cata/5065
+2011-06-21 20:09:07+0800 [scrapy] INFO: 不是item的urlLink：http://www.17u.com/blog/cata/5065
+2011-06-21 20:09:07+0800 [scrapy] INFO: 解析完成 http://www.17u.com/blog/cata/5065 parse 产生 Item页url数量：41 ,普通页数量:46 ,图片数量：0, 总数：87 ，花费时间：0:00:00.597642
+2011-06-21 20:09:07+0800 [scrapy] INFO: url总数量：87,排重数量：40，通过(添加到数据库)数量：47 排重花费时间：0:00:00.748403
+2011-06-21 20:09:07+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:07+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/wenquan/list1.shtml
+2011-06-21 20:09:07+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/wenquan/list1.shtml
+2011-06-21 20:09:07+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/wenquan/list1.shtml parse 产生 Item页url数量：34 ,普通页数量:17 ,图片数量：0, 总数：51 ，花费时间：0:00:00.163249
+2011-06-21 20:09:07+0800 [scrapy] INFO: url总数量：51,排重数量：16，通过(添加到数据库)数量：35 排重花费时间：0:00:00.273635
+2011-06-21 20:09:08+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
+2011-06-21 20:09:08+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
+2011-06-21 20:09:08+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:08+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
+2011-06-21 20:09:09+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-21 20:09:09+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:09:09+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:09:09+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s4124/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.943213
+2011-06-21 20:09:09+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:01.016252
+2011-06-21 20:09:09+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089e5834fc02398000269+++++++++++
+2011-06-21 20:09:09+0800 [scrapy] INFO: 图片下载完成
+2011-06-21 20:09:09+0800 [lvpingSpider] INFO: Passed None
+2011-06-21 20:09:09+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/shangqiou/list1.shtml
+2011-06-21 20:09:09+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/shangqiou/list1.shtml
+2011-06-21 20:09:09+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:09+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/shangqiou/list1.shtml
+2011-06-21 20:09:10+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/shangqiou/list1.shtml
+2011-06-21 20:09:10+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/shangqiou/list1.shtml parse 产生 Item页url数量：27 ,普通页数量:17 ,图片数量：0, 总数：44 ，花费时间：0:00:00.166135
+2011-06-21 20:09:10+0800 [scrapy] INFO: url总数量：44,排重数量：16，通过(添加到数据库)数量：28 排重花费时间：0:00:00.270204
+2011-06-21 20:09:11+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/shanshui/list2.shtml
+2011-06-21 20:09:11+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/shanshui/list2.shtml
+2011-06-21 20:09:11+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:11+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/shanshui/list2.shtml
+2011-06-21 20:09:11+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/shanshui/list2.shtml
+2011-06-21 20:09:11+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/shanshui/list2.shtml parse 产生 Item页url数量：35 ,普通页数量:18 ,图片数量：0, 总数：53 ，花费时间：0:00:00.133216
+2011-06-21 20:09:11+0800 [scrapy] INFO: url总数量：53,排重数量：17，通过(添加到数据库)数量：36 排重花费时间：0:00:00.357670
+2011-06-21 20:09:11+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s33298/luoyang:package.html
+2011-06-21 20:09:11+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s33298/luoyang:package.html
+2011-06-21 20:09:11+0800 [scrapy] INFO: 开始排重
+2011-06-21 20:09:11+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s33298/luoyang:package.html
+2011-06-21 20:09:11+0800 [scrapy] INFO: Received SIGINT, shutting down gracefully. Send again to force unclean shutdown
+2011-06-21 20:09:12+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-21 20:09:12+0800 [scrapy] INFO: 解析图片
+2011-06-21 20:09:12+0800 [scrapy] INFO: 共解析了0张图片
+2011-06-21 20:09:12+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s33298/luoyang:package.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.895961
+2011-06-21 20:09:12+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:01.019772
+2011-06-21 20:09:12+0800 [lvpingSpider] INFO: Closing spider (shutdown)
+2011-06-21 20:09:12+0800 [21cnSpider] INFO: Closing spider (shutdown)
+2011-06-21 20:09:12+0800 [17uSpider] INFO: Closing spider (shutdown)
+2011-06-21 20:09:12+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089e8834fc023980002ad+++++++++++
+2011-06-21 20:09:12+0800 [scrapy] INFO: 图片下载完成
+2011-06-21 20:09:12+0800 [lvpingSpider] INFO: Passed None
+2011-06-21 20:09:13+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser:onSpiderClose 运行时间=15秒
+2011-06-21 20:09:13+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：15秒，间隔阀值：200秒
+2011-06-21 20:09:13+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser信息：剩余待爬取的网页数量：0
+2011-06-21 20:09:13+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：0
+2011-06-21 20:09:13+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
+2011-06-21 20:09:13+0800 [21cnSpider] INFO: Spider closed (shutdown)
+2011-06-21 20:09:14+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser:onSpiderClose 运行时间=16秒
+2011-06-21 20:09:14+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：16秒，间隔阀值：200秒
+2011-06-21 20:09:14+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser信息：剩余待爬取的网页数量：0
+2011-06-21 20:09:14+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：0
+2011-06-21 20:09:14+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
+2011-06-21 20:09:14+0800 [lvpingSpider] INFO: Spider closed (shutdown)
+2011-06-21 20:09:20+0800 [scrapy] INFO: Received SIGINT twice, forcing unclean shutdown

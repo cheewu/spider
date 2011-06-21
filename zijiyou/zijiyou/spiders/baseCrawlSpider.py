@@ -173,11 +173,11 @@ class BaseCrawlSpider(CrawlSpider):
             reqs.append(item)
         
         #解析图片
-        imageItems = self.parseImageItems(response)
+#        imageItems = self.parseImageItems(response)
         imageNum = 0
-        if imageItems:
-            reqs.extend(imageItems)
-            imageNum = len(imageItems)
+#        if imageItems:
+#            reqs.extend(imageItems)
+#            imageNum = len(imageItems)
         dtEnd=datetime.datetime.now()
         dtInterval=dtEnd - dtBegin
         log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,图片数量：%s, 总数：%s ，花费时间：%s" % (response.url, itemNum, normalNum, imageNum, len(reqs),dtInterval), level=log.INFO)
