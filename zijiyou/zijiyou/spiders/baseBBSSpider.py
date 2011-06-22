@@ -45,6 +45,7 @@ class BaseBBSSpider(BaseCrawlSpider):
         
         if not self.hasInit:
             self.hasInit=True
+            self.initRequest()
             if self.pendingRequest and len(self.pendingRequest)>0:
                 reqs.extend(self.pendingRequest)
                 log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)

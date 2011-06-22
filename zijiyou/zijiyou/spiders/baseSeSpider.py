@@ -54,8 +54,8 @@ class BaseSeSpider(BaseCrawlSpider):
         self.articleMetaName = 'Article'
         self.urlPatternMeta = 'urlPattern'
         self.clearUrlDb()
-#        self.initRequest()
         dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
+#        self.initRequest()
         
     def onSeSpiderClosed(self):
         '''清空数据库中的SeSpider中的搜索页列表'''
@@ -194,6 +194,7 @@ class BaseSeSpider(BaseCrawlSpider):
         
         if not self.hasInit:
             self.hasInit=True
+            self.initRequest()
             if self.pendingRequest and len(self.pendingRequest)>0:
                 reqs.extend(self.pendingRequest)
                 log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
