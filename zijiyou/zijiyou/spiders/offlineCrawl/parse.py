@@ -5,6 +5,7 @@ Created on 2011-4-20
 @author: shiym
 '''
 from bson.objectid import ObjectId
+from orca.braille import Region
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
@@ -13,53 +14,64 @@ from zijiyou.common import utilities
 from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.enumModel import LogLevel
+from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
+    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord
 from zijiyou.spiders.offlineCrawl.extractText import doExtract
 import datetime
 import json
 import os
 import re
 import string
-#from zijiyou.spiders.offlineCrawl.ExtMainText import doExtMainText
 
 
 class Parse(object):
     '''
-    模拟爬虫解析
+    模拟爬虫解析网页
     '''
 
-    def __init__(self):
+    def __init__(self,isOffline=False):
         '''
         Constructor
         '''
-        logFileName=settings.get('OFFLINE_PARSE_LOG','/data/configs/offlineParseLog.log')
-        if os.path.exists(logFileName):
-            self.loger=open(logFileName,'a')
-        else:
-            self.loger=open(logFileName,'w')
+        #离线爬虫初始化
+        self.isOffline=isOffline
+        if self.isOffline:   
+            #需要单独的日志记录
+            logFileName=settings.get('OFFLINE_PARSE_LOG')
+            if os.path.exists(logFileName):
+                self.loger=open(logFileName,'a')
+            else:
+                self.loger=open(logFileName,'w')
+            #加载离线爬虫配置信息
+            self.ResponseDb=settings.get('RESPONSE_DB')
+            if not self.ResponseDb :
+                self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
+                raise NotConfigured
+            self.mongoApt=MongoDbApt()
+                
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
-        self.mongoApt=MongoDbApt()
-        self.ResponseDb=settings.get('RESPONSE_DB')
-        if not self.ResponseDb :
-            self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
-            raise NotConfigured
+        
         self.requiredField= ['name','content','title']
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
-        self.needMd5=['Article']
+        self.needMd5=['Article','Note']
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
         self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50
-        self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
-        self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
-        self.curSeek=0#len(self.responseBodys)
-        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
-        print 'init完成'
+        self.responseTotalNum=0#self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
+#        self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
+        self.curSeek=0
+#        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
+#        print 'init完成'
     
     def parse(self):
-        if not self.responseBodys or len(self.responseBodys)<1:
-            self.parseLog( '加载ResponseBody数为0!', level=LogLevel.WARNING)
-            return
+        '''
+        离线爬虫入口
+        '''
+        if self.responseTotalNum<1:
+            self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
+            self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
         
         heard={'Content-type':'text/html',
                'encoding':'utf-8',
@@ -74,6 +86,7 @@ class Parse(object):
             for p in self.responseBodys:
                 if not ('spiderName' in p and 'itemCollectionName' in p):
                     self.parseLog( '缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
+                    continue
                 spiderName=p['spiderName']
                 itemCollectionName=re.sub('[\r\n]', "", p['itemCollectionName'])
                 item = None
@@ -81,7 +94,7 @@ class Parse(object):
                     item = self.parseSpecialItem(itemCollectionName, p)
                 else:
                     response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(p['responseBody']), flags=None, request=None )
-                    item = self.parseItem(extractorConfig[spiderName],itemCollectionName, response, spiderName)
+                    item = self.parseItem(spiderName,itemCollectionName, response)
                 whereJson={'_id':ObjectId(p['_id'])}
                 if itemCollectionName in self.collectionNameMap:
                     itemCollectionName=self.collectionNameMap[itemCollectionName]
@@ -120,25 +133,57 @@ class Parse(object):
             self.curSeek+=len(self.responseBodys)
             _parse()
         self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.INFO)
-        #关闭日志
+        
+        #离线爬虫关闭日志
         self.parseLog('parse 完成', level=LogLevel.INFO)
         self.loger.close()
         if not self.loger.closed :
             self.loger.close()
             print 'OK !关闭日志'
 
-    def parseItem(self,config, itemCollectionName, response, spiderName=None):
+    def parseItem(self,spiderName=None, itemCollectionName=None, response=None):
         '''
         parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
         '''
+        config=extractorConfig[spiderName]
+        if not config:
+            self.parseLog('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName, level=LogLevel.ERROR)
+            raise NotConfigured
         hxs=HtmlXPathSelector(response)
         
         #define xpath rule
-        if not itemCollectionName in config:
+        if not itemCollectionName or not itemCollectionName in config:
             self.parseLog('类型没有找到：%s ' % itemCollectionName, level=LogLevel.ERROR)
             raise NotConfigured
-        item={}
+        
+        #耦合较大且代码重复，后续计划用工厂模式取代
+        item=None
+        if itemCollectionName == 'UrlDb':
+            item=UrlDb()
+        elif itemCollectionName == 'PageDb':
+            item=PageDb()
+        elif itemCollectionName == 'POI':
+            item=POI()
+        elif itemCollectionName == 'Article':
+            item=Article()
+        elif itemCollectionName == 'Note':
+            item=Note()
+        elif itemCollectionName == 'MemberInfo':
+            item=MemberInfo()
+        elif itemCollectionName == 'MemberTrack':
+            item=MemberTrack()
+        elif itemCollectionName == 'MemberFriend':
+            item=MemberFriend()
+        elif itemCollectionName == 'MemberNoteList':
+            item=MemberNoteList()
+        elif itemCollectionName == 'Region':
+            item=Region()
+        elif itemCollectionName == 'KeyWord':
+            item=KeyWord()
+        else:
+            raise NotConfigured
+        
         item['collectionName']=itemCollectionName
         if itemCollectionName in self.collectionNameMap:
             item['collectionName']=self.collectionNameMap[itemCollectionName]
@@ -330,9 +375,13 @@ class Parse(object):
         return item
     
     def parseLog(self,msg,level=None):
-        if not msg or not level or len(msg)<2:
-            return
-        self.loger.write('%s level=%s  :%s \n' %(datetime.datetime.now(),level,msg))
+        '''
+        只解析离线爬虫
+        '''
+        if self.isOffline:
+            if not msg or not level or len(msg)<2:
+                return
+            self.loger.write('%s level=%s  :%s \n' %(datetime.datetime.now(),level,msg))
         
     def ExtText(self,input):
         pass

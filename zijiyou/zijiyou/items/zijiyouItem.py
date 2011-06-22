@@ -12,7 +12,7 @@ class UrlDb(BaseItem):
     '''
     CrawlDB
     '''
-    collectionName="UrlDb"
+    collectionName=Field()
     
     reference=Field() #来源url
     callBack=Field() # the name of CallBackFunction Method Object
@@ -23,11 +23,15 @@ class UrlDb(BaseItem):
     def __str__(self):
         return "UrlDb"
     
+    def __init__(self,*kw):
+        super(UrlDb, self).__init__(*kw)
+        self['collectionName']="UrlDb"
+    
 class PageDb(BaseItem):
     '''
     存储所有的page content，景点 景区 攻略 用户 个人页面
     '''
-    collectionName="PageDb"
+    collectionName = Field() 
     
     itemCollectionName = Field() # item表名
     responseBody = Field() 
@@ -35,12 +39,16 @@ class PageDb(BaseItem):
     
     def __str__(self):
         return 'PageDbItem'
+    
+    def __init__(self,*kw):
+        super(PageDb, self).__init__(*kw)
+        self['collectionName']="PageDb"
 
 class POI(BaseItem):
     '''
     所有的poi 包括 景点 景区 酒店 机场 火车站.. 
     '''
-    collectionName="POI"
+    collectionName=Field()
     
     area=Field()
     name=Field()
@@ -60,14 +68,21 @@ class POI(BaseItem):
     replyNum = Field() #点评数
     center=Field()  #坐标
         
+    imageUrls = Field()     #图片原始链接列表
+    imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
+        
     def __str__(self):
         return "POIItem"
+    
+    def __init__(self,*kw):
+        super(POI, self).__init__(*kw)
+        self['collectionName']="POI"
     
 class Article(BaseItem):
     '''
     长文本，如游记 攻略
     '''  
-    collectionName="Article" #表名
+    collectionName=Field() #表名
     
     title = Field()     #标题
     author = Field()    #作者
@@ -91,16 +106,24 @@ class Article(BaseItem):
     keyWords = Field()       #关键字  
     destination=Field()      #旅游目的地
     
+    imageUrls = Field()     #图片原始链接列表
+    imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
+    
     md5=Field()             #MD5值
     
     def __str__(self):
         return "ArticleItem"
     
+    def __init__(self,*kw):
+        super(Article, self).__init__(*kw)
+        self['collectionName']="Article"
+        self['imageUrls']=[]
+    
 class Note(BaseItem):
     '''
     短文本 如常识 气候、文化等
     '''  
-    collectionName="Note"
+    collectionName=Field()
     
     area = Field()
     author = Field()
@@ -115,16 +138,24 @@ class Note(BaseItem):
     helpfulNum = Field()    #有用
     unhelpfulNum = Field()  #没有用
     
+    imageUrls = Field()     #图片原始链接列表
+    imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
+    
     md5=Field()             #MD5值
 
     def __str__(self):
         return "NoteItem"
     
+    def __init__(self,*kw):
+        super(Note, self).__init__(*kw)
+        self['collectionName']="Note"
+        self['imageUrls']=[]
+    
 class MemberInfo(BaseItem):
     '''
     会员主页信息
     '''
-    collectionName="MemberInfo"
+    collectionName=Field()
     
     pageUrl = Field()
     name=Field() 
@@ -147,12 +178,16 @@ class MemberInfo(BaseItem):
 
     def __str__(self):
         return "MemberInfo"
+    
+    def __init__(self,*kw):
+        super(MemberInfo, self).__init__(*kw)
+        self['collectionName']="MemberInfo"
 
 class MemberTrack(BaseItem):
     '''
     会员足迹
     '''
-    collectionName="MemberTrack"
+    collectionName=Field()
     
     name=Field()
     gone=Field()
@@ -162,12 +197,16 @@ class MemberTrack(BaseItem):
 
     def __str__(self):
         return "MemberTrack"
+    
+    def __init__(self,*kw):
+        super(MemberTrack, self).__init__(*kw)
+        self['collectionName']="MemberTrack"
 
 class MemberFriend(BaseItem):
     '''
     会员好友
     '''
-    collectionName="MemberFriend"
+    collectionName=Field()
     
     #friends=Field() # like {friendName:address,friendName:address}
     name=Field()
@@ -179,6 +218,10 @@ class MemberFriend(BaseItem):
 
     def __str__(self):
         return "MemberFriend"
+    
+    def __init__(self,*kw):
+        super(MemberFriend, self).__init__(*kw)
+        self['collectionName']="MemberFriend"
 
 class MemberNoteList(BaseItem):
     '''
@@ -193,19 +236,32 @@ class MemberNoteList(BaseItem):
     pvNumList = Field()     #浏览量
     replyNumList = Field()  #回复    
     destinationList=Field() #旅游目的地
+    imageUrls = Field()     #图片原始链接列表
+    imagesInfo = Field()    #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
 
     def __str__(self):
         return "MemberNoteList"
     
-class Region(BaseItem):
+    def __init__(self,*kw):
+        super(MemberNoteList, self).__init__(*kw)
+        self['collectionName']="MemberNoteList"
     
+class Region(BaseItem):
+    '''
+    地区。包括了该地区的介绍、该地区的酒店
+    '''
+    collectionName=Field()
     name=Field()
     area=Field()
     introduction=Field()
     hotHotelLink=Field()
     
     def __str__(self):
-        return "CityAttraction"
+        return "Region"
+    
+    def __init__(self,*kw):
+        super(Region, self).__init__(*kw)
+        self['collectionName']="Region"
 
 class KeyWord(Item):
     '''
@@ -219,11 +275,15 @@ class KeyWord(Item):
     
     optDateTime=Field() #最后一次搜索时间
     
-class Image(Item):
-    '''
-    爬取结果中的图片
-    '''
-    collectionName="ImageDb"
-    imageUrl = Field() #图片原来的url
-    imagePath = Field() #图片存到本地的路径地址
+    def __init__(self,*kw):
+        super(KeyWord, self).__init__(*kw)
+        self['collectionName']="KeyWord"
+    
+#class Image(Item):
+#    '''
+#    爬取结果中的图片
+#    '''
+#    collectionName="ImageDb"
+#    imageUrl = Field() #图片原来的url
+#    imagePath = Field() #图片存到本地的路径地址
     

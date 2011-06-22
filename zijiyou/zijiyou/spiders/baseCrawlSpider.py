@@ -11,11 +11,11 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
 from scrapy.http import Request
-from scrapy.selector import HtmlXPathSelector
 from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import PageDb, Image
+from zijiyou.items.zijiyouItem import PageDb
+from zijiyou.spiders.offlineCrawl.parse import Parse
 import datetime
 import re
 
@@ -60,6 +60,7 @@ class BaseCrawlSpider(CrawlSpider):
         if(not self.initConfig()):
             log.msg('爬虫配置文件加载失败！' , level=log.ERROR)
             raise NotConfigured
+        self.itemParser=Parse()
         
     def getStartUrls(self,spiderName=None,colName=None):
         """
@@ -74,13 +75,13 @@ class BaseCrawlSpider(CrawlSpider):
                 queJson['spiderName']=spiderName
             sortField="priority"
             self.pendingUrl=self.mongoApt.findByDictionaryAndSort(colName, queJson, sortField)
-            log.msg("过滤前pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            log.msg("更新策略过滤前pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
             #过滤掉已经爬完但并不需要更新或是更新时间未到的记录
             now = datetime.datetime.now()
             self.pendingUrl = filter(lambda p:not (p["status"] == 200 and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) < p["dateTime"]),self.pendingUrl)
-            log.msg("pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            log.msg("更新策略过滤后pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
             for i in self.pendingUrl:
-                log.msg(i['url'], log.INFO)
+                log.msg(i['url'], log.DEBUG)
             return self.pendingUrl
         except (IOError,EOFError):
             log.msg("查数据库异常" ,level=log.ERROR)
@@ -114,7 +115,7 @@ class BaseCrawlSpider(CrawlSpider):
             self.mongoApt=MongoDbApt()
         pendingUrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
         dtRecentReq=datetime.datetime.now();
-        log.msg('%s爬虫恢复：完成查询recentequest，时间花费：%s,数量=%s' % (self.name,dtRecentReq-dtBegin,len(pendingUrls)), level=log.INFO)
+        log.msg('%s爬虫恢复：完成数据库recentequest加载，时间花费：%s,recentequest数量=%s' % (self.name,dtRecentReq-dtBegin,len(pendingUrls)), level=log.INFO)
             
         if pendingUrls and len(pendingUrls)>0:
             self.pendingRequest=[]
@@ -140,7 +141,6 @@ class BaseCrawlSpider(CrawlSpider):
 
     def baseParse(self, response):
         '''start to parse response link'''
-#        print response.url
         reqs = []
         
         if not self.hasInit:
@@ -149,9 +149,9 @@ class BaseCrawlSpider(CrawlSpider):
             self.initRequest();
             if self.pendingRequest and len(self.pendingRequest)>0:
                 reqs.extend(self.pendingRequest)
-                log.msg('爬虫%s启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(self.pendingRequest)), log.INFO)
+                log.msg('爬虫%s正式启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(self.pendingRequest)), log.INFO)
             else:
-                log.msg('爬虫%s启动执行：没有从数据库获得合适的url，将从stat_url开始crawl' % self.name , log.INFO)
+                log.msg('爬虫%s正式启动执行：解析startUrl页面' % self.name , log.INFO)
         
         log.msg('解析开始link: %s' % response.url, log.INFO)
         dtBegin=datetime.datetime.now()
@@ -160,80 +160,88 @@ class BaseCrawlSpider(CrawlSpider):
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
         
         normalNum = len(reqs)
-#        log.msg("%s parse 产生 普通页 url 数量：%s" % (response.url, len(reqs)), level=log.INFO)
  
         '''item页link'''
         for v in self.itemRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
         for i in reqs:
-            log.msg("%s" % i, level=log.DEBUG)
+            log.msg("解析新得到的url：%s" % i, level=log.DEBUG)
         itemNum = len(reqs) - normalNum
-        item = self.parseItem(response)
-        if item:
-            reqs.append(item)
-        
-        #解析图片
-#        imageItems = self.parseImageItems(response)
-        imageNum = 0
-#        if imageItems:
-#            reqs.extend(imageItems)
-#            imageNum = len(imageItems)
+        items = self.parseItem(response)
+        if items and len(items)>1:
+            reqs.extend(items)
         dtEnd=datetime.datetime.now()
         dtInterval=dtEnd - dtBegin
-        log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,图片数量：%s, 总数：%s ，花费时间：%s" % (response.url, itemNum, normalNum, imageNum, len(reqs),dtInterval), level=log.INFO)
+        log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,总数：%s ，花费时间：%s" % (response.url, itemNum, normalNum, len(reqs),dtInterval), level=log.INFO)
         
         return reqs
 
     def parseItem(self, response):
         '''start to parse parse item'''
+        #识别item页，并解析
         itemCollectionName = None
         for v in self.itemRegex:
             if re.search(v['regex'], response.url):
                 itemCollectionName=v['itemCollectionName']
                 break
-        
         if itemCollectionName == None:
             log.msg("不是item的urlLink：%s" %  response.url, level=log.INFO)
             return None
-        #验证数据库是否和type配置对应
+        #验证数据库是否和类型配置对应
         if not itemCollectionName in self.dbCollecions:
             log.msg('Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % itemCollectionName, level=log.ERROR)
             raise NotConfigured
         
-        log.msg('保存item页，类型： %s' % itemCollectionName, level=log.INFO)            
-        '''ResponseBody'''
+        #保存PageDb
+        items=[]
+        log.msg('保存item页，类型： %s' % itemCollectionName, level=log.INFO)         
         loader = ZijiyouItemLoader(PageDb(),response=response)
         loader.add_value('spiderName', self.name)
         loader.add_value('url', response.url)
-        loader.add_value('itemCollectionName', itemCollectionName)
         loader.add_value('responseBody', response.body_as_unicode())
         loader.add_value('optDateTime', datetime.datetime.now())
         pageResponse = loader.load_item()
-        return pageResponse
+        pageResponse.setdefault('collectionName', itemCollectionName)
+        items.append(pageResponse)
+        print '测试item的itemCollectionName：%s status:%s' % (pageResponse.get('collectionName'),pageResponse['status'])
+        #解析item
+        dtParseItemBegin=datetime.datetime.now()
+        item=self.itemParser.parseItem(spiderName=self.name, itemCollectionName=itemCollectionName, response=response)
+        dtParseItemEnd=datetime.datetime.now()
+        dtCost=dtParseItemEnd-dtParseItemBegin
+        log.msg('解析item时间花费：%s' % dtCost, level=log.INFO)
+        if item:
+            #测试图像下载
+            if item.has_key('imageUrls'):
+                print '测试图像下载，加入2个imgurls'
+                item['imageUrls']=['http://images3.ctrip.com/images/uploadphoto/photo/0318/636632.jpg','http://images3.ctrip.com/images/uploadphoto/photo/0318/636633.jpg']
+            items.append(item)
+            pageResponse['status']=200
+        return items
     
-    def parseImageItems(self, response):
-        '''start to parse parse image item'''
-        if not self.imageXpath:
-            return None
-        
-        log.msg("解析图片", level=log.INFO)
-        print "图片解析"
-        imageItems = []
-        hxs = HtmlXPathSelector(response)
-        for xpath in self.imageXpath:
-            imageUrls = hxs.select(xpath).extract()
-            if not imageUrls:
-                continue
-            for url in imageUrls:
-                loader = ZijiyouItemLoader(Image(),response=response)
-                loader.add_value("imageUrl", unicode(str(url), 'utf8'))
-                imageItem = loader.load_item()
-                imageItems.append(imageItem)
-                print imageItem
-                log.msg(url, level=log.INFO)
-                
-        log.msg("共解析了%s张图片" % len(imageItems), level=log.INFO)
-        return imageItems
+#    def parseImageItems(self, response):
+#        '''start to parse parse image item'''
+#        if not self.imageXpath:
+#            return None
+#        
+#        log.msg("解析图片", level=log.INFO)
+#        print "图片解析"
+#        imageItems = []
+#        hxs = HtmlXPathSelector(response)
+#        for xpath in self.imageXpath:
+#            imageUrls = hxs.select(xpath).extract()
+#            if not imageUrls:
+#                continue
+#            for url in imageUrls:
+#                loader = ZijiyouItemLoader(Image(),response=response)
+#                loader.add_value("imageUrl", unicode(str(url), 'utf8'))
+#                imageItem = loader.load_item()
+#                imageItems.append(imageItem)
+#                print imageItemh
+#                log.msg(url, level=log.INFO)
+#                
+#        log.msg("共解析了%s张图片" % len(imageItems), level=log.INFO)
+#        return imageItems
     
     def extractLinks(self, response, **extra): 
         """ 

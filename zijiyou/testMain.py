@@ -12,6 +12,24 @@ import pymongo
 import re
 import time
 
+t={'t1':'t11'}
+
+#from zijiyou.items.zijiyouItem import PageDb,Article,Note
+#pd=Note()
+##pd['itemCollectionName']='100'
+##pd['status']='100'
+##pd['spiderName']='lvpingSpider'
+##pd['spiderName']=100
+#if pd.has_key('imageUrls'):#imageUrls
+#    print 'ok'
+#else:
+#    print 'bad'
+#pd.setdefault('status', 10000)
+#print pd.get('status', 'baddd')
+#pd['status']=20000
+#print pd.get('status', 'baddd')
+#print pd.get('collectionName')
+#print pd['collectionName']
 
 #mongo = MongoDbApt()
 #value=mongo.findFieldsWithLimit('Article',whereJson={}, limitNum=1)

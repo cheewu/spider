@@ -34,7 +34,7 @@ class UpdateRequestedUrl(object):
         if responseStatus in [400, 403]:
             log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应" % responseStatus, level=log.ERROR)
         self.mongoApt.updateItem(self.CrawlDb,whereJson,updateJson)
-        log.msg("recentRequests 更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
+        log.msg("downloader中间件更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
         return response
 
 class RandomHttpProxy(object):
