@@ -10,10 +10,9 @@ from scrapy.exceptions import NotConfigured
 from scrapy.http.request import Request
 from scrapy.utils.url import canonicalize_url
 from zijiyou.db.mongoDbApt import MongoDbApt
-import datetime
-import hashlib
-import re
 from zijiyou.common import utilities
+import datetime
+import re
 #from scrapy.utils.url import canonicalize_url
 
 #import re
@@ -36,26 +35,16 @@ class DuplicateUrlFilter(object):
         dtBegin=datetime.datetime.now()
         log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url' , level=log.INFO)
         crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
-#        log.msg('完成CrawlUrl加载' ,level=log.INFO)
-#        responsUrls=self.mon.findFieldsAndSort(self.ResponseDb, whereJson={}, fieldsJson=fieldsJson)
         dtLoad=datetime.datetime.now()
         log.msg('完成Url加载.从CrawlUrl加载%s个；加载数据时间花费：%s' %(len(crawlUrls),dtLoad-dtBegin), level=log.INFO)
         now = datetime.datetime.now()
         for p in crawlUrls:
             if "url" in p :
-#                fp=getFingerPrint(p['url'])
                 #判断是否是到达需要重新爬取的时刻，若需要重新爬取，则不放入dump中
                 if 'status' in p and 'updateInterval' in p and 'dateTime' in p and p['status'] == 200 and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
                     continue
                 fp=p['md5']
                 self.urlDump.add(fp)
-#                if not fp in self.urlDump:
-#                    self.urlDump.add(fp)
-#        for p in responsUrls:
-#            if "url" in p :
-#                fp=getFingerPrint(p['url'])
-#                if not fp in self.urlDump:
-#                    self.urlDump.add(fp)
         dtDump=datetime.datetime.now()
         log.msg("spider中间件完成初始化urlDump. dump的长度=%s；初始化Dump花费时间：%s" % (len(self.urlDump),dtDump-dtLoad), level=log.INFO)
     
@@ -161,16 +150,6 @@ class SaveNewRequestUrl(object):
         log.msg("spider中间件保存新url.NewUrl=%s; ExistUrl=%s ; result长度：%s,url:%s" % (counterNew,counterExist,len(newResult),response.url),level=log.INFO)
         return newResult
 
-#def getFingerPrint(input):
-#    '''
-#    指纹
-#    '''
-#    hasher=hashlib.sha1(input)
-##    hasher.update(canonicalize_url(str(input)))
-#    fp=hasher.hexdigest()
-#    return fp
-
-
 class UrlNormalizer(object):
     '''url normalizer (归一化)'''
     def __init__(self):
@@ -202,3 +181,18 @@ class UrlNormalizer(object):
             log.msg("总共归一化数量为：%s" % counter, level=log.INFO)
         return newResult
         
+class UpdateStrategy(object):
+    '''
+    更新策略
+    '''
+    def process_spider_input(self, response, spider):
+        pass
+        #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值为Response的Item类型
+        #if 'updateStrategy' in response.meta and response.meta['updateStrategy']:
+            #whereJson = {'url':reponse.url}
+            #mongodb.remove("UrlDb", whereJson)
+            #mongodb.remove(response.meta['updateStrategy'], whereJson)
+            
+    
+    
+    

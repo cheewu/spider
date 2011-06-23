@@ -15,7 +15,6 @@ class ImagesPipeline(ImagesPipeline):
     '''
     
     def get_media_requests(self, item, info):
-#        print '测试到达imgpipeline - get_media_requests item:%s'%item
         if item and 'imageUrls' in item:
             self.dtBegin=datetime.datetime.now()
             print '测试 imgpipeline 发出图片下载请求%s' % item['imageUrls']
@@ -29,7 +28,6 @@ class ImagesPipeline(ImagesPipeline):
         if not (results and len(results)>1) :
             print '测试 到达imgpipeline 但没有图片%s' % item
             return item
-#        print '测试到达imgpipeline - item_completed'
         self.dtEnd=datetime.datetime.now()
         log.msg("图片下载完成，时间花费：%s" % (self.dtEnd - self.dtBegin), level=log.INFO)
         print '测试 下载完成：结果%s'% results

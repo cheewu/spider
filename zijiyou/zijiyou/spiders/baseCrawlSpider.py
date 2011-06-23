@@ -79,6 +79,8 @@ class BaseCrawlSpider(CrawlSpider):
             #过滤掉已经爬完但并不需要更新或是更新时间未到的记录
             now = datetime.datetime.now()
             self.pendingUrl = filter(lambda p:not (p["status"] == 200 and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) < p["dateTime"]),self.pendingUrl)
+            #加updateStrategy：itemCollectionName
+            
             log.msg("更新策略过滤后pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
             for i in self.pendingUrl:
                 log.msg(i['url'], log.DEBUG)

@@ -12,4 +12,3 @@ class BBS55(BaseCrawlSpider):
     name ="55BBSSpider"
     
 SPIDER = BBS55()
-
