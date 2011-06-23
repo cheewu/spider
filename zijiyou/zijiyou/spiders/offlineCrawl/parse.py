@@ -5,7 +5,6 @@ Created on 2011-4-20
 @author: shiym
 '''
 from bson.objectid import ObjectId
-from orca.braille import Region
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
@@ -15,7 +14,7 @@ from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.enumModel import LogLevel
 from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
-    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord
+    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord ,Region
 from zijiyou.spiders.offlineCrawl.extractText import doExtract
 import datetime
 import json

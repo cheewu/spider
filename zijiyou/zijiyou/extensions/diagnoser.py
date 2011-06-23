@@ -40,10 +40,6 @@ class Diagnoser(object):
         self.errorStatus=[400]
         self.mongo=MongoDbApt()
         self.crawlCol='UrlDb'
-        
-        self.mailInterval = None    #发送邮件间隔
-        self.subject = "爬虫诊断信息" #邮件主题
-        self.spiderName = None
         #发送邮件的时间间隔
         self.mailInterval=settings.get('MAIL_INTERVAL', None)
         #爬虫系统速度
@@ -62,7 +58,6 @@ class Diagnoser(object):
     
     def onSpiderOpen(self,spider):
         self.biginTime=datetime.datetime.now()
-        self.spiderName = spider.name
         log.msg('爬虫：%s 扩展diagnoser：onSpiderOpen ' % spider.name,level=log.INFO)
                 
     def onSpiderClose(self,spider):
@@ -73,7 +68,6 @@ class Diagnoser(object):
         if not self.mailInterval:
             return
         log.msg("邮件内容 %s" %content , level=log.INFO)
-#        sendSucess = sendMail(self.subject, content)
         self.mailer.send(to=self.mailTos, subject='爬虫诊断信息', body=content);
         log.msg("诊断邮件发送完成 时间：%s，邮件内容：%s" % (datetime.datetime.now(),content) , level=log.INFO)
         #若关闭spider则不再发送邮件
@@ -87,13 +81,13 @@ class Diagnoser(object):
             endTime=datetime.datetime.now()
             intervalTemp=endTime - self.biginTime
             interval=intervalTemp.seconds
-            log.msg('爬虫：%s 扩展diagnoser:onSpiderClose 运行时间=%s秒' % (self.spiderName,interval),level=log.INFO)
+            log.msg('爬虫诊断 运行时间=%s秒' % (interval),level=log.INFO)
             if interval<self.thresholdRuntime:
-                msg = "爬虫：%s 扩展diagnoser警告：运行时间小于阀值。运行时间：%s秒，间隔阀值：%s秒" % (self.spiderName,interval,self.thresholdRuntime)
+                msg = "爬虫诊断 运行时间小于阀值。总运行时间：%s秒，间隔阀值：%s秒" % (interval,self.thresholdRuntime)
                 content += "\r\n" + msg
                 log.msg(msg, level=log.ERROR)
             elif (interval + 100) < self.closeSpiderTimeout:
-                msg = "爬虫：%s 扩展diagnoser警告：运行时间小于爬虫规定的运行时间间隔。运行时间：%s秒，setting的时间间隔：%s秒" % (self.spiderName,interval,self.closeSpiderTimeout)
+                msg = "爬虫诊断 运行时间小于爬虫规定的运行时间间隔。运行时间：%s秒，setting的时间间隔：%s秒" % (interval,self.closeSpiderTimeout)
                 content += "\r\n" + msg
                 log.msg(msg, level=log.WARNING)
         else:
@@ -102,12 +96,15 @@ class Diagnoser(object):
         whereJson={'status':{'$gte':400,'$lt':900}}
         errorUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
         if errorUrlNum>self.thresholdError:
-            msg = "爬虫：%s 扩展diagnoser警告：下载失败网页数量为%s，高于于阀值%s" % (self.spiderName,errorUrlNum,self.thresholdError)
+            msg = "爬虫诊断 ：下载失败网页数量为%s，高于于阀值%s" % (errorUrlNum,self.thresholdError)
             content += "\r\n" + msg
         whereJson={'status':{'$gt':900}}
         untouchedUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
         if untouchedUrlNum<self.thresholdUntouchedUrl:
-            msg = "爬虫：%s 扩展diagnoser信息：剩余待爬取的网页数量：%s，低于阀值%s" % (self.spiderName,untouchedUrlNum,self.thresholdUntouchedUrl)
+            msg = "爬虫诊断 剩余待爬取的网页数量：%s，低于阀值%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
+            content += "\r\n" + msg
+        else:
+            msg = "爬虫诊断 剩余待爬取的网页数量：%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
             content += "\r\n" + msg
         #爬虫速度
         speed=self.totalPagecounts* 60.0 % self.mailInterval
@@ -117,7 +114,6 @@ class Diagnoser(object):
         content += "\r\n最近%s小时内执行过的爬虫有：%s" % (self.mailInterval / 3600.0 , spiderNames)
         self.totalPagecounts=0
         self.pagecounts.clear()
-        
         return content
     
     def onResponseReceived(self,response, request, spider):
