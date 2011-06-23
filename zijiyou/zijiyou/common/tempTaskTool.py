@@ -71,10 +71,13 @@ def initUrlMd5(dbHost='localHost',port=27017,dbName='spiderV21',urlDbName='UrlDb
         urlCol.update(whereJson,uj,True,False)
     
 def run(needDumUrl=False,needInitUrl=False):
+    print 'begin to run task!'
     if needDumUrl:
+        print 'run urlDump ... '
         newNum = dumpUrlFromPageDb2UrlDb()
         print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' %newNum
     if needInitUrl:
+        print 'run urlInit ... '
         initUrlMd5()
         print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     

@@ -410,7 +410,7 @@ spiderConfig = {
 		   
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
-                     'startUrls':[
+                     'startUrls':[#'http://www.lvping.com/showjournal-d100008-r1326227-journals.html'
                                   'http://www.lvping.com/NorthAmericaNavigation.aspx',
                                   'http://www.lvping.com/EuropeNavigation.aspx',
                                   'http://www.lvping.com/AsiaNavigation.aspx',

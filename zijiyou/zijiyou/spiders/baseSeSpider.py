@@ -21,9 +21,6 @@ import string
 import time
 import urllib
 
-
-
-
 class BaseSeSpider(BaseCrawlSpider):
     '''
     Spider for www.daodao.com

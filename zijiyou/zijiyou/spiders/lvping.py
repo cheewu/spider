@@ -4,17 +4,11 @@ Created on 2011-3-28
 
 @author: shiym
 '''
-from scrapy import log
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 class Lvping(BaseCrawlSpider):
     '''
     Spider for www.daodao.com
     '''
-    log.msg('启动爬虫：lvpingSpider', level=log.INFO)
     name ="lvpingSpider"
     
-#    def __init__(self,*a,**kw):
-#        super(Lvping,self).__init__(*a,**kw)
-#        self.initRequest()
-        
 SPIDER = Lvping()

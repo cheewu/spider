@@ -4,10 +4,11 @@ Created on 2011-4-1
 
 @author: shiym
 '''
-from pymongo import Connection,DESCENDING
+from pymongo import Connection, DESCENDING
+from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-from scrapy import log
+import gc
 
 class MongoDbApt(object):
     '''
@@ -97,8 +98,10 @@ class MongoDbApt(object):
         
         results=[]
         if mycursor:
+            gc.disable()
             for p in mycursor:
                 results.append(p)
+            gc.enable()
         return results
     
     def findFieldsWithLimit(self,colName,whereJson={},limitNum=-1):

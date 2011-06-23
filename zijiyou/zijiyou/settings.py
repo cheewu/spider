@@ -14,8 +14,8 @@ SPIDER_MODULES = ['zijiyou.spiders']
 NEWSPIDER_MODULE = 'zijiyou.spiders'
 DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ResponseBody'
 ITEM_PIPELINES=[
-                'zijiyou.pipelines.pipelines.ZijiyouPipeline',
-                'zijiyou.pipelines.pipelines.ZijiyouImagesPipeline'
+#                'zijiyou.pipelines.imagesPipeline.ImagesPipeline',
+                'zijiyou.pipelines.storagePipeline.StoragePipeline' 
                 ]
 
 # mongodb setting
@@ -40,7 +40,6 @@ DB_COLLECTIONS = ['PageDb',
 CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
-#TESTLOG='/data/configs/test.txt'
 LOG_LEVEL='INFO'
 DOWNLOAD_DELAY = 0.1
 CONCURRENT_REQUESTS_PER_SPIDER=10
@@ -54,7 +53,9 @@ DIAGNOSER_PATH = '/data/configs/diagnose.log'
 OFFLINE_PARSE_LOG = '/data/configs/offlineParseLog.log'#/home/shiym
 
 IMAGES_STORE = '/data/images' #图片存放路径 /home/hy/data/images
-IMAGES_EXPIRES = 0 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999
+IMAGES_EXPIRES = 9999 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999
+IMAGES_MIN_HEIGHT = 110
+IMAGES_MIN_WIDTH = 110
 
 EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
               }
@@ -74,15 +75,17 @@ SPIDER_MIDDLEWARES = {
 #proxy server
 PROXY = ['local']
 
-#EMail Configure
-#MAIL_INTERVAL = 7200
+#Email Configure
+MAIL_INTERVAL = 14400
 #发送对象列表
-MAIL_TO_LIST = ["465813018@qq.com", "1413614423@qq.com"]
+MAIL_TO_LIST = ["953227024@qq.com", "1413614423@qq.com"]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL_HOST = "smtp.sina.com"
-MAIL_USER = "zijiyou2011@sina.com"
-MAIL_PASS = "zijiyou"
-MAIL_POSTFIX = "sina.com"
+MAIL_HOST = 'smtp.sina.com'
+MAIL_PORT = 25
+MAIL_FROM = 'zijiyou2011@sina.com'
+MAIL_USER = 'zijiyou2011'
+MAIL_PASS = 'zijiyou'
+#MAIL_POSTFIX = 'sina.com'
 
 
 #URLNormallizer_Rules(URL 归一化)

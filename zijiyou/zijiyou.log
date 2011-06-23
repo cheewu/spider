@@ -1,560 +1,1225 @@
-2011-06-21 20:08:46+0800 [scrapy] INFO: Scrapy 0.12.0.2541 started (bot: zijiyou)
-2011-06-21 20:08:46+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:47+0800 [scrapy] INFO: 17uSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫17uSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 21cnSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫21cnSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 55bbsSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫55BBSSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫bbsSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫baseSeSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 开始清空搜索引擎数据
-2011-06-21 20:08:47+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接
-2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:47+0800 [scrapy] INFO: 清除未完成的item和搜索引擎list页：0
-2011-06-21 20:08:47+0800 [scrapy] INFO: 清除已经完成的搜索引擎list页：0
-2011-06-21 20:08:47+0800 [scrapy] INFO: 清除搜索引擎数据完成
-2011-06-21 20:08:47+0800 [scrapy] INFO: bbkerSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫bbkerSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: bytravelSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫bytravelSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 启动爬虫：daodaoSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫daodaoSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: hexunSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫hexunSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: loturSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lotourSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 启动爬虫：lvpingSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvpingSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: lvrenSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvrenSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: lvyou114Spider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvyou114Spider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: mafengwoSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫mafengwoSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: meishiSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫meishiSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: peopleSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫peopleSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 启动爬虫：qqBlogSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫QQBlogSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: sinaSpider
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫sinaSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:47+0800 [scrapy] INFO: spider中间件开始从数据库加载CrawlUrl和ResponseBody.url
-2011-06-21 20:08:47+0800 [scrapy] INFO: 完成Url加载.从CrawlUrl加载0个；加载数据时间花费：0:00:00.000867
-2011-06-21 20:08:47+0800 [scrapy] INFO: spider中间件完成初始化urlDump. dump的长度=0；初始化Dump花费时间：0:00:00.000204
-2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:47+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫lvpingSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫17uSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫21cnSpider初始配置信息spiderConfig
-2011-06-21 20:08:47+0800 [lvpingSpider] INFO: Spider opened
-2011-06-21 20:08:47+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser：onSpiderOpen 
-2011-06-21 20:08:47+0800 [scrapy] INFO: lvpingSpider 获得新的cookies
-2011-06-21 20:08:48+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx
-2011-06-21 20:08:48+0800 [scrapy] INFO: new url=http://www.lvping.com/Journals.aspx
-2011-06-21 20:08:48+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:08:48+0800 [scrapy] INFO: 爬虫lvpingSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
-2011-06-21 20:08:48+0800 [scrapy] INFO: lvpingSpider爬虫恢复： 查询recentequest
-2011-06-21 20:08:48+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:48+0800 [scrapy] INFO: 过滤前pending长度为：281
-2011-06-21 20:08:48+0800 [scrapy] INFO: pending长度为：281
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d330-r1326215-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d308-r1326213-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326210-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326209-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326208-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d106-r1326206-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d7-r1326203-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d20354-r1326200-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326198-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326197-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d389-r1326195-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d702-r1326188-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326186-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100008-r1326184-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d599-r1326182-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d816-r1326181-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d32-r1326178-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d789-r1326165-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d61-r1326169-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316626
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316624
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326183
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326211-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326205-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326170-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d21-r1326166-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d104-r1326137-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326105-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326101-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d339-r1326054-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326031-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1326030-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326017-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326016-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326015-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326000-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d297-r1325973-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326207
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326173
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326171
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326168
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326060
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d917-r1285670-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d145-r1281402-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1279231-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d293-r1278970-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d128-r1278803-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1278085-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1272361-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d36-r1272189-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d434-r1269338-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d482-r1269069-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1268989-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d327-r1268894-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d527-r1268764-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d287-r1268687-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d239-r1268618-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1267028-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1266707-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1266782-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1268630
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1267050
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d330-r1326215-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d308-r1326213-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326210-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326209-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326208-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d106-r1326206-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d7-r1326203-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d20354-r1326200-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326198-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d23-r1326197-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d389-r1326195-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d702-r1326188-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d115-r1326186-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100008-r1326184-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d599-r1326182-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d816-r1326181-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d32-r1326178-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d789-r1326165-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d61-r1326169-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316626
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1316624
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326183
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326211-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326205-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d438-r1326170-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d21-r1326166-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d104-r1326137-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326105-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1326101-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d339-r1326054-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326031-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1326030-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326017-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326016-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d100024-r1326015-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d8-r1326000-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d297-r1325973-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326207
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326173
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326171
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326168
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1326060
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d917-r1285670-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d145-r1281402-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1279231-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d293-r1278970-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d128-r1278803-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d2-r1278085-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d181-r1272361-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d36-r1272189-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d434-r1269338-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d482-r1269069-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1268989-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d327-r1268894-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d527-r1268764-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d287-r1268687-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d239-r1268618-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1267028-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d38-r1266707-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/showjournal-d198-r1266782-journals.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1268630
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1267050
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s1124/luoyang:history.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s11241/luoyang:climate.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s12218/luoyang:culture.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s23532/luoyang:traffic.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s21753/luoyang:traffic.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s22284/luoyang:traffic.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s3124/luoyang:holiday.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s31170/luoyang:shop.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s33298/luoyang:package.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?selecttype=2
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?selecttype=2
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=2&title=&type=0
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=2&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=3&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=4&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=5&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=6&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=7&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=8&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/Journals.aspx?IsTitle=T&district=0&orderby=d&pageindex=9&selecttype=0&title=&type=1
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/attractions-d198-luoyang.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/travel-d198-luoyang:brochure.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d110000-china.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120001-asia.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120003-oceania.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120002-europe.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120006-africa.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120004-northamerica.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120005-southamerica.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d110000-china.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120001-asia.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120003-oceania.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120002-europe.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120006-africa.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120004-northamerica.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d120005-southamerica.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d198-luoyang.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d157-Zhengzhou.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d165-Kaifeng.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d178-Songshan.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d183-Huashan.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d348-lintong.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d397-yuncheng.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/tourism-d100058-henan.html
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/lvpingzhushou/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AFA635EC576449A39B60A98CA1BC3C14/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/5204A747DEF146C5AA282DDF8B0E6E94/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/8094C83DC772416DB3CCB0DBFC9899F1/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/102C4A58220F4B88857F89945D4BD9A1/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/DC276A599BE14453AA461139EAC2E3D6/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BAAD939F25EA408EA54F782F950B6007/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/04F0C13DDB4D4B07B7CDFE2AABE99931/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/7D241C484AD042D3825EE288BA3BD237/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BE2C7AA7A751454EBB288E2F92C4C9C7/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/2EC75DA5FEA444EABB5CB18BAB13BE62/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0AB2619516A2484FB3163CC672B02A90/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/926C08CBA443438B8938203ACEBFD0BF/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/FCF17FA2C10241C985215C78EBA45021/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/ttyyttyy/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0BEB57303A34433EB58FBC759BA66F7B/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CC7FE0B41EEC4DB7AF9B0103E44712D9/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CB1211A5D0864FE2A4326A8452306FFC/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/1D25F06896114534A5594AC4C8B5A0AC/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/C0E70639241447B3ACDCDB7C9AA4B827/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/69009BA560AB43DABFDCE6F613FEAC65/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/17A4C562B3194C9D8B2CEDA30A91AB5D/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/448EE50092334DF687368986E8DEBB6B/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/yangtaoyt/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/E514CD6D6ECB4AD19592073B07545D68/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/B112100816BD47F0A08A471663631133/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AC828F5FDBDD492F92C544939E2BD23B/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/shangyitang/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/lvpingzhushou/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AFA635EC576449A39B60A98CA1BC3C14/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/5204A747DEF146C5AA282DDF8B0E6E94/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/8094C83DC772416DB3CCB0DBFC9899F1/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/102C4A58220F4B88857F89945D4BD9A1/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/DC276A599BE14453AA461139EAC2E3D6/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BAAD939F25EA408EA54F782F950B6007/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/04F0C13DDB4D4B07B7CDFE2AABE99931/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/7D241C484AD042D3825EE288BA3BD237/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BE2C7AA7A751454EBB288E2F92C4C9C7/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/2EC75DA5FEA444EABB5CB18BAB13BE62/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0AB2619516A2484FB3163CC672B02A90/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/926C08CBA443438B8938203ACEBFD0BF/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/FCF17FA2C10241C985215C78EBA45021/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/ttyyttyy/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/01C4DB3F897D414FA05AEF7D992EEE23/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/0BEB57303A34433EB58FBC759BA66F7B/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CC7FE0B41EEC4DB7AF9B0103E44712D9/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/CB1211A5D0864FE2A4326A8452306FFC/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/1D25F06896114534A5594AC4C8B5A0AC/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/C0E70639241447B3ACDCDB7C9AA4B827/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/69009BA560AB43DABFDCE6F613FEAC65/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/17A4C562B3194C9D8B2CEDA30A91AB5D/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/448EE50092334DF687368986E8DEBB6B/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/yangtaoyt/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/A421F2741F4549F882A5FA1189040AB6/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/E514CD6D6ECB4AD19592073B07545D68/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/B112100816BD47F0A08A471663631133/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/AC828F5FDBDD492F92C544939E2BD23B/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/shangyitang/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/lovenhope/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/61CC0D26649F41FB9B4F3A783BAB7FFF/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/9DE08E1BA7DD441C835EB1BDD400C6F3/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BFCE9037D0BF43D8B058448734159631/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/EF00800BAF2F4917BFDB67A82CAF9E5B/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/4D4B6E79B2854B2BB0ED017E3F5D2B89/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/8433EBE8831F44BBA3D3C818FC99BE4A/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/BA275DF50DBD43929166438823780BB1/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: http://www.lvping.com/members/ytpglyl/journals
-2011-06-21 20:08:48+0800 [scrapy] INFO: lvpingSpider爬虫恢复：完成查询recentequest，时间花费：0:00:00.156196,数量=281
-2011-06-21 20:08:48+0800 [scrapy] INFO: 第一个url : {u'status': 1000, u'reference': u'http://www.lvping.com/Journals.aspx', u'url': u'http://www.lvping.com/showjournal-d330-r1326215-journals.html', u'dateTime': datetime.datetime(2011, 6, 21, 19, 44, 30, 248000), u'priority': 1000, u'callBack': None, u'spiderName': u'lvpingSpider', u'_id': ObjectId('4e00841e834fc0229700000a'), u'md5': u'a44e29eb3416b853600ccab93fdc7387'}
-2011-06-21 20:08:48+0800 [scrapy] INFO: 爬虫lvpingSpider恢复：初始化pendingRequest，时间花费：0:00:00.165358，数量=281
-2011-06-21 20:08:48+0800 [scrapy] ERROR: 爬虫lvpingSpider完成恢复
-2011-06-21 20:08:48+0800 [scrapy] INFO: 爬虫lvpingSpider启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= 281
-2011-06-21 20:08:48+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx
-2011-06-21 20:08:49+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx
-2011-06-21 20:08:49+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:08:49+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:08:49+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx parse 产生 Item页url数量：43 ,普通页数量:290 ,图片数量：0, 总数：333 ，花费时间：0:00:00.581565
-2011-06-21 20:08:50+0800 [scrapy] INFO: url总数量：333,排重数量：176，通过(添加到数据库)数量：157 排重花费时间：0:00:01.477280
-2011-06-21 20:08:50+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx?selecttype=2
-2011-06-21 20:08:50+0800 [scrapy] INFO: new url=http://www.lvping.com/Journals.aspx?selecttype=2
-2011-06-21 20:08:50+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:08:50+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx?selecttype=2
-2011-06-21 20:08:51+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx?selecttype=2
-2011-06-21 20:08:51+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:08:51+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:08:51+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx?selecttype=2 parse 产生 Item页url数量：29 ,普通页数量:9 ,图片数量：0, 总数：38 ，花费时间：0:00:00.587972
-2011-06-21 20:08:51+0800 [scrapy] INFO: url总数量：38,排重数量：38，通过(添加到数据库)数量：0 排重花费时间：0:00:00.692522
-2011-06-21 20:08:52+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx?type=1
-2011-06-21 20:08:52+0800 [scrapy] INFO: new url=http://www.lvping.com/Journals.aspx?type=1
-2011-06-21 20:08:52+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:08:52+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx?type=1
-2011-06-21 20:08:52+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx?type=1
-2011-06-21 20:08:52+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:08:52+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:08:52+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx?type=1 parse 产生 Item页url数量：43 ,普通页数量:9 ,图片数量：0, 总数：52 ，花费时间：0:00:00.617986
-2011-06-21 20:08:53+0800 [scrapy] INFO: url总数量：52,排重数量：52，通过(添加到数据库)数量：0 排重花费时间：0:00:00.781652
-2011-06-21 20:08:53+0800 [17uSpider] INFO: Spider opened
-2011-06-21 20:08:53+0800 [scrapy] INFO: 爬虫：17uSpider 扩展diagnoser：onSpiderOpen 
-2011-06-21 20:08:53+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/AfricaNavigation.aspx
-2011-06-21 20:08:54+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
-2011-06-21 20:08:54+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
-2011-06-21 20:08:54+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:08:54+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41670/luoyang:dish.html
-2011-06-21 20:08:55+0800 [scrapy] INFO: 保存item页，类型： Note
-2011-06-21 20:08:55+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:08:55+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:08:55+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41670/luoyang:dish.html parse 产生 Item页url数量：30 ,普通页数量:4 ,图片数量：0, 总数：35 ，花费时间：0:00:00.905109
-2011-06-21 20:08:55+0800 [scrapy] INFO: url总数量：35,排重数量：32，通过(添加到数据库)数量：3 排重花费时间：0:00:01.004944
-2011-06-21 20:08:55+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089d7834fc023980000a4+++++++++++
-2011-06-21 20:08:55+0800 [scrapy] INFO: 图片下载完成
-2011-06-21 20:08:55+0800 [lvpingSpider] INFO: Passed None
-2011-06-21 20:08:56+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
-2011-06-21 20:08:56+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
-2011-06-21 20:08:56+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:08:56+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41669/luoyang:dish.html
-2011-06-21 20:08:57+0800 [scrapy] INFO: 保存item页，类型： Note
-2011-06-21 20:08:57+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:08:57+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:08:57+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41669/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.771296
-2011-06-21 20:08:57+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:00.860299
-2011-06-21 20:08:57+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089d9834fc023980000a6+++++++++++
-2011-06-21 20:08:57+0800 [scrapy] INFO: 图片下载完成
-2011-06-21 20:08:57+0800 [lvpingSpider] INFO: Passed None
-2011-06-21 20:08:57+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.17u.com/blog/
-2011-06-21 20:08:57+0800 [scrapy] INFO: new url=http://www.17u.com/blog/
-2011-06-21 20:08:57+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:08:57+0800 [scrapy] INFO: 爬虫17uSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
-2011-06-21 20:08:57+0800 [scrapy] INFO: 17uSpider爬虫恢复： 查询recentequest
-2011-06-21 20:08:57+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:08:57+0800 [scrapy] INFO: 过滤前pending长度为：0
-2011-06-21 20:08:57+0800 [scrapy] INFO: pending长度为：0
-2011-06-21 20:08:57+0800 [scrapy] INFO: 17uSpider爬虫恢复：完成查询recentequest，时间花费：0:00:00.003342,数量=0
-2011-06-21 20:08:57+0800 [scrapy] ERROR: 爬虫17uSpider的pendingRequest为空，交由scrapy从startUrl开始
-2011-06-21 20:08:57+0800 [scrapy] ERROR: 爬虫17uSpider完成恢复
-2011-06-21 20:08:57+0800 [scrapy] INFO: 爬虫17uSpider启动执行：没有从数据库获得合适的url，将从stat_url开始crawl
-2011-06-21 20:08:57+0800 [scrapy] INFO: 解析开始link: http://www.17u.com/blog/
-2011-06-21 20:08:58+0800 [scrapy] INFO: 不是item的urlLink：http://www.17u.com/blog/
-2011-06-21 20:08:58+0800 [scrapy] INFO: 解析完成 http://www.17u.com/blog/ parse 产生 Item页url数量：62 ,普通页数量:64 ,图片数量：0, 总数：126 ，花费时间：0:00:00.553277
-2011-06-21 20:08:58+0800 [scrapy] INFO: 排重中间件所有的url均不重复！数量：126 ,排重花费时间：0:00:00.727036
-2011-06-21 20:08:58+0800 [21cnSpider] INFO: Spider opened
-2011-06-21 20:08:58+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser：onSpiderOpen 
-2011-06-21 20:08:59+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.17u.com
-2011-06-21 20:08:59+0800 [scrapy] INFO: new url=http://www.17u.com
-2011-06-21 20:08:59+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:08:59+0800 [scrapy] INFO: 解析开始link: http://www.17u.com
-2011-06-21 20:09:00+0800 [scrapy] INFO: 不是item的urlLink：http://www.17u.com
-2011-06-21 20:09:00+0800 [scrapy] INFO: 解析完成 http://www.17u.com parse 产生 Item页url数量：69 ,普通页数量:38 ,图片数量：0, 总数：107 ，花费时间：0:00:00.937571
-2011-06-21 20:09:00+0800 [scrapy] INFO: url总数量：107,排重数量：17，通过(添加到数据库)数量：90 排重花费时间：0:00:01.092158
-2011-06-21 20:09:00+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
-2011-06-21 20:09:00+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
-2011-06-21 20:09:00+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:00+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41668/luoyang:dish.html
-2011-06-21 20:09:01+0800 [scrapy] INFO: 保存item页，类型： Note
-2011-06-21 20:09:01+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:09:01+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:09:01+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41668/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.771624
-2011-06-21 20:09:01+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:00.866399
-2011-06-21 20:09:01+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/
-2011-06-21 20:09:01+0800 [scrapy] INFO: new url=http://travel.21cn.com/
-2011-06-21 20:09:01+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089dd834fc02398000183+++++++++++
-2011-06-21 20:09:01+0800 [scrapy] INFO: 图片下载完成
-2011-06-21 20:09:01+0800 [lvpingSpider] INFO: Passed None
-2011-06-21 20:09:01+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:01+0800 [scrapy] INFO: 爬虫21cnSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
-2011-06-21 20:09:01+0800 [scrapy] INFO: 21cnSpider爬虫恢复： 查询recentequest
-2011-06-21 20:09:01+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
-2011-06-21 20:09:01+0800 [scrapy] INFO: 过滤前pending长度为：0
-2011-06-21 20:09:01+0800 [scrapy] INFO: pending长度为：0
-2011-06-21 20:09:01+0800 [scrapy] INFO: 21cnSpider爬虫恢复：完成查询recentequest，时间花费：0:00:00.003125,数量=0
-2011-06-21 20:09:01+0800 [scrapy] ERROR: 爬虫21cnSpider的pendingRequest为空，交由scrapy从startUrl开始
-2011-06-21 20:09:01+0800 [scrapy] ERROR: 爬虫21cnSpider完成恢复
-2011-06-21 20:09:01+0800 [scrapy] INFO: 爬虫21cnSpider启动执行：没有从数据库获得合适的url，将从stat_url开始crawl
-2011-06-21 20:09:01+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/
-2011-06-21 20:09:02+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/
-2011-06-21 20:09:02+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/ parse 产生 Item页url数量：37 ,普通页数量:30 ,图片数量：0, 总数：67 ，花费时间：0:00:00.735718
-2011-06-21 20:09:02+0800 [scrapy] INFO: 排重中间件所有的url均不重复！数量：67 ,排重花费时间：0:00:00.865402
-2011-06-21 20:09:02+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
-2011-06-21 20:09:02+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
-2011-06-21 20:09:02+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:02+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41667/luoyang:dish.html
-2011-06-21 20:09:03+0800 [scrapy] INFO: 保存item页，类型： Note
-2011-06-21 20:09:03+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:09:03+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:09:03+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41667/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.884199
-2011-06-21 20:09:03+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:00.990135
-2011-06-21 20:09:03+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089df834fc023980001c8+++++++++++
-2011-06-21 20:09:03+0800 [scrapy] INFO: 图片下载完成
-2011-06-21 20:09:03+0800 [lvpingSpider] INFO: Passed None
-2011-06-21 20:09:03+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/shanshui/list1.shtml
-2011-06-21 20:09:03+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/shanshui/list1.shtml
-2011-06-21 20:09:03+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:03+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/shanshui/list1.shtml
-2011-06-21 20:09:04+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/shanshui/list1.shtml
-2011-06-21 20:09:04+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/shanshui/list1.shtml parse 产生 Item页url数量：33 ,普通页数量:17 ,图片数量：0, 总数：50 ，花费时间：0:00:00.171012
-2011-06-21 20:09:04+0800 [scrapy] INFO: url总数量：50,排重数量：16，通过(添加到数据库)数量：34 排重花费时间：0:00:00.363225
-2011-06-21 20:09:05+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/tanxian/list1.shtml
-2011-06-21 20:09:05+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/tanxian/list1.shtml
-2011-06-21 20:09:05+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:05+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/tanxian/list1.shtml
-2011-06-21 20:09:05+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/tanxian/list1.shtml
-2011-06-21 20:09:05+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/tanxian/list1.shtml parse 产生 Item页url数量：35 ,普通页数量:17 ,图片数量：0, 总数：52 ，花费时间：0:00:00.127373
-2011-06-21 20:09:05+0800 [scrapy] INFO: url总数量：52,排重数量：16，通过(添加到数据库)数量：36 排重花费时间：0:00:00.215823
-2011-06-21 20:09:05+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41671/luoyang:dish.html
-2011-06-21 20:09:05+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s41671/luoyang:dish.html
-2011-06-21 20:09:05+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:05+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41671/luoyang:dish.html
-2011-06-21 20:09:06+0800 [scrapy] INFO: 保存item页，类型： Note
-2011-06-21 20:09:06+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:09:06+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:09:06+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41671/luoyang:dish.html parse 产生 Item页url数量：31 ,普通页数量:4 ,图片数量：0, 总数：36 ，花费时间：0:00:00.970439
-2011-06-21 20:09:06+0800 [scrapy] INFO: url总数量：36,排重数量：34，通过(添加到数据库)数量：2 排重花费时间：0:00:01.045101
-2011-06-21 20:09:06+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089e2834fc02398000213+++++++++++
-2011-06-21 20:09:06+0800 [scrapy] INFO: 图片下载完成
-2011-06-21 20:09:06+0800 [lvpingSpider] INFO: Passed None
-2011-06-21 20:09:06+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.17u.com/blog/cata/5065
-2011-06-21 20:09:06+0800 [scrapy] INFO: new url=http://www.17u.com/blog/cata/5065
-2011-06-21 20:09:06+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/wenquan/list1.shtml
-2011-06-21 20:09:06+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/wenquan/list1.shtml
-2011-06-21 20:09:06+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:06+0800 [scrapy] INFO: 解析开始link: http://www.17u.com/blog/cata/5065
-2011-06-21 20:09:07+0800 [scrapy] INFO: 不是item的urlLink：http://www.17u.com/blog/cata/5065
-2011-06-21 20:09:07+0800 [scrapy] INFO: 解析完成 http://www.17u.com/blog/cata/5065 parse 产生 Item页url数量：41 ,普通页数量:46 ,图片数量：0, 总数：87 ，花费时间：0:00:00.597642
-2011-06-21 20:09:07+0800 [scrapy] INFO: url总数量：87,排重数量：40，通过(添加到数据库)数量：47 排重花费时间：0:00:00.748403
-2011-06-21 20:09:07+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:07+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/wenquan/list1.shtml
-2011-06-21 20:09:07+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/wenquan/list1.shtml
-2011-06-21 20:09:07+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/wenquan/list1.shtml parse 产生 Item页url数量：34 ,普通页数量:17 ,图片数量：0, 总数：51 ，花费时间：0:00:00.163249
-2011-06-21 20:09:07+0800 [scrapy] INFO: url总数量：51,排重数量：16，通过(添加到数据库)数量：35 排重花费时间：0:00:00.273635
-2011-06-21 20:09:08+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
-2011-06-21 20:09:08+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
-2011-06-21 20:09:08+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:08+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s4124/luoyang:dish.html
-2011-06-21 20:09:09+0800 [scrapy] INFO: 保存item页，类型： Note
-2011-06-21 20:09:09+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:09:09+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:09:09+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s4124/luoyang:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.943213
-2011-06-21 20:09:09+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:01.016252
-2011-06-21 20:09:09+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089e5834fc02398000269+++++++++++
-2011-06-21 20:09:09+0800 [scrapy] INFO: 图片下载完成
-2011-06-21 20:09:09+0800 [lvpingSpider] INFO: Passed None
-2011-06-21 20:09:09+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/shangqiou/list1.shtml
-2011-06-21 20:09:09+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/shangqiou/list1.shtml
-2011-06-21 20:09:09+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:09+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/shangqiou/list1.shtml
-2011-06-21 20:09:10+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/shangqiou/list1.shtml
-2011-06-21 20:09:10+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/shangqiou/list1.shtml parse 产生 Item页url数量：27 ,普通页数量:17 ,图片数量：0, 总数：44 ，花费时间：0:00:00.166135
-2011-06-21 20:09:10+0800 [scrapy] INFO: url总数量：44,排重数量：16，通过(添加到数据库)数量：28 排重花费时间：0:00:00.270204
-2011-06-21 20:09:11+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://travel.21cn.com/tsly/shanshui/list2.shtml
-2011-06-21 20:09:11+0800 [scrapy] INFO: new url=http://travel.21cn.com/tsly/shanshui/list2.shtml
-2011-06-21 20:09:11+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:11+0800 [scrapy] INFO: 解析开始link: http://travel.21cn.com/tsly/shanshui/list2.shtml
-2011-06-21 20:09:11+0800 [scrapy] INFO: 不是item的urlLink：http://travel.21cn.com/tsly/shanshui/list2.shtml
-2011-06-21 20:09:11+0800 [scrapy] INFO: 解析完成 http://travel.21cn.com/tsly/shanshui/list2.shtml parse 产生 Item页url数量：35 ,普通页数量:18 ,图片数量：0, 总数：53 ，花费时间：0:00:00.133216
-2011-06-21 20:09:11+0800 [scrapy] INFO: url总数量：53,排重数量：17，通过(添加到数据库)数量：36 排重花费时间：0:00:00.357670
-2011-06-21 20:09:11+0800 [scrapy] INFO: recentRequests 更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s33298/luoyang:package.html
-2011-06-21 20:09:11+0800 [scrapy] INFO: new url=http://www.lvping.com/travel-d198-s33298/luoyang:package.html
-2011-06-21 20:09:11+0800 [scrapy] INFO: 开始排重
-2011-06-21 20:09:11+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s33298/luoyang:package.html
-2011-06-21 20:09:11+0800 [scrapy] INFO: Received SIGINT, shutting down gracefully. Send again to force unclean shutdown
-2011-06-21 20:09:12+0800 [scrapy] INFO: 保存item页，类型： Note
-2011-06-21 20:09:12+0800 [scrapy] INFO: 解析图片
-2011-06-21 20:09:12+0800 [scrapy] INFO: 共解析了0张图片
-2011-06-21 20:09:12+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s33298/luoyang:package.html parse 产生 Item页url数量：29 ,普通页数量:4 ,图片数量：0, 总数：34 ，花费时间：0:00:00.895961
-2011-06-21 20:09:12+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:01.019772
-2011-06-21 20:09:12+0800 [lvpingSpider] INFO: Closing spider (shutdown)
-2011-06-21 20:09:12+0800 [21cnSpider] INFO: Closing spider (shutdown)
-2011-06-21 20:09:12+0800 [17uSpider] INFO: Closing spider (shutdown)
-2011-06-21 20:09:12+0800 [scrapy] INFO: ++++saveItem2Mongodb++++col:PageDb,objectId:4e0089e8834fc023980002ad+++++++++++
-2011-06-21 20:09:12+0800 [scrapy] INFO: 图片下载完成
-2011-06-21 20:09:12+0800 [lvpingSpider] INFO: Passed None
-2011-06-21 20:09:13+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser:onSpiderClose 运行时间=15秒
-2011-06-21 20:09:13+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：15秒，间隔阀值：200秒
-2011-06-21 20:09:13+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser信息：剩余待爬取的网页数量：0
-2011-06-21 20:09:13+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：0
-2011-06-21 20:09:13+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
-2011-06-21 20:09:13+0800 [21cnSpider] INFO: Spider closed (shutdown)
-2011-06-21 20:09:14+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser:onSpiderClose 运行时间=16秒
-2011-06-21 20:09:14+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-运行时间小于阀值。运行时间：16秒，间隔阀值：200秒
-2011-06-21 20:09:14+0800 [scrapy] INFO: 爬虫：21cnSpider 扩展diagnoser信息：剩余待爬取的网页数量：0
-2011-06-21 20:09:14+0800 [scrapy] ERROR: 爬虫：21cnSpider 扩展diagnoser警告：错误-剩余待爬取的网页数量低于阀值：0
-2011-06-21 20:09:14+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
-2011-06-21 20:09:14+0800 [lvpingSpider] INFO: Spider closed (shutdown)
-2011-06-21 20:09:20+0800 [scrapy] INFO: Received SIGINT twice, forcing unclean shutdown
+2011-06-24 00:20:18+0800 [scrapy] INFO: Scrapy 0.12.0.2541 started (bot: zijiyou)
+2011-06-24 00:20:18+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫17uSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫21cnSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫55BBSSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫bbsSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫baseSeSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 开始清空搜索引擎数据
+2011-06-24 00:20:19+0800 [scrapy] INFO: self.mongoApt为空，初始化mongod链接
+2011-06-24 00:20:19+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-24 00:20:19+0800 [scrapy] INFO: 清除未完成的item和搜索引擎list页：0
+2011-06-24 00:20:19+0800 [scrapy] INFO: 清除已经完成的搜索引擎list页：0
+2011-06-24 00:20:19+0800 [scrapy] INFO: 清除搜索引擎数据完成
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫bbkerSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫bytravelSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫daodaoSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫hexunSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫lotourSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫lvpingSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫lvrenSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫lvyou114Spider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫mafengwoSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫meishiSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫peopleSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫QQBlogSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫sinaSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-24 00:20:19+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-24 00:20:19+0800 [scrapy] INFO: spider中间件开始从数据库加载CrawlUrl和ResponseBody.url
+2011-06-24 00:20:19+0800 [scrapy] INFO: 完成Url加载.从CrawlUrl加载0个；加载数据时间花费：0:00:00.020380
+2011-06-24 00:20:19+0800 [scrapy] INFO: spider中间件完成初始化urlDump. dump的长度=0；初始化Dump花费时间：0:00:00.000242
+2011-06-24 00:20:19+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫lvpingSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫daodaoSpider初始配置信息spiderConfig
+2011-06-24 00:20:19+0800 [lvpingSpider] INFO: Spider opened
+2011-06-24 00:20:19+0800 [scrapy] INFO: 爬虫：lvpingSpider 扩展diagnoser：onSpiderOpen 
+2011-06-24 00:20:19+0800 [scrapy] INFO: lvpingSpider 获得新的cookies
+2011-06-24 00:20:20+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx
+2011-06-24 00:20:20+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:20+0800 [scrapy] INFO: 爬虫lvpingSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
+2011-06-24 00:20:20+0800 [scrapy] INFO: lvpingSpider爬虫恢复： 查询recentequest
+2011-06-24 00:20:20+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-24 00:20:20+0800 [scrapy] INFO: 更新策略过滤前pending长度为：616
+2011-06-24 00:20:20+0800 [scrapy] INFO: 更新策略过滤后pending长度为：616
+2011-06-24 00:20:20+0800 [scrapy] INFO: lvpingSpider爬虫恢复：完成数据库recentequest加载，时间花费：0:00:00.284243,recentequest数量=616
+2011-06-24 00:20:20+0800 [scrapy] INFO: 第一个url : {u'status': 1000, u'reference': u'http://www.lvping.com/Journals.aspx', u'url': u'http://www.lvping.com/showjournal-d126-r1326347-journals.html', u'dateTime': datetime.datetime(2011, 6, 23, 23, 36, 24, 680000), u'priority': 1000, u'callBack': None, u'spiderName': u'lvpingSpider', u'_id': ObjectId('4e035d78834fc01cc400000a'), u'md5': u'f183bef78f3fe7352ac21039684936ba'}
+2011-06-24 00:20:20+0800 [scrapy] INFO: 爬虫lvpingSpider恢复：初始化pendingRequest，时间花费：0:00:00.304355，数量=616
+2011-06-24 00:20:20+0800 [scrapy] ERROR: 爬虫lvpingSpider完成恢复
+2011-06-24 00:20:20+0800 [scrapy] INFO: 爬虫lvpingSpider正式启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= 616
+2011-06-24 00:20:20+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx
+2011-06-24 00:20:21+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx
+2011-06-24 00:20:21+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx parse 产生 Item页url数量：45 ,普通页数量:625 ,总数：670 ，花费时间：0:00:00.574231
+2011-06-24 00:20:22+0800 [scrapy] INFO: url总数量：670,排重数量：346，通过(添加到数据库)数量：324 排重花费时间：0:00:02.142838
+2011-06-24 00:20:22+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-24 00:20:22+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:22+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-24 00:20:23+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx?selecttype=2
+2011-06-24 00:20:23+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx?selecttype=2 parse 产生 Item页url数量：29 ,普通页数量:9 ,总数：38 ，花费时间：0:00:00.534801
+2011-06-24 00:20:23+0800 [scrapy] INFO: url总数量：38,排重数量：38，通过(添加到数据库)数量：0 排重花费时间：0:00:00.604383
+2011-06-24 00:20:23+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/Journals.aspx?type=1
+2011-06-24 00:20:23+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:23+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/Journals.aspx?type=1
+2011-06-24 00:20:24+0800 [scrapy] INFO: 不是item的urlLink：http://www.lvping.com/Journals.aspx?type=1
+2011-06-24 00:20:24+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/Journals.aspx?type=1 parse 产生 Item页url数量：43 ,普通页数量:9 ,总数：52 ，花费时间：0:00:00.500170
+2011-06-24 00:20:24+0800 [scrapy] INFO: url总数量：52,排重数量：52，通过(添加到数据库)数量：0 排重花费时间：0:00:00.590097
+2011-06-24 00:20:24+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/AfricaNavigation.aspx
+2011-06-24 00:20:24+0800 [daodaoSpider] INFO: Spider opened
+2011-06-24 00:20:24+0800 [scrapy] INFO: 爬虫：daodaoSpider 扩展diagnoser：onSpiderOpen 
+2011-06-24 00:20:25+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-06-24 00:20:25+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:25+0800 [scrapy] INFO: 爬虫daodaoSpider 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复
+2011-06-24 00:20:25+0800 [scrapy] INFO: daodaoSpider爬虫恢复： 查询recentequest
+2011-06-24 00:20:25+0800 [scrapy] INFO: ++初始化MongoDbApt++++++++++++++++++++++++++++++++++++
+2011-06-24 00:20:25+0800 [scrapy] INFO: 更新策略过滤前pending长度为：266
+2011-06-24 00:20:25+0800 [scrapy] INFO: 更新策略过滤后pending长度为：266
+2011-06-24 00:20:25+0800 [scrapy] INFO: daodaoSpider爬虫恢复：完成数据库recentequest加载，时间花费：0:00:00.156625,recentequest数量=266
+2011-06-24 00:20:25+0800 [scrapy] INFO: 第一个url : {u'status': 1000, u'reference': u'http://www.daodao.com/Attractions-g294211-Activities-China.html', u'url': u'http://www.daodao.com/Attraction_Review-g1851009-d1851860-Reviews-Mt_Qilin_Scenic_Resort-Jidong_County_Heilongjiang.html', u'dateTime': datetime.datetime(2011, 6, 23, 23, 36, 30, 369000), u'priority': 600, u'callBack': None, u'spiderName': u'daodaoSpider', u'_id': ObjectId('4e035d7e834fc01cc40000ba'), u'md5': u'd11e22e9eac5d0b17ac1964cb35e7dc7'}
+2011-06-24 00:20:25+0800 [scrapy] INFO: 爬虫daodaoSpider恢复：初始化pendingRequest，时间花费：0:00:00.167760，数量=266
+2011-06-24 00:20:25+0800 [scrapy] ERROR: 爬虫daodaoSpider完成恢复
+2011-06-24 00:20:25+0800 [scrapy] INFO: 爬虫daodaoSpider正式启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= 266
+2011-06-24 00:20:25+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-06-24 00:20:25+0800 [scrapy] INFO: 不是item的urlLink：http://www.daodao.com/Attractions-g294211-Activities-China.html
+2011-06-24 00:20:25+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attractions-g294211-Activities-China.html parse 产生 Item页url数量：11 ,普通页数量:294 ,总数：305 ，花费时间：0:00:00.195693
+2011-06-24 00:20:26+0800 [scrapy] INFO: url总数量：305,排重数量：157，通过(添加到数据库)数量：148 排重花费时间：0:00:00.971494
+2011-06-24 00:20:26+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s13503/hongkong:Telephones.html
+2011-06-24 00:20:26+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:26+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s13503/hongkong:Telephones.html
+2011-06-24 00:20:28+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:28+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s13503/hongkong:Telephones.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.610793
+2011-06-24 00:20:28+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.671200
+2011-06-24 00:20:28+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d311534-Reviews-Temple_of_Heaven_Tiantan_Park-Beijing.html
+2011-06-24 00:20:28+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:28+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d311534-Reviews-Temple_of_Heaven_Tiantan_Park-Beijing.html
+2011-06-24 00:20:29+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:29+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d311534-Reviews-Temple_of_Heaven_Tiantan_Park-Beijing.html parse 产生 Item页url数量：14 ,普通页数量:6 ,总数：20 ，花费时间：0:00:00.386529
+2011-06-24 00:20:29+0800 [scrapy] INFO: url总数量：20,排重数量：4，通过(添加到数据库)数量：16 排重花费时间：0:00:00.438741
+2011-06-24 00:20:29+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1016973-d1824600-Reviews-Shaohua_Ancient_City-Guangyuan_Sichuan.html
+2011-06-24 00:20:29+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:29+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1016973-d1824600-Reviews-Shaohua_Ancient_City-Guangyuan_Sichuan.html
+2011-06-24 00:20:29+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:29+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1016973-d1824600-Reviews-Shaohua_Ancient_City-Guangyuan_Sichuan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.310754
+2011-06-24 00:20:29+0800 [scrapy] INFO: url总数量：18,排重数量：3，通过(添加到数据库)数量：15 排重花费时间：0:00:00.372656
+2011-06-24 00:20:29+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43448/bali:dish.html
+2011-06-24 00:20:29+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:29+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43448/bali:dish.html
+2011-06-24 00:20:30+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:30+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43448/bali:dish.html parse 产生 Item页url数量：30 ,普通页数量:4 ,总数：34 ，花费时间：0:00:00.982646
+2011-06-24 00:20:30+0800 [scrapy] INFO: url总数量：34,排重数量：32，通过(添加到数据库)数量：2 排重花费时间：0:00:01.033670
+2011-06-24 00:20:31+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294220-d1814155-Reviews-Nanjing_Underwater_World-Nanjing_Jiangsu.html
+2011-06-24 00:20:31+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:31+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294220-d1814155-Reviews-Nanjing_Underwater_World-Nanjing_Jiangsu.html
+2011-06-24 00:20:31+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:31+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294220-d1814155-Reviews-Nanjing_Underwater_World-Nanjing_Jiangsu.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.406013
+2011-06-24 00:20:31+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.455973
+2011-06-24 00:20:31+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43447/bali:dish.html
+2011-06-24 00:20:31+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:31+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43447/bali:dish.html
+2011-06-24 00:20:32+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:32+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43447/bali:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:00.981572
+2011-06-24 00:20:32+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.029712
+2011-06-24 00:20:33+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1795741-d1831751-Reviews-Chen_Xubai_s_Tomb-Shiping_County_Yunnan.html
+2011-06-24 00:20:33+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:33+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1795741-d1831751-Reviews-Chen_Xubai_s_Tomb-Shiping_County_Yunnan.html
+2011-06-24 00:20:33+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:33+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1795741-d1831751-Reviews-Chen_Xubai_s_Tomb-Shiping_County_Yunnan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.217049
+2011-06-24 00:20:33+0800 [scrapy] INFO: url总数量：18,排重数量：3，通过(添加到数据库)数量：15 排重花费时间：0:00:00.271280
+2011-06-24 00:20:33+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43195/bali:dish.html
+2011-06-24 00:20:33+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:33+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43195/bali:dish.html
+2011-06-24 00:20:34+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:34+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43195/bali:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:00.991986
+2011-06-24 00:20:34+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.037970
+2011-06-24 00:20:34+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1649141-d1808283-Reviews-Huitang_Hot_Spring-Ningxiang_County_Hunan.html
+2011-06-24 00:20:34+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:34+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1649141-d1808283-Reviews-Huitang_Hot_Spring-Ningxiang_County_Hunan.html
+2011-06-24 00:20:34+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:34+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1649141-d1808283-Reviews-Huitang_Hot_Spring-Ningxiang_County_Hunan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.219381
+2011-06-24 00:20:34+0800 [scrapy] INFO: url总数量：18,排重数量：3，通过(添加到数据库)数量：15 排重花费时间：0:00:00.266653
+2011-06-24 00:20:35+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294220-d1515763-Reviews-Presidential_palace_of_Nanjing-Nanjing_Jiangsu.html
+2011-06-24 00:20:35+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:35+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294220-d1515763-Reviews-Presidential_palace_of_Nanjing-Nanjing_Jiangsu.html
+2011-06-24 00:20:35+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:35+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294220-d1515763-Reviews-Presidential_palace_of_Nanjing-Nanjing_Jiangsu.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.457936
+2011-06-24 00:20:35+0800 [scrapy] INFO: url总数量：21,排重数量：7，通过(添加到数据库)数量：14 排重花费时间：0:00:00.514407
+2011-06-24 00:20:35+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14193/hongkong:tip.html
+2011-06-24 00:20:35+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:35+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14193/hongkong:tip.html
+2011-06-24 00:20:37+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:37+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14193/hongkong:tip.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.527089
+2011-06-24 00:20:37+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.588969
+2011-06-24 00:20:37+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1409383-d1824750-Reviews-Huating_Lake-Taihu_County_Anhui.html
+2011-06-24 00:20:37+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:37+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1409383-d1824750-Reviews-Huating_Lake-Taihu_County_Anhui.html
+2011-06-24 00:20:37+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:37+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1409383-d1824750-Reviews-Huating_Lake-Taihu_County_Anhui.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.214613
+2011-06-24 00:20:37+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.260697
+2011-06-24 00:20:38+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g644040-d1871173-Reviews-Liuxi_River_Drifting-Lin_an_Zhejiang.html
+2011-06-24 00:20:38+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:38+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g644040-d1871173-Reviews-Liuxi_River_Drifting-Lin_an_Zhejiang.html
+2011-06-24 00:20:38+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:38+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g644040-d1871173-Reviews-Liuxi_River_Drifting-Lin_an_Zhejiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.376593
+2011-06-24 00:20:38+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.475764
+2011-06-24 00:20:38+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43449/bali:dish.html
+2011-06-24 00:20:38+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:38+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43449/bali:dish.html
+2011-06-24 00:20:40+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:40+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43449/bali:dish.html parse 产生 Item页url数量：31 ,普通页数量:4 ,总数：35 ，花费时间：0:00:01.362398
+2011-06-24 00:20:40+0800 [scrapy] INFO: url总数量：35,排重数量：34，通过(添加到数据库)数量：1 排重花费时间：0:00:01.414235
+2011-06-24 00:20:40+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297442-d1813978-Reviews-Jinji_Lake-Suzhou_Jiangsu.html
+2011-06-24 00:20:40+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:40+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297442-d1813978-Reviews-Jinji_Lake-Suzhou_Jiangsu.html
+2011-06-24 00:20:40+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:40+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297442-d1813978-Reviews-Jinji_Lake-Suzhou_Jiangsu.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.392588
+2011-06-24 00:20:40+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.442665
+2011-06-24 00:20:41+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s41914/bali:dish.html
+2011-06-24 00:20:41+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:41+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s41914/bali:dish.html
+2011-06-24 00:20:42+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:42+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s41914/bali:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.000267
+2011-06-24 00:20:42+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.048092
+2011-06-24 00:20:42+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1793347-Reviews-798_Art_Zone-Beijing.html
+2011-06-24 00:20:42+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:42+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d1793347-Reviews-798_Art_Zone-Beijing.html
+2011-06-24 00:20:42+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:42+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d1793347-Reviews-798_Art_Zone-Beijing.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.380197
+2011-06-24 00:20:42+0800 [scrapy] INFO: url总数量：21,排重数量：7，通过(添加到数据库)数量：14 排重花费时间：0:00:00.436635
+2011-06-24 00:20:43+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1980177-Reviews-Beijing_Tianning_Tower-Beijing.html
+2011-06-24 00:20:43+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:43+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d1980177-Reviews-Beijing_Tianning_Tower-Beijing.html
+2011-06-24 00:20:43+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:43+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d1980177-Reviews-Beijing_Tianning_Tower-Beijing.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.343647
+2011-06-24 00:20:43+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.389329
+2011-06-24 00:20:44+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1979565-Reviews-Beijing_Jinluyuan_Picking_Garden-Beijing.html
+2011-06-24 00:20:44+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:44+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d1979565-Reviews-Beijing_Jinluyuan_Picking_Garden-Beijing.html
+2011-06-24 00:20:44+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:44+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d1979565-Reviews-Beijing_Jinluyuan_Picking_Garden-Beijing.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.265832
+2011-06-24 00:20:44+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.319025
+2011-06-24 00:20:44+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1851007-d1851661-Reviews-Hongxing_Forest_Park-Boli_County_Heilongjiang.html
+2011-06-24 00:20:44+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:44+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1851007-d1851661-Reviews-Hongxing_Forest_Park-Boli_County_Heilongjiang.html
+2011-06-24 00:20:44+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:44+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1851007-d1851661-Reviews-Hongxing_Forest_Park-Boli_County_Heilongjiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.181216
+2011-06-24 00:20:44+0800 [scrapy] INFO: url总数量：18,排重数量：3，通过(添加到数据库)数量：15 排重花费时间：0:00:00.229983
+2011-06-24 00:20:44+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s4310/bali:dish.html
+2011-06-24 00:20:44+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:44+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s4310/bali:dish.html
+2011-06-24 00:20:46+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:46+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s4310/bali:dish.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.063853
+2011-06-24 00:20:46+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.110254
+2011-06-24 00:20:46+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494938-d502524-Reviews-Chengtian_Temple_West_Pagoda-Yinchuan_Ningxia.html
+2011-06-24 00:20:46+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:46+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494938-d502524-Reviews-Chengtian_Temple_West_Pagoda-Yinchuan_Ningxia.html
+2011-06-24 00:20:46+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:46+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494938-d502524-Reviews-Chengtian_Temple_West_Pagoda-Yinchuan_Ningxia.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.230587
+2011-06-24 00:20:46+0800 [scrapy] INFO: url总数量：21,排重数量：5，通过(添加到数据库)数量：16 排重花费时间：0:00:00.286765
+2011-06-24 00:20:46+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g303761-d1810196-Reviews-Bixia_Temple-Tai_an_Shandong.html
+2011-06-24 00:20:47+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:47+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g303761-d1810196-Reviews-Bixia_Temple-Tai_an_Shandong.html
+2011-06-24 00:20:47+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:47+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g303761-d1810196-Reviews-Bixia_Temple-Tai_an_Shandong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.252545
+2011-06-24 00:20:47+0800 [scrapy] INFO: url总数量：21,排重数量：3，通过(添加到数据库)数量：18 排重花费时间：0:00:00.309798
+2011-06-24 00:20:47+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1795634-d1810617-Reviews-Wumen_Weir-Chenggu_County_Shaanxi.html
+2011-06-24 00:20:47+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:47+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1795634-d1810617-Reviews-Wumen_Weir-Chenggu_County_Shaanxi.html
+2011-06-24 00:20:47+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:47+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1795634-d1810617-Reviews-Wumen_Weir-Chenggu_County_Shaanxi.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.184666
+2011-06-24 00:20:47+0800 [scrapy] INFO: url总数量：18,排重数量：3，通过(添加到数据库)数量：15 排重花费时间：0:00:00.238285
+2011-06-24 00:20:48+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14194/hongkong:tip.html
+2011-06-24 00:20:48+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:48+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14194/hongkong:tip.html
+2011-06-24 00:20:49+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:49+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14194/hongkong:tip.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.617526
+2011-06-24 00:20:49+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.677692
+2011-06-24 00:20:49+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297420-d1834835-Reviews-Beihai_Beach-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:20:49+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:49+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297420-d1834835-Reviews-Beihai_Beach-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:20:50+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:50+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297420-d1834835-Reviews-Beihai_Beach-Beihai_Guangxi_Zhuang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.333800
+2011-06-24 00:20:50+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.382564
+2011-06-24 00:20:50+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297452-d1848023-Reviews-Dalian_West_Forest_Park-Dalian_Liaoning.html
+2011-06-24 00:20:50+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:50+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297452-d1848023-Reviews-Dalian_West_Forest_Park-Dalian_Liaoning.html
+2011-06-24 00:20:51+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:51+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297452-d1848023-Reviews-Dalian_West_Forest_Park-Dalian_Liaoning.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.374192
+2011-06-24 00:20:51+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.426476
+2011-06-24 00:20:51+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43450/bali:dish.html
+2011-06-24 00:20:51+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:51+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43450/bali:dish.html
+2011-06-24 00:20:52+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:52+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43450/bali:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:01.002450
+2011-06-24 00:20:52+0800 [scrapy] INFO: url总数量：36,排重数量：35，通过(添加到数据库)数量：1 排重花费时间：0:00:01.054261
+2011-06-24 00:20:52+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1017041-d1851284-Reviews-Kongtong_Mountain-Pingliang_Gansu.html
+2011-06-24 00:20:52+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:52+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1017041-d1851284-Reviews-Kongtong_Mountain-Pingliang_Gansu.html
+2011-06-24 00:20:52+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:52+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1017041-d1851284-Reviews-Kongtong_Mountain-Pingliang_Gansu.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.304526
+2011-06-24 00:20:52+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.353319
+2011-06-24 00:20:53+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298555-d1797617-Reviews-Panyu_Bridge-Guangzhou_Guangdong.html
+2011-06-24 00:20:53+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:53+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298555-d1797617-Reviews-Panyu_Bridge-Guangzhou_Guangdong.html
+2011-06-24 00:20:53+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:53+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298555-d1797617-Reviews-Panyu_Bridge-Guangzhou_Guangdong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.259998
+2011-06-24 00:20:53+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.312141
+2011-06-24 00:20:53+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s33496/bali:package.html
+2011-06-24 00:20:53+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:53+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s33496/bali:package.html
+2011-06-24 00:20:54+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:54+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s33496/bali:package.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.120795
+2011-06-24 00:20:54+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.176261
+2011-06-24 00:20:54+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152338-d1814372-Reviews-Mian_Mountain-Jiexiu_Shanxi.html
+2011-06-24 00:20:54+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:54+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152338-d1814372-Reviews-Mian_Mountain-Jiexiu_Shanxi.html
+2011-06-24 00:20:55+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:55+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152338-d1814372-Reviews-Mian_Mountain-Jiexiu_Shanxi.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.380569
+2011-06-24 00:20:55+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.430033
+2011-06-24 00:20:55+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s32331/bali:entertainment.html
+2011-06-24 00:20:55+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:55+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s32331/bali:entertainment.html
+2011-06-24 00:20:57+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:20:57+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s32331/bali:entertainment.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.251143
+2011-06-24 00:20:57+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.305869
+2011-06-24 00:20:57+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1793465-Reviews-Shidu-Beijing.html
+2011-06-24 00:20:57+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:57+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d1793465-Reviews-Shidu-Beijing.html
+2011-06-24 00:20:57+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:57+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d1793465-Reviews-Shidu-Beijing.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.385353
+2011-06-24 00:20:57+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.457147
+2011-06-24 00:20:57+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g303761-d1810560-Reviews-Taishan_Foye_Temple-Tai_an_Shandong.html
+2011-06-24 00:20:57+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:57+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g303761-d1810560-Reviews-Taishan_Foye_Temple-Tai_an_Shandong.html
+2011-06-24 00:20:58+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:20:58+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g303761-d1810560-Reviews-Taishan_Foye_Temple-Tai_an_Shandong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.418525
+2011-06-24 00:20:58+0800 [scrapy] INFO: url总数量：21,排重数量：10，通过(添加到数据库)数量：11 排重花费时间：0:00:00.479714
+2011-06-24 00:20:58+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14195/hongkong:tip.html
+2011-06-24 00:20:58+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:20:58+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14195/hongkong:tip.html
+2011-06-24 00:21:00+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:00+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14195/hongkong:tip.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.697995
+2011-06-24 00:21:00+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.762667
+2011-06-24 00:21:00+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297457-d1802165-Reviews-Spring_City_Square-Jinan_Shandong.html
+2011-06-24 00:21:00+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:00+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297457-d1802165-Reviews-Spring_City_Square-Jinan_Shandong.html
+2011-06-24 00:21:00+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:00+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297457-d1802165-Reviews-Spring_City_Square-Jinan_Shandong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.360036
+2011-06-24 00:21:00+0800 [scrapy] INFO: url总数量：21,排重数量：5，通过(添加到数据库)数量：16 排重花费时间：0:00:00.415394
+2011-06-24 00:21:00+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297463-d1491913-Reviews-Free_panda_card-Chengdu_Sichuan.html
+2011-06-24 00:21:01+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43451/bali:dish.html
+2011-06-24 00:21:01+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:01+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43451/bali:dish.html
+2011-06-24 00:21:02+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:02+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43451/bali:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:00.998456
+2011-06-24 00:21:02+0800 [scrapy] INFO: url总数量：36,排重数量：35，通过(添加到数据库)数量：1 排重花费时间：0:00:01.050759
+2011-06-24 00:21:02+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1454389-d1834588-Reviews-Chongdu_Ditch-Luanchuan_County_Henan.html
+2011-06-24 00:21:02+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:02+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1454389-d1834588-Reviews-Chongdu_Ditch-Luanchuan_County_Henan.html
+2011-06-24 00:21:02+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:02+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1454389-d1834588-Reviews-Chongdu_Ditch-Luanchuan_County_Henan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.310749
+2011-06-24 00:21:02+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.359958
+2011-06-24 00:21:03+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152541-d1848767-Reviews-Yiziping_Mountain-Zixing_Hunan.html
+2011-06-24 00:21:03+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:03+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152541-d1848767-Reviews-Yiziping_Mountain-Zixing_Hunan.html
+2011-06-24 00:21:03+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:03+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152541-d1848767-Reviews-Yiziping_Mountain-Zixing_Hunan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.200260
+2011-06-24 00:21:03+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.249307
+2011-06-24 00:21:03+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s33889/bali:Performance.html
+2011-06-24 00:21:03+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:03+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s33889/bali:Performance.html
+2011-06-24 00:21:04+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:04+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s33889/bali:Performance.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.000199
+2011-06-24 00:21:04+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.048077
+2011-06-24 00:21:04+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294220-d459767-Reviews-Confucian_Temple_Fuzi_Miao-Nanjing_Jiangsu.html
+2011-06-24 00:21:04+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:04+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294220-d459767-Reviews-Confucian_Temple_Fuzi_Miao-Nanjing_Jiangsu.html
+2011-06-24 00:21:04+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:04+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294220-d459767-Reviews-Confucian_Temple_Fuzi_Miao-Nanjing_Jiangsu.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.368244
+2011-06-24 00:21:04+0800 [scrapy] INFO: url总数量：21,排重数量：8，通过(添加到数据库)数量：13 排重花费时间：0:00:00.423176
+2011-06-24 00:21:05+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152479-d2003856-Reviews-Shouguang_Linhai_Eco_Tourism_Area-Shouguang_Shandong.html
+2011-06-24 00:21:05+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:05+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152479-d2003856-Reviews-Shouguang_Linhai_Eco_Tourism_Area-Shouguang_Shandong.html
+2011-06-24 00:21:05+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:05+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152479-d2003856-Reviews-Shouguang_Linhai_Eco_Tourism_Area-Shouguang_Shandong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.232542
+2011-06-24 00:21:05+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.280906
+2011-06-24 00:21:05+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s31356/bali:shop.html
+2011-06-24 00:21:05+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:05+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s31356/bali:shop.html
+2011-06-24 00:21:06+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:06+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s31356/bali:shop.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.015192
+2011-06-24 00:21:06+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.063212
+2011-06-24 00:21:06+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152596-d1796706-Reviews-Mount_Fanjing-Tongren_Guizhou.html
+2011-06-24 00:21:06+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:06+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152596-d1796706-Reviews-Mount_Fanjing-Tongren_Guizhou.html
+2011-06-24 00:21:07+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:07+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152596-d1796706-Reviews-Mount_Fanjing-Tongren_Guizhou.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.324125
+2011-06-24 00:21:07+0800 [scrapy] INFO: url总数量：18,排重数量：3，通过(添加到数据库)数量：15 排重花费时间：0:00:00.370368
+2011-06-24 00:21:07+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g325577-d1814714-Reviews-Chongqing_Carved_Stone_Museum-Dazu_County.html
+2011-06-24 00:21:07+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:07+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g325577-d1814714-Reviews-Chongqing_Carved_Stone_Museum-Dazu_County.html
+2011-06-24 00:21:07+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:07+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g325577-d1814714-Reviews-Chongqing_Carved_Stone_Museum-Dazu_County.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.350696
+2011-06-24 00:21:07+0800 [scrapy] INFO: url总数量：21,排重数量：4，通过(添加到数据库)数量：17 排重花费时间：0:00:00.407391
+2011-06-24 00:21:08+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14196/hongkong:TouristBoardInfo.html
+2011-06-24 00:21:08+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:08+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14196/hongkong:TouristBoardInfo.html
+2011-06-24 00:21:09+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:09+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14196/hongkong:TouristBoardInfo.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.539429
+2011-06-24 00:21:09+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.599219
+2011-06-24 00:21:09+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1372025-d1443235-Reviews-Premier_Zhou_Enlai_s_Ancestral_House-Shaoxing_County_Zhejiang.html
+2011-06-24 00:21:09+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:09+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1372025-d1443235-Reviews-Premier_Zhou_Enlai_s_Ancestral_House-Shaoxing_County_Zhejiang.html
+2011-06-24 00:21:09+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:09+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1372025-d1443235-Reviews-Premier_Zhou_Enlai_s_Ancestral_House-Shaoxing_County_Zhejiang.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.248227
+2011-06-24 00:21:10+0800 [scrapy] INFO: url总数量：21,排重数量：4，通过(添加到数据库)数量：17 排重花费时间：0:00:00.306153
+2011-06-24 00:21:10+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g776965-d1793353-Reviews-Beijing_Badaling_Ski-Yanqing_County.html
+2011-06-24 00:21:10+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:10+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g776965-d1793353-Reviews-Beijing_Badaling_Ski-Yanqing_County.html
+2011-06-24 00:21:10+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:10+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g776965-d1793353-Reviews-Beijing_Badaling_Ski-Yanqing_County.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.322467
+2011-06-24 00:21:10+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.369049
+2011-06-24 00:21:10+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43452/bali:dish.html
+2011-06-24 00:21:10+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:10+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43452/bali:dish.html
+2011-06-24 00:21:11+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:11+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43452/bali:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:00.994475
+2011-06-24 00:21:11+0800 [scrapy] INFO: url总数量：36,排重数量：35，通过(添加到数据库)数量：1 排重花费时间：0:00:01.051341
+2011-06-24 00:21:12+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294217-d1645935-Reviews-Madame_Tussauds_Wax_Museum_Hong_Kong-Hong_Kong.html
+2011-06-24 00:21:12+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:12+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294217-d1645935-Reviews-Madame_Tussauds_Wax_Museum_Hong_Kong-Hong_Kong.html
+2011-06-24 00:21:12+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:12+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294217-d1645935-Reviews-Madame_Tussauds_Wax_Museum_Hong_Kong-Hong_Kong.html parse 产生 Item页url数量：14 ,普通页数量:6 ,总数：20 ，花费时间：0:00:00.463228
+2011-06-24 00:21:12+0800 [scrapy] INFO: url总数量：20,排重数量：5，通过(添加到数据库)数量：15 排重花费时间：0:00:00.517820
+2011-06-24 00:21:12+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s3310/bali:holiday.html
+2011-06-24 00:21:12+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:12+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s3310/bali:holiday.html
+2011-06-24 00:21:13+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:13+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s3310/bali:holiday.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.001227
+2011-06-24 00:21:14+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.050783
+2011-06-24 00:21:14+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1639596-d1865077-Reviews-Tiantai_Mountain_of_Hong_an-Hong_an_County_Hubei.html
+2011-06-24 00:21:14+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:14+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1639596-d1865077-Reviews-Tiantai_Mountain_of_Hong_an-Hong_an_County_Hubei.html
+2011-06-24 00:21:14+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:14+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1639596-d1865077-Reviews-Tiantai_Mountain_of_Hong_an-Hong_an_County_Hubei.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.212987
+2011-06-24 00:21:14+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.263604
+2011-06-24 00:21:14+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s22768/bali:traffic.html
+2011-06-24 00:21:14+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:14+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s22768/bali:traffic.html
+2011-06-24 00:21:15+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:15+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s22768/bali:traffic.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.020546
+2011-06-24 00:21:15+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.068815
+2011-06-24 00:21:15+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152585-d1823927-Reviews-Guanghan_Fanghu_Park-Guanghan_Sichuan.html
+2011-06-24 00:21:15+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:15+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152585-d1823927-Reviews-Guanghan_Fanghu_Park-Guanghan_Sichuan.html
+2011-06-24 00:21:15+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:15+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152585-d1823927-Reviews-Guanghan_Fanghu_Park-Guanghan_Sichuan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.199809
+2011-06-24 00:21:16+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.247789
+2011-06-24 00:21:16+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1169756-d1824532-Reviews-Jade_Pool-Wenchuan_County_Sichuan.html
+2011-06-24 00:21:16+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:16+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1169756-d1824532-Reviews-Jade_Pool-Wenchuan_County_Sichuan.html
+2011-06-24 00:21:16+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:16+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1169756-d1824532-Reviews-Jade_Pool-Wenchuan_County_Sichuan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.182921
+2011-06-24 00:21:16+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.235500
+2011-06-24 00:21:16+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14197/hongkong:tip.html
+2011-06-24 00:21:16+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:16+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14197/hongkong:tip.html
+2011-06-24 00:21:18+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:18+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14197/hongkong:tip.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.651715
+2011-06-24 00:21:18+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.712016
+2011-06-24 00:21:18+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g608464-d1805636-Reviews-Zhonghua_Square-Xianyang_Shaanxi.html
+2011-06-24 00:21:18+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:18+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g608464-d1805636-Reviews-Zhonghua_Square-Xianyang_Shaanxi.html
+2011-06-24 00:21:18+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:18+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g608464-d1805636-Reviews-Zhonghua_Square-Xianyang_Shaanxi.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.210543
+2011-06-24 00:21:18+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.259730
+2011-06-24 00:21:19+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1016984-d1839570-Reviews-Ancient_City_Wall_in_Yiyang-Yiyang_Hunan.html
+2011-06-24 00:21:19+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:19+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1016984-d1839570-Reviews-Ancient_City_Wall_in_Yiyang-Yiyang_Hunan.html
+2011-06-24 00:21:19+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:19+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1016984-d1839570-Reviews-Ancient_City_Wall_in_Yiyang-Yiyang_Hunan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.237444
+2011-06-24 00:21:19+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.285519
+2011-06-24 00:21:19+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43453/bali:dish.html
+2011-06-24 00:21:19+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:19+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43453/bali:dish.html
+2011-06-24 00:21:20+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:20+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43453/bali:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:01.003101
+2011-06-24 00:21:20+0800 [scrapy] INFO: url总数量：36,排重数量：35，通过(添加到数据库)数量：1 排重花费时间：0:00:01.055916
+2011-06-24 00:21:20+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297420-d1834075-Reviews-Beihai_Weizhou_Island-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:21:20+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:20+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297420-d1834075-Reviews-Beihai_Weizhou_Island-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:21:20+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:20+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297420-d1834075-Reviews-Beihai_Weizhou_Island-Beihai_Guangxi_Zhuang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.346193
+2011-06-24 00:21:20+0800 [scrapy] INFO: url总数量：18,排重数量：9，通过(添加到数据库)数量：9 排重花费时间：0:00:00.394118
+2011-06-24 00:21:21+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298557-d507044-Reviews-Tomb_of_Emperor_Wudi_Maoling-Xi_an_Shaanxi.html
+2011-06-24 00:21:21+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:21+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298557-d507044-Reviews-Tomb_of_Emperor_Wudi_Maoling-Xi_an_Shaanxi.html
+2011-06-24 00:21:21+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:21+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298557-d507044-Reviews-Tomb_of_Emperor_Wudi_Maoling-Xi_an_Shaanxi.html parse 产生 Item页url数量：11 ,普通页数量:6 ,总数：17 ，花费时间：0:00:00.255193
+2011-06-24 00:21:21+0800 [scrapy] INFO: url总数量：17,排重数量：6，通过(添加到数据库)数量：11 排重花费时间：0:00:00.302473
+2011-06-24 00:21:21+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s22591/bali:traffic.html
+2011-06-24 00:21:21+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:21+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s22591/bali:traffic.html
+2011-06-24 00:21:22+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:22+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s22591/bali:traffic.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.017031
+2011-06-24 00:21:22+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.065201
+2011-06-24 00:21:22+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g681019-d1439718-Reviews-Guanzhai_Mountain-Liancheng_County_Fujian.html
+2011-06-24 00:21:22+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:22+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g681019-d1439718-Reviews-Guanzhai_Mountain-Liancheng_County_Fujian.html
+2011-06-24 00:21:23+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:23+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g681019-d1439718-Reviews-Guanzhai_Mountain-Liancheng_County_Fujian.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.338460
+2011-06-24 00:21:23+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.387373
+2011-06-24 00:21:23+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s22269/bali:traffic.html
+2011-06-24 00:21:23+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:23+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s22269/bali:traffic.html
+2011-06-24 00:21:24+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:24+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s22269/bali:traffic.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.063771
+2011-06-24 00:21:24+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.113534
+2011-06-24 00:21:24+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298555-d1842902-Reviews-Two_Mausoleums_of_Southern_Han_Dynasty-Guangzhou_Guangdong.html
+2011-06-24 00:21:24+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:24+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298555-d1842902-Reviews-Two_Mausoleums_of_Southern_Han_Dynasty-Guangzhou_Guangdong.html
+2011-06-24 00:21:25+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:25+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298555-d1842902-Reviews-Two_Mausoleums_of_Southern_Han_Dynasty-Guangzhou_Guangdong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.231015
+2011-06-24 00:21:25+0800 [scrapy] INFO: url总数量：18,排重数量：9，通过(添加到数据库)数量：9 排重花费时间：0:00:00.278828
+2011-06-24 00:21:25+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297420-d1856134-Reviews-Qiaogang_Resort_Beach-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:21:25+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:25+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297420-d1856134-Reviews-Qiaogang_Resort_Beach-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:21:25+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:25+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297420-d1856134-Reviews-Qiaogang_Resort_Beach-Beihai_Guangxi_Zhuang.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.248194
+2011-06-24 00:21:25+0800 [scrapy] INFO: url总数量：21,排重数量：7，通过(添加到数据库)数量：14 排重花费时间：0:00:00.304549
+2011-06-24 00:21:26+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297412-d1797554-Reviews-Dongguan_Park-Dongguan_Guangdong.html
+2011-06-24 00:21:26+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:26+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297412-d1797554-Reviews-Dongguan_Park-Dongguan_Guangdong.html
+2011-06-24 00:21:26+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:26+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297412-d1797554-Reviews-Dongguan_Park-Dongguan_Guangdong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.335704
+2011-06-24 00:21:26+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.383642
+2011-06-24 00:21:26+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14198/hongkong:ImportantPhrases.html
+2011-06-24 00:21:26+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:26+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14198/hongkong:ImportantPhrases.html
+2011-06-24 00:21:28+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:28+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14198/hongkong:ImportantPhrases.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.552021
+2011-06-24 00:21:28+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.612142
+2011-06-24 00:21:28+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1831158-d1832116-Reviews-Qianchengsuo_Cilff-Jinping_County_Yunnan.html
+2011-06-24 00:21:28+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:28+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1831158-d1832116-Reviews-Qianchengsuo_Cilff-Jinping_County_Yunnan.html
+2011-06-24 00:21:28+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:28+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1831158-d1832116-Reviews-Qianchengsuo_Cilff-Jinping_County_Yunnan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.185423
+2011-06-24 00:21:28+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.234544
+2011-06-24 00:21:28+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g681027-d1810529-Reviews-Shengneng_Playground-Linyi_Shandong.html
+2011-06-24 00:21:28+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:28+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g681027-d1810529-Reviews-Shengneng_Playground-Linyi_Shandong.html
+2011-06-24 00:21:28+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:28+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g681027-d1810529-Reviews-Shengneng_Playground-Linyi_Shandong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.237356
+2011-06-24 00:21:29+0800 [scrapy] INFO: url总数量：21,排重数量：13，通过(添加到数据库)数量：8 排重花费时间：0:00:00.330332
+2011-06-24 00:21:29+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43454/bali:dish.html
+2011-06-24 00:21:29+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:29+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43454/bali:dish.html
+2011-06-24 00:21:30+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:30+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43454/bali:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:01.075385
+2011-06-24 00:21:30+0800 [scrapy] INFO: url总数量：36,排重数量：35，通过(添加到数据库)数量：1 排重花费时间：0:00:01.128025
+2011-06-24 00:21:30+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298559-d1807958-Reviews-Tomb_of_Yuefei-Hangzhou_Zhejiang.html
+2011-06-24 00:21:30+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:30+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298559-d1807958-Reviews-Tomb_of_Yuefei-Hangzhou_Zhejiang.html
+2011-06-24 00:21:30+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:30+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298559-d1807958-Reviews-Tomb_of_Yuefei-Hangzhou_Zhejiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.245228
+2011-06-24 00:21:30+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.293628
+2011-06-24 00:21:31+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s21585/bali:traffic.html
+2011-06-24 00:21:31+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:31+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s21585/bali:traffic.html
+2011-06-24 00:21:32+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:32+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s21585/bali:traffic.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.010851
+2011-06-24 00:21:32+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.059534
+2011-06-24 00:21:32+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294220-d505678-Reviews-Nanjing_Yangtze_River_Bridge-Nanjing_Jiangsu.html
+2011-06-24 00:21:32+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:32+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294220-d505678-Reviews-Nanjing_Yangtze_River_Bridge-Nanjing_Jiangsu.html
+2011-06-24 00:21:32+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:32+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294220-d505678-Reviews-Nanjing_Yangtze_River_Bridge-Nanjing_Jiangsu.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.346304
+2011-06-24 00:21:32+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.391311
+2011-06-24 00:21:33+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g308272-d1979419-Reviews-Shanghai_Taiping_Martyrs_Tombs-Shanghai.html
+2011-06-24 00:21:33+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:33+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g308272-d1979419-Reviews-Shanghai_Taiping_Martyrs_Tombs-Shanghai.html
+2011-06-24 00:21:33+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:33+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g308272-d1979419-Reviews-Shanghai_Taiping_Martyrs_Tombs-Shanghai.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.311708
+2011-06-24 00:21:33+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.361119
+2011-06-24 00:21:33+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s23469/bali:traffic.html
+2011-06-24 00:21:33+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:33+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s23469/bali:traffic.html
+2011-06-24 00:21:34+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:34+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s23469/bali:traffic.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.020511
+2011-06-24 00:21:34+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.067955
+2011-06-24 00:21:34+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1372209-d1808086-Reviews-Xiaoyangshan_Island-Shengsi_County_Zhejiang.html
+2011-06-24 00:21:34+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:34+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1372209-d1808086-Reviews-Xiaoyangshan_Island-Shengsi_County_Zhejiang.html
+2011-06-24 00:21:34+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:34+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1372209-d1808086-Reviews-Xiaoyangshan_Island-Shengsi_County_Zhejiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.189514
+2011-06-24 00:21:35+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.240034
+2011-06-24 00:21:35+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1823738-d1825427-Reviews-Mt_Jinzi_Scenic_Resort-Qingchuan_County_Sichuan.html
+2011-06-24 00:21:35+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:35+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1823738-d1825427-Reviews-Mt_Jinzi_Scenic_Resort-Qingchuan_County_Sichuan.html
+2011-06-24 00:21:35+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:35+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1823738-d1825427-Reviews-Mt_Jinzi_Scenic_Resort-Qingchuan_County_Sichuan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.189056
+2011-06-24 00:21:35+0800 [scrapy] INFO: url总数量：18,排重数量：4，通过(添加到数据库)数量：14 排重花费时间：0:00:00.241596
+2011-06-24 00:21:35+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14354/hongkong:tip.html
+2011-06-24 00:21:35+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:35+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14354/hongkong:tip.html
+2011-06-24 00:21:37+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:37+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14354/hongkong:tip.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.622886
+2011-06-24 00:21:37+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.683797
+2011-06-24 00:21:37+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297435-d1834063-Reviews-Century_Amusement_Park_Zhengzhou-Zhengzhou_Henan.html
+2011-06-24 00:21:37+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:37+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297435-d1834063-Reviews-Century_Amusement_Park_Zhengzhou-Zhengzhou_Henan.html
+2011-06-24 00:21:37+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:37+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297435-d1834063-Reviews-Century_Amusement_Park_Zhengzhou-Zhengzhou_Henan.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.371721
+2011-06-24 00:21:37+0800 [scrapy] INFO: url总数量：21,排重数量：6，通过(添加到数据库)数量：15 排重花费时间：0:00:00.427977
+2011-06-24 00:21:38+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297415-d626376-Reviews-Mission_Hills_Golf_Club-Shenzhen_Guangdong.html
+2011-06-24 00:21:38+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:38+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297415-d626376-Reviews-Mission_Hills_Golf_Club-Shenzhen_Guangdong.html
+2011-06-24 00:21:38+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:38+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297415-d626376-Reviews-Mission_Hills_Golf_Club-Shenzhen_Guangdong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.274870
+2011-06-24 00:21:38+0800 [scrapy] INFO: url总数量：21,排重数量：7，通过(添加到数据库)数量：14 排重花费时间：0:00:00.328248
+2011-06-24 00:21:38+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s43455/bali:dish.html
+2011-06-24 00:21:38+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:38+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s43455/bali:dish.html
+2011-06-24 00:21:39+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:39+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s43455/bali:dish.html parse 产生 Item页url数量：31 ,普通页数量:4 ,总数：35 ，花费时间：0:00:00.965470
+2011-06-24 00:21:39+0800 [scrapy] INFO: url总数量：35,排重数量：35，通过(添加到数据库)数量：0 排重花费时间：0:00:01.016136
+2011-06-24 00:21:40+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297407-d592858-Reviews-Paean_Golf_Club-Xiamen_Fujian.html
+2011-06-24 00:21:40+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:40+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297407-d592858-Reviews-Paean_Golf_Club-Xiamen_Fujian.html
+2011-06-24 00:21:40+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:40+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297407-d592858-Reviews-Paean_Golf_Club-Xiamen_Fujian.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.208612
+2011-06-24 00:21:40+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.280983
+2011-06-24 00:21:40+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s13215/bali:BanksandMoney.html
+2011-06-24 00:21:40+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:40+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s13215/bali:BanksandMoney.html
+2011-06-24 00:21:41+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:41+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s13215/bali:BanksandMoney.html parse 产生 Item页url数量：30 ,普通页数量:4 ,总数：34 ，花费时间：0:00:01.073039
+2011-06-24 00:21:41+0800 [scrapy] INFO: url总数量：34,排重数量：33，通过(添加到数据库)数量：1 排重花费时间：0:00:01.128936
+2011-06-24 00:21:41+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152428-d2003596-Reviews-Jiandeliye_Shilihehua_Scenic_Resort-Jiande_Zhejiang.html
+2011-06-24 00:21:41+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:41+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152428-d2003596-Reviews-Jiandeliye_Shilihehua_Scenic_Resort-Jiande_Zhejiang.html
+2011-06-24 00:21:41+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:41+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152428-d2003596-Reviews-Jiandeliye_Shilihehua_Scenic_Resort-Jiande_Zhejiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.207528
+2011-06-24 00:21:41+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.252965
+2011-06-24 00:21:42+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1017019-d1859525-Reviews-Songtao_Reservoir-Danzhou_Hainan.html
+2011-06-24 00:21:42+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:42+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1017019-d1859525-Reviews-Songtao_Reservoir-Danzhou_Hainan.html
+2011-06-24 00:21:42+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:42+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1017019-d1859525-Reviews-Songtao_Reservoir-Danzhou_Hainan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.198516
+2011-06-24 00:21:42+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.273688
+2011-06-24 00:21:42+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s13214/bali:HealthandSafety.html
+2011-06-24 00:21:42+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:42+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s13214/bali:HealthandSafety.html
+2011-06-24 00:21:43+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:43+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s13214/bali:HealthandSafety.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.063814
+2011-06-24 00:21:43+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.112620
+2011-06-24 00:21:43+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g635517-d1824736-Reviews-Liang_City-Huainan_Anhui.html
+2011-06-24 00:21:43+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:43+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g635517-d1824736-Reviews-Liang_City-Huainan_Anhui.html
+2011-06-24 00:21:43+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:43+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g635517-d1824736-Reviews-Liang_City-Huainan_Anhui.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.199467
+2011-06-24 00:21:44+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.246917
+2011-06-24 00:21:44+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1016973-d1801423-Reviews-Huangze_Temple-Guangyuan_Sichuan.html
+2011-06-24 00:21:44+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:44+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1016973-d1801423-Reviews-Huangze_Temple-Guangyuan_Sichuan.html
+2011-06-24 00:21:44+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:44+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1016973-d1801423-Reviews-Huangze_Temple-Guangyuan_Sichuan.html parse 产生 Item页url数量：13 ,普通页数量:7 ,总数：20 ，花费时间：0:00:00.340754
+2011-06-24 00:21:44+0800 [scrapy] INFO: url总数量：20,排重数量：9，通过(添加到数据库)数量：11 排重花费时间：0:00:00.404539
+2011-06-24 00:21:44+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14872/hongkong:light.html
+2011-06-24 00:21:45+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:45+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14872/hongkong:light.html
+2011-06-24 00:21:46+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:46+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14872/hongkong:light.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.541651
+2011-06-24 00:21:46+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.602393
+2011-06-24 00:21:46+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1795711-d1839806-Reviews-King_Wu_Tomb_Museum_of_Mian_County-Mian_County_Shaanxi.html
+2011-06-24 00:21:46+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:46+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1795711-d1839806-Reviews-King_Wu_Tomb_Museum_of_Mian_County-Mian_County_Shaanxi.html
+2011-06-24 00:21:46+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:46+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1795711-d1839806-Reviews-King_Wu_Tomb_Museum_of_Mian_County-Mian_County_Shaanxi.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.184217
+2011-06-24 00:21:46+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.233298
+2011-06-24 00:21:47+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297418-d754414-Reviews-Baili_Island-Zhuhai_Guangdong.html
+2011-06-24 00:21:47+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:47+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297418-d754414-Reviews-Baili_Island-Zhuhai_Guangdong.html
+2011-06-24 00:21:47+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:47+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297418-d754414-Reviews-Baili_Island-Zhuhai_Guangdong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.342331
+2011-06-24 00:21:47+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.389270
+2011-06-24 00:21:47+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s13213/bali:CrossingtheBorder.html
+2011-06-24 00:21:47+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:47+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s13213/bali:CrossingtheBorder.html
+2011-06-24 00:21:48+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:48+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s13213/bali:CrossingtheBorder.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.015922
+2011-06-24 00:21:48+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.063936
+2011-06-24 00:21:48+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d636729-Reviews-Nanshan_Ski_Village-Beijing.html
+2011-06-24 00:21:48+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:48+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d636729-Reviews-Nanshan_Ski_Village-Beijing.html
+2011-06-24 00:21:49+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:49+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d636729-Reviews-Nanshan_Ski_Village-Beijing.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.260078
+2011-06-24 00:21:49+0800 [scrapy] INFO: url总数量：18,排重数量：9，通过(添加到数据库)数量：9 排重花费时间：0:00:00.306422
+2011-06-24 00:21:49+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297420-d1834616-Reviews-Xieyang_Island-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:21:49+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:49+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297420-d1834616-Reviews-Xieyang_Island-Beihai_Guangxi_Zhuang.html
+2011-06-24 00:21:49+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:49+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297420-d1834616-Reviews-Xieyang_Island-Beihai_Guangxi_Zhuang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.387803
+2011-06-24 00:21:49+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.492757
+2011-06-24 00:21:50+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s13216/bali:TippingandEtiquette.html
+2011-06-24 00:21:50+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:50+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s13216/bali:TippingandEtiquette.html
+2011-06-24 00:21:51+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:51+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s13216/bali:TippingandEtiquette.html parse 产生 Item页url数量：31 ,普通页数量:4 ,总数：35 ，花费时间：0:00:01.125654
+2011-06-24 00:21:51+0800 [scrapy] INFO: url总数量：35,排重数量：34，通过(添加到数据库)数量：1 排重花费时间：0:00:01.180693
+2011-06-24 00:21:51+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1170500-d1826918-Reviews-Dapeng_Tingjing_Stone-Qingyang_County_Anhui.html
+2011-06-24 00:21:51+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:51+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1170500-d1826918-Reviews-Dapeng_Tingjing_Stone-Qingyang_County_Anhui.html
+2011-06-24 00:21:51+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:51+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1170500-d1826918-Reviews-Dapeng_Tingjing_Stone-Qingyang_County_Anhui.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.202788
+2011-06-24 00:21:51+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.251320
+2011-06-24 00:21:51+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g670561-d617184-Reviews-Sumtsaling_Monastery-Shangri_La_County_Yunnan.html
+2011-06-24 00:21:51+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:51+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g670561-d617184-Reviews-Sumtsaling_Monastery-Shangri_La_County_Yunnan.html
+2011-06-24 00:21:52+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:52+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g670561-d617184-Reviews-Sumtsaling_Monastery-Shangri_La_County_Yunnan.html parse 产生 Item页url数量：11 ,普通页数量:6 ,总数：17 ，花费时间：0:00:00.366009
+2011-06-24 00:21:52+0800 [scrapy] INFO: url总数量：17,排重数量：5，通过(添加到数据库)数量：12 排重花费时间：0:00:00.412925
+2011-06-24 00:21:52+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s11427/bali:climate.html
+2011-06-24 00:21:52+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:52+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s11427/bali:climate.html
+2011-06-24 00:21:53+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:53+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s11427/bali:climate.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.007411
+2011-06-24 00:21:53+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.053906
+2011-06-24 00:21:53+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1368447-d1810577-Reviews-The_1st_Town-Xianghe_County_Hebei.html
+2011-06-24 00:21:53+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:53+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1368447-d1810577-Reviews-The_1st_Town-Xianghe_County_Hebei.html
+2011-06-24 00:21:53+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:53+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1368447-d1810577-Reviews-The_1st_Town-Xianghe_County_Hebei.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.314212
+2011-06-24 00:21:53+0800 [scrapy] INFO: url总数量：21,排重数量：4，通过(添加到数据库)数量：17 排重花费时间：0:00:00.371304
+2011-06-24 00:21:54+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297431-d501537-Reviews-Zhaozhou_Bridge-Shijiazhuang_Hebei.html
+2011-06-24 00:21:54+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:54+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297431-d501537-Reviews-Zhaozhou_Bridge-Shijiazhuang_Hebei.html
+2011-06-24 00:21:54+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:54+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297431-d501537-Reviews-Zhaozhou_Bridge-Shijiazhuang_Hebei.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.404019
+2011-06-24 00:21:54+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.452486
+2011-06-24 00:21:54+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14873/hongkong:light.html
+2011-06-24 00:21:54+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:54+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14873/hongkong:light.html
+2011-06-24 00:21:56+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:56+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14873/hongkong:light.html parse 产生 Item页url数量：38 ,普通页数量:4 ,总数：42 ，花费时间：0:00:01.543783
+2011-06-24 00:21:56+0800 [scrapy] INFO: url总数量：42,排重数量：40，通过(添加到数据库)数量：2 排重花费时间：0:00:01.607548
+2011-06-24 00:21:56+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1217315-d1864202-Reviews-Liandan_Lake-Qianshan_County_Anhui.html
+2011-06-24 00:21:56+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:56+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1217315-d1864202-Reviews-Liandan_Lake-Qianshan_County_Anhui.html
+2011-06-24 00:21:56+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:56+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1217315-d1864202-Reviews-Liandan_Lake-Qianshan_County_Anhui.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.192911
+2011-06-24 00:21:56+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.242350
+2011-06-24 00:21:57+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1851013-d1851984-Reviews-Zhenbao_Island-Raohe_County_Heilongjiang.html
+2011-06-24 00:21:57+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:57+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1851013-d1851984-Reviews-Zhenbao_Island-Raohe_County_Heilongjiang.html
+2011-06-24 00:21:57+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:57+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1851013-d1851984-Reviews-Zhenbao_Island-Raohe_County_Heilongjiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.201236
+2011-06-24 00:21:57+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.252060
+2011-06-24 00:21:57+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s15974/bali:Culture.html
+2011-06-24 00:21:57+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:57+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s15974/bali:Culture.html
+2011-06-24 00:21:58+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:21:58+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s15974/bali:Culture.html parse 产生 Item页url数量：29 ,普通页数量:4 ,总数：33 ，花费时间：0:00:01.096621
+2011-06-24 00:21:58+0800 [scrapy] INFO: url总数量：33,排重数量：33，通过(添加到数据库)数量：0 排重花费时间：0:00:01.144039
+2011-06-24 00:21:58+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g308272-d557693-Reviews-Jianye_Lane-Shanghai.html
+2011-06-24 00:21:58+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:58+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g308272-d557693-Reviews-Jianye_Lane-Shanghai.html
+2011-06-24 00:21:59+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:59+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g308272-d557693-Reviews-Jianye_Lane-Shanghai.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.199766
+2011-06-24 00:21:59+0800 [scrapy] INFO: url总数量：18,排重数量：9，通过(添加到数据库)数量：9 排重花费时间：0:00:00.246073
+2011-06-24 00:21:59+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g608470-d1807810-Reviews-Yiwu_International_Trade_City-Yiwu_Zhejiang.html
+2011-06-24 00:21:59+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:59+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g608470-d1807810-Reviews-Yiwu_International_Trade_City-Yiwu_Zhejiang.html
+2011-06-24 00:21:59+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:21:59+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g608470-d1807810-Reviews-Yiwu_International_Trade_City-Yiwu_Zhejiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.394218
+2011-06-24 00:21:59+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.442080
+2011-06-24 00:21:59+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d438-s13217/bali:Telephones.html
+2011-06-24 00:21:59+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:21:59+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d438-s13217/bali:Telephones.html
+2011-06-24 00:22:00+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:00+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d438-s13217/bali:Telephones.html parse 产生 Item页url数量：31 ,普通页数量:4 ,总数：35 ，花费时间：0:00:01.012729
+2011-06-24 00:22:01+0800 [scrapy] INFO: url总数量：35,排重数量：35，通过(添加到数据库)数量：0 排重花费时间：0:00:01.063209
+2011-06-24 00:22:01+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g303712-d487070-Reviews-West_Street_Xi_Jie-Yangshuo_County_Guangxi_Zhuang.html
+2011-06-24 00:22:01+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:01+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g303712-d487070-Reviews-West_Street_Xi_Jie-Yangshuo_County_Guangxi_Zhuang.html
+2011-06-24 00:22:01+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:01+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g303712-d487070-Reviews-West_Street_Xi_Jie-Yangshuo_County_Guangxi_Zhuang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.347762
+2011-06-24 00:22:01+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.396878
+2011-06-24 00:22:01+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494927-d1825220-Reviews-Southern_Peach_Garden_Resort-Foshan_Guangdong.html
+2011-06-24 00:22:01+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:01+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494927-d1825220-Reviews-Southern_Peach_Garden_Resort-Foshan_Guangdong.html
+2011-06-24 00:22:02+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:02+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494927-d1825220-Reviews-Southern_Peach_Garden_Resort-Foshan_Guangdong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.337638
+2011-06-24 00:22:02+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.384477
+2011-06-24 00:22:02+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/showjournal-d438-r1326349-journals.html
+2011-06-24 00:22:02+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:02+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/showjournal-d438-r1326349-journals.html
+2011-06-24 00:22:03+0800 [scrapy] INFO: 保存item页，类型： Article
+2011-06-24 00:22:03+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/showjournal-d438-r1326349-journals.html parse 产生 Item页url数量：37 ,普通页数量:3 ,总数：40 ，花费时间：0:00:01.131557
+2011-06-24 00:22:03+0800 [scrapy] INFO: url总数量：40,排重数量：40，通过(添加到数据库)数量：0 排重花费时间：0:00:01.190029
+2011-06-24 00:22:03+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298556-d1856180-Reviews-Qixia_Temple_of_Guilin-Guilin_Guangxi_Zhuang.html
+2011-06-24 00:22:03+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:03+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298556-d1856180-Reviews-Qixia_Temple_of_Guilin-Guilin_Guangxi_Zhuang.html
+2011-06-24 00:22:03+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:03+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298556-d1856180-Reviews-Qixia_Temple_of_Guilin-Guilin_Guangxi_Zhuang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.334146
+2011-06-24 00:22:03+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.382043
+2011-06-24 00:22:04+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1017000-d1805822-Reviews-Wuqiao_Acrobatics_Art_Festival-Cangzhou_Hebei.html
+2011-06-24 00:22:04+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:04+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1017000-d1805822-Reviews-Wuqiao_Acrobatics_Art_Festival-Cangzhou_Hebei.html
+2011-06-24 00:22:04+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:04+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1017000-d1805822-Reviews-Wuqiao_Acrobatics_Art_Festival-Cangzhou_Hebei.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.235323
+2011-06-24 00:22:04+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.281876
+2011-06-24 00:22:04+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s14874/hongkong:light.html
+2011-06-24 00:22:04+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:04+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s14874/hongkong:light.html
+2011-06-24 00:22:06+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:06+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s14874/hongkong:light.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.558052
+2011-06-24 00:22:06+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.617185
+2011-06-24 00:22:06+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297458-d1810660-Reviews-Xuejia_Island-Qingdao_Shandong.html
+2011-06-24 00:22:06+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:06+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297458-d1810660-Reviews-Xuejia_Island-Qingdao_Shandong.html
+2011-06-24 00:22:06+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:06+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297458-d1810660-Reviews-Xuejia_Island-Qingdao_Shandong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.204527
+2011-06-24 00:22:06+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.250984
+2011-06-24 00:22:07+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1793339-Reviews-Liulichang_Cultrue_Street-Beijing.html
+2011-06-24 00:22:07+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:07+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d1793339-Reviews-Liulichang_Cultrue_Street-Beijing.html
+2011-06-24 00:22:07+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:07+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d1793339-Reviews-Liulichang_Cultrue_Street-Beijing.html parse 产生 Item页url数量：11 ,普通页数量:6 ,总数：17 ，花费时间：0:00:00.304164
+2011-06-24 00:22:07+0800 [scrapy] INFO: url总数量：17,排重数量：8，通过(添加到数据库)数量：9 排重花费时间：0:00:00.349713
+2011-06-24 00:22:07+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s13502/hongkong:BanksandMoney.html
+2011-06-24 00:22:07+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:07+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s13502/hongkong:BanksandMoney.html
+2011-06-24 00:22:09+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:09+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s13502/hongkong:BanksandMoney.html parse 产生 Item页url数量：36 ,普通页数量:4 ,总数：40 ，花费时间：0:00:01.549350
+2011-06-24 00:22:09+0800 [scrapy] INFO: url总数量：40,排重数量：40，通过(添加到数据库)数量：0 排重花费时间：0:00:01.610116
+2011-06-24 00:22:09+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g303731-d1825055-Reviews-Mangshan_Mountain-Luoyang_Henan.html
+2011-06-24 00:22:09+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:09+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g303731-d1825055-Reviews-Mangshan_Mountain-Luoyang_Henan.html
+2011-06-24 00:22:09+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:09+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g303731-d1825055-Reviews-Mangshan_Mountain-Luoyang_Henan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.212485
+2011-06-24 00:22:09+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.258956
+2011-06-24 00:22:10+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42767/hongkong:dish.html
+2011-06-24 00:22:10+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:10+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42767/hongkong:dish.html
+2011-06-24 00:22:11+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:11+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42767/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.558060
+2011-06-24 00:22:11+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.617022
+2011-06-24 00:22:11+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d553592-Reviews-Peking_University_Beijing_Da_Xue-Beijing.html
+2011-06-24 00:22:11+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:11+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d553592-Reviews-Peking_University_Beijing_Da_Xue-Beijing.html
+2011-06-24 00:22:12+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:12+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d553592-Reviews-Peking_University_Beijing_Da_Xue-Beijing.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.397214
+2011-06-24 00:22:12+0800 [scrapy] INFO: url总数量：21,排重数量：11，通过(添加到数据库)数量：10 排重花费时间：0:00:00.450562
+2011-06-24 00:22:12+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494927-d1825209-Reviews-Shunde_Qinghui_Park-Foshan_Guangdong.html
+2011-06-24 00:22:12+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:12+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494927-d1825209-Reviews-Shunde_Qinghui_Park-Foshan_Guangdong.html
+2011-06-24 00:22:13+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:13+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494927-d1825209-Reviews-Shunde_Qinghui_Park-Foshan_Guangdong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.503377
+2011-06-24 00:22:13+0800 [scrapy] INFO: url总数量：21,排重数量：7，通过(添加到数据库)数量：14 排重花费时间：0:00:00.561262
+2011-06-24 00:22:13+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42766/hongkong:dish.html
+2011-06-24 00:22:13+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:13+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42766/hongkong:dish.html
+2011-06-24 00:22:14+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:14+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42766/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.539533
+2011-06-24 00:22:14+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.600440
+2011-06-24 00:22:14+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1795705-d1831677-Reviews-Mt_Dongshan_Forest_Park-Midu_County_Yunnan.html
+2011-06-24 00:22:14+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:14+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1795705-d1831677-Reviews-Mt_Dongshan_Forest_Park-Midu_County_Yunnan.html
+2011-06-24 00:22:15+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:15+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1795705-d1831677-Reviews-Mt_Dongshan_Forest_Park-Midu_County_Yunnan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.193282
+2011-06-24 00:22:15+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.240063
+2011-06-24 00:22:15+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s15439/hongkong:Architecture.html
+2011-06-24 00:22:15+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:15+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s15439/hongkong:Architecture.html
+2011-06-24 00:22:17+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:17+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s15439/hongkong:Architecture.html parse 产生 Item页url数量：36 ,普通页数量:4 ,总数：40 ，花费时间：0:00:01.617402
+2011-06-24 00:22:17+0800 [scrapy] INFO: url总数量：40,排重数量：40，通过(添加到数据库)数量：0 排重花费时间：0:00:01.678967
+2011-06-24 00:22:17+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1979769-Reviews-Chinese_Military_Museum-Beijing.html
+2011-06-24 00:22:17+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:17+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d1979769-Reviews-Chinese_Military_Museum-Beijing.html
+2011-06-24 00:22:17+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:17+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d1979769-Reviews-Chinese_Military_Museum-Beijing.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.301815
+2011-06-24 00:22:17+0800 [scrapy] INFO: url总数量：18,排重数量：10，通过(添加到数据库)数量：8 排重花费时间：0:00:00.348620
+2011-06-24 00:22:21+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42764/hongkong:dish.html
+2011-06-24 00:22:21+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:21+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42764/hongkong:dish.html
+2011-06-24 00:22:22+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:22+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42764/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.608310
+2011-06-24 00:22:22+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.666703
+2011-06-24 00:22:23+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g297430-d1059242-Reviews-Tanghe_River_Park-Qinhuangdao_Hebei.html
+2011-06-24 00:22:23+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:23+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g297430-d1059242-Reviews-Tanghe_River_Park-Qinhuangdao_Hebei.html
+2011-06-24 00:22:23+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:23+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g297430-d1059242-Reviews-Tanghe_River_Park-Qinhuangdao_Hebei.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.382310
+2011-06-24 00:22:23+0800 [scrapy] INFO: url总数量：21,排重数量：7，通过(添加到数据库)数量：14 排重花费时间：0:00:00.439180
+2011-06-24 00:22:23+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s43319/hongkong:dish.html
+2011-06-24 00:22:23+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:23+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s43319/hongkong:dish.html
+2011-06-24 00:22:25+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:25+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s43319/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.539186
+2011-06-24 00:22:25+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.598573
+2011-06-24 00:22:25+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1372401-d1852115-Reviews-Jiulong_Natural_Reserve-Zhaoyuan_County_Heilongjiang.html
+2011-06-24 00:22:25+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:25+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1372401-d1852115-Reviews-Jiulong_Natural_Reserve-Zhaoyuan_County_Heilongjiang.html
+2011-06-24 00:22:25+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:25+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1372401-d1852115-Reviews-Jiulong_Natural_Reserve-Zhaoyuan_County_Heilongjiang.html parse 产生 Item页url数量：13 ,普通页数量:7 ,总数：20 ，花费时间：0:00:00.214264
+2011-06-24 00:22:25+0800 [scrapy] INFO: url总数量：20,排重数量：8，通过(添加到数据库)数量：12 排重花费时间：0:00:00.269118
+2011-06-24 00:22:26+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294217-d1735923-Reviews-Catholic_Bethanie-Hong_Kong.html
+2011-06-24 00:22:26+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:26+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294217-d1735923-Reviews-Catholic_Bethanie-Hong_Kong.html
+2011-06-24 00:22:26+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:26+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294217-d1735923-Reviews-Catholic_Bethanie-Hong_Kong.html parse 产生 Item页url数量：11 ,普通页数量:6 ,总数：17 ，花费时间：0:00:00.218953
+2011-06-24 00:22:26+0800 [scrapy] INFO: url总数量：17,排重数量：7，通过(添加到数据库)数量：10 排重花费时间：0:00:00.267818
+2011-06-24 00:22:26+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42763/hongkong:dish.html
+2011-06-24 00:22:26+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:26+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42763/hongkong:dish.html
+2011-06-24 00:22:28+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:28+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42763/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.523343
+2011-06-24 00:22:28+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.583167
+2011-06-24 00:22:28+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152495-d1834058-Reviews-Tanghu_Ruins-Xinzheng_Henan.html
+2011-06-24 00:22:28+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:28+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152495-d1834058-Reviews-Tanghu_Ruins-Xinzheng_Henan.html
+2011-06-24 00:22:28+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:28+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152495-d1834058-Reviews-Tanghu_Ruins-Xinzheng_Henan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.190800
+2011-06-24 00:22:28+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.236476
+2011-06-24 00:22:28+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298558-d2003316-Reviews-Yunnan_Normal_University-Kunming_Yunnan.html
+2011-06-24 00:22:28+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:28+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298558-d2003316-Reviews-Yunnan_Normal_University-Kunming_Yunnan.html
+2011-06-24 00:22:29+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:29+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298558-d2003316-Reviews-Yunnan_Normal_University-Kunming_Yunnan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.315378
+2011-06-24 00:22:29+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.361962
+2011-06-24 00:22:29+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s33531/hongkong:package.html
+2011-06-24 00:22:29+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:29+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s33531/hongkong:package.html
+2011-06-24 00:22:30+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:31+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s33531/hongkong:package.html parse 产生 Item页url数量：35 ,普通页数量:4 ,总数：39 ，花费时间：0:00:01.538605
+2011-06-24 00:22:31+0800 [scrapy] INFO: url总数量：39,排重数量：39，通过(添加到数据库)数量：0 排重花费时间：0:00:01.595047
+2011-06-24 00:22:31+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1372315-d1814927-Reviews-Life_Source_Limestone-Wulong_County.html
+2011-06-24 00:22:31+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:31+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1372315-d1814927-Reviews-Life_Source_Limestone-Wulong_County.html
+2011-06-24 00:22:31+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:31+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1372315-d1814927-Reviews-Life_Source_Limestone-Wulong_County.html parse 产生 Item页url数量：13 ,普通页数量:7 ,总数：20 ，花费时间：0:00:00.222210
+2011-06-24 00:22:31+0800 [scrapy] INFO: url总数量：20,排重数量：6，通过(添加到数据库)数量：14 排重花费时间：0:00:00.277207
+2011-06-24 00:22:31+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42762/hongkong:dish.html
+2011-06-24 00:22:31+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:31+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42762/hongkong:dish.html
+2011-06-24 00:22:33+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:33+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42762/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.589334
+2011-06-24 00:22:33+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.648685
+2011-06-24 00:22:33+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g308272-d1793258-Reviews-Shanghai_Exhibition_Center-Shanghai.html
+2011-06-24 00:22:33+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:33+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g308272-d1793258-Reviews-Shanghai_Exhibition_Center-Shanghai.html
+2011-06-24 00:22:33+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:33+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g308272-d1793258-Reviews-Shanghai_Exhibition_Center-Shanghai.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.311197
+2011-06-24 00:22:34+0800 [scrapy] INFO: url总数量：21,排重数量：10，通过(添加到数据库)数量：11 排重花费时间：0:00:00.364248
+2011-06-24 00:22:34+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1575822-d1814464-Reviews-Sanjinyuan_Ticket_No-Qi_County_Shanxi.html
+2011-06-24 00:22:34+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:34+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1575822-d1814464-Reviews-Sanjinyuan_Ticket_No-Qi_County_Shanxi.html
+2011-06-24 00:22:34+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:34+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1575822-d1814464-Reviews-Sanjinyuan_Ticket_No-Qi_County_Shanxi.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.176382
+2011-06-24 00:22:34+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.223348
+2011-06-24 00:22:34+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s43374/hongkong:dish.html
+2011-06-24 00:22:34+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:34+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s43374/hongkong:dish.html
+2011-06-24 00:22:36+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:36+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s43374/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.614398
+2011-06-24 00:22:36+0800 [scrapy] INFO: url总数量：41,排重数量：40，通过(添加到数据库)数量：1 排重花费时间：0:00:01.680856
+2011-06-24 00:22:36+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g664891-d645404-Reviews-Cotai_Strip-Macau.html
+2011-06-24 00:22:36+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:36+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g664891-d645404-Reviews-Cotai_Strip-Macau.html
+2011-06-24 00:22:37+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:37+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g664891-d645404-Reviews-Cotai_Strip-Macau.html parse 产生 Item页url数量：11 ,普通页数量:6 ,总数：17 ，花费时间：0:00:00.404380
+2011-06-24 00:22:37+0800 [scrapy] INFO: url总数量：17,排重数量：5，通过(添加到数据库)数量：12 排重花费时间：0:00:00.447343
+2011-06-24 00:22:37+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42287/hongkong:dish.html
+2011-06-24 00:22:37+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:37+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42287/hongkong:dish.html
+2011-06-24 00:22:39+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:39+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42287/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.533146
+2011-06-24 00:22:39+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.591792
+2011-06-24 00:22:39+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1823700-d1825359-Reviews-Luoyang_White_Tower-Gao_County_Sichuan.html
+2011-06-24 00:22:39+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:39+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1823700-d1825359-Reviews-Luoyang_White_Tower-Gao_County_Sichuan.html
+2011-06-24 00:22:39+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:39+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1823700-d1825359-Reviews-Luoyang_White_Tower-Gao_County_Sichuan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.179118
+2011-06-24 00:22:39+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.228683
+2011-06-24 00:22:39+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298555-d311555-Reviews-Museum_and_Tomb_of_the_Southern_Yue_Kings_Nan_Yue_Wang_Mu-Guangzhou_Guangdong.html
+2011-06-24 00:22:39+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:39+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298555-d311555-Reviews-Museum_and_Tomb_of_the_Southern_Yue_Kings_Nan_Yue_Wang_Mu-Guangzhou_Guangdong.html
+2011-06-24 00:22:40+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:40+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298555-d311555-Reviews-Museum_and_Tomb_of_the_Southern_Yue_Kings_Nan_Yue_Wang_Mu-Guangzhou_Guangdong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.317023
+2011-06-24 00:22:40+0800 [scrapy] INFO: url总数量：21,排重数量：8，通过(添加到数据库)数量：13 排重花费时间：0:00:00.376989
+2011-06-24 00:22:40+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42286/hongkong:dish.html
+2011-06-24 00:22:40+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:40+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42286/hongkong:dish.html
+2011-06-24 00:22:41+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:41+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42286/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.546205
+2011-06-24 00:22:41+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.610825
+2011-06-24 00:22:41+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152431-d2004009-Reviews-Jiulongshan_Binhai_Tourist_Area-Pinghu_Zhejiang.html
+2011-06-24 00:22:41+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:41+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152431-d2004009-Reviews-Jiulongshan_Binhai_Tourist_Area-Pinghu_Zhejiang.html
+2011-06-24 00:22:42+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:42+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152431-d2004009-Reviews-Jiulongshan_Binhai_Tourist_Area-Pinghu_Zhejiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.208604
+2011-06-24 00:22:42+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.256334
+2011-06-24 00:22:42+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d239-s15313/yinchuan:Culture.html
+2011-06-24 00:22:42+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:42+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d239-s15313/yinchuan:Culture.html
+2011-06-24 00:22:43+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:43+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d239-s15313/yinchuan:Culture.html parse 产生 Item页url数量：34 ,普通页数量:4 ,总数：38 ，花费时间：0:00:00.738560
+2011-06-24 00:22:43+0800 [scrapy] INFO: url总数量：38,排重数量：38，通过(添加到数据库)数量：0 排重花费时间：0:00:00.793342
+2011-06-24 00:22:43+0800 [scrapy] INFO: 邮件内容 运行时邮件诊断信息
+	爬虫：daodaoSpider 扩展diagnoser信息：剩余待爬取的网页数量：0，低于阀值20
+	最近0小时内，下载网页总数为153个，爬虫速度为:108.0/分钟
+	最近0小时内执行过的爬虫有：[<Daodao 'daodaoSpider' at 0x946814c>, <Lvping 'lvpingSpider' at 0x9460fcc>]
+2011-06-24 00:22:43+0800 [scrapy] INFO: 诊断邮件发送完成 时间：2011-06-24 00:22:43.502534，邮件内容：运行时邮件诊断信息
+	爬虫：daodaoSpider 扩展diagnoser信息：剩余待爬取的网页数量：0，低于阀值20
+	最近0小时内，下载网页总数为153个，爬虫速度为:108.0/分钟
+	最近0小时内执行过的爬虫有：[<Daodao 'daodaoSpider' at 0x946814c>, <Lvping 'lvpingSpider' at 0x9460fcc>]
+2011-06-24 00:22:43+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494934-d502491-Reviews-Heyuan_Garden-Yangzhou_Jiangsu.html
+2011-06-24 00:22:43+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:43+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494934-d502491-Reviews-Heyuan_Garden-Yangzhou_Jiangsu.html
+2011-06-24 00:22:43+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:43+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494934-d502491-Reviews-Heyuan_Garden-Yangzhou_Jiangsu.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.365198
+2011-06-24 00:22:43+0800 [scrapy] INFO: url总数量：21,排重数量：8，通过(添加到数据库)数量：13 排重花费时间：0:00:00.422341
+2011-06-24 00:22:44+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g308272-d549395-Reviews-Century_Park-Shanghai.html
+2011-06-24 00:22:44+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:44+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g308272-d549395-Reviews-Century_Park-Shanghai.html
+2011-06-24 00:22:45+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:45+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g308272-d549395-Reviews-Century_Park-Shanghai.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.461325
+2011-06-24 00:22:45+0800 [scrapy] INFO: url总数量：21,排重数量：10，通过(添加到数据库)数量：11 排重花费时间：0:00:00.515726
+2011-06-24 00:22:45+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s43375/hongkong:dish.html
+2011-06-24 00:22:45+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:45+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s43375/hongkong:dish.html
+2011-06-24 00:22:46+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:46+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s43375/hongkong:dish.html parse 产生 Item页url数量：36 ,普通页数量:4 ,总数：40 ，花费时间：0:00:01.589135
+2011-06-24 00:22:47+0800 [scrapy] INFO: url总数量：40,排重数量：40，通过(添加到数据库)数量：0 排重花费时间：0:00:01.648450
+2011-06-24 00:22:47+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298555-d457128-Reviews-Watchtowers_of_Kaiping-Guangzhou_Guangdong.html
+2011-06-24 00:22:47+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:47+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298555-d457128-Reviews-Watchtowers_of_Kaiping-Guangzhou_Guangdong.html
+2011-06-24 00:22:47+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:47+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298555-d457128-Reviews-Watchtowers_of_Kaiping-Guangzhou_Guangdong.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.374284
+2011-06-24 00:22:47+0800 [scrapy] INFO: url总数量：21,排重数量：9，通过(添加到数据库)数量：12 排重花费时间：0:00:00.429975
+2011-06-24 00:22:47+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494934-d1392070-Reviews-Daming_Temple-Yangzhou_Jiangsu.html
+2011-06-24 00:22:47+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:47+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494934-d1392070-Reviews-Daming_Temple-Yangzhou_Jiangsu.html
+2011-06-24 00:22:48+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:48+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494934-d1392070-Reviews-Daming_Temple-Yangzhou_Jiangsu.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.408754
+2011-06-24 00:22:48+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.452782
+2011-06-24 00:22:48+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42285/hongkong:dish.html
+2011-06-24 00:22:48+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:48+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42285/hongkong:dish.html
+2011-06-24 00:22:50+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:50+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42285/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.516451
+2011-06-24 00:22:50+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.575572
+2011-06-24 00:22:50+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1639611-d503342-Reviews-Bao_Zheng_s_Ancestral_Hall_of_Kaifeng-Kaifeng_County_Henan.html
+2011-06-24 00:22:50+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:50+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1639611-d503342-Reviews-Bao_Zheng_s_Ancestral_Hall_of_Kaifeng-Kaifeng_County_Henan.html
+2011-06-24 00:22:50+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:50+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1639611-d503342-Reviews-Bao_Zheng_s_Ancestral_Hall_of_Kaifeng-Kaifeng_County_Henan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.319674
+2011-06-24 00:22:50+0800 [scrapy] INFO: url总数量：18,排重数量：9，通过(添加到数据库)数量：9 排重花费时间：0:00:00.365672
+2011-06-24 00:22:50+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1152528-d1810468-Reviews-Qiyue_Mountain-Lichuan_Hubei.html
+2011-06-24 00:22:50+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:50+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1152528-d1810468-Reviews-Qiyue_Mountain-Lichuan_Hubei.html
+2011-06-24 00:22:51+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:51+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1152528-d1810468-Reviews-Qiyue_Mountain-Lichuan_Hubei.html parse 产生 Item页url数量：13 ,普通页数量:7 ,总数：20 ，花费时间：0:00:00.220556
+2011-06-24 00:22:51+0800 [scrapy] INFO: url总数量：20,排重数量：13，通过(添加到数据库)数量：7 排重花费时间：0:00:00.272280
+2011-06-24 00:22:51+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42284/hongkong:dish.html
+2011-06-24 00:22:51+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:51+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42284/hongkong:dish.html
+2011-06-24 00:22:52+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:52+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42284/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.527340
+2011-06-24 00:22:52+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.586405
+2011-06-24 00:22:52+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g294212-d1675221-Reviews-Niaochao-Beijing.html
+2011-06-24 00:22:52+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:52+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g294212-d1675221-Reviews-Niaochao-Beijing.html
+2011-06-24 00:22:53+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:53+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g294212-d1675221-Reviews-Niaochao-Beijing.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.624860
+2011-06-24 00:22:53+0800 [scrapy] INFO: url总数量：21,排重数量：11，通过(添加到数据库)数量：10 排重花费时间：0:00:00.737825
+2011-06-24 00:22:54+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g664891-d1986880-Reviews-House_of_Dancing_Water-Macau.html
+2011-06-24 00:22:54+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:54+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g664891-d1986880-Reviews-House_of_Dancing_Water-Macau.html
+2011-06-24 00:22:54+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:54+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g664891-d1986880-Reviews-House_of_Dancing_Water-Macau.html parse 产生 Item页url数量：11 ,普通页数量:6 ,总数：17 ，花费时间：0:00:00.334600
+2011-06-24 00:22:54+0800 [scrapy] INFO: url总数量：17,排重数量：9，通过(添加到数据库)数量：8 排重花费时间：0:00:00.376688
+2011-06-24 00:22:54+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42283/hongkong:dish.html
+2011-06-24 00:22:54+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:54+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42283/hongkong:dish.html
+2011-06-24 00:22:56+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:56+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42283/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.561733
+2011-06-24 00:22:56+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.619157
+2011-06-24 00:22:56+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494927-d1843412-Reviews-Xihai_Anti_Japanese_Martyrs_Cemetery-Foshan_Guangdong.html
+2011-06-24 00:22:56+0800 [scrapy] INFO: Mail sent OK: To=['465813018@qq.com', '1413614423@qq.com'] Cc=None Subject="爬虫诊断信息" Attachs=0
+2011-06-24 00:22:56+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:56+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494927-d1843412-Reviews-Xihai_Anti_Japanese_Martyrs_Cemetery-Foshan_Guangdong.html
+2011-06-24 00:22:56+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:56+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494927-d1843412-Reviews-Xihai_Anti_Japanese_Martyrs_Cemetery-Foshan_Guangdong.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.211802
+2011-06-24 00:22:56+0800 [scrapy] INFO: url总数量：18,排重数量：11，通过(添加到数据库)数量：7 排重花费时间：0:00:00.293351
+2011-06-24 00:22:57+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494932-d1523181-Reviews-Martyr_s_Park-Changsha_Hunan.html
+2011-06-24 00:22:57+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:57+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494932-d1523181-Reviews-Martyr_s_Park-Changsha_Hunan.html
+2011-06-24 00:22:57+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:57+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494932-d1523181-Reviews-Martyr_s_Park-Changsha_Hunan.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.455283
+2011-06-24 00:22:57+0800 [scrapy] INFO: url总数量：21,排重数量：7，通过(添加到数据库)数量：14 排重花费时间：0:00:00.513013
+2011-06-24 00:22:57+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s42953/luoyang:dish.html
+2011-06-24 00:22:57+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:57+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s42953/luoyang:dish.html
+2011-06-24 00:22:58+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:22:58+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s42953/luoyang:dish.html parse 产生 Item页url数量：31 ,普通页数量:4 ,总数：35 ，花费时间：0:00:00.816372
+2011-06-24 00:22:58+0800 [scrapy] INFO: url总数量：35,排重数量：35，通过(添加到数据库)数量：0 排重花费时间：0:00:00.869044
+2011-06-24 00:22:58+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g298558-d1583700-Reviews-Kunming_Zoo-Kunming_Yunnan.html
+2011-06-24 00:22:58+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:58+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g298558-d1583700-Reviews-Kunming_Zoo-Kunming_Yunnan.html
+2011-06-24 00:22:59+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:22:59+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g298558-d1583700-Reviews-Kunming_Zoo-Kunming_Yunnan.html parse 产生 Item页url数量：14 ,普通页数量:7 ,总数：21 ，花费时间：0:00:00.459737
+2011-06-24 00:22:59+0800 [scrapy] INFO: url总数量：21,排重数量：9，通过(添加到数据库)数量：12 排重花费时间：0:00:00.525622
+2011-06-24 00:22:59+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42282/hongkong:dish.html
+2011-06-24 00:22:59+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:22:59+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42282/hongkong:dish.html
+2011-06-24 00:23:01+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:01+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42282/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.596524
+2011-06-24 00:23:01+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.665727
+2011-06-24 00:23:01+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g528734-d530749-Reviews-Jiegu_Monastery-Yushu_County_Qinghai.html
+2011-06-24 00:23:01+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:01+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g528734-d530749-Reviews-Jiegu_Monastery-Yushu_County_Qinghai.html
+2011-06-24 00:23:01+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:01+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g528734-d530749-Reviews-Jiegu_Monastery-Yushu_County_Qinghai.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.274298
+2011-06-24 00:23:01+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.334296
+2011-06-24 00:23:02+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41675/luoyang:dish.html
+2011-06-24 00:23:02+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:02+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41675/luoyang:dish.html
+2011-06-24 00:23:02+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:02+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41675/luoyang:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:00.872640
+2011-06-24 00:23:02+0800 [scrapy] INFO: url总数量：36,排重数量：36，通过(添加到数据库)数量：0 排重花费时间：0:00:00.928566
+2011-06-24 00:23:03+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g308272-d1805650-Reviews-Zhujiajiao_Ancient_Town-Shanghai.html
+2011-06-24 00:23:03+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:03+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g308272-d1805650-Reviews-Zhujiajiao_Ancient_Town-Shanghai.html
+2011-06-24 00:23:03+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:03+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g308272-d1805650-Reviews-Zhujiajiao_Ancient_Town-Shanghai.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.363693
+2011-06-24 00:23:03+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.413862
+2011-06-24 00:23:03+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1410718-d1831931-Reviews-Feilong_Bridge-Yuanyang_County_Yunnan.html
+2011-06-24 00:23:03+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:03+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1410718-d1831931-Reviews-Feilong_Bridge-Yuanyang_County_Yunnan.html
+2011-06-24 00:23:03+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:03+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1410718-d1831931-Reviews-Feilong_Bridge-Yuanyang_County_Yunnan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.196178
+2011-06-24 00:23:04+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.247961
+2011-06-24 00:23:04+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42281/hongkong:dish.html
+2011-06-24 00:23:04+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:04+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42281/hongkong:dish.html
+2011-06-24 00:23:05+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:05+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42281/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.677676
+2011-06-24 00:23:05+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.738360
+2011-06-24 00:23:05+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1851011-d1851894-Reviews-Huiyun_Temple-Linkou_County_Heilongjiang.html
+2011-06-24 00:23:05+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:05+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1851011-d1851894-Reviews-Huiyun_Temple-Linkou_County_Heilongjiang.html
+2011-06-24 00:23:06+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:06+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1851011-d1851894-Reviews-Huiyun_Temple-Linkou_County_Heilongjiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.218065
+2011-06-24 00:23:06+0800 [scrapy] INFO: url总数量：18,排重数量：7，通过(添加到数据库)数量：11 排重花费时间：0:00:00.274225
+2011-06-24 00:23:06+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1459349-d1814847-Reviews-Zhangfei_Temple-Yunyang_County.html
+2011-06-24 00:23:06+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:06+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1459349-d1814847-Reviews-Zhangfei_Temple-Yunyang_County.html
+2011-06-24 00:23:06+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:06+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1459349-d1814847-Reviews-Zhangfei_Temple-Yunyang_County.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.252607
+2011-06-24 00:23:06+0800 [scrapy] INFO: url总数量：18,排重数量：5，通过(添加到数据库)数量：13 排重花费时间：0:00:00.316456
+2011-06-24 00:23:06+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41674/luoyang:dish.html
+2011-06-24 00:23:06+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:06+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41674/luoyang:dish.html
+2011-06-24 00:23:07+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:07+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41674/luoyang:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:00.835778
+2011-06-24 00:23:07+0800 [scrapy] INFO: url总数量：36,排重数量：36，通过(添加到数据库)数量：0 排重花费时间：0:00:00.891142
+2011-06-24 00:23:08+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1854788-d1930385-Reviews-Wu_kung_Mountains-Luxi_County_Jiangxi.html
+2011-06-24 00:23:08+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:08+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1854788-d1930385-Reviews-Wu_kung_Mountains-Luxi_County_Jiangxi.html
+2011-06-24 00:23:08+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:08+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1854788-d1930385-Reviews-Wu_kung_Mountains-Luxi_County_Jiangxi.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.408621
+2011-06-24 00:23:08+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.458470
+2011-06-24 00:23:08+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42280/hongkong:dish.html
+2011-06-24 00:23:08+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:08+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42280/hongkong:dish.html
+2011-06-24 00:23:10+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:10+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42280/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.579670
+2011-06-24 00:23:10+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.639933
+2011-06-24 00:23:10+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1405802-d1871534-Reviews-Zhuyu_Island-Pingyang_County_Zhejiang.html
+2011-06-24 00:23:10+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:10+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1405802-d1871534-Reviews-Zhuyu_Island-Pingyang_County_Zhejiang.html
+2011-06-24 00:23:10+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:10+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1405802-d1871534-Reviews-Zhuyu_Island-Pingyang_County_Zhejiang.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.185796
+2011-06-24 00:23:10+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.236758
+2011-06-24 00:23:11+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1490621-d1824434-Reviews-Wangweizhou_Memorial_Hall-Xuanhan_County_Sichuan.html
+2011-06-24 00:23:11+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:11+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1490621-d1824434-Reviews-Wangweizhou_Memorial_Hall-Xuanhan_County_Sichuan.html
+2011-06-24 00:23:11+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:11+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1490621-d1824434-Reviews-Wangweizhou_Memorial_Hall-Xuanhan_County_Sichuan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.205016
+2011-06-24 00:23:11+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.257010
+2011-06-24 00:23:11+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41673/luoyang:dish.html
+2011-06-24 00:23:11+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:11+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41673/luoyang:dish.html
+2011-06-24 00:23:12+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:12+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41673/luoyang:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:00.799832
+2011-06-24 00:23:12+0800 [scrapy] INFO: url总数量：36,排重数量：36，通过(添加到数据库)数量：0 排重花费时间：0:00:00.864250
+2011-06-24 00:23:12+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1411417-d1823988-Reviews-Huanglongxi_Ancient_Town-Shuangliu_County_Sichuan.html
+2011-06-24 00:23:12+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:12+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1411417-d1823988-Reviews-Huanglongxi_Ancient_Town-Shuangliu_County_Sichuan.html
+2011-06-24 00:23:12+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:12+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1411417-d1823988-Reviews-Huanglongxi_Ancient_Town-Shuangliu_County_Sichuan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.350504
+2011-06-24 00:23:12+0800 [scrapy] INFO: url总数量：18,排重数量：8，通过(添加到数据库)数量：10 排重花费时间：0:00:00.399240
+2011-06-24 00:23:12+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d239-s43078/yinchuan:dish.html
+2011-06-24 00:23:12+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:12+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d239-s43078/yinchuan:dish.html
+2011-06-24 00:23:13+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:13+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d239-s43078/yinchuan:dish.html parse 产生 Item页url数量：35 ,普通页数量:4 ,总数：39 ，花费时间：0:00:00.621212
+2011-06-24 00:23:13+0800 [scrapy] INFO: url总数量：39,排重数量：39，通过(添加到数据库)数量：0 排重花费时间：0:00:00.697808
+2011-06-24 00:23:14+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g494932-d1805386-Reviews-Orange_Island_Park-Changsha_Hunan.html
+2011-06-24 00:23:14+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:14+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g494932-d1805386-Reviews-Orange_Island_Park-Changsha_Hunan.html
+2011-06-24 00:23:14+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:14+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g494932-d1805386-Reviews-Orange_Island_Park-Changsha_Hunan.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.417073
+2011-06-24 00:23:14+0800 [scrapy] INFO: url总数量：18,排重数量：9，通过(添加到数据库)数量：9 排重花费时间：0:00:00.463282
+2011-06-24 00:23:14+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d38-s42279/hongkong:dish.html
+2011-06-24 00:23:14+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:14+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d38-s42279/hongkong:dish.html
+2011-06-24 00:23:16+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:16+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d38-s42279/hongkong:dish.html parse 产生 Item页url数量：37 ,普通页数量:4 ,总数：41 ，花费时间：0:00:01.808428
+2011-06-24 00:23:16+0800 [scrapy] INFO: url总数量：41,排重数量：41，通过(添加到数据库)数量：0 排重花费时间：0:00:01.879195
+2011-06-24 00:23:16+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.daodao.com/Attraction_Review-g1870862-d1871586-Reviews-Celestial_Burial_Platform_of_Zhigong_Ti_Temple-Maizhokunggar_County_Tibet.html
+2011-06-24 00:23:16+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:16+0800 [scrapy] INFO: 解析开始link: http://www.daodao.com/Attraction_Review-g1870862-d1871586-Reviews-Celestial_Burial_Platform_of_Zhigong_Ti_Temple-Maizhokunggar_County_Tibet.html
+2011-06-24 00:23:16+0800 [scrapy] INFO: 保存item页，类型： Attraction
+2011-06-24 00:23:16+0800 [scrapy] INFO: 解析完成 http://www.daodao.com/Attraction_Review-g1870862-d1871586-Reviews-Celestial_Burial_Platform_of_Zhigong_Ti_Temple-Maizhokunggar_County_Tibet.html parse 产生 Item页url数量：11 ,普通页数量:7 ,总数：18 ，花费时间：0:00:00.190316
+2011-06-24 00:23:16+0800 [scrapy] INFO: url总数量：18,排重数量：6，通过(添加到数据库)数量：12 排重花费时间：0:00:00.240753
+2011-06-24 00:23:17+0800 [scrapy] INFO: downloader中间件更新数据库访问状态。 url:http://www.lvping.com/travel-d198-s41672/luoyang:dish.html
+2011-06-24 00:23:17+0800 [scrapy] INFO: 开始排重
+2011-06-24 00:23:17+0800 [scrapy] INFO: 解析开始link: http://www.lvping.com/travel-d198-s41672/luoyang:dish.html
+2011-06-24 00:23:17+0800 [scrapy] INFO: Received SIGINT, shutting down gracefully. Send again to force unclean shutdown
+2011-06-24 00:23:18+0800 [scrapy] INFO: 保存item页，类型： Note
+2011-06-24 00:23:18+0800 [scrapy] INFO: 解析完成 http://www.lvping.com/travel-d198-s41672/luoyang:dish.html parse 产生 Item页url数量：32 ,普通页数量:4 ,总数：36 ，花费时间：0:00:00.874889
+2011-06-24 00:23:18+0800 [scrapy] INFO: url总数量：36,排重数量：36，通过(添加到数据库)数量：0 排重花费时间：0:00:00.926293
+2011-06-24 00:23:18+0800 [daodaoSpider] INFO: Closing spider (shutdown)
+2011-06-24 00:23:18+0800 [lvpingSpider] INFO: Closing spider (shutdown)
+2011-06-24 00:23:18+0800 [scrapy] INFO: 爬虫：daodaoSpider 扩展diagnoser:onSpiderClose 运行时间=174秒
+2011-06-24 00:23:18+0800 [scrapy] ERROR: 爬虫：daodaoSpider 扩展diagnoser警告：运行时间小于阀值。运行时间：174秒，间隔阀值：200秒
+2011-06-24 00:23:18+0800 [scrapy] INFO: 邮件内容 爬虫结束时邮件诊断信息
+	爬虫：daodaoSpider 扩展diagnoser警告：运行时间小于阀值。运行时间：174秒，间隔阀值：200秒
+	爬虫：daodaoSpider 扩展diagnoser信息：剩余待爬取的网页数量：0，低于阀值20
+	最近0小时内，下载网页总数为39个，爬虫速度为:36.0/分钟
+	最近0小时内执行过的爬虫有：[<Lvping 'lvpingSpider' at 0x9460fcc>, <Daodao 'daodaoSpider' at 0x946814c>]
+2011-06-24 00:23:18+0800 [scrapy] INFO: 诊断邮件发送完成 时间：2011-06-24 00:23:18.860977，邮件内容：爬虫结束时邮件诊断信息
+	爬虫：daodaoSpider 扩展diagnoser警告：运行时间小于阀值。运行时间：174秒，间隔阀值：200秒
+	爬虫：daodaoSpider 扩展diagnoser信息：剩余待爬取的网页数量：0，低于阀值20
+	最近0小时内，下载网页总数为39个，爬虫速度为:36.0/分钟
+	最近0小时内执行过的爬虫有：[<Lvping 'lvpingSpider' at 0x9460fcc>, <Daodao 'daodaoSpider' at 0x946814c>]
+2011-06-24 00:23:18+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
+2011-06-24 00:23:18+0800 [daodaoSpider] INFO: Spider closed (shutdown)
+2011-06-24 00:23:19+0800 [scrapy] INFO: 爬虫：daodaoSpider 扩展diagnoser:onSpiderClose 运行时间=174秒
+2011-06-24 00:23:19+0800 [scrapy] ERROR: 爬虫：daodaoSpider 扩展diagnoser警告：运行时间小于阀值。运行时间：174秒，间隔阀值：200秒
+2011-06-24 00:23:19+0800 [scrapy] INFO: 邮件内容 爬虫结束时邮件诊断信息
+	爬虫：daodaoSpider 扩展diagnoser警告：运行时间小于阀值。运行时间：174秒，间隔阀值：200秒
+	爬虫：daodaoSpider 扩展diagnoser信息：剩余待爬取的网页数量：0，低于阀值20
+	最近0小时内，下载网页总数为3个，爬虫速度为:36.0/分钟
+	最近0小时内执行过的爬虫有：[<Lvping 'lvpingSpider' at 0x9460fcc>]
+2011-06-24 00:23:19+0800 [scrapy] INFO: 诊断邮件发送完成 时间：2011-06-24 00:23:19.201154，邮件内容：爬虫结束时邮件诊断信息
+	爬虫：daodaoSpider 扩展diagnoser警告：运行时间小于阀值。运行时间：174秒，间隔阀值：200秒
+	爬虫：daodaoSpider 扩展diagnoser信息：剩余待爬取的网页数量：0，低于阀值20
+	最近0小时内，下载网页总数为3个，爬虫速度为:36.0/分钟
+	最近0小时内执行过的爬虫有：[<Lvping 'lvpingSpider' at 0x9460fcc>]
+2011-06-24 00:23:19+0800 [scrapy] INFO: 开始清空数据库中的SeSpider中的搜索页列表，长度：0
+2011-06-24 00:23:19+0800 [lvpingSpider] INFO: Spider closed (shutdown)
+2011-06-24 00:23:19+0800 [scrapy] INFO: Mail sent OK: To=['465813018@qq.com', '1413614423@qq.com'] Cc=None Subject="爬虫诊断信息" Attachs=0
+2011-06-24 00:23:19+0800 [scrapy] INFO: Mail sent OK: To=['465813018@qq.com', '1413614423@qq.com'] Cc=None Subject="爬虫诊断信息" Attachs=0

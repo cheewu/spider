@@ -1,11 +1,14 @@
-#Tue Jun 21 19:51:51 CST 2011
+#Thu Jun 23 22:59:48 CST 2011
 eclipse.preferences.version=1
+encoding//zijiyou/build/lib.linux-i686-2.7/zijiyou/spiders/baseCrawlSpider.py=utf-8
 encoding//zijiyou/testMain.py=utf-8
+encoding//zijiyou/zijiyou/common/emailTool.py=utf-8
 encoding//zijiyou/zijiyou/common/emailtool.py=utf-8
 encoding//zijiyou/zijiyou/common/postTool.py=utf-8
 encoding//zijiyou/zijiyou/common/tempTaskTool.py=utf-8
 encoding//zijiyou/zijiyou/common/utilities.py=utf-8
 encoding//zijiyou/zijiyou/common/zijiyouLoger.py=utf-8
+encoding//zijiyou/zijiyou/config/extractorConfig.py=utf-8
 encoding//zijiyou/zijiyou/config/spiderConfig.py=utf-8
 encoding//zijiyou/zijiyou/db/mongoDbApt.py=utf-8
 encoding//zijiyou/zijiyou/extensions/diagnoser.py=utf-8
@@ -16,7 +19,9 @@ encoding//zijiyou/zijiyou/items/zijiyouItem.py=utf-8
 encoding//zijiyou/zijiyou/middlewares/downloadermid.py=utf-8
 encoding//zijiyou/zijiyou/middlewares/schedulermid.py=utf-8
 encoding//zijiyou/zijiyou/middlewares/spidermid.py=utf-8
-encoding//zijiyou/zijiyou/pipelines/pipelines.py=utf-8
+encoding//zijiyou/zijiyou/pipelines/__init__.py=utf-8
+encoding//zijiyou/zijiyou/pipelines/imagesPipeline.py=utf-8
+encoding//zijiyou/zijiyou/pipelines/storagePipeline.py=utf-8
 encoding//zijiyou/zijiyou/settings.py=utf-8
 encoding//zijiyou/zijiyou/spiders/17u.py=utf-8
 encoding//zijiyou/zijiyou/spiders/21cn.py=utf-8
