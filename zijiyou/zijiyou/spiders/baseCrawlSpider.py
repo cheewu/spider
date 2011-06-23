@@ -80,6 +80,7 @@ class BaseCrawlSpider(CrawlSpider):
             now = datetime.datetime.now()
             self.pendingUrl = filter(lambda p:not (p["status"] == 200 and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) < p["dateTime"]),self.pendingUrl)
             #加updateStrategy：itemCollectionName
+            #dict['updateStrategy']=itemCollectionName
             
             log.msg("更新策略过滤后pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
             for i in self.pendingUrl:
@@ -166,8 +167,8 @@ class BaseCrawlSpider(CrawlSpider):
         '''item页link'''
         for v in self.itemRegex:
             reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
-        for i in reqs:
-            log.msg("解析新得到的url：%s" % i, level=log.DEBUG)
+#        for i in reqs:
+#            log.msg("解析新得到的url：%s" % i, level=log.DEBUG)
         itemNum = len(reqs) - normalNum
         items = self.parseItem(response)
         if items and len(items)>1:
@@ -205,20 +206,21 @@ class BaseCrawlSpider(CrawlSpider):
         pageResponse = loader.load_item()
         pageResponse.setdefault('collectionName', itemCollectionName)
         items.append(pageResponse)
-        print '测试item的itemCollectionName：%s status:%s' % (pageResponse.get('collectionName'),pageResponse['status'])
-        #解析item
-        dtParseItemBegin=datetime.datetime.now()
-        item=self.itemParser.parseItem(spiderName=self.name, itemCollectionName=itemCollectionName, response=response)
-        dtParseItemEnd=datetime.datetime.now()
-        dtCost=dtParseItemEnd-dtParseItemBegin
-        log.msg('解析item时间花费：%s' % dtCost, level=log.INFO)
-        if item:
-            #测试图像下载
-            if item.has_key('imageUrls'):
-                print '测试图像下载，加入2个imgurls'
-                item['imageUrls']=['http://images3.ctrip.com/images/uploadphoto/photo/0318/636632.jpg','http://images3.ctrip.com/images/uploadphoto/photo/0318/636633.jpg']
-            items.append(item)
-            pageResponse['status']=200
+        
+#        #解析item
+#        dtParseItemBegin=datetime.datetime.now()
+#        item=self.itemParser.parseItem(spiderName=self.name, itemCollectionName=itemCollectionName, response=response)
+#        dtParseItemEnd=datetime.datetime.now()
+#        dtCost=dtParseItemEnd-dtParseItemBegin
+#        log.msg('解析item时间花费：%s' % dtCost, level=log.INFO)
+#        if item:
+#            #测试图像下载
+#            if item.has_key('imageUrls'):
+#                print '测试图像下载，加入2个imgurls'
+#                item['imageUrls']=['http://images3.ctrip.com/images/uploadphoto/photo/0318/636632.jpg','http://images3.ctrip.com/images/uploadphoto/photo/0318/636633.jpg']
+#            items.append(item)
+#            pageResponse['status']=200
+            
         return items
     
 #    def parseImageItems(self, response):

@@ -15,7 +15,7 @@ extractorConfig = {
                                     "Article":{
                                                 #第一部分和CommonSenseItem的一样
                                                 r'author':r'//div[@class="article-title borderBom"]/p/span/span[@class="fkLnk hvrIE6"]/text()',
-                                                r'date':r'//div[@class="article-title borderBom"]/p/span[2]/text()',
+                                                r'publishDate':r'//div[@class="article-title borderBom"]/p/span[2]/text()',
                                                 r'content':r'//div[@class="article-content"]',
                                                 r'pvNum':r'//em[@id="pvNum"]/text()',
                                                 r'replyNum':r'//div[@class="interaction clearfix"]/span/a[@href="#"]/parent::*/text()',

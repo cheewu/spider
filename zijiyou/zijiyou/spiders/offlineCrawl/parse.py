@@ -23,7 +23,6 @@ import os
 import re
 import string
 
-
 class Parse(object):
     '''
     模拟爬虫解析网页

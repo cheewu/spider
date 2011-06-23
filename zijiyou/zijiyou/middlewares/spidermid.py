@@ -100,7 +100,7 @@ class DuplicateUrlFilter(object):
         if responseStatus  in range(199,305) :
             dupUrl=response.url
             if not dupUrl in self.urlDump:
-                log.msg("new url=%s" % dupUrl, level=log.INFO)
+                log.msg("爬虫通过 url=%s" % dupUrl, level=log.DEBUG)
                 self.urlDump.add(dupUrl)
         
 class SaveNewRequestUrl(object):

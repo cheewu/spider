@@ -11,8 +11,19 @@ import os
 import pymongo
 import re
 import time
+from collections import defaultdict 
 
 t={'t1':'t11'}
+ps = defaultdict(int)
+ps['tt1'] +=1
+ps['tt2'] +=2
+print ps
+ps.clear()
+print ps
+#keys=ps.keys()
+#print 'keys:%s' % ps.keys()
+#print 'key:%s' % t.keys()
+#print len(ps)
 
 #from zijiyou.items.zijiyouItem import PageDb,Article,Note
 #pd=Note()

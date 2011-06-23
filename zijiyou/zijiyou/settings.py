@@ -14,7 +14,7 @@ SPIDER_MODULES = ['zijiyou.spiders']
 NEWSPIDER_MODULE = 'zijiyou.spiders'
 DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ResponseBody'
 ITEM_PIPELINES=[
-                'zijiyou.pipelines.imagesPipeline.ImagesPipeline',
+#                'zijiyou.pipelines.imagesPipeline.ImagesPipeline',
                 'zijiyou.pipelines.storagePipeline.StoragePipeline' 
                 ]
 
@@ -40,7 +40,7 @@ DB_COLLECTIONS = ['PageDb',
 CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
-LOG_LEVEL='DEBUG'#测试
+LOG_LEVEL='INFO'
 DOWNLOAD_DELAY = 0.1
 CONCURRENT_REQUESTS_PER_SPIDER=10
 RECENT_URLS_SIZE = 3000
@@ -75,15 +75,17 @@ SPIDER_MIDDLEWARES = {
 #proxy server
 PROXY = ['local']
 
-#EMail Configure
-#MAIL_INTERVAL = 7200
+#Email Configure
+MAIL_INTERVAL = 144
 #发送对象列表
 MAIL_TO_LIST = ["465813018@qq.com", "1413614423@qq.com"]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL_HOST = "smtp.sina.com"
-MAIL_USER = "zijiyou2011@sina.com"
-MAIL_PASS = "zijiyou"
-MAIL_POSTFIX = "sina.com"
+MAIL_HOST = 'smtp.sina.com'
+MAIL_PORT = 25
+MAIL_FROM = 'zijiyou2011@sina.com'
+MAIL_USER = 'zijiyou2011'
+MAIL_PASS = 'zijiyou'
+#MAIL_POSTFIX = 'sina.com'
 
 
 #URLNormallizer_Rules(URL 归一化)
