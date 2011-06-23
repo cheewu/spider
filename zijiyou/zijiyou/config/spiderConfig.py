@@ -474,4 +474,25 @@ spiderConfig = {
                      'pagePattern':{'page=(\d+)':'page=%s', '-(\d)+-':'-%s-'},
                      'itemPriority':1100
                      },
+
+
+	      "55bbsSpider":{
+                     'homePage':'http://bbs.55bbs.com/', #后面要加 /
+                     'allowedDomains':["bbs.55bbs.com"],
+                     'startUrls':['http://bbs.55bbs.com/forum-34-1.html'],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    {'regex':r'forumdisplay.php\?fid=\d+.*page=\d+$|forum-\d+-\d+.html$', 'priority':700},
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  {'itemCollectionName':'Article','regex':r'viewthread.php\?.*tid=\d+.*$|thread-\d+-\d+-\d+.html$'},
+                                  ],
+                     'firstPageItemRegex':'viewthread.php\?(tid=\d+)?((?!page=).)*$|thread-\d+-1-\d+.html$',
+                     'maxPageNumXpath':'//span[@class="threadpages"]/a[last()]/@href',
+                     'maxPageNumRegex':None,
+                     'pagePattern':{'page=(\d+)':'page=%s', '-(\d)+-':'-%s-'},
+                     'itemPriority':1100
+                     },
+
 }
