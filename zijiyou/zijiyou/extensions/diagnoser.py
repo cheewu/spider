@@ -39,7 +39,7 @@ class Diagnoser(object):
         self.diagnoserPath=settings.get('DIAGNOSER_PATH','./diagnosePath')
         self.errorStatus=[400]
         self.mongo=MongoDbApt()
-        self.crawlCol='CrawlUrl'
+        self.crawlCol='UrlDb'
         
         self.mailInterval = None    #发送邮件间隔
         self.subject = "爬虫诊断信息" #邮件主题
@@ -111,10 +111,10 @@ class Diagnoser(object):
             content += "\r\n" + msg
         #爬虫速度
         speed=self.totalPagecounts* 60.0 % self.mailInterval
-        content += "\r\n最近%s小时内，下载网页总数为%s个，爬虫速度为:%s/分钟" % (self.mailInterval / 3600 ,self.totalPagecounts, speed) 
+        content += "\r\n最近%s小时内，下载网页总数为%s个，爬虫速度为:%s/分钟" % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
         #统计爬虫数
         spiderNames=self.pagecounts.keys()
-        content += "\r\n最近%s小时内执行过的爬虫有：%s" % (self.mailInterval / 3600 , spiderNames)
+        content += "\r\n最近%s小时内执行过的爬虫有：%s" % (self.mailInterval / 3600.0 , spiderNames)
         self.totalPagecounts=0
         self.pagecounts.clear()
         
@@ -123,14 +123,4 @@ class Diagnoser(object):
     def onResponseReceived(self,response, request, spider):
         self.pagecounts[spider] += 1
         self.totalPagecounts += 1
-        print '测试 onResponseReceived总数：%s，爬虫%s' % (self.totalPagecounts,spider.name)
         
-#    dispatcher.connect(self.page_count, signal=signals.response_received)
-    
-#    def onResponseReceived(self,response,request,spider):
-#        if response.status in self.errorStatus:
-#            self.errorCounter+=1
-#        if self.errorCounter>self.thresholdError:
-#            log.msg("扩展diagnoser警告：错误-某些错误出现次数大于阀值：%s" % self.errorCounter, level=log.ERROR)
-#        log.msg('扩展diagnoser:onResponseReceived %s,%s' % (spider.name,self.errorCounter), level=log.INFO)
-            
