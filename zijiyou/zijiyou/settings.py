@@ -69,6 +69,7 @@ SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.Cookies': 502}
 SPIDER_MIDDLEWARES = {
 #                      'zijiyou.middlewares.spidermid.UrlNormalizer': 503, #先归一化再排重
                       'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
+                      'zijiyou.middlewares.spidermid.UpdateStrategy':500 #进行更新策略，删除PageDb、对应的item的数据库记录
                       #'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499
                       }
 

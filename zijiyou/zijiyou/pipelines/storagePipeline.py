@@ -16,8 +16,6 @@ class StoragePipeline(object):
         #self.fileApt = open("zijiyou/pipelines/test.txt","w+")
     
     def process_item(self, item, spider):
-        print '测试到达StoragePipeline - process_item：%s'% item
-        print item['collectionName']
         if not item['collectionName']:
             log.msg("Item的collectionName空！请检查zijiyouItem中是否有未定义collectionName的Item！", level=log.ERROR)
             raise NotConfigured

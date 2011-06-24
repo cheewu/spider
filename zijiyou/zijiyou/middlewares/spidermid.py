@@ -41,7 +41,7 @@ class DuplicateUrlFilter(object):
         for p in crawlUrls:
             if "url" in p :
                 #判断是否是到达需要重新爬取的时刻，若需要重新爬取，则不放入dump中
-                if 'status' in p and 'updateInterval' in p and 'dateTime' in p and p['status'] == 200 and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
+                if 'status' in p and 'updateInterval' in p and 'dateTime' in p and p['status'] in [200, 304] and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
                     continue
                 fp=p['md5']
                 self.urlDump.add(fp)
@@ -185,14 +185,14 @@ class UpdateStrategy(object):
     '''
     更新策略
     '''
+    def __init__(self):
+        self.mongoApt=MongoDbApt()
+        
     def process_spider_input(self, response, spider):
-        pass
-        #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值为Response的Item类型
-        #if 'updateStrategy' in response.meta and response.meta['updateStrategy']:
-            #whereJson = {'url':reponse.url}
-            #mongodb.remove("UrlDb", whereJson)
-            #mongodb.remove(response.meta['updateStrategy'], whereJson)
-            
-    
-    
-    
+        #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值不为None时为Response的Item类型，为None时为list页的Response
+        if 'updateStrategy' in response.meta and response.meta['updateStrategy']:
+            log.msg('进行更新策略，删除DB中的相应的url记录：%s' % response.url, level=log.DEBUG)
+            log.msg(response.meta['updateStrategy'], log=log.DEBUG)
+            whereJson = {'url':response.url}
+            self.mongoApt.remove('PageDb', whereJson)
+            self.mongoApt.remove(response.meta['updateStrategy'], whereJson)
