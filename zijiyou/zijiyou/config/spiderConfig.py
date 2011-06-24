@@ -47,20 +47,7 @@ spiderConfig = {
                                   ]
                      },
 
-		  #55bbs需要修改
-		  "55BBSSpider":{
-                     'allowedDomains':["55bbs.com"],
-                     'startUrls':['http://bbs.55bbs.com/forumdisplay.php?fid=34&filter=digest&page=1'],
-                     #普通list页正则表达式
-                     'normalRegex':[
-                                    {'regex':r'http://bbs.55bbs.com/forumdisplay\.php\?fid=34&filter=digest', 'priority':1000}
-                                   
-                                    ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[{'itemCollectionName':'Article','regex':r'thread-\d+-\d+-\d+.html', 'priority':600}  #AttractionItem
-                                 
-                                  ]
-                     },
+		  
 
 		  "yahooSpider":{
                      'allowedDomains':["travel.cn.yahoo.com" ],
@@ -456,6 +443,7 @@ spiderConfig = {
                                   ],
                      'imageXpath':['//div[@class="yjDetail cf"]//img/@src']
                      },
+
                 "bbsSpider":{
                      'homePage':'http://www.go2eu.com/bbs/', #后面要加 /
                      'allowedDomains':["go2eu.com"],
@@ -479,10 +467,10 @@ spiderConfig = {
 	      "55bbsSpider":{
                      'homePage':'http://bbs.55bbs.com/', #后面要加 /
                      'allowedDomains':["bbs.55bbs.com"],
-                     'startUrls':['http://bbs.55bbs.com/forum-34-1.html'],
+                     'startUrls':['http://bbs.55bbs.com/forum-34-35.html'],
                      #普通list页正则表达式
                      'normalRegex':[
-                                    {'regex':r'forumdisplay.php\?fid=\d+.*page=\d+$|forum-\d+-\d+.html$', 'priority':700},
+                                    {'regex':r'forumdisplay.php\?fid=34.*page=\d+$|forum-34-\d+.html$', 'priority':700},
                                     ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[
