@@ -77,10 +77,11 @@ class BaseCrawlSpider(CrawlSpider):
             if not colName:
                 colName="UrlDb" #CrawlUrl
             unCrawledJson={"status":{"$gte":400}}
-            updateJson={"status":200, "updateInterval":{"$exists":True}}
+            updateJson={"status":200}
             if spiderName:
                 unCrawledJson['spiderName']=spiderName
                 updateJson['spiderName']=spiderName
+                updateJson['updateInterval']={"$exists":True}
             sortField="priority"
             self.pendingUrl=self.mongoApt.findByDictionaryAndSort(colName, unCrawledJson, sortField)
             log.msg("未被爬取的pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
