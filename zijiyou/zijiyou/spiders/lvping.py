@@ -7,7 +7,7 @@ Created on 2011-3-28
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 class Lvping(BaseCrawlSpider):
     '''
-    Spider for www.daodao.com
+    Spider for www.lvping.com
     '''
     name ="lvpingSpider"
     

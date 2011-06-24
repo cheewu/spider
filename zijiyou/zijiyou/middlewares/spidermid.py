@@ -33,18 +33,17 @@ class DuplicateUrlFilter(object):
         whereJson={"status":{"$lt":400}}
         fieldsJson={'url':1,'md5':1, 'status':1, 'updateInterval':1, 'dateTime':1} #status updateInterval用来判断
         dtBegin=datetime.datetime.now()
-        log.msg('spider中间件开始从数据库加载CrawlUrl和ResponseBody.url' , level=log.INFO)
+        log.msg('spider中间件开始从数据库加载UrlDb' , level=log.INFO)
         crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
         dtLoad=datetime.datetime.now()
-        log.msg('完成Url加载.从CrawlUrl加载%s个；加载数据时间花费：%s' %(len(crawlUrls),dtLoad-dtBegin), level=log.INFO)
+        log.msg('spider中间件完成Url加载.从CrawlUrl加载%s个；加载数据时间花费：%s' %(len(crawlUrls),dtLoad-dtBegin), level=log.INFO)
         now = datetime.datetime.now()
         for p in crawlUrls:
             if "url" in p :
                 #判断是否是到达需要重新爬取的时刻，若需要重新爬取，则不放入dump中
-                if 'status' in p and 'updateInterval' in p and 'dateTime' in p and p['status'] == 200 and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
+                if 'status' in p and 'updateInterval' in p and 'dateTime' in p and p['status'] in [200, 304] and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
                     continue
-                fp=p['md5']
-                self.urlDump.add(fp)
+                self.urlDump.add(p['md5'])
         dtDump=datetime.datetime.now()
         log.msg("spider中间件完成初始化urlDump. dump的长度=%s；初始化Dump花费时间：%s" % (len(self.urlDump),dtDump-dtLoad), level=log.INFO)
     
@@ -100,7 +99,7 @@ class DuplicateUrlFilter(object):
         if responseStatus  in range(199,305) :
             dupUrl=response.url
             if not dupUrl in self.urlDump:
-                log.msg("爬虫通过 url=%s" % dupUrl, level=log.DEBUG)
+                log.msg("警告！spider中间件滤重时没有增加url，是starturl?：%s" % dupUrl, level=log.ERROR)
                 self.urlDump.add(dupUrl)
         
 class SaveNewRequestUrl(object):
@@ -185,14 +184,14 @@ class UpdateStrategy(object):
     '''
     更新策略
     '''
+    def __init__(self):
+        self.mongoApt=MongoDbApt()
+        
     def process_spider_input(self, response, spider):
-        pass
-        #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值为Response的Item类型
-        #if 'updateStrategy' in response.meta and response.meta['updateStrategy']:
-            #whereJson = {'url':reponse.url}
-            #mongodb.remove("UrlDb", whereJson)
-            #mongodb.remove(response.meta['updateStrategy'], whereJson)
-            
-    
-    
-    
+        #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值不为None时为Response的Item类型，为None时为list页的Response
+        if 'updateStrategy' in response.meta and response.meta['updateStrategy']:
+            log.msg('进行更新策略，删除DB中的相应的url记录：%s' % response.url, level=log.DEBUG)
+            log.msg(response.meta['updateStrategy'], log=log.DEBUG)
+            whereJson = {'url':response.url}
+            self.mongoApt.remove('PageDb', whereJson)
+            self.mongoApt.remove(response.meta['updateStrategy'], whereJson)

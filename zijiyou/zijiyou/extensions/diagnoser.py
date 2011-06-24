@@ -104,7 +104,7 @@ class Diagnoser(object):
             msg = "爬虫诊断 剩余待爬取的网页数量：%s，低于阀值%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
             content += "\r\n" + msg
         else:
-            msg = "爬虫诊断 剩余待爬取的网页数量：%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
+            msg = "爬虫诊断 剩余待爬取的网页数量：%s" % (untouchedUrlNum)
             content += "\r\n" + msg
         #爬虫速度
         speed=self.totalPagecounts* 60.0 % self.mailInterval

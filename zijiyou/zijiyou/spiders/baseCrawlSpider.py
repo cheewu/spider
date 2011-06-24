@@ -43,9 +43,15 @@ class BaseCrawlSpider(CrawlSpider):
     imageXpath = None
     #数据库操作类
     mongoApt=None
+    #更新策略标志位
+    updateStrategy='updateStrategy'
     #验证数据库是否和type配置对应
     dbCollecions=[]
     hasInit=False
+    
+    #GMT格式
+    weekMap = {'0':'Sun', '1':'Mon', '2':'Tue', '3':'Wed', '4':'Thu', '5':'Fri', '6':'Sat'}
+    monthMap = {'01':'Jan', '02':'Feb', '03':'Mar', '04':'Apr', '05':'May', '06':'Jun', '07':'Jul', '08':'Aug', '09':'Sep', '10':'Oct', '11':'Nov', '12':'Dec'}
 
     def __init__(self, *a, **kw):      
         super(BaseCrawlSpider, self).__init__(*a, **kw)
@@ -70,19 +76,37 @@ class BaseCrawlSpider(CrawlSpider):
             #查数据库
             if not colName:
                 colName="UrlDb" #CrawlUrl
-            queJson={"$or":[{"status":{"$gte":400}}, {"status":200, "updateInterval":{"$exists":True}}]}
+            unCrawledJson={"status":{"$gte":400}}
+            updateJson={"status":200}
             if spiderName:
-                queJson['spiderName']=spiderName
+                unCrawledJson['spiderName']=spiderName
+                updateJson['spiderName']=spiderName
+                updateJson['updateInterval']={"$exists":True}
             sortField="priority"
-            self.pendingUrl=self.mongoApt.findByDictionaryAndSort(colName, queJson, sortField)
-            log.msg("更新策略过滤前pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            self.pendingUrl=self.mongoApt.findByDictionaryAndSort(colName, unCrawledJson, sortField)
+            log.msg("未被爬取的pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            updateUrl=self.mongoApt.findByDictionaryAndSort(colName, updateJson, sortField)
+            log.msg("需要判断是否更新的pending长度为：%s" % len(updateUrl), level=log.INFO)
             #过滤掉已经爬完但并不需要更新或是更新时间未到的记录
             now = datetime.datetime.now()
-            self.pendingUrl = filter(lambda p:not (p["status"] == 200 and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) < p["dateTime"]),self.pendingUrl)
-            #加updateStrategy：itemCollectionName
-            #dict['updateStrategy']=itemCollectionName
-            
-            log.msg("更新策略过滤后pending长度为：%s" % len(self.pendingUrl), level=log.INFO)
+            updateUrl = filter(lambda p:not (p["status"] in [200, 304] and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) < p["dateTime"]),updateUrl)
+            log.msg("需要更新的pending长度为：%s" % len(updateUrl), level=log.INFO)
+            log.msg("为updateUrl添加更新策略标志位", level=log.INFO)
+            #在updateUrl的每一项加updateStrategy：itemCollectionName,若url不是Item页，则设置为None
+            for p in updateUrl:
+                itemCollectionName = None
+                for v in self.itemRegex:
+                    if re.search(v['regex'], p['url']):
+                        itemCollectionName=v['itemCollectionName']
+                        break
+                #验证数据库是否和类型配置对应
+                if itemCollectionName and not itemCollectionName in self.dbCollecions:
+                    log.msg('Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % itemCollectionName, level=log.ERROR)
+                    raise NotConfigured
+                p[self.updateStrategy] = itemCollectionName
+
+            self.pendingUrl.extend(updateUrl)
+            log.msg('总的pending长度为%s, 如下：' % len(self.pendingUrl), log.DEBUG)            
             for i in self.pendingUrl:
                 log.msg(i['url'], log.DEBUG)
             return self.pendingUrl
@@ -131,10 +155,14 @@ class BaseCrawlSpider(CrawlSpider):
                 url=p["url"]
                 callBackFunctionName=p["callBack"]
                 pagePriority=p["priority"]
-                reference=None
+                meta={}
+                headers={}
                 if 'reference' in p :
-                    reference=p['reference']
-                req=self.makeRequest(url, callBackFunctionName=callBackFunctionName,reference=reference,priority=pagePriority)
+                    meta['reference'] = p['reference']
+                if self.updateStrategy in p:
+                    meta[self.updateStrategy]=p[self.updateStrategy]
+                    headers['If-Modified-Since'] = self.getGMTFormatDate(p['dateTime'])
+                req=self.makeRequestWithMeta(url, callBackFunctionName=callBackFunctionName, meta=meta, priority=pagePriority, headers=headers)
                 self.pendingRequest.append(req)
             dtPendingReq=datetime.datetime.now();
             log.msg("爬虫%s恢复：初始化pendingRequest，时间花费：%s，数量=%s" % (self.name,dtPendingReq-dtBegin,len(self.pendingRequest)),level=log.INFO)
@@ -287,3 +315,11 @@ class BaseCrawlSpider(CrawlSpider):
             meta={'callBack':callBackFunctionName}
         kw.setdefault('meta',meta)
         return Request(url, **kw)
+
+    def getGMTFormatDate(self, date):
+        week=date.strftime('%w')
+        day=date.strftime('%d')
+        month = date.strftime("%m")
+        d = date.strftime(' %Y %H:%M:%S GMT')
+        gmt = self.weekMap[week] + ', ' + day + ' ' + self.monthMap[month] + d
+        return gmt

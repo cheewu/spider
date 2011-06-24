@@ -69,6 +69,7 @@ SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.Cookies': 502}
 SPIDER_MIDDLEWARES = {
 #                      'zijiyou.middlewares.spidermid.UrlNormalizer': 503, #先归一化再排重
                       'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
+                      'zijiyou.middlewares.spidermid.UpdateStrategy':500 #进行更新策略，删除PageDb、对应的item的数据库记录
                       #'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499
                       }
 
@@ -76,7 +77,7 @@ SPIDER_MIDDLEWARES = {
 PROXY = ['local']
 
 #Email Configure
-MAIL_INTERVAL = 144
+MAIL_INTERVAL = 14400
 #发送对象列表
 MAIL_TO_LIST = ["953227024@qq.com", "1413614423@qq.com"]
 #设置服务器，用户名、口令以及邮箱的后缀

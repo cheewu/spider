@@ -31,8 +31,8 @@ class UpdateRequestedUrl(object):
         updateJson={"status":200, "dateTime":datetime.datetime.now()}
         if responseStatus:
             updateJson["status"]=responseStatus
-        if responseStatus in [400, 403]:
-            log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应" % responseStatus, level=log.ERROR)
+        if responseStatus in [400, 403, 304]:
+            log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应或者该页面没有更新" % responseStatus, level=log.ERROR)
         self.mongoApt.updateItem(self.CrawlDb,whereJson,updateJson)
         log.msg("downloader中间件更新数据库访问状态。 url:%s" % request.url, level=log.INFO)
         return response
