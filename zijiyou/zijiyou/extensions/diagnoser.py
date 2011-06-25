@@ -25,6 +25,9 @@ class Diagnoser(object):
     '''
     
     def __init__(self):
+        #记录当前爬虫的数量
+        self.closeSpiderNum=0
+        self.openSpiderNum=0
         #某些错误出现次数
         self.errorCounter=0
         #某些错误出现次数下限阀值
@@ -57,11 +60,14 @@ class Diagnoser(object):
         dispatcher.connect(self.onResponseReceived, signal=signals.response_received)
     
     def onSpiderOpen(self,spider):
+        self.openSpiderNum+=1
         self.biginTime=datetime.datetime.now()
         log.msg('爬虫：%s 扩展diagnoser：onSpiderOpen ' % spider.name,level=log.INFO)
                 
     def onSpiderClose(self,spider):
-        self.onSendMail(isClose=True)
+        self.closeSpiderNum+=1
+        if self.closeSpiderNum == 1:
+            self.onSendMail(isClose=True)
     
     def onSendMail(self, isClose=False):
         content = self.getDiagnoseContent(isClose=isClose)
@@ -107,11 +113,12 @@ class Diagnoser(object):
             msg = "爬虫诊断 剩余待爬取的网页数量：%s" % (untouchedUrlNum)
             content += "\r\n" + msg
         #爬虫速度
-        speed=self.totalPagecounts* 60.0 % self.mailInterval
+        speed=self.totalPagecounts* 60.0 / self.mailInterval
         content += "\r\n最近%s小时内，下载网页总数为%s个，爬虫速度为:%s/分钟" % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
         #统计爬虫数
         spiderNames=self.pagecounts.keys()
         content += "\r\n最近%s小时内执行过的爬虫有：%s" % (self.mailInterval / 3600.0 , spiderNames)
+        content += "\r\n当前还运行着的爬虫数有：%s" % (self.openSpiderNum - self.closeSpiderNum)
         self.totalPagecounts=0
         self.pagecounts.clear()
         return content

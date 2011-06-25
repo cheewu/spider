@@ -444,7 +444,7 @@ spiderConfig = {
                      'imageXpath':['//div[@class="yjDetail cf"]//img/@src']
                      },
 
-                "bbsSpider":{
+            "bbsSpider":{
                      'homePage':'http://www.go2eu.com/bbs/', #后面要加 /
                      'allowedDomains':["go2eu.com"],
                      'startUrls':['http://www.19lou.com/forum-1174-filter-type-typeid-566-1.html'],
@@ -482,5 +482,36 @@ spiderConfig = {
                      'pagePattern':{'page=(\d+)':'page=%s', '-(\d)+-':'-%s-'},
                      'itemPriority':1100
                      },
+            'go2euSpider':{
+                           'homePage':'http://www.go2eu.com/bbs/',
+                           'allowedDomains':["go2eu.com"],
+                           'startUrls':[
+                                        'http://www.go2eu.com/bbs/index.php'
+                                        ],
+                            #普通list页正则表达式
+                             'normalRegex':[
+                                            {'regex':r'forumdisplay.php\?fid=\d+$', 'priority':700,'region':'//body/div/div[@class="mainbox forumlist"]'},#列表第一页/板块页，在种子页中找
+                                            {'regex':r'forumdisplay.php\?fid=\d+&page=\d+$', 'priority':800,'region':'//div/div[@class="pages"]'},#列表后续页，在板块页中找
+                                            {'regex':r'viewthread.php\?tid=\d+&extra=page.{1,4}\d+$', 'priority':1000,'region':'//div/form/table[2]'},#帖子第一页，在列表页中找
+                                            ],
+                             #item页正则表达式 itemCollectionName对应item存放的数据表名
+                             'itemRegex':[
+                                          {'itemCollectionName':'Article','regex':r'viewthread\.php\?tid=\d+&page=1&authorid=\d+', 'priority':1000,'region':'//div[@class="wrap"]/form[@name="modactions"]/div[1]'},#帖子全部内容
+                                          ]
+                           }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

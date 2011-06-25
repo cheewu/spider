@@ -188,13 +188,23 @@ class BaseCrawlSpider(CrawlSpider):
         dtBegin=datetime.datetime.now()
         #普通页link
         for v in self.normalRegex:
-            reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
+            reqsNormal=[]
+            if 'region' in v:
+                reqsNormal=self.extractRequests(response, v['priority'], allow = v['regex'],restrict_xpaths=v['region'])
+            else:
+                reqsNormal=self.extractRequests(response, v['priority'], allow = v['regex'])
+            reqs.extend(reqsNormal)
         
         normalNum = len(reqs)
  
         '''item页link'''
         for v in self.itemRegex:
-            reqs.extend(self.extractRequests(response, v['priority'], allow = v['regex']))
+            reqsItem=[]
+            if 'region' in v:
+                reqsItem=self.extractRequests(response, v['priority'], allow = v['regex'],restrict_xpaths=v['region'])
+            else:
+                reqsItem=self.extractRequests(response, v['priority'], allow = v['regex'])
+            reqs.extend(reqsItem)
 #        for i in reqs:
 #            log.msg("解析新得到的url：%s" % i, level=log.DEBUG)
         itemNum = len(reqs) - normalNum
@@ -250,31 +260,7 @@ class BaseCrawlSpider(CrawlSpider):
 #            pageResponse['status']=200
             
         return items
-    
-#    def parseImageItems(self, response):
-#        '''start to parse parse image item'''
-#        if not self.imageXpath:
-#            return None
-#        
-#        log.msg("解析图片", level=log.INFO)
-#        print "图片解析"
-#        imageItems = []
-#        hxs = HtmlXPathSelector(response)
-#        for xpath in self.imageXpath:
-#            imageUrls = hxs.select(xpath).extract()
-#            if not imageUrls:
-#                continue
-#            for url in imageUrls:
-#                loader = ZijiyouItemLoader(Image(),response=response)
-#                loader.add_value("imageUrl", unicode(str(url), 'utf8'))
-#                imageItem = loader.load_item()
-#                imageItems.append(imageItem)
-#                print imageItemh
-#                log.msg(url, level=log.INFO)
-#                
-#        log.msg("共解析了%s张图片" % len(imageItems), level=log.INFO)
-#        return imageItems
-    
+
     def extractLinks(self, response, **extra): 
         """ 
         Extract links from response

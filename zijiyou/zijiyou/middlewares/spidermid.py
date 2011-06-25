@@ -94,13 +94,13 @@ class DuplicateUrlFilter(object):
             log.msg("排重中间件所有的url均不重复！数量：%s ,排重花费时间：%s" % (len(newResult),dtEnd-dtBegin), level=log.INFO)
         return newResult
         
-    def process_spider_input(self, response, spider):
-        responseStatus=response.status
-        if responseStatus  in range(199,305) :
-            dupUrl=response.url
-            if not dupUrl in self.urlDump:
-                log.msg("警告！spider中间件滤重时没有增加url，是starturl?：%s" % dupUrl, level=log.ERROR)
-                self.urlDump.add(dupUrl)
+#    def process_spider_input(self, response, spider):
+#        responseStatus=response.status
+#        if responseStatus  in range(199,305) :
+#            dupUrl=response.url
+#            if not dupUrl in self.urlDump:
+#                log.msg("警告！spider中间件滤重时没有增加url，是starturl?：%s" % dupUrl, level=log.ERROR)
+#                self.urlDump.add(dupUrl)
         
 class SaveNewRequestUrl(object):
     '''

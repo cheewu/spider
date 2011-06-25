@@ -19,9 +19,9 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = '127.0.0.1' #192.168.0.183
+DB_HOST = '192.168.0.183' #192.168.0.183 127.0.0.1
 DB_PORT=27017
-DB='spiderV21'
+DB='spiderV21'#测试用spiderV21 spidertest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
@@ -79,7 +79,10 @@ PROXY = ['local']
 #Email Configure
 MAIL_INTERVAL = 14400
 #发送对象列表
-MAIL_TO_LIST = ["953227024@qq.com", "1413614423@qq.com"]
+MAIL_TO_LIST = [
+                "953227024@qq.com", 
+                "1413614423@qq.com"
+                ]
 #设置服务器，用户名、口令以及邮箱的后缀
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25

@@ -36,7 +36,6 @@ class BaseBBSSpider(BaseCrawlSpider):
                 raise NotConfigured
         self.functionDic['baseParse'] = self.baseParse
         self.functionDic['parseItem'] = self.parseItem
-#        self.initRequest()
         
     def baseParse(self,response):
         print '解析BBS List页结果'
@@ -56,7 +55,8 @@ class BaseBBSSpider(BaseCrawlSpider):
         dtBegin=datetime.datetime.now()
         #普通页link
         for v in self.normalRegex:
-            reqs.extend(self.extractRequests(response, v['priority'], callBackFunctionName = 'baseParse', allow = v['regex']))
+            reqsNormal=self.extractRequests(response, v['priority'], callBackFunctionName = 'baseParse', allow = v['regex'])
+            reqs.extend(reqsNormal)
         normalNum = len(reqs)
 #        log.msg("%s parse 产生 普通list页 url 数量：%s" % (response.url, len(reqs)), level=log.INFO)
         log.msg("list页", level=log.DEBUG)
@@ -67,8 +67,9 @@ class BaseBBSSpider(BaseCrawlSpider):
         #抽取第一页链接
         itemReqs = []
         if 'firstPageItemRegex' in self.config:
-            itemReqs.extend(self.extractRequests(response, self.config['itemPriority'], callBackFunctionName = 'parseItem', allow = self.config['firstPageItemRegex']))
-        log.msg("第一页item", level=log.DEBUG)
+            reqsItem = self.extractRequests(response, self.config['itemPriority'], callBackFunctionName = 'parseItem', allow = self.config['firstPageItemRegex'])
+            itemReqs.extend(reqsItem)
+            log.msg("第一页item", level=log.DEBUG)
         for i in itemReqs:
             log.msg("%s" % i, level=log.DEBUG)
             
@@ -132,11 +133,11 @@ class BaseBBSSpider(BaseCrawlSpider):
         elif maxPageNumXpath in self.config and maxPageNumXpath and maxPageNumRegex in self.config and maxPageNumRegex:
             maxPageUrlValues = hxs.select(self.config[maxPageNumXpath]).re(self.config[maxPageNumRegex])
         else:
-            log.msg("配置有误，maxPageNumRegex是必须的，maxPageNumRegex是可选的，%s" % self.name, level=log.ERROR)
+            log.msg("爬虫%s配置有误，maxPageNumRegex是必须的，maxPageNumRegex是可选的，" % self.name, level=log.ERROR)
             return None
         
         if not maxPageUrlValues:
-            log.msg("所有帖子都只有一页，%s" % response.url, level=log.ERROR)
+            log.msg("所有帖子都只有一页，%s" % response.url, level=log.WARNING)
         else:
             log.msg("总共产生的帖子最大页码链接总数量为：%s" % len(maxPageUrlValues), level=log.INFO)
             for i in maxPageUrlValues:

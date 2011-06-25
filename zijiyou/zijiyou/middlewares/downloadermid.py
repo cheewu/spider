@@ -7,6 +7,7 @@ Created on 2011-4-12
 from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
+#from zijiyou.common import utilities
 from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
 
@@ -26,6 +27,8 @@ class UpdateRequestedUrl(object):
             raise NotConfigured
     
     def process_response(self, request, response, spider):
+#        md5Val=utilities.getFingerPrint(inputs=request.url,isUrl=True)
+#        whereJson={"md5":md5Val}
         whereJson={"url":request.url}
         responseStatus=response.status
         updateJson={"status":200, "dateTime":datetime.datetime.now()}
