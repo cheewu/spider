@@ -19,7 +19,7 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = '192.168.0.183' #192.168.0.183 127.0.0.1
+DB_HOST = '127.0.0.1' #192.168.0.183 127.0.0.1
 DB_PORT=27017
 DB='spiderV21'#测试用spiderV21 spidertest
 DB_COLLECTIONS = ['PageDb',
