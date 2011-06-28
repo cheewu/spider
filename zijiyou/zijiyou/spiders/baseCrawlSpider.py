@@ -209,7 +209,8 @@ class BaseCrawlSpider(CrawlSpider):
 #            log.msg("解析新得到的url：%s" % i, level=log.DEBUG)
         itemNum = len(reqs) - normalNum
         items = self.parseItem(response)
-        if items and len(items)>1:
+        if items and len(items)>0:
+            log.msg('得到items，数量：%s'% len(items),level=log.DEBUG)
             reqs.extend(items)
         dtEnd=datetime.datetime.now()
         dtInterval=dtEnd - dtBegin
@@ -244,6 +245,7 @@ class BaseCrawlSpider(CrawlSpider):
         pageResponse = loader.load_item()
         pageResponse.setdefault('collectionName', itemCollectionName)
         items.append(pageResponse)
+        print 'test :%s' % len(items)
         
 #        #解析item
 #        dtParseItemBegin=datetime.datetime.now()

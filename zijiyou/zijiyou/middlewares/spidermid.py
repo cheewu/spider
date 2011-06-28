@@ -57,7 +57,7 @@ class DuplicateUrlFilter(object):
             counter+=1
             if isinstance(p, Request):
                 if p.url:
-                    fp=utilities.getFingerPrint(inputs=p.url,isUrl=True)
+                    fp=utilities.getFingerPrint(inputs=[p.url],isUrl=True)
                     if fp in self.urlDump:
                         log.msg("排除重复 url=%s" % (p.url), level=log.DEBUG)
                         continue

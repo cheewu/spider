@@ -39,7 +39,7 @@ def dumpUrlFromPageDb2UrlDb(dbHost='localHost',port=27017,dbName='spiderV21',pag
         if urlNum>0:
             continue
         newUrl={"url":url,"callBack":None,"reference":'PageDb',"status":200,"priority":1000,'spiderName':p['spiderName'],"dateTime":datetime.datetime.now()}
-        newUrl['md5']=utilities.getFingerPrint(url, isUrl=True)
+        newUrl['md5']=utilities.getFingerPrint([url], isUrl=True)
         newId = urlCol.insert(newUrl)
         counter+=1
         print '插入成功，新id：%s' % newId

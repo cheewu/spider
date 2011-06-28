@@ -17,10 +17,24 @@ def getFingerPrint(inputs=[],isUrl=False):
     newInputs=[]
     if isUrl:
         for p in inputs:
-            newInputs.append(canonicalize_url(p))
+            newP = canonicalize_url(p)
+            tokens=newP.split('?')
+            newTokens=[]
+            if len(tokens) == 2:
+                newTokens.append(tokens[0])
+                temps=tokens[1].split('&')
+                if len(temps)>1:
+                    newTokens.extend(temps)
+                else:
+                    newTokens.extend(temps)
+                    log.msg('%s ?后面的url只有一个参数' % p, level=log.DEBUG) 
+            else:
+                newTokens.extend(tokens)
+                log.msg('%s url没有参数' % p, level=log.DEBUG)
+                
+            newInputs.extend(newTokens)
     else:
         newInputs=inputs
-    
     if len(newInputs)<1:
         return 0; 
     hasher=hashlib.md5(newInputs[0])
