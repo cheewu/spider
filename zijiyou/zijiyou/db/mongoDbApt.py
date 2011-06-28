@@ -122,7 +122,7 @@ class MongoDbApt(object):
         更新
         '''
         uj={"$set":updateJson}
-        result = self.db[colName].update(whereJson,uj)#,False,True
+        result = self.db[colName].update(whereJson,uj,multi=True)#,False,True
         return result
         
     def removeAll(self,colName):
