@@ -227,7 +227,7 @@ class BaseCrawlSpider(CrawlSpider):
                 itemCollectionName=v['itemCollectionName']
                 break
         if itemCollectionName == None:
-            log.msg("不是item的urlLink：%s" %  response.url, level=log.INFO)
+            log.msg("不是item的urlLink：%s" %  response.url, level=log.WARNING)
             return None
         #验证数据库是否和类型配置对应
         if not itemCollectionName in self.dbCollecions:
