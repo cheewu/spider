@@ -65,7 +65,7 @@ def initUrlMd5(dbHost='localHost',port=27017,dbName='spiderV21',urlDbName='UrlDb
             percents+=1.0
             print '当前进度：百分之%s' % percents
         url=p['url']
-        md5Val=utilities.getFingerPrint(url, isUrl=True)
+        md5Val=utilities.getFingerPrint([url], isUrl=True)
         whereJson={'_id':p['_id']}
         uj={'$set':{'md5':md5Val}}
         urlCol.update(whereJson,uj,True,False)
