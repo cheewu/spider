@@ -525,10 +525,31 @@ spiderConfig = {
                                           {##'itemCollectionName':'Article','regex':r'viewthread\.php\?tid=\d+&page=1&authorid=\d+', 'priority':1000,'region':'//div[@class="wrap"]/form[@name="modactions"]/div[1]'},#帖子全部内容
                                           'itemCollectionName':'Article','regex':r'viewthread\.php\?action=printable&tid=\d+', 'priority':1000,'region':'//span[@class="headactions"]'},#帖子全部内容
 					  ] 
-
-
 					
-         }
+          },
+
+	  'lvyeSpider':{
+                           'homePage':'http://bbs.lvye.cn',
+                           'allowedDomains':["bbs.lvye.cn"],
+                           'startUrls':[
+                                        'http://bbs.lvye.cn/forum-1559-1.html',#自驾
+					'http://bbs.lvye.cn/forum-8-1.html',#游记攻略
+					'http://bbs.lvye.cn/forum-1815-1.html',#背包自助
+					'http://bbs.lvye.cn/forum-354-1.html',#户外摄影
+					'http://bbs.lvye.cn/forum-haiwai-1.html'#海外
+					
+                                        ],
+                            #普通list页正则表达式
+                             'normalRegex':[
+                                            {'regex':r'forum-\d+-\d+.html$', 'priority':700,'region':'//div[@class="pg"]'},#帖子列表页
+                                            {'regex':r'thread-\d+-1-\d+.html', 'priority':1000,'region':'//div[@class="bm_c"]'},#帖子第一页，在列表页中找
+                                            ],
+                             #item页正则表达式 itemCollectionName对应item存放的数据表名
+                             'itemRegex':[
+			                   { 'itemCollectionName':'Article','regex':r'forum-viewthread-action-printable-tid-\d+\.html', 'priority':1000},#帖子全部内容  ,'region':'//span[@class="pipe"]'
+					  ] 
+					
+          },
 
 }
 
