@@ -467,20 +467,15 @@ spiderConfig = {
 	      "55bbsSpider":{
                      'homePage':'http://bbs.55bbs.com/', #后面要加 /
                      'allowedDomains':["bbs.55bbs.com"],
-                     'startUrls':['http://bbs.55bbs.com/forum-34-35.html'],
+                     'startUrls':['http://bbs.55bbs.com/forum-34-1.html'],
                      #普通list页正则表达式
-                     'normalRegex':[
-                                    {'regex':r'forumdisplay.php\?fid=34.*page=\d+$|forum-34-\d+.html$', 'priority':700},
+                     'normalRegex':[   
+                                    {'regex':r'thread-\d+-1-\d+.html', 'priority':1000,'region':'//div[@class="mainbox threadlist"]'},#帖子第一页，在列表页中找				    
+				    {'regex':r'forum-34-\d+.html$', 'priority':1000,'region':'//div[@class="pages"]'},  
                                     ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[
-                                  {'itemCollectionName':'Article','regex':r'viewthread.php\?.*tid=\d+.*$|thread-\d+-\d+-\d+.html$'},
-                                  ],
-                     'firstPageItemRegex':'viewthread.php\?(tid=\d+)?((?!page=).)*$|thread-\d+-1-\d+.html$',
-                     'maxPageNumXpath':'//span[@class="threadpages"]/a[last()]/@href',
-                     'maxPageNumRegex':None,
-                     'pagePattern':{'page=(\d+)':'page=%s', '-(\d)+-':'-%s-'},
-                     'itemPriority':1100
+                     #帖子全部内容
+                     'itemRegex':[ {'itemCollectionName':'Article','regex':r'viewthread\.php\?action=printable&tid=\d+', 'priority':1000,'region':'//span[@class="headactions"]'}
+				 ] 
                      },
            
 	      'go2euSpider':{
