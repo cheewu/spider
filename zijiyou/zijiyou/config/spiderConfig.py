@@ -537,7 +537,6 @@ spiderConfig = {
 					'http://bbs.lvye.cn/forum-1815-1.html',#背包自助
 					'http://bbs.lvye.cn/forum-354-1.html',#户外摄影
 					'http://bbs.lvye.cn/forum-haiwai-1.html'#海外
-					
                                         ],
                             #普通list页正则表达式
                              'normalRegex':[
@@ -550,6 +549,28 @@ spiderConfig = {
 					  ] 
 					
           },
+
+	 'sinabbsSpider':{
+                           'homePage':'http://club.travel.sina.com.cn',
+                           'allowedDomains':["club.travel.sina.com.cn"],
+                           'startUrls':[
+                                        'http://club.travel.sina.com.cn/forum-2-1.html',#旅行天下
+					'http://club.travel.sina.com.cn/forum-4-1.html',#驴友同行
+					'http://club.travel.sina.com.cn/forum-21-1.html',#光影记录
+                                        ],
+                            #普通list页正则表达式
+                             'normalRegex':[
+                                            {'regex':r'forum-\d+-\d+.html$', 'priority':700,'region':'//div[@class="pages"]'},#帖子列表页
+                                            {'regex':r'thread-\d+-1-\d+.html', 'priority':1000,'region':'//div[@class="mainbox threadlist"]'},#帖子第一页，在列表页中找
+                                            ],
+                             #item页正则表达式 itemCollectionName对应item存放的数据表名
+                             'itemRegex':[
+			                   { 'itemCollectionName':'Article','regex':r'viewthread.php\?action=printable&tid=\d+', 'priority':1000},#帖子全部内容 
+					  ] 
+          },
+
+
+
 
 }
 
