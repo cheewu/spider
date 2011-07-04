@@ -464,6 +464,24 @@ spiderConfig = {
                      },
 
 
+	      "bbsSpider2":{
+                     'allowedDomains':['www.go2eu.com/bbs'],
+                     'startUrls':['http://www.go2eu.com/bbs/forumdisplay.php?fid=12&page=1'],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  {'itemCollectionName':'Article',
+                                   'regex':r'viewthread.php\?tid=\d+&extra=page.{1,4}\d+$',
+                                   'itemPrintPageFormat':r'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=%s',
+                                   'itemTidRegex':r'tid=(\d+)',
+                                   'region':'//div/form/table[2]',
+                                   'priority':1000},
+                                  ]
+                     },
+
+
 	      "55bbsSpider":{
                      'homePage':'http://bbs.55bbs.com/', #后面要加 /
                      'allowedDomains':["bbs.55bbs.com"],
