@@ -465,17 +465,39 @@ spiderConfig = {
 
 
 	      "bbsSpider2":{
-                     'allowedDomains':['www.go2eu.com/bbs'],
-                     'startUrls':['http://www.go2eu.com/bbs/forumdisplay.php?fid=12&page=1'],
+                     'allowedDomains':['www.go2eu.com'],
+                     'startUrls':[
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=79&page=1'
+                                  ],
                      #普通list页正则表达式
                      'normalRegex':[
                                     ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[
                                   {'itemCollectionName':'Article',
-                                   'regex':r'viewthread.php\?tid=\d+&extra=page.{1,4}\d+$',
+                                   'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
                                    'itemPrintPageFormat':r'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=%s',
                                    'itemTidRegex':r'tid=(\d+)',
+                                   'region':'//div/form/table[2]',
+                                   'priority':1000},
+                                  ]
+                     },
+            "test":{
+                     'allowedDomains':['www.go2eu.com',
+                                       'www.lvping.com'],
+                     'startUrls':[
+#                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=79&page=1',
+                                  'http://www.lvping.com/Journals.aspx?type=1',
+#                                  'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=415518',
+#                                  'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=456633'
+                                  ],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  {'itemCollectionName':'Article',
+                                   'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
                                    'region':'//div/form/table[2]',
                                    'priority':1000},
                                   ]
@@ -489,7 +511,7 @@ spiderConfig = {
                      #普通list页正则表达式
                      'normalRegex':[   
                                     {'regex':r'thread-\d+-1-\d+.html', 'priority':1000,'region':'//div[@class="mainbox threadlist"]'},#帖子第一页，在列表页中找				    
-				    {'regex':r'forum-34-\d+.html$', 'priority':1000,'region':'//div[@class="pages"]'},  
+				                    {'regex':r'forum-34-\d+.html$', 'priority':1000,'region':'//div[@class="pages"]'},  
                                     ],
                      #帖子全部内容
                      'itemRegex':[ {'itemCollectionName':'Article','regex':r'viewthread\.php\?action=printable&tid=\d+', 'priority':1000,'region':'//span[@class="headactions"]'}

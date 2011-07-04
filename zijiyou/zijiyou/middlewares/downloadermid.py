@@ -27,7 +27,11 @@ class UpdateRequestedUrl(object):
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
             raise NotConfigured
     
+#    def process_request(self,request, spider):
+#        print 'downMid reqOut test get:%s' % request.url 
+    
     def process_response(self, request, response, spider):
+#        print 'downMid repIn test get:%s' % request.url
         md5Val=utilities.getFingerPrint(inputs=[request.url],isUrl=True)
         whereJson={"md5":md5Val}
 #        whereJson={"url":request.url}

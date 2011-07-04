@@ -5,6 +5,7 @@ Created on 2011-3-28
 @author: shiym
 '''
 from scrapy import log
+from scrapy.http.request import Request
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import datetime
 import re
@@ -15,8 +16,23 @@ class BaseBBSSpider2(BaseCrawlSpider):
     '''
     name ="bbsSpider2"
     
+    def printRequest(self,r,right=False):
+        if isinstance(r,Request) :
+            if right:
+                log.msg('right', level=log.ERROR)
+            log.msg('url %s' % r.url, level=log.ERROR)
+            log.msg('method %s' % r.method, level=log.ERROR)
+            log.msg('header %s' % r.headers, level=log.ERROR)
+            log.msg('body %s' % r.body, level=log.ERROR)
+            log.msg('meta %s' % r.meta, level=log.ERROR)
+            if right:
+                log.msg('rightOver', level=log.ERROR)
+        else:
+            print 'not Request %s ' % r.url
+    
     def baseParse(self, response):
         '''start to parse response link'''
+#        self.printRequest(response.request,right=True)
         reqs = []
         
         if not self.hasInit:
@@ -59,8 +75,8 @@ class BaseBBSSpider2(BaseCrawlSpider):
                     tid=match.group(1)
                     newLink=v['itemPrintPageFormat'] % tid
                     log.msg("拼凑item打印链接：%s" %newLink, level=log.DEBUG)
-                    print v['priority']
-                    newReq=self.makeRequest(newLink, callBackFunctionName='parseItem',reference=response.url,priority=v['priority'])
+                    newReq=self.makeRequest(newLink,reference=response.url,priority=v['priority'])
+#                    self.printRequest(newReq)
                     reqs.append(newReq)
                 else:
                     log.msg("抽出的link:%s 没有发现tid，不能拼凑出新链接。请检查正则是否有误： linkXpath：%s、tid正则:%s" %(link.url,v['regex'],v['itemTidRegex']), level=log.ERROR)
@@ -75,5 +91,6 @@ class BaseBBSSpider2(BaseCrawlSpider):
         log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,总数：%s ，花费时间：%s" % (response.url, itemNum, normalNum, len(reqs),dtInterval), level=log.INFO)
         
         return reqs
+    
     
 SPIDER = BaseBBSSpider2()

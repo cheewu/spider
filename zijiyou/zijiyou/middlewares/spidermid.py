@@ -59,7 +59,7 @@ class DuplicateUrlFilter(object):
                 if p.url:
                     fp=utilities.getFingerPrint(inputs=[p.url],isUrl=True)
                     if fp in self.urlDump:
-                        log.msg("排除重复 url=%s" % (p.url), level=log.DEBUG)
+                        log.msg("排除重复 url=%s" % p.url, level=log.DEBUG)
                         continue
                     else:
                         #更新urlDump
@@ -81,7 +81,7 @@ class DuplicateUrlFilter(object):
                         recentReq["spiderName"]=spider.name
                         recentReq['md5']=fp
                         self.mon.saveItem(self.CrawlDb,recentReq)
-                        log.msg("保存新request：%s" % p.url,level=log.DEBUG)
+                        log.msg("保存新request：%s md5: %s" % (p.url,fp),level=log.DEBUG)
                         
                         #放回请求队列
                         newResult.append(p)

@@ -141,7 +141,7 @@ class BaseCrawlSpider(CrawlSpider):
             log.msg("%s爬虫恢复： 查询recentequest" % self.name ,level=log.INFO)
             self.mongoApt=MongoDbApt()
         pendingUrls = self.getStartUrls(spiderName=self.name,colName=self.CrawlDb)
-        dtRecentReq=datetime.datetime.now();
+        dtRecentReq=datetime.datetime.now()
         log.msg('%s爬虫恢复：完成数据库recentequest加载，时间花费：%s,recentequest数量=%s' % (self.name,dtRecentReq-dtBegin,len(pendingUrls)), level=log.INFO)
             
         if pendingUrls and len(pendingUrls)>0:

@@ -50,6 +50,7 @@ class Diagnoser(object):
         self.totalPagecounts = 0
         #若有该邮件发送时间间隔配置信息，则进行定时发送诊断信息
         if self.mailInterval:
+            self.mail=settings.get('MAIL')
             self.mailer=MailSender()
             self.mailTos=settings.get('MAIL_TO_LIST')
             reactor.callLater(self.mailInterval, self.onSendMail)
@@ -69,12 +70,14 @@ class Diagnoser(object):
         if self.closeSpiderNum == 1:
             self.onSendMail(isClose=True)
     
-    def onSendMail(self, isClose=False):
+    def onSendMail(self, isClose=False,msg=None):
         content = self.getDiagnoseContent(isClose=isClose)
         if not self.mailInterval:
             return
         log.msg("邮件内容 %s" %content , level=log.INFO)
-        self.mailer.send(to=self.mailTos, subject='爬虫诊断信息', body=content);
+        if self.mail:
+            print 'mailer'
+            self.mailer.send(to=self.mailTos, subject='爬虫诊断信息', body=content)
         log.msg("诊断邮件发送完成 时间：%s，邮件内容：%s" % (datetime.datetime.now(),content) , level=log.INFO)
         #若关闭spider则不再发送邮件
         if not isClose:

@@ -14,6 +14,7 @@ class Cookies(object):
     _cookiesStartTime = {}
     
     def enqueue_request(self,spider,request):
+#        print 'scheduleMid test get:%s' % request.url
         cookies = self.getCookies(spider.name)
         if cookies and len(cookies)>1:
             request.cookies = cookies
