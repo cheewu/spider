@@ -21,7 +21,7 @@ ITEM_PIPELINES=[
 # mongodb setting
 DB_HOST = '127.0.0.1' #192.168.0.183 127.0.0.1
 DB_PORT=27017
-DB='spiderV21'#测试用spiderV21 spidertest
+DB='bbstest'#测试用spiderV21 spidertest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
@@ -43,7 +43,7 @@ LOG_FILE='./zijiyou.log'
 LOG_LEVEL='INFO'
 DOWNLOAD_DELAY = 0.1
 CONCURRENT_REQUESTS_PER_SPIDER=10
-RECENT_URLS_SIZE = 3000
+RECENT_URLS_SIZE = 3000000
 MAX_INII_REQUESTS_SIZE = 1000000
 #CLOSESPIDER_TIMEOUT=1800
 #CLOSESPIDER_ITEMPASSED=3000
@@ -84,6 +84,7 @@ MAIL_TO_LIST = [
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
+MAIL= False
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'

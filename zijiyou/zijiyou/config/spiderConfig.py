@@ -471,6 +471,8 @@ spiderConfig = {
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
+#                                    {'regex':r'forumdisplay.php\?fid=\d+$', 'priority':700,'region':'//body/div/div[@class="mainbox forumlist"]'},#列表第一页/板块页，在种子页中找
+                                    {'regex':r'forumdisplay.php\?fid=\d+', 'priority':700,'region':'//div/div[@class="pages"]'},#列表后续页，在板块页中找 &page=\d+$
                                     ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[
@@ -478,31 +480,10 @@ spiderConfig = {
                                    'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
                                    'itemPrintPageFormat':r'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=%s',
                                    'itemTidRegex':r'tid=(\d+)',
-                                   'region':'//div/form/table[2]',
+                                   'region':'//div/form/table',
                                    'priority':1000},
                                   ]
                      },
-            "test":{
-                     'allowedDomains':['www.go2eu.com',
-                                       'www.lvping.com'],
-                     'startUrls':[
-#                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=79&page=1',
-                                  'http://www.lvping.com/Journals.aspx?type=1',
-#                                  'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=415518',
-#                                  'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=456633'
-                                  ],
-                     #普通list页正则表达式
-                     'normalRegex':[
-                                    ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[
-                                  {'itemCollectionName':'Article',
-                                   'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
-                                   'region':'//div/form/table[2]',
-                                   'priority':1000},
-                                  ]
-                     },
-
 
 	      "55bbsSpider":{
                      'homePage':'http://bbs.55bbs.com/', #后面要加 /
