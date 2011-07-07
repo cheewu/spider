@@ -3,9 +3,9 @@ Created on 2011-6-25
 
 @author: shiym
 '''
-from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
+from zijiyou.spiders.baseBBSSpider2 import BaseBBSSpider2
 
-class sinabbsSpider(BaseCrawlSpider):
+class sinabbsSpider(BaseBBSSpider2):
     '''
     club.travel.com.cn
     '''

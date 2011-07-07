@@ -556,7 +556,7 @@ spiderConfig = {
           },
 
 
-	  "lvyeSpider":{
+	   "lvyeSpider":{
                        'allowedDomains':["bbs.lvye.cn"],
                        'startUrls':[
                                 #'http://bbs.lvye.cn/forum-1559-1.html',#自驾
@@ -591,14 +591,20 @@ spiderConfig = {
 					'http://club.travel.sina.com.cn/forum-21-1.html',#光影记录
                                         ],
                             #普通list页正则表达式
-                             'normalRegex':[
+                            'normalRegex':[
                                             {'regex':r'forum-\d+-\d+.html$', 'priority':700,'region':'//div[@class="pages"]'},#帖子列表页
-                                            {'regex':r'thread-\d+-1-\d+.html', 'priority':1000,'region':'//div[@class="mainbox threadlist"]'},#帖子第一页，在列表页中找
+                                           
                                             ],
-                             #item页正则表达式 itemCollectionName对应item存放的数据表名
-                             'itemRegex':[
-			                   { 'itemCollectionName':'Article','regex':r'viewthread.php\?action=printable&tid=\d+', 'priority':1000},#帖子全部内容 
-					  ] 
+                            #item页正则表达式 itemCollectionName对应item存放的数据表名
+                            'itemRegex':[
+                                 {'itemCollectionName':'Article',
+                                  'regex':r'(thread-\d+-1-\d+.html)|(http:\/\/club\.travel\.sina\.com\.cn\/viewthread.php\?action=printable&tid=\d+)',
+                                  'itemPrintPageFormat':r'http://club.travel.sina.com.cn/viewthread.php?action=printable&tid=%s',
+                                  'itemTidRegex':r'thread-(\d+)',
+                                  'region':'//div[@class="mainbox threadlist"]',
+                                  'priority':1000},
+                                 ]
+			    
           },
 
 
