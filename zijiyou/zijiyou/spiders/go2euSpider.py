@@ -3,9 +3,9 @@ Created on 2011-6-25
 
 @author: shiym
 '''
-from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
+from zijiyou.spiders.baseBBSSpider2 import BaseBBSSpider2
 
-class Go2euSpider(BaseCrawlSpider):
+class Go2euSpider(BaseBBSSpider2):
     '''
     www.go2euSpider.com
     '''

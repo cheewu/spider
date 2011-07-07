@@ -500,7 +500,6 @@ spiderConfig = {
                      },
            
 	      'go2euSpider':{
-                           'homePage':'http://www.go2eu.com/bbs/',
                            'allowedDomains':["go2eu.com"],
                            'startUrls':[
                                         'http://www.go2eu.com/bbs/forumdisplay.php?fid=12',#德国
@@ -534,18 +533,21 @@ spiderConfig = {
 					'http://www.go2eu.com/bbs/forumdisplay.php?fid=33',#自驾
 					'http://www.go2eu.com/bbs/forumdisplay.php?fid=80',#购物
 					'http://www.go2eu.com/bbs/forumdisplay.php?fid=100',#银联
-                                        ],
-                            #普通list页正则表达式
-                             'normalRegex':[
-                                            {'regex':r'forumdisplay.php\?fid=\d+$', 'priority':700,'region':'//body/div/div[@class="mainbox forumlist"]'},#列表第一页/板块页，在种子页中找
-                                            {'regex':r'forumdisplay.php\?fid=\d+', 'priority':700,'region':'//div/div[@class="pages"]'},#列表后续页，在板块页中找 &page=\d+$
-                                            {'regex':r'viewthread.php\?tid=\d+&extra=page.{1,4}\d+$', 'priority':1000,'region':'//div[@class="mainbox threadlist"]'},#帖子第一页，在列表页中找 
-                                            ],
-                             #item页正则表达式 itemCollectionName对应item存放的数据表名
-                             'itemRegex':[
-                                          {##'itemCollectionName':'Article','regex':r'viewthread\.php\?tid=\d+&page=1&authorid=\d+', 'priority':1000,'region':'//div[@class="wrap"]/form[@name="modactions"]/div[1]'},#帖子全部内容
-                                          'itemCollectionName':'Article','regex':r'viewthread\.php\?action=printable&tid=\d+', 'priority':1000,'region':'//span[@class="headactions"]'},#帖子全部内容
-					  ] 
+					],
+			    
+			     #普通list页正则表达式
+			     'normalRegex':[
+					    {'regex':r'forumdisplay.php\?fid=\d+', 'priority':700,'region':'//div/div[@class="pages"]'},#列表后续页，在板块页中找 &page=\d+$
+					    ],
+			     #item页正则表达式 itemCollectionName对应item存放的数据表名
+			     'itemRegex':[
+                                  {'itemCollectionName':'Article',
+                                   'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
+                                   'itemPrintPageFormat':r'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=%s',
+                                   'itemTidRegex':r'tid=(\d+)',
+                                   'region':'//div/form/table',
+                                   'priority':1000},
+                                  ]
 					
           },
 
