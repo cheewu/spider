@@ -443,7 +443,7 @@ spiderConfig = {
                                   ],
                      'imageXpath':['//div[@class="yjDetail cf"]//img/@src']
                      },
-
+            #------------------------------------------------------------------------------------------------------------------------------------
             "bbsSpider":{
                      'homePage':'http://www.go2eu.com/bbs/', #后面要加 /
                      'allowedDomains':["go2eu.com"],
@@ -606,6 +606,30 @@ spiderConfig = {
                                  ]
 			    
           },
+
+	  'xcarSpider':{
+                           'allowedDomains':["xcar.com.cn"],
+                           'startUrls':[
+                                        'http://www.xcar.com.cn/bbs/forumdisplay.php?fid=175'
+					],
+			    
+			     #普通list页正则表达式
+			     'normalRegex':[
+					    {'regex':r'forumdisplay.php\?fid=175&page=\d+', 'priority':700,'region':'//div[@class="FpageNum"]'},#列表页，在板块页中找 
+					    ],
+			     #item页正则表达式 itemCollectionName对应item存放的数据表名
+			     'itemRegex':[
+                                  {'itemCollectionName':'Article',
+                                   'regex':r'(viewthread\.php\?tid=\d+)|(http:\/\/www\.xcar\.com\.cn\/bbs\/viewthread\.php\?action=printable&tid=\d+)',
+                                   'itemPrintPageFormat':r'http://www.xcar.com.cn/bbs/viewthread.php?action=printable&tid=%s',
+                                   'itemTidRegex':r'tid=(\d+)',
+                                   'region':'//div[@class="maintable"]',
+                                   'priority':1000},
+                                  ]
+					
+          },
+
+
 
 
 
