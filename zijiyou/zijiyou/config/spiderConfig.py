@@ -471,7 +471,6 @@ spiderConfig = {
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
-#                                    {'regex':r'forumdisplay.php\?fid=\d+$', 'priority':700,'region':'//body/div/div[@class="mainbox forumlist"]'},#列表第一页/板块页，在种子页中找
                                     {'regex':r'forumdisplay.php\?fid=\d+', 'priority':700,'region':'//div/div[@class="pages"]'},#列表后续页，在板块页中找 &page=\d+$
                                     ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
@@ -486,17 +485,22 @@ spiderConfig = {
                      },
 
 	      "55bbsSpider":{
-                     'homePage':'http://bbs.55bbs.com/', #后面要加 /
                      'allowedDomains':["bbs.55bbs.com"],
                      'startUrls':['http://bbs.55bbs.com/forum-34-1.html'],
-                     #普通list页正则表达式
-                     'normalRegex':[   
-                                    {'regex':r'thread-\d+-1-\d+.html', 'priority':1000,'region':'//div[@class="mainbox threadlist"]'},#帖子第一页，在列表页中找				    
-				                    {'regex':r'forum-34-\d+.html$', 'priority':1000,'region':'//div[@class="pages"]'},  
-                                    ],
-                     #帖子全部内容
-                     'itemRegex':[ {'itemCollectionName':'Article','regex':r'viewthread\.php\?action=printable&tid=\d+', 'priority':1000,'region':'//span[@class="headactions"]'}
-				 ] 
+		      #普通list页正则表达式
+		     'normalRegex':[
+			     {'regex':r'forum-34-\d+.html$', 'priority':1000,'region':'//div[@class="pages"]'},
+				    ],
+		     #item页正则表达式 itemCollectionName对应item存放的数据表名
+		     'itemRegex':[
+                                 {'itemCollectionName':'Article',
+                                  'regex':r'(thread-\d+-1-\d+.html)|(http:\/\/bbs\.55bbs\.com\/viewthread\.php\?action=printable&tid=.*)',
+                                  'itemPrintPageFormat':r'http://bbs.55bbs.com/viewthread.php?action=printable&tid=%s',
+                                  'itemTidRegex':r'thread-(\d+)',
+                                  'region':'//div[@class="mainbox threadlist"]',
+                                  'priority':1000},
+                                 ]
+		    
                      },
            
 	      'go2euSpider':{

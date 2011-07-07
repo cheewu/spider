@@ -4,8 +4,8 @@ Created on 2011-3-28
 
 @author: shiym
 '''
-from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-class BBS55(BaseCrawlSpider):
+from zijiyou.spiders.baseBBSSpider2 import BaseBBSSpider2
+class BBS55(BaseBBSSpider2):
     '''
     Spider for 55bbs.com
     '''
