@@ -630,6 +630,34 @@ spiderConfig = {
           },
 
 
+	'lotourbbsSpider':{
+                           'allowedDomains':["bbs.lotour.com"],
+                           'startUrls':[
+                                        'http://bbs.lotour.com/forum-2-1.html', #行游中国
+					'http://bbs.lotour.com/forum-18-1.html', #异域风情
+					'http://bbs.lotour.com/forum-10-1.html' ,#光影天堂
+					'http://bbs.lotour.com/forum-58-1.html', #美食生活
+					'http://bbs.lotour.com/forum-210-1.html', #旅游热讯
+					'http://bbs.lotour.com/forum-2-1.html' #行游中国
+					],
+			    
+			    #普通list页正则表达式
+                            'normalRegex':[
+                                            {'regex':r'forum-\d+-\d+.html$', 'priority':700,'region':'//div[@class="pages"]'},#帖子列表页
+                                           
+                                            ],
+                            #item页正则表达式 itemCollectionName对应item存放的数据表名
+                            'itemRegex':[
+                                 {'itemCollectionName':'Article',
+                                  'regex':r'(thread-\d+-1-\d+.html)|(http:\/\/bbs.lotour.com\/viewthread.php\?action=printable&tid=\d+)',
+                                  'itemPrintPageFormat':r'http://bbs.lotour.com/viewthread.php?action=printable&tid=%s',
+                                  'itemTidRegex':r'thread-(\d+)',
+                                  'region':'//div[@id="threadlist"]',
+                                  'priority':1000},
+                                 ]
+					
+          },
+
 
 
 
