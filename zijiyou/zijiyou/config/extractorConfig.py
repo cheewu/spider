@@ -1,6 +1,19 @@
 # -*- coding: utf-8 -*-
 
 extractorConfig = {
+
+                    "lotourSpider":{
+		     
+                                   "Article":{
+                                                                                          
+                                                r'publishDate':r'/html/body/div[2]/div/div/div/p',
+                                                r'content':r'//*[@id="zoom"]',                                                
+                                                r'title':r'//div[@id="maincontent"]/h6',
+                                                
+                                    },
+                     },
+
+
                     "daodaoSpider":{
                                     "POI":{
                                                r'name':r'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
