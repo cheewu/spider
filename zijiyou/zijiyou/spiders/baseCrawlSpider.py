@@ -238,15 +238,15 @@ class BaseCrawlSpider(CrawlSpider):
         items=[]
         log.msg('保存item页，类型： %s' % itemCollectionName, level=log.INFO)         
         loader = ZijiyouItemLoader(PageDb(),response=response)
-        loader.add_value('spiderName', self.name)
-        loader.add_value('url', response.url)
-        loader.add_value('responseBody', response.body_as_unicode())
-        loader.add_value('optDateTime', datetime.datetime.now())
         pageResponse = loader.load_item()
-        pageResponse.setdefault('collectionName', itemCollectionName)
+        pageResponse.setdefault('itemCollectionName', itemCollectionName)
+        pageResponse.setdefault('spiderName', self.name)
+        pageResponse.setdefault('url', response.url)
+        pageResponse.setdefault('responseBody', response.body_as_unicode())
+        pageResponse.setdefault('optDateTime', datetime.datetime.now())
         items.append(pageResponse)
-        print 'test :%s' % len(items)
-        
+
+
 #        #解析item
 #        dtParseItemBegin=datetime.datetime.now()
 #        item=self.itemParser.parseItem(spiderName=self.name, itemCollectionName=itemCollectionName, response=response)
