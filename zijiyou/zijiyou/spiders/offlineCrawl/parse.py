@@ -56,7 +56,7 @@ class Parse(object):
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
         self.whereJson={'status':100}#{'status':100} 测试
-        self.limitNum=50
+        self.limitNum=1#50 
         self.responseTotalNum=0#self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
 #        self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
         self.curSeek=0
@@ -116,7 +116,12 @@ class Parse(object):
                         continue
                     else:
                         print '新item的数量：%s，类型：%s' % (len(v),k)
-                    objId = self.mongoApt.saveItem(k, v)
+                    #拆箱-向后兼容
+#                    newItem={}
+#                    for k,v in item.items():
+#                        newItem[k] = v
+#                    objId = self.mongoApt.saveItem(k, newItem)
+                    objId = self.mongoApt.saveItem(k, item)
                     print '保存新item：%s, objId:%s' % (itemCollectionName,objId)
                     if objId:
                         self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
@@ -156,31 +161,32 @@ class Parse(object):
             raise NotConfigured
         
         #耦合较大且代码重复，后续计划用工厂模式取代
-        item=None
-        if itemCollectionName == 'UrlDb':
-            item=UrlDb()
-        elif itemCollectionName == 'PageDb':
-            item=PageDb()
-        elif itemCollectionName == 'POI':
-            item=POI()
-        elif itemCollectionName == 'Article':
-            item=Article()
-        elif itemCollectionName == 'Note':
-            item=Note()
-        elif itemCollectionName == 'MemberInfo':
-            item=MemberInfo()
-        elif itemCollectionName == 'MemberTrack':
-            item=MemberTrack()
-        elif itemCollectionName == 'MemberFriend':
-            item=MemberFriend()
-        elif itemCollectionName == 'MemberNoteList':
-            item=MemberNoteList()
-        elif itemCollectionName == 'Region':
-            item=Region()
-        elif itemCollectionName == 'KeyWord':
-            item=KeyWord()
-        else:
-            raise NotConfigured
+#        item=None
+#        if itemCollectionName == 'UrlDb':
+#            item=UrlDb()
+#        elif itemCollectionName == 'PageDb':
+#            item=PageDb()
+#        elif itemCollectionName == 'POI':
+#            item=POI()
+#        elif itemCollectionName == 'Article':
+#            item=Article()
+#        elif itemCollectionName == 'Note':
+#            item=Note()
+#        elif itemCollectionName == 'MemberInfo':
+#            item=MemberInfo()
+#        elif itemCollectionName == 'MemberTrack':
+#            item=MemberTrack()
+#        elif itemCollectionName == 'MemberFriend':
+#            item=MemberFriend()
+#        elif itemCollectionName == 'MemberNoteList':
+#            item=MemberNoteList()
+#        elif itemCollectionName == 'Region':
+#            item=Region()
+#        elif itemCollectionName == 'KeyWord':
+#            item=KeyWord()
+#        else:
+#            raise NotConfigured
+        item={};
         
         item['collectionName']=itemCollectionName
         if itemCollectionName in self.collectionNameMap:
