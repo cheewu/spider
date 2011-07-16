@@ -20,8 +20,8 @@ class UrlDb(BaseItem):
     dateTime=Field() # initiated by middleWare who save it to DB
     updateInterval=Field() #更新间隔
 
-    def __str__(self):
-        return "UrlDb"
+#    def __str__(self):
+#        return "UrlDb"
     
     def __init__(self,*kw):
         super(UrlDb, self).__init__(*kw)
@@ -37,8 +37,8 @@ class PageDb(BaseItem):
     responseBody = Field() 
     optDateTime=Field() #保存时间
     
-    def __str__(self):
-        return 'PageDbItem'
+#    def __str__(self):
+#        return 'PageDbItem'
     
     def __init__(self,*kw):
         super(PageDb, self).__init__(*kw)
@@ -71,8 +71,8 @@ class POI(BaseItem):
     imageUrls = Field()     #图片原始链接列表
     imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
         
-    def __str__(self):
-        return "POIItem"
+#    def __str__(self):
+#        return "POIItem"
     
     def __init__(self,*kw):
         super(POI, self).__init__(*kw)
@@ -111,8 +111,8 @@ class Article(BaseItem):
     
     md5=Field()             #MD5值
     
-    def __str__(self):
-        return "ArticleItem"
+#    def __str__(self):
+#        return "ArticleItem"
     
     def __init__(self,*kw):
         super(Article, self).__init__(*kw)
@@ -143,8 +143,8 @@ class Note(BaseItem):
     
     md5=Field()             #MD5值
 
-    def __str__(self):
-        return "NoteItem"
+#    def __str__(self):
+#        return "NoteItem"
     
     def __init__(self,*kw):
         super(Note, self).__init__(*kw)
@@ -176,8 +176,8 @@ class MemberInfo(BaseItem):
     trackPlan=Field()   #计划去哪
     friends=Field()     #好友列表    
 
-    def __str__(self):
-        return "MemberInfo"
+#    def __str__(self):
+#        return "MemberInfo"
     
     def __init__(self,*kw):
         super(MemberInfo, self).__init__(*kw)
@@ -195,8 +195,8 @@ class MemberTrack(BaseItem):
     like=Field()
     plan=Field()
 
-    def __str__(self):
-        return "MemberTrack"
+#    def __str__(self):
+#        return "MemberTrack"
     
     def __init__(self,*kw):
         super(MemberTrack, self).__init__(*kw)
@@ -216,8 +216,8 @@ class MemberFriend(BaseItem):
 #    goneNumList = Field()
 #    discoverList = Field()
 
-    def __str__(self):
-        return "MemberFriend"
+#    def __str__(self):
+#        return "MemberFriend"
     
     def __init__(self,*kw):
         super(MemberFriend, self).__init__(*kw)
@@ -239,8 +239,8 @@ class MemberNoteList(BaseItem):
     imageUrls = Field()     #图片原始链接列表
     imagesInfo = Field()    #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
 
-    def __str__(self):
-        return "MemberNoteList"
+#    def __str__(self):
+#        return "MemberNoteList"
     
     def __init__(self,*kw):
         super(MemberNoteList, self).__init__(*kw)
@@ -256,8 +256,8 @@ class Region(BaseItem):
     introduction=Field()
     hotHotelLink=Field()
     
-    def __str__(self):
-        return "Region"
+#    def __str__(self):
+#        return "Region"
     
     def __init__(self,*kw):
         super(Region, self).__init__(*kw)

@@ -242,7 +242,7 @@ class BaseCrawlSpider(CrawlSpider):
         pageResponse.setdefault('itemCollectionName', itemCollectionName)
         pageResponse.setdefault('spiderName', self.name)
         pageResponse.setdefault('url', response.url)
-        pageResponse.setdefault('responseBody', response.body_as_unicode())
+        pageResponse.setdefault('responseBody', (response.body_as_unicode()).encode('utf-8'))
         pageResponse.setdefault('optDateTime', datetime.datetime.now())
         items.append(pageResponse)
 

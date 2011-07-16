@@ -56,7 +56,7 @@ class Parse(object):
         self.collectionNameMap={'Attraction':'POI',
                                  'Hotel':'POI'}
         self.whereJson={'status':100}#{'status':100} 测试
-        self.limitNum=1#50 
+        self.limitNum=50# test should be 50 
         self.responseTotalNum=0#self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
 #        self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
         self.curSeek=0
@@ -72,8 +72,8 @@ class Parse(object):
             self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
         
         heard={'Content-type':'text/html',
-               'encoding':'utf-8',
-               'Content-Type': ['text/html;charset=UTF-8'],
+               'encoding':'uft-8',#uft-8
+               'Content-Type': ['text/html;charset=UTF-8'], #UTF-8
                'Pragma': ['no-cache'], 
                'Cache-Control': ['no-cache,no-store,must-revalidate']
                }
@@ -202,7 +202,6 @@ class Parse(object):
                 self.parseLog('字段%s 为空 url：%s' %(k,response.url) ,level=LogLevel.WARNING)
                 continue
             value=("-".join("%s" % p for p in values)).encode("utf-8")
-            
             '''处理电话号码'''
             if(k == 'telNum'):
                 if len(values) > 3:
@@ -392,6 +391,6 @@ class Parse(object):
 
 #测试
 #if __name__ == '__main__':
-#    p=Parse()
+#    p=Parse(isOffline=True)
 #    p.parse()
 #    print '解析完成了！'

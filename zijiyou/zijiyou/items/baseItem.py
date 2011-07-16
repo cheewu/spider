@@ -15,8 +15,8 @@ class BaseItem(Item):
     spiderName=Field()      #爬虫名
     url=Field()             #来源网页链接
 
-    def __str__(self):
-        return "BaseItem"
+#    def __str__(self):
+#        return "BaseItem"
 
     def __init__(self,*kw):
         super(BaseItem, self).__init__(*kw)
