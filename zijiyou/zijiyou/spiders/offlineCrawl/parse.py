@@ -64,7 +64,7 @@ class Parse(object):
         self.curSeek=0
 #        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
 #        print 'init完成'
-#        self.txtDupChecker=TxtDuplicateFilter()
+        self.txtDupChecker=TxtDuplicateFilter(md5SourceCols=['Article','Note'])
     
     def parse(self):
         '''
@@ -165,16 +165,6 @@ class Parse(object):
         
         
         hxs=HtmlXPathSelector(response)
-#        heard={'Content-type':'text/html',
-#               'encoding':'gbk',#uft-8 gbk
-#               'Content-Type': ['text/html;charset=gbk'], #UTF-8
-#               'Pragma': ['no-cache'], 
-#               'Cache-Control': ['no-cache,no-store,must-revalidate']
-#               }
-#        response2=HtmlResponse(str(response.url), status=200, headers=heard, body=str(responseBody.decode('utf-8')), flags=None, request=None )
-#        hxs=HtmlXPathSelector(response2)#test
-        
-        #define xpath rule
         if not itemCollectionName or not itemCollectionName in config:
             self.parseLog('类型没有找到：%s ' % itemCollectionName, level=LogLevel.ERROR)
             raise NotConfigured
@@ -307,7 +297,12 @@ class Parse(object):
         #文本排重
         if itemCollectionName in self.needMd5:
             if 'content' in item:
-                item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
+                isDup,md5Val = self.txtDupChecker.checkDuplicate(item['url'], item['content'])
+                if isDup:
+                    self.parseLog('duplicate id为“%s”的输入被确定与md5Vale为“%s”的现有文本重复' % (id,md5Val), level=LogLevel.WARNING)
+                    return None
+                else:
+                    item['md5']=md5Val
         
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
@@ -334,7 +329,6 @@ class Parse(object):
                 newContent = matches.group(1)
                 return newContent
         if name == 'content':
-            print '正文抽取'
             mainText = doExtract(content,threshold=False)
             #print mainText
             return mainText

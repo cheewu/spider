@@ -98,11 +98,13 @@ class MongoDbApt(object):
         
         results=[]
         if mycursor:
-            gc.disable()
             for p in mycursor:
                 results.append(p)
-            gc.enable()
         return results
+    
+    def findCursor(self,colName=None,whereJson={},fieldsJson={}):
+        cursor = self.db[colName].find(whereJson,fieldsJson)
+        return cursor 
     
     def findFieldsWithLimit(self,colName,whereJson={},limitNum=-1):
         mycursor=None
