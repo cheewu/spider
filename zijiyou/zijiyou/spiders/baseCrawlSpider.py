@@ -66,7 +66,7 @@ class BaseCrawlSpider(CrawlSpider):
         if(not self.initConfig()):
             log.msg('爬虫配置文件加载失败！' , level=log.ERROR)
             raise NotConfigured
-        self.itemParser=Parse()
+#        self.itemParser=Parse()
         
     def getStartUrls(self,spiderName=None,colName=None):
         """
@@ -244,6 +244,8 @@ class BaseCrawlSpider(CrawlSpider):
         pageResponse.setdefault('url', response.url)
         pageResponse.setdefault('responseBody', (response.body_as_unicode()).encode('utf-8'))
         pageResponse.setdefault('optDateTime', datetime.datetime.now())
+        pageResponse.setdefault('coding', response.encoding)
+        pageResponse.setdefault('headers', response.headers)
         items.append(pageResponse)
 
 

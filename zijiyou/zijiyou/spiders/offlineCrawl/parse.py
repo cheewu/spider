@@ -5,16 +5,18 @@ Created on 2011-4-20
 @author: shiym
 '''
 from bson.objectid import ObjectId
+from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
 from zijiyou.common import utilities
+from zijiyou.common.utilities import TxtDuplicateFilter
 from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.enumModel import LogLevel
 from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
-    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord ,Region
+    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord, Region
 from zijiyou.spiders.offlineCrawl.extractText import doExtract
 import datetime
 import json
@@ -62,6 +64,7 @@ class Parse(object):
         self.curSeek=0
 #        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
 #        print 'init完成'
+#        self.txtDupChecker=TxtDuplicateFilter()
     
     def parse(self):
         '''
@@ -72,8 +75,8 @@ class Parse(object):
             self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
         
         heard={'Content-type':'text/html',
-               'encoding':'uft-8',#uft-8
-               'Content-Type': ['text/html;charset=UTF-8'], #UTF-8
+               'encoding':'gb18030',#uft-8
+               'Content-Type': ['text/html;charset=gb18030'], #UTF-8
                'Pragma': ['no-cache'], 
                'Cache-Control': ['no-cache,no-store,must-revalidate']
                }
@@ -91,8 +94,14 @@ class Parse(object):
                 if itemCollectionName in self.specialItem:
                     item = self.parseSpecialItem(itemCollectionName, p)
                 else:
-                    response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(p['responseBody']), flags=None, request=None )
-                    item = self.parseItem(spiderName,itemCollectionName, response)
+                    if 'headers' in p:
+                        heard=p['headers']
+                    #对body进行编码
+                    responseBody=p['responseBody']
+                    if 'coding' in p:
+                        responseBody=responseBody.decode('utf-8').encode(p['coding'])
+                    response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None )
+                    item = self.parseItem(spiderName,itemCollectionName, response,responseBody=p['responseBody']) # test
                 whereJson={'_id':ObjectId(p['_id'])}
                 if itemCollectionName in self.collectionNameMap:
                     itemCollectionName=self.collectionNameMap[itemCollectionName]
@@ -144,7 +153,7 @@ class Parse(object):
             self.loger.close()
             print 'OK !关闭日志'
 
-    def parseItem(self,spiderName=None, itemCollectionName=None, response=None):
+    def parseItem(self,spiderName=None, itemCollectionName=None, response=None,responseBody=''):
         '''
         parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
@@ -153,7 +162,17 @@ class Parse(object):
         if not config:
             self.parseLog('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName, level=LogLevel.ERROR)
             raise NotConfigured
+        
+        
         hxs=HtmlXPathSelector(response)
+#        heard={'Content-type':'text/html',
+#               'encoding':'gbk',#uft-8 gbk
+#               'Content-Type': ['text/html;charset=gbk'], #UTF-8
+#               'Pragma': ['no-cache'], 
+#               'Cache-Control': ['no-cache,no-store,must-revalidate']
+#               }
+#        response2=HtmlResponse(str(response.url), status=200, headers=heard, body=str(responseBody.decode('utf-8')), flags=None, request=None )
+#        hxs=HtmlXPathSelector(response2)#test
         
         #define xpath rule
         if not itemCollectionName or not itemCollectionName in config:
@@ -285,8 +304,10 @@ class Parse(object):
                 value=self.parseSpecialField(k, value)
             item[k]=value
             
+        #文本排重
         if itemCollectionName in self.needMd5:
-            item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
+            if 'content' in item:
+                item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
         
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
@@ -385,6 +406,8 @@ class Parse(object):
             if not msg or not level or len(msg)<2:
                 return
             self.loger.write('%s level=%s  :%s \n' %(datetime.datetime.now(),level,msg))
+        else:
+            log.msg('%s level=%s  :%s \n' %(datetime.datetime.now()), level=level)
         
     def ExtText(self,input):
         pass

@@ -37,6 +37,9 @@ class PageDb(BaseItem):
     responseBody = Field() 
     optDateTime=Field() #保存时间
     
+    coding=Field()#编码
+    headers=Field()#文件头
+    
 #    def __str__(self):
 #        return 'PageDbItem'
     
