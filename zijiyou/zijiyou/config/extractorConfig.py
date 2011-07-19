@@ -59,6 +59,11 @@ extractorConfig = {
                                                 r'type':r'//div[@class="article-title borderBom"]/div/h1/text()'   
                                     }
                 },
+                "meishiSpider":{                                       
+                                    "Article":{                                               
+                                                'content':r'//table/tr/td[@class="main2"]',  
+                                            }
+                                },
                 "lvpingSpider":{                                    
                                     "Attraction":{
                                                r'name':r'//h1[@property="v:name"]/text()',

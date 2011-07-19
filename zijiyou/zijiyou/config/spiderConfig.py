@@ -3,25 +3,40 @@
 spiderConfig = {
                 "baseSeSpider":{
                      'allowedDomains':[],
-                     'startUrls':['http://www.baidu.com'],
-                     'seUrlFormat':[{'seName':'sosoBlog',
+                     'startUrls':['http://blog.soso.com'],
+                     'seUrlFormat':[{
+                                     #搜索引擎名称
+                                     'seName':'sosoBlog',
+                                     #搜素格式
                                      'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s&pg=%s',#搜索格式
 #                                     'sePageNum':5,
+                                     #输入编码
                                      'encode':'GBK',
+                                     #搜素结果中，目标页的url的xpath
                                      'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
+                                     #搜素结果中，下一页搜素结果的xpath
                                      'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',
+                                     #搜素结果中搜素结果页数xpath
                                      'totalRecordXpath':'//div[@id="sNum"]/text()',
+                                     #搜素结果中搜素结果页数
                                      'totalRecordRegex':r'[\d|,]+',
+                                     #搜素引擎下一页的格式
                                      'nextPagePattern':'http://blog.soso.com/qz.q?w=keyWord&sc=qz&ty=blog&sd=0&st=r&cid=&op=blog.blog&pid=qz.s.res&pg=pageNum',#无法通过xpath获得js动态生成的下一页区域，使用模板
+                                     #搜素引擎域
                                      'homePage':'http://blog.soso.com'                                  
                                      }],
                     'seXpath':{
+                               #解析搜素结果页中的数据，如标题、发布时间、摘要、作者等
                                "sosoBlog":{
-                                    r'title':r'//ol/li/h3/a',
-                                    r'publishDate':r'//ol/li/h3/text()',
-                                    r'content':None,
-                                    r'abstract':r'//ol/li'
-                                    }
+                                           #标题
+                                           r'title':r'//ol/li/h3/a',
+                                           #发布时间
+                                           r'publishDate':r'//ol/li/h3/text()',
+                                           #内容
+                                           r'content':None,
+                                           #摘要
+                                           r'abstract':r'//ol/li'
+                                           }
                                },
                      #普通list页正则表达式
                      'normalRegex':[
@@ -141,7 +156,8 @@ spiderConfig = {
 		 "meishiSpider":{
                      'allowedDomains':["meishiditu.com" ],
                      'startUrls':[ 		                   
-				    'http://www.meishiditu.com/'			  
+#				    'http://www.meishiditu.com/'			 
+                        'http://www.meishiditu.com/food/showpage.php?id=20973' 
 				   ],
                      #普通list页正则表达式
                      'normalRegex':[
@@ -397,7 +413,8 @@ spiderConfig = {
 		   
                 "lvpingSpider":{
                      'allowedDomains':["lvping.com"],
-                     'startUrls':[#'http://www.lvping.com/showjournal-d100008-r1326227-journals.html'
+                     'startUrls':[
+#                                  'http://www.lvping.com/showjournal-d100008-r1326227-journals.html'#test
                                   'http://www.lvping.com/NorthAmericaNavigation.aspx',
                                   'http://www.lvping.com/EuropeNavigation.aspx',
                                   'http://www.lvping.com/AsiaNavigation.aspx',
@@ -406,7 +423,7 @@ spiderConfig = {
                                   'http://www.lvping.com/southAmericaNavigation.aspx',
                                   'http://www.lvping.com/AfricaNavigation.aspx',
 
-#                                  #游记攻略
+##                                  #游记攻略
                                   'http://www.lvping.com/Journals.aspx?type=1',
                                   'http://www.lvping.com/Journals.aspx?selecttype=2',
                                   'http://www.lvping.com/Journals.aspx'
@@ -420,7 +437,7 @@ spiderConfig = {
                                     {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
                                     {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-[r]+\w+\d+-\w+\.html$', 'priority':450}, #景点列表
                                     
-#                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':1}, #攻略列表
+##                                    {'regex':r'(http://www.lvping.com/)?(journals-)+d\d+-s\d+-p\d+-g/\w+\.html$', 'priority':1}, #攻略列表
                                     {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':700},# 会员游记列表
                                     {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=0.*', 'priority':700},# 游记列表
                                     {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':700},# 攻略列表
