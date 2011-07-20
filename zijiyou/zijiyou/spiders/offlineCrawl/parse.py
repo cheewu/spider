@@ -130,7 +130,7 @@ class Parse(object):
 #                    for k,v in item.items():
 #                        newItem[k] = v
 #                    objId = self.mongoApt.saveItem(k, newItem)
-                    objId = self.mongoApt.saveItem(k, item)
+                    objId = self.mongoApt.saveItem(k, v)
                     print '保存新item：%s, objId:%s' % (itemCollectionName,objId)
                     if objId:
                         self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
@@ -298,11 +298,16 @@ class Parse(object):
         if itemCollectionName in self.needMd5:
             if 'content' in item:
                 isDup,md5Val = self.txtDupChecker.checkDuplicate(item['url'], item['content'])
+                item['md5']=md5Val
                 if isDup:
                     self.parseLog('duplicate id为“%s”的输入被确定与md5Vale为“%s”的现有文本重复' % (id,md5Val), level=LogLevel.WARNING)
-                    return None
+                    item['isDup']='Ture'
                 else:
-                    item['md5']=md5Val
+                    item['isDup']='False'
+                    #暂时注释：认定重复的文档页保存，但标注重复
+#                    return None
+#                else:
+#                    item['md5']=md5Val
         
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
