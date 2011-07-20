@@ -1,126 +1,218 @@
 # -*- coding: utf-8 -*-
 
 spiderConfig = {
-                "baseSeSpider":{
-                     'allowedDomains':[],
-                     'startUrls':['http://www.baidu.com'],
-                     'seUrlFormat':[{'seName':'sosoBlog',
-                                     'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s&pg=%s',#搜索格式
-#                                     'sePageNum':5,
-                                     'encode':'GBK',
-                                     'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
-                                     'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',
-                                     'totalRecordXpath':'//div[@id="sNum"]/text()',
-                                     'totalRecordRegex':r'[\d|,]+',
-                                     'nextPagePattern':'http://blog.soso.com/qz.q?w=keyWord&sc=qz&ty=blog&sd=0&st=r&cid=&op=blog.blog&pid=qz.s.res&pg=pageNum',#无法通过xpath获得js动态生成的下一页区域，使用模板
-                                     'homePage':'http://blog.soso.com'                                  
-                                     }],
-                    'seXpath':{
-                               "sosoBlog":{
-                                    r'title':r'//ol/li/h3/a',
-                                    r'publishDate':r'//ol/li/h3/text()',
-                                    r'content':None,
-                                    r'abstract':r'//ol/li'
-                                    }
-                               },
-                     #普通list页正则表达式
-                     'normalRegex':[
-                                    "http://blog.soso.com/qz\.q"
-                                    ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[]
-                     },
+    
+    "baseSeSpider":{
+        'allowedDomains':[],
+        'startUrls':['http://www.baidu.com'],
+        'seUrlFormat':[{
+            'seName':'sosoBlog',
+            'format':'http://blog.soso.com/qz.q?sc=qz&pid=qz.s.res&ty=blog&st=r&op=blog.blog&sd=0&w=%s&pg=%s',#搜索格式
+#            'sePageNum':5,
+            'encode':'GBK',
+            'resultItemLinkXpath':'//div[2]/div[2]/div[2]/ol/li/a/@href',
+            'nextPageLinkXpath':'//div[@class="page"]/div[@class="pg"]/a/@href',
+            'totalRecordXpath':'//div[@id="sNum"]/text()',
+            'totalRecordRegex':'[\d|,]+',
+            'nextPagePattern':'http://blog.soso.com/qz.q?w=keyWord&sc=qz&ty=blog&sd=0&st=r&cid=&op=blog.blog&pid=qz.s.res&pg=pageNum',#无法通过xpath获得js动态生成的下一页区域，使用模板
+            'homePage':'http://blog.soso.com'                                  
+        }],
+        'seXpath':{
+            "sosoBlog":{
+                'title':'//ol/li/h3/a',
+                'publishDate':'//ol/li/h3/text()',
+                'content':None,
+                'abstract':'//ol/li'
+            }
+        },
+        #普通list页正则表达式
+        'normalRegex':["http://blog.soso.com/qz\.q"],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[]
+    },
 		     
-                "daodaoSpider":{
-                     'allowedDomains':["daodao.com"],
-                     'startUrls':['http://www.daodao.com/Attractions-g294211-Activities-China.html'],
-                     #普通list页正则表达式
-                     'normalRegex':[
-                                    {'regex':r'Tourism-g\d+-.*-Vacations\.html$', 'priority':10},
-                                    {'regex':r'Attractions-g\d+-Activities-.*\.html$', 'priority':50},
-                                    {'regex':r'Tourism-g\d+-c\d+-[^n].*\.html((\?pg=\d+)?|(\?kw=.*&st=8))$', 'priority':50} #包括游记列表、标签
-                                    ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[{'itemCollectionName':'Attraction','regex':r'Attraction_Review-g\d+-.*-Reviews-.*\.html$', 'priority':600},  #AttractionItem
-                                  {'itemCollectionName':'Article','regex':r'Tourism-g\d+-c\d+-n\d+.*\.html$', 'priority':500},              #NoteItem
-                                  {'itemCollectionName':'Note','regex':r'Changshi-g\d+-.*\.html$', 'priority':500}                       #CommonSenseItem
-                                  ]
-                     },
+    "daodaoSpider":{
+        'allowedDomains':["daodao.com"],
+        'startUrls':['http://www.daodao.com/Attractions-g294211-Activities-China.html'],
+        #普通list页正则表达式
+        'normalRegex':[
+            {
+                'regex':r'Tourism-g\d+-.*-Vacations\.html$', 
+                'priority':10
+            },
+            {
+                'regex':r'Attractions-g\d+-Activities-.*\.html$', 
+                'priority':50
+            },
+            #包括游记列表、标签
+            {
+                'regex':r'Tourism-g\d+-c\d+-[^n].*\.html((\?pg=\d+)?|(\?kw=.*&st=8))$', 
+                'priority':50
+            } 
+        ],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[
+            #AttractionItem
+            {
+                'itemCollectionName':'Attraction',
+                'regex':r'Attraction_Review-g\d+-.*-Reviews-.*\.html$', 
+                'priority':600
+            },  
+            #NoteItem
+            {
+                'itemCollectionName':'Article',
+                'regex':r'Tourism-g\d+-c\d+-n\d+.*\.html$', 
+                'priority':500
+            },              
+            #CommonSenseItem
+            {
+                'itemCollectionName':'Note',
+                'regex':r'Changshi-g\d+-.*\.html$', 
+                'priority':500
+            }
+        ]
+    },
 
-		  
-
-		  "yahooSpider":{
-                     'allowedDomains':["travel.cn.yahoo.com" ],
-                     'startUrls':[ 
-		                   'http://travel.cn.yahoo.com/yxk/category/581/',
-				    'http://travel.cn.yahoo.com/yxk/category/586/',
-				    'http://travel.cn.yahoo.com/yxk/category/586/',
-				    'http://travel.cn.yahoo.com/yxk/category/574/',
-				    'http://travel.cn.yahoo.com/yxk/category/562/',
-				    'http://travel.cn.yahoo.com/yxk/category/557/',
-				    'http://travel.cn.yahoo.com/',
-				    'http://travel.cn.yahoo.com/travel_gonglve.html'			  
-				   ],
-                     #普通list页正则表达式
-                     'normalRegex':[
-                                    {'regex':r'^http://travel.cn.yahoo.com/store/d+/$', 'priority':1000},
-				    {'regex':r'^http://travel.cn.yahoo.com/area/\w+\.html$', 'priority':1000},
-				    {'regex':r'^http://travel.cn.yahoo.com/yxk/category/\d+/index_\d+.html$', 'priority':1000},
-				    {'regex':r'^http://travel.cn.yahoo.com/store/\d+/article-\d+-list.html$', 'priority':1000}
-				   		     
-                                    
-                                    ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[{'itemCollectionName':'Article','regex':r'^http://travel.cn.yahoo.com/ypen/\d+/\d+\.html$', 'priority':600},  #Article
-                                 {'itemCollectionName':'Article','regex':r'^http://travel.cn.yahoo.com/store/\d+/article-\d+-item.html$', 'priority':600},
-				 {'itemCollectionName':'Article','regex':r'^http://travel.cn.yahoo.com/yxk/category/\d+/\w+.html$', 'priority':600},
-				 {'itemCollectionName':'Article','regex':r'^http://travel.cn.yahoo.com/newspic/travel/\d+/$', 'priority':600},
-				 {'itemCollectionName':'Article','regex':r'^http://travel.cn.yahoo.com/newspic/travel/\d+/\d+/$', 'priority':600}
-				  
-                                 ]
-                     },	
-
+    "yahooSpider":{
+        'allowedDomains':["travel.cn.yahoo.com" ],
+        'startUrls':[ 
+            'http://travel.cn.yahoo.com/yxk/category/581/',
+            'http://travel.cn.yahoo.com/yxk/category/586/',
+            'http://travel.cn.yahoo.com/yxk/category/586/',
+            'http://travel.cn.yahoo.com/yxk/category/574/',
+            'http://travel.cn.yahoo.com/yxk/category/562/',
+            'http://travel.cn.yahoo.com/yxk/category/557/',
+            'http://travel.cn.yahoo.com/',
+            'http://travel.cn.yahoo.com/travel_gonglve.html',			  
+        ],
+        #普通list页正则表达式
+        'normalRegex':[
+            {
+                'regex':r'^http://travel.cn.yahoo.com/store/d+/$',
+                'priority':1000
+            },
+            {
+                'regex':r'^http://travel.cn.yahoo.com/area/\w+\.html$', 
+                'priority':1000
+            },
+            {
+                'regex':r'^http://travel.cn.yahoo.com/yxk/category/\d+/index_\d+.html$', 
+                'priority':1000
+            },
+            {
+                'regex':r'^http://travel.cn.yahoo.com/store/\d+/article-\d+-list.html$', 
+                'priority':1000
+            }
+        ],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[
+            #Article
+            {
+                'itemCollectionName':'Article',
+                'regex':r'^http://travel.cn.yahoo.com/ypen/\d+/\d+\.html$',
+                'priority':600
+            },  
+            {
+                'itemCollectionName':'Article',
+                'regex':r'^http://travel.cn.yahoo.com/store/\d+/article-\d+-item.html$',
+                'priority':600
+            },
+            {
+                'itemCollectionName':'Article',
+                'regex':r'^http://travel.cn.yahoo.com/yxk/category/\d+/\w+.html$',
+                'priority':600
+            },
+            {
+                'itemCollectionName':'Article',
+                'regex':r'^http://travel.cn.yahoo.com/newspic/travel/\d+/$', 
+                'priority':600
+            },
+            {
+                'itemCollectionName':'Article',
+                'regex':r'^http://travel.cn.yahoo.com/newspic/travel/\d+/\d+/$', 
+                'priority':600
+            }
+        ]
+    },	
 		 
-		 "lvrenSpider":{
-                     'allowedDomains':["d.lvren.cn"],
-                     'startUrls':[ 
-		                   'http://d.lvren.cn/guide/',
-				   'http://news.lvren.cn'],
-                     #普通list页正则表达式
-                     'normalRegex':[
-                                    {'regex':r'^http://news.lvren.cn/plus/list.php\?tid=\d+$', 'priority':1000},
-				    {'regex':r'^http://news.lvren.cn/plus/list.php\?tid=\d+&TotalResult=\d+&PageNo=\d+$', 'priority':1000},
-				    {'regex':r'^http://d.lvren.cn/youji/\w+/$', 'priority':1000},
-				    {'regex':r'^http://d.lvren.cn/youji/\w+_p\d+/$', 'priority':1000}
-				   		     
-                                    
-                                    ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[{'itemCollectionName':'Article','regex':r'^http://news.lvren.cn/html/.*\.html$', 'priority':600},  #Article
-                                 {'itemCollectionName':'Article','regex':r'http://d.lvren.cn/gonglue/\w+/', 'priority':600},  #Article
-				 {'itemCollectionName':'Article','regex':r'http://d.lvren.cn/youji/\w+_\d+/', 'priority':600}				
-                                 ]
-                     },
+    "lvrenSpider":{
+        'allowedDomains':["d.lvren.cn"],
+        'startUrls':[ 
+            'http://d.lvren.cn/guide/',
+            'http://news.lvren.cn'
+        ],
+        #普通list页正则表达式
+        'normalRegex':[
+            {
+                'regex':r'^http://news.lvren.cn/plus/list.php\?tid=\d+$', 
+                'priority':1000
+            },
+            {
+                'regex':r'^http://news.lvren.cn/plus/list.php\?tid=\d+&TotalResult=\d+&PageNo=\d+$', 
+                'priority':1000
+            },
+            {
+                'regex':r'^http://d.lvren.cn/youji/\w+/$', 'priority':1000
+            },
+            {
+                'regex':r'^http://d.lvren.cn/youji/\w+_p\d+/$', 
+                'priority':1000
+            }
+       ],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[
+            #Article
+            {
+                'itemCollectionName':'Article',
+                'regex':r'^http://news.lvren.cn/html/.*\.html$',
+                'priority':600
+            },
+            #Article
+            {
+                'itemCollectionName':'Article',
+                'regex':r'http://d.lvren.cn/gonglue/\w+/',
+                'priority':600
+            },  
+            {
+                'itemCollectionName':'Article',
+                'regex':r'http://d.lvren.cn/youji/\w+_\d+/',
+                'priority':600
+            }
+        ]
+    },
 
-		   "sozhenSpider":{
-                     'allowedDomains':["sozhen.com"],
-                     'startUrls':[ 
-		                   'http://www.sozhen.com/'
-				   ],
-                     #普通list页正则表达式
-                     'normalRegex':[
-                                    {'regex':r'^http://www.sozhen.com/\w+/$', 'priority':1000},
-				    {'regex':r'^http://www.sozhen.com/default/chinatown_\d+.html$', 'priority':1000},
-				    {'regex':r'^http://www.sozhen.com/default/townarticle_\d+.html$', 'priority':1000},
-				    {'regex':r'^http://www.sozhen.com/default/newsarticle_\d+_\d+.html$', 'priority':1000}
-				   		     
-                                    
-                                    ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[{'itemCollectionName':'Article','regex':r'^http://www.sozhen.com/default/\w+con_\d+_\d+.html$', 'priority':600},  #Article
-                                 		
-                                 ]
-                     },
+    "sozhenSpider":{
+        'allowedDomains':["sozhen.com"],
+        'startUrls':['http://www.sozhen.com/'],
+        #普通list页正则表达式
+        'normalRegex':[
+            {
+                'regex':r'^http://www.sozhen.com/\w+/$',
+                'priority':1000
+            },
+            {
+                'regex':r'^http://www.sozhen.com/default/chinatown_\d+.html$',
+                'priority':1000
+            },
+            {
+                'regex':r'^http://www.sozhen.com/default/townarticle_\d+.html$',
+                'priority':1000
+            },
+            {
+                'regex':r'^http://www.sozhen.com/default/newsarticle_\d+_\d+.html$',
+                'priority':1000
+            }
+        ],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[
+            #Article
+            {
+            'itemCollectionName':'Article',
+            'regex':r'^http://www.sozhen.com/default/\w+con_\d+_\d+.html$',
+            'priority':600
+            },  
+        ]
+    },
 
 		   "21cnSpider":{
                      'allowedDomains':["travel.21cn.com"],
@@ -308,8 +400,10 @@ spiderConfig = {
 		 "17uSpider":{
                      'allowedDomains':["www.17u.com"],
                      'startUrls':[ 		                   
-				   "http://www.17u.com",
-				   "http://www.17u.com/blog/",
+#				   "http://www.17u.com",
+#				   "http://www.17u.com/blog/4255948",
+#                   'http://www.17u.com/blog/article/598845.html',
+                    'http://www.17u.com/news/shownews_1358128_0_c.html'
 				   ],
                      #普通list页正则表达式
                      'normalRegex':[		                   
@@ -322,9 +416,10 @@ spiderConfig = {
                                    ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[
-		                      {'itemCollectionName':'POI','regex':r'^http://www.17u.com/destination/(scenery|city|province|country)_\d+.html$', 'priority':1000} , #Article 
-				      {'itemCollectionName':'Article','regex':r'^http://www.17u.com/news/shownews\w+\.html$', 'priority':600},  #Article 
-				      {'itemCollectionName':'Article','regex':r'^http://www.17u.com/blog/article/\d+.html$', 'priority':300}  #Article 
+#		                      {'itemCollectionName':'POI','regex':r'^http://www.17u.com/destination/(scenery|city|province|country)_\d+.html$', 'priority':1000} , #Article 
+				      
+				      {'itemCollectionName':'Article1','regex':r'^http://www.17u.com/blog/article/\d+.html$', 'priority':300}, #Article 
+                      {'itemCollectionName':'Article2','regex':r'^http://www.17u.com/news/shownews\w+\.html$', 'priority':600}, #Article 
 		                 
 				
 				 
@@ -336,20 +431,19 @@ spiderConfig = {
 		 "mafengwoSpider":{
                      'allowedDomains':["www.mafengwo.cn"],
                      'startUrls':[ 		                   
-				   "http://www.mafengwo.cn"				   
+#				   "http://www.mafengwo.cn"
+                   'http://www.mafengwo.cn/u/205360.html'				   
 				   ],
                      #普通list页正则表达式
                      'normalRegex':[		                   
-                                    {'regex':r'^http://www.mafengwo.cn/mdd/smap.php\?mddid=\d+$', 'priority':1000},
-				    {'regex':r'^http://www.mafengwo.cn/mdd/detail.php\?mddid=\d+&sort=&start=\d+$', 'priority':1000}
-				  
-				
+                        {'regex':r'^http://www.mafengwo.cn/mdd/smap.php\?mddid=\d+$', 'priority':1000},
+                        {'regex':r'^http://www.mafengwo.cn/mdd/detail.php\?mddid=\d+&sort=&start=\d+$', 'priority':1000}
                                    ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[
-		                      {'itemCollectionName':'POI','regex':r'^http://www.mafengwo.cn/travel-scenic-spot/mafengwo/\d+.html$', 'priority':1000} , #Article 
-				      {'itemCollectionName':'PROFILE','regex':r'^http://www.mafengwo.cn/u/\d+.html$', 'priority':1000} , #Article
-				      {'itemCollectionName':'Article','regex':r'^http://www.mafengwo.cn/i/\d+.html$', 'priority':600},  #Article 
+#                      {'itemCollectionName':'POI','regex':r'^http://www.mafengwo.cn/travel-scenic-spot/mafengwo/\d+.html$', 'priority':1000} , #Article 
+				      {'itemCollectionName':'Profile','regex':r'^http://www.mafengwo.cn/u/\d+.html$', 'priority':1000} , #Article
+#				      {'itemCollectionName':'Article','regex':r'^http://www.mafengwo.cn/i/\d+.html$', 'priority':600},  #Article 
 				                    
 				
 				 
@@ -357,25 +451,23 @@ spiderConfig = {
                      },	
 
 
-		"bytravelSpider":{
-                     'allowedDomains':["bytravel.cn"],
-                     'startUrls':[ 		                   
-				   "http://www.bytravel.cn"				   
-				   ],
-                     #普通list页正则表达式
-                     'normalRegex':[		                   
-                                  {'regex':r'^http://\w+.bytravel.cn/{0,1}$', 'priority':1000},
-				  {'regex':r'^http://\w+.bytravel.cn/v/index\d+.html$', 'priority':1000},
-				  {'regex':r'^http://\w+.bytravel.cn/v/\d+/$', 'priority':1000},
-                                  {'regex':r'^http://\w+.bytravel.cn/Scenery/[\w\d]+/(\d+/)*$', 'priority':1000},
-                                   ],
-                     #item页正则表达式 itemCollectionName对应item存放的数据表名
-                     'itemRegex':[
-		                      {'itemCollectionName':'ARTICLE','regex':r'^http://\w+.bytravel.cn/art/[\d\w-]+/[\d\w\-\%\(\)\!]+/(index\d+.html)*$', 'priority':1000} , #Article
-				      {'itemCollectionName':'ARTICLE','regex':r'^http://\w+.bytravel.cn/(art|Scenery)/(.*).html$', 'priority':1000} , #Article				      
-				      {'itemCollectionName':'ARTICLE','regex':r'^http://shop.bytravel.cn/produce/[\w\d]+/$', 'priority':1000} , #Article				     
-				 ]
-                     },	
+    "bytravelSpider":{
+        'allowedDomains':["bytravel.cn"],
+        'startUrls':["http://www.bytravel.cn"],
+        #普通list页正则表达式
+        'normalRegex':[		                   
+            {'regex':r'^http://\w+.bytravel.cn/{0,1}$', 'priority':1000},
+            {'regex':r'^http://\w+.bytravel.cn/v/index\d+.html$', 'priority':1000},
+            {'regex':r'^http://\w+.bytravel.cn/v/\d+/$', 'priority':1000},
+            {'regex':r'^http://\w+.bytravel.cn/Scenery/[\w\d]+/(\d+/)*$', 'priority':1000},
+        ],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[
+            {'itemCollectionName':'ARTICLE','regex':r'^http://\w+.bytravel.cn/art/[\d\w-]+/[\d\w\-\%\(\)\!]+/(index\d+.html)*$', 'priority':1000} , #Article
+            {'itemCollectionName':'ARTICLE','regex':r'^http://\w+.bytravel.cn/(art|Scenery)/(.*).html$', 'priority':1000} , #Article				      
+            {'itemCollectionName':'ARTICLE','regex':r'^http://shop.bytravel.cn/produce/[\w\d]+/$', 'priority':1000} , #Article				     
+        ]
+    },	
 
 
 		 "QQBlogSpider":{
