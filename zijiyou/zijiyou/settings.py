@@ -21,7 +21,7 @@ ITEM_PIPELINES=[
 # mongodb setting
 DB_HOST = '127.0.0.1' #192.168.0.183 127.0.0.1
 DB_PORT=27017
-DB='bbstest'#测试用spiderV21 spidertest
+DB='bbstest1'#测试用spiderV21 spidertest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
@@ -29,6 +29,8 @@ DB_COLLECTIONS = ['PageDb',
                   'Hotel',
                   'Region',
                   'Article',
+                  'Article1',
+                  'Article2',
                   'Note',
                   'MemberInfo',
                   'MemberTrack',
@@ -36,7 +38,15 @@ DB_COLLECTIONS = ['PageDb',
                   'MemberNoteList',
                   'KeyWord',
                   'ImageDb',
-                  'test']
+                  'test',
+                  'Profile',
+                  ]
+COLLECTION_NAME_MAP = {
+                    'Attraction':'POI',
+                    'Hotel':'POI',
+                    'Article1':'Article',
+                    'Article2':'Article',
+}
 CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
@@ -51,6 +61,7 @@ SCHEDULER_ORDER='DFO'
 
 DIAGNOSER_PATH = '/data/configs/diagnose.log'
 OFFLINE_PARSE_LOG = '/data/configs/offlineParseLog.log'#/home/shiym
+#OFFLINE_PARSE_LOG = '/home/cubee/python/spider/spider/zijiyou/offlineParseLog.log'
 
 IMAGES_STORE = '/data/images' #图片存放路径 /home/hy/data/images
 IMAGES_EXPIRES = 9999 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999

@@ -113,6 +113,7 @@ class Article(BaseItem):
     imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
     
     md5=Field()             #MD5值
+    isDup=Field()           #标识是否重复
     
 #    def __str__(self):
 #        return "ArticleItem"
@@ -145,6 +146,7 @@ class Note(BaseItem):
     imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
     
     md5=Field()             #MD5值
+    isDup=Field()           #标识是否重复
 
 #    def __str__(self):
 #        return "NoteItem"

@@ -55,8 +55,7 @@ class Parse(object):
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
         self.needMd5=['Article','Note']
-        self.collectionNameMap={'Attraction':'POI',
-                                 'Hotel':'POI'}
+        self.collectionNameMap=settings.get('COLLECTION_NAME_MAP')
         self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50# test should be 50 
         self.responseTotalNum=0#self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
@@ -64,7 +63,7 @@ class Parse(object):
         self.curSeek=0
 #        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
 #        print 'init完成'
-#        self.txtDupChecker=TxtDuplicateFilter()
+        self.txtDupChecker=TxtDuplicateFilter(md5SourceCols=['Article','Note'])
     
     def parse(self):
         '''
@@ -130,7 +129,7 @@ class Parse(object):
 #                    for k,v in item.items():
 #                        newItem[k] = v
 #                    objId = self.mongoApt.saveItem(k, newItem)
-                    objId = self.mongoApt.saveItem(k, item)
+                    objId = self.mongoApt.saveItem(k, v)
                     print '保存新item：%s, objId:%s' % (itemCollectionName,objId)
                     if objId:
                         self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
@@ -165,16 +164,6 @@ class Parse(object):
         
         
         hxs=HtmlXPathSelector(response)
-#        heard={'Content-type':'text/html',
-#               'encoding':'gbk',#uft-8 gbk
-#               'Content-Type': ['text/html;charset=gbk'], #UTF-8
-#               'Pragma': ['no-cache'], 
-#               'Cache-Control': ['no-cache,no-store,must-revalidate']
-#               }
-#        response2=HtmlResponse(str(response.url), status=200, headers=heard, body=str(responseBody.decode('utf-8')), flags=None, request=None )
-#        hxs=HtmlXPathSelector(response2)#test
-        
-        #define xpath rule
         if not itemCollectionName or not itemCollectionName in config:
             self.parseLog('类型没有找到：%s ' % itemCollectionName, level=LogLevel.ERROR)
             raise NotConfigured
@@ -307,7 +296,17 @@ class Parse(object):
         #文本排重
         if itemCollectionName in self.needMd5:
             if 'content' in item:
-                item['md5']=utilities.getFingerPrint(response.url, isUrl=True)
+                isDup,md5Val = self.txtDupChecker.checkDuplicate(item['url'], item['content'])
+                item['md5']=md5Val
+                if isDup:
+                    self.parseLog('duplicate id为“%s”的输入被确定与md5Vale为“%s”的现有文本重复' % (id,md5Val), level=LogLevel.WARNING)
+                    item['isDup']='Ture'
+                else:
+                    item['isDup']='False'
+                    #暂时注释：认定重复的文档页保存，但标注重复
+#                    return None
+#                else:
+#                    item['md5']=md5Val
         
         self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
         return item
@@ -334,7 +333,6 @@ class Parse(object):
                 newContent = matches.group(1)
                 return newContent
         if name == 'content':
-            print '正文抽取'
             mainText = doExtract(content,threshold=False)
             #print mainText
             return mainText

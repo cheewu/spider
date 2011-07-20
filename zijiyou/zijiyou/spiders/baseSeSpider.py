@@ -23,7 +23,7 @@ import urllib
 
 class BaseSeSpider(BaseCrawlSpider):
     '''
-    Spider for www.daodao.com
+    搜素引擎爬虫
     '''
     name ="baseSeSpider"
     
@@ -50,20 +50,21 @@ class BaseSeSpider(BaseCrawlSpider):
         self.nextPageField=['content'] #在下一页取得的Field
         self.articleMetaName = 'Article'
         self.urlPatternMeta = 'urlPattern'
+        #清空搜素引擎中间页面的数据库，防止因爬虫崩溃导致下一次抓取时中间页被错误过滤
         self.clearUrlDb()
-        dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
+#        dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
 #        self.initRequest()
         
-    def onSeSpiderClosed(self):
-        '''清空数据库中的SeSpider中的搜索页列表'''
-        log.msg('开始清空数据库中的SeSpider中的搜索页列表，长度：%s' % len(self.seResultList), level=log.INFO)
-        if len(self.seResultList)>0:
-            whereJson={}
-            for url in self.seResultList :
-                whereJson['url']=url
-                self.mongoApt.remove(self.CrawlDb,whereJson)
-            log.msg('清空数据库中的SeSpider中的搜索链接数量：%s' % len(self.seResultList), level=log.INFO)
-        self.seResultList=[]
+#    def onSeSpiderClosed(self):
+#        '''清空数据库中的SeSpider中的搜索页列表'''
+#        log.msg('开始清空数据库中的SeSpider中的搜索页列表，长度：%s' % len(self.seResultList), level=log.INFO)
+#        if len(self.seResultList)>0:
+#            whereJson={}
+#            for url in self.seResultList :
+#                whereJson['url']=url
+#                self.mongoApt.remove(self.CrawlDb,whereJson)
+#            log.msg('清空数据库中的SeSpider中的搜索链接数量：%s' % len(self.seResultList), level=log.INFO)
+#        self.seResultList=[]
         
     def clearUrlDb(self):
         log.msg("开始清空搜索引擎数据" ,level=log.INFO)
@@ -77,7 +78,7 @@ class BaseSeSpider(BaseCrawlSpider):
 #            log.msg(u["url"] ,level=log.INFO)
         itemCount = self.mongoApt.countByWhere(self.CrawlDb, whereJsonItem)
         self.mongoApt.remove(self.CrawlDb, whereJsonItem)
-        log.msg("清除未完成的item和搜索引擎list页：%s" % itemCount ,level=log.INFO)
+        log.msg("成功清除未完成的item和搜索引擎list页：共%s个" % itemCount ,level=log.INFO)
         normalRegex = "normalRegex"
         if normalRegex in self.config:
             regexes = ("|".join("%s" % p for p in self.config[normalRegex]))
@@ -110,13 +111,11 @@ class BaseSeSpider(BaseCrawlSpider):
         for keyWord in keyWords:
             for v in self.seUrlFormat:
                 #设置默认值
-                    
                 format=v['format']
                 encodeType=v['encode']
                 encodeWords=urllib.quote(keyWord['keyWord'].encode(encodeType))
                 pagePriority=keyWord['priority']
                 url=format % (encodeWords, 1)
-#                    print url
                 meta={'itemCollectionName':keyWord['itemCollectionName'],
                       'sePageNum':keyWord['pageNumber'],
                       'priority':keyWord['priority'],
@@ -177,9 +176,10 @@ class BaseSeSpider(BaseCrawlSpider):
         #递减
         for i in range(totalPage, 1, -1):
             url = urlPattern + str(i)
-#            print url
+#            log.msg('makeRequestByFirstPageForSEs 得到Url：%s' % url, level=log.INFO)#debug
             request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=meta['priority'])
             reqs.append(request)
+#            log.msg('makeRequestByFirstPageForSEs 得到Res：%s' % url, level=log.INFO)#debug
                     
             self.seResultList.append(url)
         return reqs
@@ -191,17 +191,18 @@ class BaseSeSpider(BaseCrawlSpider):
         
         if not self.hasInit:
             self.hasInit=True
-            self.initRequest()
-            if self.pendingRequest and len(self.pendingRequest)>0:
-                reqs.extend(self.pendingRequest)
-                log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
-            else:
-                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , level=log.INFO)
+#            self.initRequest()
+#            if self.pendingRequest and len(self.pendingRequest)>0:
+#                reqs.extend(self.pendingRequest)
+#                log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
+#            else:
+#                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , level=log.INFO)
             seReqs=self.makeFirstPageRequestByKeywordForSEs()
             if seReqs and len(seReqs)>0:
                 reqs.extend(seReqs)
             else:
                 log.msg('关键字没有生成任何Request!，请检查配置文件spiderConfig中baseSeSpider的url格式或数据库关键字表',level=log.ERROR)
+                raise NotConfigured
         #拦截
         if len(reqs)>0:
             log.msg('拦截Request。url： %s' % response.url, log.INFO)
@@ -215,8 +216,8 @@ class BaseSeSpider(BaseCrawlSpider):
 #        print meta
         #item页链接请求
         itemsReq=[]
-#        homePage=meta['homePage']
-#        print homePage
+        homePage=meta['homePage']
+        print homePage
         resultItemLinkXpath=meta['resultItemLinkXpath']
         hxs=HtmlXPathSelector(response)
         links=hxs.select(resultItemLinkXpath).extract()
@@ -227,6 +228,8 @@ class BaseSeSpider(BaseCrawlSpider):
             if pageLinks:
                 reqs.extend(pageLinks)
                 log.msg("第一页：%s，生成剩余的搜索页面数为：：%s" % (response.url, len(pageLinks)), level=log.INFO)
+            else:
+                log.msg("只生成了一页：%s" % response.url, level=log.INFO)
         
         #开始抓取页面上的搜索结果
         if links and len(links)>0:
@@ -246,18 +249,20 @@ class BaseSeSpider(BaseCrawlSpider):
                         if k in self.specailField:
                             values[i]=self.parseSpecialField(k, values[i])
                     metaItem[k] = values
-                
-            for  i in range(len(links)):
-                link = links[i]
-                
-                log.msg("%s"%link, log.INFO)
+#                log.msg('解析搜素结果页面%s' % (response.url), level=log.INFO) #debug
+#                log.msg('meta为%s' % (metaItem), level=log.INFO) #debug
                 if metaItem:
                     item = {}
                     for k,v in metaItem.items():
                         item[k] = v[i]
                     if item:
                         meta[self.articleMetaName] = item
-                req=self.makeRequestWithMeta(link, callBackFunctionName='parseItem', meta=meta,priority=self.itemPriority)
+            for  i in range(len(links)):
+                link = links[i]
+                
+#                log.msg('%s' % link, level=log.INFO)#debug
+#                log.msg('baseParse将抽取的link创建Req Url是：%s' % link, level=log.INFO)#debug
+                req=self.makeRequestWithMeta(homePage+link, callBackFunctionName='parseItem', meta=meta,priority=self.itemPriority)
                 itemsReq.append(req)
         else:
             log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
@@ -269,7 +274,6 @@ class BaseSeSpider(BaseCrawlSpider):
     
     def parseItem(self,response):
         '''解析搜索目标页'''
-        print '解析搜索目标页'
         log.msg("解析搜索目标页", level=log.INFO)
         items=[]
         
@@ -282,12 +286,20 @@ class BaseSeSpider(BaseCrawlSpider):
         log.msg("保存item页，类型:%s"%str(itemCollectionName) , level=log.INFO)
         #ResponseBody
         loader = ZijiyouItemLoader(PageDb(),response=response)
-        loader.add_value('spiderName', self.name)
-        loader.add_value('url', response.url)
-        loader.add_value('itemCollectionName', itemCollectionName)
-        loader.add_value('responseBody', response.body_as_unicode())
-        loader.add_value('optDateTime', datetime.datetime.now())
+#        loader.add_value('spiderName', self.name)
+#        loader.add_value('url', response.url)
+#        loader.add_value('itemCollectionName', itemCollectionName)
+#        loader.add_value('responseBody', response.body_as_unicode())
+#        loader.add_value('optDateTime', datetime.datetime.now())
         pageResponse = loader.load_item()
+        pageResponse.setdefault('spiderName', self.name)
+        pageResponse.setdefault('url', response.url)
+        pageResponse.setdefault('itemCollectionName', itemCollectionName)
+        pageResponse.setdefault('responseBody', response.body_as_unicode().encode('utf-8'))
+        pageResponse.setdefault('optDateTime', datetime.datetime.now())
+        pageResponse.setdefault('coding', response.encoding)
+        pageResponse.setdefault('headers', response.headers)
+        
         items.append(pageResponse)
         
         #解析搜索引擎NoteItem
@@ -299,21 +311,22 @@ class BaseSeSpider(BaseCrawlSpider):
     
     def parseArticleItem(self, response):
         '''解析搜索引擎AcricleItem'''
-        log.msg("解析搜索引擎NoteItem", level=log.INFO)
+        log.msg("解析搜索引擎AcricleItem", level=log.INFO)
         #判断配置是否正确
         if not self.checkXathConfig(response):
             return None
         
         xpathItems = self.config['seXpath'][response.meta['seName']]
         hxs=HtmlXPathSelector(response)
-        loader = ZijiyouItemLoader(Article(),response=response)
+#        loader = ZijiyouItemLoader(Article(),response=response)
+        article=Article()
         #添加前一页的field项
         if self.articleMetaName in response.meta:
             for k,v in response.meta[self.articleMetaName].items():
                 v = unicode(str(v), 'utf8')
 #                print k
 #                print getText(v)
-                loader.add_value(k, getText(v))
+                article.setdefault(k, getText(v))
         #添加下一页的field项
         for k,v in xpathItems.items():
             if k in self.nextPageField:
@@ -327,11 +340,15 @@ class BaseSeSpider(BaseCrawlSpider):
                 if k in self.specailField:
                     value=self.parseSpecialField(k, value)
                 if value:
-                    loader.add_value(k, getText(value))
-        loader.add_value('url', response.url)
-        loader.add_value('spiderName', self.name)
-        noteItem = loader.load_item()
-        return noteItem
+                    article.setdefault(k, getText(value))
+#                    loader.add_value(k, getText(value))
+        article.setdefault('url', response.url)
+        article.setdefault('spiderName', response.url)
+#        loader.add_value('url', response.url)
+#        loader.add_value('spiderName', self.name)
+#        noteItem = loader.load_item()
+#        return noteItem
+        return article
     
     def parseSpecialField(self,name,content):
         '''
@@ -346,7 +363,6 @@ class BaseSeSpider(BaseCrawlSpider):
             else:
                 return time.strftime("%Y年%m月%d日")
         if name == 'content':
-            print '正文抽取'
             mainText = doExtract(content,threshold=False)
 #            print mainText
             return mainText
