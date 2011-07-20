@@ -29,7 +29,7 @@ class BaseSeSpider(BaseCrawlSpider):
     
     #搜索引擎格式
     seUrlFormat=[]
-    maxPageNum=1
+    maxPageNum=20
     itemPriority=1200
     config=None
     seResultList=[]
@@ -176,10 +176,10 @@ class BaseSeSpider(BaseCrawlSpider):
         #递减
         for i in range(totalPage, 1, -1):
             url = urlPattern + str(i)
-            log.msg('makeRequestByFirstPageForSEs 得到Url：%s' % url, level=log.INFO)#debug
+#            log.msg('makeRequestByFirstPageForSEs 得到Url：%s' % url, level=log.INFO)#debug
             request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=meta['priority'])
             reqs.append(request)
-            log.msg('makeRequestByFirstPageForSEs 得到Res：%s' % url, level=log.INFO)#debug
+#            log.msg('makeRequestByFirstPageForSEs 得到Res：%s' % url, level=log.INFO)#debug
                     
             self.seResultList.append(url)
         return reqs
@@ -249,8 +249,8 @@ class BaseSeSpider(BaseCrawlSpider):
                         if k in self.specailField:
                             values[i]=self.parseSpecialField(k, values[i])
                     metaItem[k] = values
-                log.msg('解析搜素结果页面%s' % (response.url), level=log.INFO) #debug
-                log.msg('meta为%s' % (metaItem), level=log.INFO) #debug
+#                log.msg('解析搜素结果页面%s' % (response.url), level=log.INFO) #debug
+#                log.msg('meta为%s' % (metaItem), level=log.INFO) #debug
                 if metaItem:
                     item = {}
                     for k,v in metaItem.items():
@@ -260,7 +260,7 @@ class BaseSeSpider(BaseCrawlSpider):
             for  i in range(len(links)):
                 link = links[i]
                 
-                log.msg('%s' % link, level=log.INFO)#debug
+#                log.msg('%s' % link, level=log.INFO)#debug
 #                log.msg('baseParse将抽取的link创建Req Url是：%s' % link, level=log.INFO)#debug
                 req=self.makeRequestWithMeta(homePage+link, callBackFunctionName='parseItem', meta=meta,priority=self.itemPriority)
                 itemsReq.append(req)
