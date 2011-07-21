@@ -4,7 +4,7 @@ Created on 2011-4-20
 
 @author: shiym
 '''
-from bson.objectid import ObjectId
+from pymongo.objectid import ObjectId
 from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
@@ -411,7 +411,7 @@ class Parse(object):
         pass
 
 #测试
-#if __name__ == '__main__':
-#    p=Parse(isOffline=True)
-#    p.parse()
-#    print '解析完成了！'
+if __name__ == '__main__':
+    p=Parse(isOffline=True)
+    p.parse()
+    print '解析完成了！'
