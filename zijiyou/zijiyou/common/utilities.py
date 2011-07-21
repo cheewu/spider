@@ -65,11 +65,13 @@ class TxtDuplicateFilter(object):
             for colName in md5SourceCols:
                 cursor=mongoApt.findCursor(colName=colName, whereJson={}, fieldsJson={'md5':1})
                 for p in cursor:
-                    self.md5s.add(p['md5'])
+                    if 'md5' in p:
+                        self.md5s.add(p['md5'])
+                    else:
+                        raise NotConfigured('%s 没有记录md5值' % p['_id'])
             print '完成文本排重器的md5初始化，共%s个md5值' % len(self.md5s)
         else:
-            print '没有提供md5初始列表或md5数据源表，无法初始化文本排重器！'
-            raise NotConfigured
+            raise NotConfigured('没有提供md5初始列表或md5数据源表，无法初始化文本排重器！')
         if len(self.md5s)<1:
             print '初始化md5值集合为空！'
         
