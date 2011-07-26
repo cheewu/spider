@@ -31,6 +31,9 @@ DB_COLLECTIONS = ['PageDb',
                   'Article',
                   'Article1',
                   'Article2',
+                  'Article3',
+                  'Article4',
+                  'BBSArticle',
                   'Note',
                   'MemberInfo',
                   'MemberTrack',
@@ -46,11 +49,22 @@ COLLECTION_NAME_MAP = {
                     'Hotel':'POI',
                     'Article1':'Article',
                     'Article2':'Article',
+                    'Article3':'Article',
+                    'Article4':'Article',
+                    'BBSArticle':'Article',
 }
+BBS_SPIDER_NAME = [
+        '55bbsSpider',
+        'go2euSpider',
+        'xcarSpider',
+        'sinabbsSpider',
+        'lvyeSpider',
+        'lotourbbsSpider',
+]
 CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
-LOG_LEVEL='INFO'
+LOG_LEVEL='INFO' #INFO DEBUG
 DOWNLOAD_DELAY = 0.1
 CONCURRENT_REQUESTS_PER_SPIDER=2
 RECENT_URLS_SIZE = 3000000

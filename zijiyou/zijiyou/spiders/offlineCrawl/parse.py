@@ -56,6 +56,7 @@ class Parse(object):
         self.specialItem=['MemberTrack']
         self.needMd5=['Article','Note']
         self.collectionNameMap=settings.get('COLLECTION_NAME_MAP')
+        self.bbsSpiderName = settings.get('BBS_SPIDER_NAME')
         self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50# test should be 50 
         self.responseTotalNum=0#self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
@@ -88,6 +89,10 @@ class Parse(object):
                     self.parseLog( '缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
                     continue
                 spiderName=p['spiderName']
+                #bbsSpider单独处理
+                if spiderName in self.bbsSpiderName:
+                    spiderName = 'BBsSpider'
+                    
                 itemCollectionName=re.sub('[\r\n]', "", p['itemCollectionName'])
                 item = None
                 if itemCollectionName in self.specialItem:
@@ -254,6 +259,40 @@ class Parse(object):
             if not value and k in self.requiredField:
                 self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
                 return None
+            #对bbs进行单独处理 
+            #@author 侯睿
+            if spiderName == 'BBsSpider':
+                if k != 'content':
+                    if type(value) == list:
+                        value = value[0]
+                elif type(value) == list:
+                    filterWords = [
+                        '标题:',
+                        '作者:',
+                        '时间:',
+                    ]
+                    filter = []
+                    count_p = 0
+                    sig_p = 0
+                    sig_start = 1
+                    for p in value:
+                        p_strip = p.strip()
+                        if sig_p:
+                            sig_p = 0
+                            continue
+                        if p_strip in filterWords:
+                            if p_strip == '作者:':
+                                if sig_start:
+                                    sig_start = 0
+                                else:
+                                    filter.append("<br/>\n#reply#\n<br/>") 
+                            sig_p = 1
+                        else:
+                            filter.append('\t'+p_strip+"<br/>")
+                    value = (" ".join("%s" % p for p in filter)).encode("utf-8")
+#                    print value
+#                    exit()
+            #bbs 单独处理结束
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
@@ -294,7 +333,7 @@ class Parse(object):
             item[k]=value
             
         #文本排重
-        if itemCollectionName in self.needMd5:
+        if item['collectionName'] in self.needMd5:
             if 'content' in item:
                 isDup,md5Val = self.txtDupChecker.checkDuplicate(item['url'], item['content'])
                 item['md5']=md5Val

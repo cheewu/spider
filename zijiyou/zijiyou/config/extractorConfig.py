@@ -353,5 +353,23 @@ extractorConfig = {
                                     'destination':'//div[@class="tc-header-logo tc-container"]/div[@class="tc-center-container"]/div[@class="tc-logo"]/div[@class="tc-title"]/strong/text()',
                                     'content':'//div[@id="main"]/div[1]/following-sibling::*[@class!="sbox"]',
                             },
-                }
+                },
+                "BBsSpider":{
+                            'Article':{
+#                                    'text':'//body/table/preceding::*',
+                                    
+                            },
+                            'ArticleRegex':{
+                                    'title':'//body',
+                                    'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
+                                    'author':'//body',
+                                    'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',
+                                    'publishDate':'//body',
+                                    'publishDateRegex':u'(\d{4}-\d{1,2}-\d{1,2}\s*\d{2}:\d{2}).*?<b>标题',
+                                    'content':'//body',
+                                    'contentRegex':'\>([^<>]+?)<',
+#                                    'destination':'//div[@class="tc-header-logo tc-container"]/div[@class="tc-center-container"]/div[@class="tc-logo"]/div[@class="tc-title"]/strong/text()',
+#                                    'content':'//div[@id="main"]/div[1]/following-sibling::*[@class!="sbox"]',
+                            },
+                },
 }

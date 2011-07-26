@@ -893,7 +893,7 @@ spiderConfig = {
 					    ],
 			     #item页正则表达式 itemCollectionName对应item存放的数据表名
 			     'itemRegex':[
-                                  {'itemCollectionName':'Article',
+                                  {'itemCollectionName':'BBSArticle',
                                    'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
                                    'itemPrintPageFormat':r'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=%s',
                                    'itemTidRegex':r'tid=(\d+)',
@@ -967,7 +967,7 @@ spiderConfig = {
 					    ],
 			     #item页正则表达式 itemCollectionName对应item存放的数据表名
 			     'itemRegex':[
-                                  {'itemCollectionName':'Article',
+                                  {'itemCollectionName':'BBSArticle',
                                    'regex':r'(viewthread\.php\?tid=\d+)|(http:\/\/www\.xcar\.com\.cn\/bbs\/viewthread\.php\?action=printable&tid=\d+)',
                                    'itemPrintPageFormat':r'http://www.xcar.com.cn/bbs/viewthread.php?action=printable&tid=%s',
                                    'itemTidRegex':r'tid=(\d+)',

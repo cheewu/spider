@@ -271,7 +271,12 @@ class BaseCrawlSpider(CrawlSpider):
         extra - passed to SgmlLinkExtractor
         """
         link_extractor = SgmlLinkExtractor(**extra)
-        links = link_extractor.extract_links(response)
+        try:
+            links = link_extractor.extract_links(response)
+        except Exception ,e:
+            log.msg('Exception:%s' % str(e),level=log.DEBUG)
+            log.msg('参数：%s' % extra, level=log.DEBUG)
+        log.msg('从%s抽取到的链接:%s' % (response.url,links), level=log.DEBUG)
         return links
 
     def extractRequests(self, response, pagePriority, callBackFunctionName=None, **extra): 
