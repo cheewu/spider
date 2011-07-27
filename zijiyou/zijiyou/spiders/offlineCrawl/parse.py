@@ -112,12 +112,12 @@ class Parse(object):
                     items[itemCollectionName].append(item)
                     # parse item successful, and then update the status to 200
                     updateJson={'status':200}
-#                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
                     self.countSuc+=1
                 else:
                     # fail in parsing item , and then update the status to 101
                     updateJson={'status':101}
-#                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
                     self.countFail+=1
                     
             if items and len(items)>0:
