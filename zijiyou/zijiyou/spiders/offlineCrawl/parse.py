@@ -89,10 +89,7 @@ class Parse(object):
                     self.parseLog( '缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
                     continue
                 spiderName=p['spiderName']
-                #bbsSpider单独处理
-                if spiderName in self.bbsSpiderName:
-                    spiderName = 'BBsSpider'
-                    
+                
                 itemCollectionName=re.sub('[\r\n]', "", p['itemCollectionName'])
                 item = None
                 if itemCollectionName in self.specialItem:
@@ -115,12 +112,12 @@ class Parse(object):
                     items[itemCollectionName].append(item)
                     # parse item successful, and then update the status to 200
                     updateJson={'status':200}
-                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+#                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
                     self.countSuc+=1
                 else:
                     # fail in parsing item , and then update the status to 101
                     updateJson={'status':101}
-                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+#                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
                     self.countFail+=1
                     
             if items and len(items)>0:
@@ -162,7 +159,13 @@ class Parse(object):
         parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
         '''
-        config=extractorConfig[spiderName]
+        #bbsSpider单独处理
+        isbbsSpider = False
+        if spiderName in self.bbsSpiderName:
+            config = extractorConfig['BBsSpider']
+            isbbsSpider = True
+        else:
+            config=extractorConfig[spiderName]
         if not config:
             self.parseLog('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName, level=LogLevel.ERROR)
             raise NotConfigured
@@ -261,7 +264,7 @@ class Parse(object):
                 return None
             #对bbs进行单独处理 
             #@author 侯睿
-            if spiderName == 'BBsSpider':
+            if isbbsSpider:
                 if k != 'content':
                     if type(value) == list:
                         value = value[0]
@@ -275,6 +278,14 @@ class Parse(object):
                     count_p = 0
                     sig_p = 0
                     sig_start = 1
+                    #过滤空字符
+                    for p in value:
+                        p_strip = p.strip()
+                        if p_strip:
+                            filter.append(p_strip)
+                    value = filter
+                    filter = []
+                    #过滤空字符end
                     for p in value:
                         p_strip = p.strip()
                         if sig_p:
@@ -292,7 +303,7 @@ class Parse(object):
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
 #                    print value
 #                    exit()
-            #bbs 单独处理结束
+            #bbs单独处理end
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
