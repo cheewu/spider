@@ -189,7 +189,7 @@ class UpdateStrategy(object):
         
     def process_spider_input(self, response, spider):
         #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值不为None时为Response的Item类型，为None时为list页的Response
-        if 'updateStrategy' in response.meta and response.meta['updateStrategy']:
+        if response and 'updateStrategy' in response.meta and response.meta['updateStrategy']:
             log.msg('进行更新策略，删除DB中的相应的url记录：%s' % response.url, level=log.DEBUG)
             log.msg(response.meta['updateStrategy'], log=log.DEBUG)
             whereJson = {'url':response.url}
