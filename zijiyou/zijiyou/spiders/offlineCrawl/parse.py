@@ -17,7 +17,7 @@ from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.enumModel import LogLevel
 from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
     MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord, Region
-from zijiyou.spiders.offlineCrawl.extractText import doExtract
+from zijiyou.common.extractText import doExtract
 import datetime
 import json
 import os
@@ -56,7 +56,9 @@ class Parse(object):
         self.specialItem=['MemberTrack']
         self.needMd5=['Article','Note']
         self.collectionNameMap={'Attraction':'POI',
-                                 'Hotel':'POI'}
+                                 'Hotel':'POI',
+                                 'Article1':'Article',
+                                 'Article2':'Article'}
         self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50# test should be 50 
         self.responseTotalNum=0#self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
