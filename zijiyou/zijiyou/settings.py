@@ -29,6 +29,11 @@ DB_COLLECTIONS = ['PageDb',
                   'Hotel',
                   'Region',
                   'Article',
+                  'Article1',
+                  'Article2',
+                  'Article3',
+                  'Article4',
+                  'BBSArticle',
                   'Note',
                   'MemberInfo',
                   'MemberTrack',
@@ -37,11 +42,30 @@ DB_COLLECTIONS = ['PageDb',
                   'KeyWord',
                   'ImageDb',
                   'test',
-                  'Profile']
+                  'Profile',
+                  ]
+COLLECTION_NAME_MAP = {
+                    'Attraction':'POI',
+                    'Hotel':'POI',
+                    'Article1':'Article',
+                    'Article2':'Article',
+                    'Article3':'Article',
+                    'Article4':'Article',
+                    'BBSArticle':'Article',
+}
+BBS_SPIDER_NAME = [
+        '55bbsSpider',
+        'go2euSpider',
+        'xcarSpider',
+        'sinabbsSpider',
+        'lvyeSpider',
+        'lotourbbsSpider',
+]
+
 CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
-LOG_LEVEL='INFO'
+LOG_LEVEL='INFO' #INFO DEBUG
 DOWNLOAD_DELAY = 0.1
 CONCURRENT_REQUESTS_PER_SPIDER=4
 RECENT_URLS_SIZE = 3000000
@@ -52,6 +76,7 @@ SCHEDULER_ORDER='DFO'
 
 DIAGNOSER_PATH = '/data/configs/diagnose.log'
 OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym
+#OFFLINE_PARSE_LOG = '/home/cubee/python/spider/spider/zijiyou/offlineParseLog.log'
 
 IMAGES_STORE = '/data/images' #图片存放路径 /home/hy/data/images
 IMAGES_EXPIRES = 9999 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999

@@ -2,23 +2,65 @@
 #!/usr/bin/env python
 
 from bson.objectid import ObjectId
+from collections import defaultdict
+from pymongo import Connection
 from scrapy import log
 from scrapy.conf import settings
 from zijiyou.db.mongoDbApt import MongoDbApt
+from zijiyou.spiders.offlineCrawl.parse import Parse
 import datetime
 import hashlib
 import os
 import pymongo
 import re
 import time
-from collections import defaultdict 
 
-whereJson={'status':{'$gt':900}}
-crawlCol='UrlDb'
-mongo=MongoDbApt()
-um=mongo.countByWhere(crawlCol, whereJson)
-print 1.0 / um 
-print 1 / um
+#    else :
+#        print '%s 啥类型也不是' %k
+    
+#    if  isinstance(v, {}):
+#        print 'dict'
+#    if isinstance(v, ''):
+#        print 'String'
+
+#conSource=Connection('192.168.0.183',27017)
+#dbSource=conSource['spiderV21']
+#dbSCol=dbSource['KeyWord']
+##conTarget=Connection('127.0.0.1',27017)
+##dbT=conTarget['spidertest']
+##dbTCol=dbT['KeyWord']
+#curS=dbSCol.find()
+#print curS.count()
+#i=1
+#for cur in curS:
+#    if i+1 < 10: 
+#        print cur
+#        i+=1
+#    else:
+#        break
+#print 'ok!'
+#for p in cursor:
+#    print p
+
+#p=Parse(isOffline=True)
+#p.parse()
+
+#alt="\u7ed7\ue0ff\u7af4\u7039\ue0a3\ue196\u95c6\u5d85\u7af7\u93b7\u590a\u608d__\u6d94\u6130\ufffd\u65c0\u68be\u5a13\u54e5\u7d89"
+#t1=alt.decode('gb2312')
+#print t1
+#print 'OK??'
+#apt = MongoDbApt()
+#print 'OK!!'
+#obj = apt.saveItem('test', {'name':'testtt'})
+#print obj
+
+
+#whereJson={'status':{'$gt':900}}
+#crawlCol='UrlDb'
+#mongo=MongoDbApt()
+#um=mongo.countByWhere(crawlCol, whereJson)
+#print 1.0 / um 
+#print 1 / um
 
 #t={'t1':'t11'}
 #ps = defaultdict(int)
@@ -360,7 +402,8 @@ print 1 / um
 #mon.saveItem('CrawlUrl', value)
 #print mon.count("CrawlUrl")
 
-#item=[{'keyWord':'北京','type':'Note','priority':100}]
+#mon=MongoDbApt()
+#item=[{'collectionName':'KeyWord','keyWord':'北京','itemCollectionName':'Article','priority':100,'pageNumber':15}]
 #mon.saveItem('KeyWord', item)
 #keyWords=mon.findByDictionaryAndSort('KeyWord', {}, 'priority')
 #print len(keyWords)
