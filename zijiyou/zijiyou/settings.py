@@ -19,9 +19,9 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = '127.0.0.1' #192.168.0.183 127.0.0.1
+DB_HOST = '192.168.0.183' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188 
 DB_PORT=27017
-DB='bbstest'#测试用spiderV21 spidertest
+DB='spiderV21'#测试用spiderV21 spidertest bbstest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
@@ -36,13 +36,14 @@ DB_COLLECTIONS = ['PageDb',
                   'MemberNoteList',
                   'KeyWord',
                   'ImageDb',
-                  'test']
+                  'test',
+                  'Profile']
 CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
 LOG_LEVEL='INFO'
 DOWNLOAD_DELAY = 0.1
-CONCURRENT_REQUESTS_PER_SPIDER=2
+CONCURRENT_REQUESTS_PER_SPIDER=4
 RECENT_URLS_SIZE = 3000000
 MAX_INII_REQUESTS_SIZE = 1000000
 #CLOSESPIDER_TIMEOUT=1800
@@ -50,7 +51,7 @@ MAX_INII_REQUESTS_SIZE = 1000000
 SCHEDULER_ORDER='DFO'
 
 DIAGNOSER_PATH = '/data/configs/diagnose.log'
-OFFLINE_PARSE_LOG = '/data/configs/offlineParseLog.log'#/home/shiym
+OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym
 
 IMAGES_STORE = '/data/images' #图片存放路径 /home/hy/data/images
 IMAGES_EXPIRES = 9999 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999
@@ -69,7 +70,7 @@ SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.Cookies': 502}
 SPIDER_MIDDLEWARES = {
 #                      'zijiyou.middlewares.spidermid.UrlNormalizer': 503, #先归一化再排重
                       'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
-                      'zijiyou.middlewares.spidermid.UpdateStrategy':500 #进行更新策略，删除PageDb、对应的item的数据库记录
+#                      'zijiyou.middlewares.spidermid.UpdateStrategy':500 #进行更新策略，删除PageDb、对应的item的数据库记录
                       #'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499
                       }
 
@@ -84,13 +85,29 @@ MAIL_TO_LIST = [
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL= False
+MAIL= True
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'
 MAIL_USER = 'zijiyou2011'
 MAIL_PASS = 'zijiyou'
 #MAIL_POSTFIX = 'sina.com'
+
+#检测内存的使用-内存泄漏 scrapy.contrib.memdebug.MemoryDebugger
+MEMDEBUG_ENABLED=True
+MEMDEBUG_NOTIFY = [
+                "953227024@qq.com", 
+                "1413614423@qq.com"
+                ]
+#检测内存的使用-占用内存容量
+MEMUSAGE_ENABLED=True
+MEMUSAGE_NOTIFY_MAIL=2000
+MEMUSAGE_WARNING_MB=3000
+#MEMUSAGE_LIMIT_MB=5048
+MEMUSAGE_NOTIFY_MAIL = [
+                        "953227024@qq.com", 
+                        "1413614423@qq.com"
+                        ]
 
 
 #URLNormallizer_Rules(URL 归一化)

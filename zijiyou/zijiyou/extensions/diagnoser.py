@@ -44,9 +44,11 @@ class Diagnoser(object):
         self.mongo=MongoDbApt()
         self.crawlCol='UrlDb'
         #发送邮件的时间间隔
-        self.mailInterval=settings.get('MAIL_INTERVAL', None)
+        self.mailInterval=settings.get('MAIL_INTERVAL', 14400)
+        #发送邮件最小间隔
+        self.minMailInterval=settings.get('MIN_MAIL_INTERVAL', 30)
         #爬虫系统速度
-        self.pagecounts = defaultdict(int)
+#        self.pagecounts = defaultdict(int)
         self.totalPagecounts = 0
         #若有该邮件发送时间间隔配置信息，则进行定时发送诊断信息
         if self.mailInterval:
@@ -54,7 +56,10 @@ class Diagnoser(object):
             self.mailer=MailSender()
             self.mailTos=settings.get('MAIL_TO_LIST')
             reactor.callLater(self.mailInterval, self.onSendMail)
-        
+        #爬虫字典
+        self.spiderDict={}
+        #错误的crawl状态
+        self.faildedStatus=[400,403,404]
         #回调函数声明未知
         dispatcher.connect(self.onSpiderClose,signal=signals.spider_closed)
         dispatcher.connect(self.onSpiderOpen,signal=signals.spider_opened)
@@ -62,71 +67,111 @@ class Diagnoser(object):
     
     def onSpiderOpen(self,spider):
         self.openSpiderNum+=1
-        self.biginTime=datetime.datetime.now()
-        log.msg('爬虫：%s 扩展diagnoser：onSpiderOpen ' % spider.name,level=log.INFO)
+        self.beginTime=datetime.datetime.now()#可能要改
+        log.msg('diagonoser： 爬虫%s开始运行' % spider.name,level=log.INFO)
+        spiderName=spider.name
+        if not spiderName:
+            log.msg('diagonoser发现没有名字的爬虫：%s' % spider,level=log.ERROR)
+            return
+        self.spiderDict[spiderName] = {
+                                         'beginTime':datetime.datetime.now(), #爬虫开启时间
+                                         'crawledCounter':0, #下载网页数
+                                         'faildedCounter':defaultdict(int), #失败网页数={失败的code：数量}
+                                        }
+        print self.spiderDict
                 
     def onSpiderClose(self,spider):
         self.closeSpiderNum+=1
-        if self.closeSpiderNum == 1:
-            self.onSendMail(isClose=True)
+        log.msg('diagonoser： 爬虫%s关闭' % spider.name,level=log.INFO)
+        self.onSendMail(isClose=True)
+        if spider.name in self.spiderDict:
+            self.spiderDict.pop(spider.name)
+        else:
+            log.msg('diagonoser：爬虫%s关闭时发现其没有记录在spiderDict中！' % spider.name,level=log.ERROR)
     
-    def onSendMail(self, isClose=False,msg=None):
-        content = self.getDiagnoseContent(isClose=isClose)
-        if not self.mailInterval:
-            return
+    def onSendMail(self, isClose=False,msg=None,spiderName='SpiderName'):
+        content = self.getDiagnoseContent(isClose=isClose,spiderName=spiderName)
         log.msg("邮件内容 %s" %content , level=log.INFO)
+        #判断时间间隔
+        dtNow=datetime.datetime.now()
+        dtInterval=dtNow-self.beginTime
+        self.beginTime=dtNow
+        if dtInterval.seconds < self.minMailInterval:
+            return
+        
         if self.mail:
-            print 'mailer'
             self.mailer.send(to=self.mailTos, subject='爬虫诊断信息', body=content)
         log.msg("诊断邮件发送完成 时间：%s，邮件内容：%s" % (datetime.datetime.now(),content) , level=log.INFO)
         #若关闭spider则不再发送邮件
         if not isClose:
             reactor.callLater(self.mailInterval, self.onSendMail)
             
-    def getDiagnoseContent(self, isClose=False):
+    def getDiagnoseContent(self, isClose=False,spiderName='SpiderName'):
         content = ""
         if isClose:
-            content = "爬虫结束时邮件诊断信息"
+            content = "爬虫%s结束时邮件诊断信息\n" % spiderName 
             endTime=datetime.datetime.now()
-            intervalTemp=endTime - self.biginTime
+            intervalTemp=endTime - self.spiderDict[spiderName]['beginTime']
             interval=intervalTemp.seconds
-            log.msg('爬虫诊断 运行时间=%s秒' % (interval),level=log.INFO)
+            log.msg('运行时间=%s秒' % (interval),level=log.INFO)
             if interval<self.thresholdRuntime:
-                msg = "爬虫诊断 运行时间小于阀值。总运行时间：%s秒，间隔阀值：%s秒" % (interval,self.thresholdRuntime)
-                content += "\r\n" + msg
+                msg = "运行时间小于阀值。总运行时间：%s秒，间隔阀值：%s秒" % (interval,self.thresholdRuntime)
+                content += "\r%s\n" % msg
                 log.msg(msg, level=log.ERROR)
             elif (interval + 100) < self.closeSpiderTimeout:
-                msg = "爬虫诊断 运行时间小于爬虫规定的运行时间间隔。运行时间：%s秒，setting的时间间隔：%s秒" % (interval,self.closeSpiderTimeout)
-                content += "\r\n" + msg
+                msg = "运行时间小于爬虫规定的运行时间间隔。运行时间：%s秒，setting的时间间隔：%s秒" % (interval,self.closeSpiderTimeout)
+                content += "\r%s\n" % msg
                 log.msg(msg, level=log.WARNING)
         else:
             content = "运行时邮件诊断信息"
         
+        #收集每个爬虫的执行情况
+        for key in self.spiderDict.keys():
+            msg = "爬虫%s信息：\n" % key
+            msg += "\r下载网页总数：%s\n" % self.spiderDict[key]['crawledCounter']
+            msg += "\r速度：%s 每分钟\n" % (self.spiderDict[key]['crawledCounter'] / (datetime.datetime.now() - self.spiderDict[key]['beginTime']).seconds * 60)
+            self.spiderDict[key]['crawledCounter'] = 0
+            self.spiderDict[key]['beginTime'] = datetime.datetime.now()
+            msg += "\r下载失败网页数信息：%s\n" % self.spiderDict[key]['faildedCounter']
+            content +=msg
+
+        #总下载失败网页数量
         whereJson={'status':{'$gte':400,'$lt':900}}
         errorUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
         if errorUrlNum>self.thresholdError:
-            msg = "爬虫诊断 ：下载失败网页数量为%s，高于于阀值%s" % (errorUrlNum,self.thresholdError)
+            msg = "诊断警告 ：总下载失败网页数量为%s，高于于阀值%s" % (errorUrlNum,self.thresholdError)
             content += "\r\n" + msg
+        else:
+            msg = "诊断：总下载失败网页数量为%s" % errorUrlNum
+            content += "\r\n" + msg
+        
+        #总剩余待爬取的网页数量
         whereJson={'status':{'$gt':900}}
         untouchedUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
         if untouchedUrlNum<self.thresholdUntouchedUrl:
-            msg = "爬虫诊断 剩余待爬取的网页数量：%s，低于阀值%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
-            content += "\r\n" + msg
+            msg = "爬虫诊断 总剩余待爬取的网页数量：%s，低于阀值%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
+            content += "\r%s\n" % msg
         else:
-            msg = "爬虫诊断 剩余待爬取的网页数量：%s" % (untouchedUrlNum)
-            content += "\r\n" + msg
-        #爬虫速度
+            msg = "爬虫诊断 总剩余待爬取的网页数量：%s" % (untouchedUrlNum)
+            content += "\r%s\n" % msg
+            
+        #爬虫总速度
         speed=self.totalPagecounts* 60.0 / self.mailInterval
-        content += "\r\n最近%s小时内，下载网页总数为%s个，爬虫速度为:%s/分钟" % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
+        content += "\r最近%s小时内，下载网页总数为%s个，爬虫系统总速度为:%s/分钟\n" % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
         #统计爬虫数
-        spiderNames=self.pagecounts.keys()
-        content += "\r\n最近%s小时内执行过的爬虫有：%s" % (self.mailInterval / 3600.0 , spiderNames)
-        content += "\r\n当前还运行着的爬虫数有：%s" % (self.openSpiderNum - self.closeSpiderNum)
+        content += "\r最近%s小时内执行过的爬虫有：%s\n" % (self.mailInterval / 3600.0 , self.spiderDict.keys())
+        content += "\r当前还运行着的爬虫数有：%s\n" % (self.openSpiderNum - self.closeSpiderNum)
         self.totalPagecounts=0
-        self.pagecounts.clear()
+#        self.pagecounts.clear()
         return content
     
+    '''
+    下载一个网页
+    '''
     def onResponseReceived(self,response, request, spider):
-        self.pagecounts[spider] += 1
+#        self.pagecounts[spider] += 1
         self.totalPagecounts += 1
-        
+        self.spiderDict[spider.name]['crawledCounter'] += 1
+        if response and response.status in self.faildedStatus:
+            self.spiderDict[spider.name]['faildedCounter'][response.status] += 1
+            

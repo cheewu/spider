@@ -65,11 +65,12 @@ class TxtDuplicateFilter(object):
             for colName in md5SourceCols:
                 cursor=mongoApt.findCursor(colName=colName, whereJson={}, fieldsJson={'md5':1})
                 for p in cursor:
-                    self.md5s.add(p['md5'])
+                    if 'md5' in p:
+                        self.md5s.add(p['md5'])
             print '完成文本排重器的md5初始化，共%s个md5值' % len(self.md5s)
         else:
-            print '没有提供md5初始列表或md5数据源表，无法初始化文本排重器！'
-            raise NotConfigured
+            print '警告： 没有提供md5初始列表或md5数据源表，无法初始化文本排重器！'
+#            raise NotConfigured
         if len(self.md5s)<1:
             print '初始化md5值集合为空！'
         
@@ -97,12 +98,12 @@ class TxtDuplicateFilter(object):
         检测重复，若重复，返回true,重复的md5值，否则返回false，输入的md5值
         id：输入文本的id
         '''
-        dt1=datetime.datetime.now()
+#        dt1=datetime.datetime.now()
         input=self.getTopSentences(content, topNum=10)
-        md5Val=getFingerPrint(input);
-        dt2=datetime.datetime.now()
-        dt=dt2-dt1
-        print '一次文本排重时间花费：%s' % dt
+        md5Val=getFingerPrint(input)
+#        dt2=datetime.datetime.now()
+#        dt=dt2-dt1
+#        print '一次文本排重时间花费：%s' % dt
         
         if md5Val in self.md5s:
 #            log.msg('duplicate id为“%s”的输入被确定与md5Vale为“%s”的现有项目重复' % (id,md5Val),level=log.INFO)

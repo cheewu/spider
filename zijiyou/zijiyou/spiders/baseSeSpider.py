@@ -366,7 +366,6 @@ class BaseSeSpider(BaseCrawlSpider):
             mainText = doExtract(content,threshold=False)
 #            print mainText
             return mainText
-        
     
     def checkXathConfig(self, response):
         '''判断配置是否正确'''

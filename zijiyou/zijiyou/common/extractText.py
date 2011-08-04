@@ -3,7 +3,7 @@
 Created on 2011-5-15
 
 @author: shiym
-代码拷贝自互联网，修改了 fromstring，不是用sourp
+代码拷贝自互联网，修改了 fromstring，替换sourp
 '''
 from lxml.html import fromstring
 from lxml import etree
