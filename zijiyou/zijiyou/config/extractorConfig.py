@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 
 extractorConfig = {
+                "bbkerSpider":{
+                               "KeyList":{"keyWords":'//div[@class="doc"]/div[@class="col"]/div[@class="taglist"]/span//text()'},
+                               },
+                "baseSeSpider":{
+                                "Article":{
+                                    'content':'//body',
+                                    'title':'//div/h3/text()'
+                                        }
+                                },
                 "daodaoSpider":{
                             "POI":{
                                     'name':'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
@@ -29,8 +38,39 @@ extractorConfig = {
                                     'attractions':'//ul[@class="article-senior-tags borderBom"]/li[1]/div/a/text()',
                                     'feature':'//ul[@class="article-senior-tags borderBom"]/li[2]/div/a/text()'
                             },
-                            
+                            "article":{
+                                    #第一部分和CommonSenseItem的一样
+                                    'author':'//div[@class="article-title borderBom"]/p/span/span[@class="fkLnk hvrIE6"]/text()',
+                                    'publishDate':'//div[@class="article-title borderBom"]/p/span[2]/text()',
+                                    'content':'//div[@class="article-content"]',
+                                    'pvNum':'//em[@id="pvNum"]/text()',
+                                    'replyNum':'//div[@class="interaction clearfix"]/span/a[@href="#"]/parent::*/text()',
+                                    'collectionNum':'//em[@id="collectionNum"]/text()',
+                                    'helpfulNum':'//em[@id="helpfulNum"]/text()',
+                                    'unhelpfulNum':'//em[@id="unhelpfulNum"]/text()',
+                                    #第二部分不一样
+                                    'title':'//div[@class="article-title borderBom"]/div/h1/text()',
+                                    'area':'//ul[@class="article-extra borderBom"]/li[1]/div/a/text()',
+                                    'type':'//ul[@class="article-extra borderBom"]/li[2]/a/text()',
+                                    'tag':'//ul[@class="article-extra borderBom"]/li[3]/div/a/text()',
+                                    'attractions':'//ul[@class="article-senior-tags borderBom"]/li[1]/div/a/text()',
+                                    'feature':'//ul[@class="article-senior-tags borderBom"]/li[2]/div/a/text()'
+                            },
                             "Note":{
+                                    #第一部分和NoteItem的一样
+                                    'author':'//div[@class="article-title borderBom"]/p/span/span[@class="fkLnk hvrIE6"]/text()',
+                                    'date':'//div[@class="article-title borderBom"]/p/span[2]/text()',
+                                    'content':'//div[@class="article-content"]',
+                                    'pvNum':'//em[@id="pvNum"]/text()',
+                                    'replyNum':'//div[@class="interaction clearfix"]/span/a[@href="#"]/parent::*/text()',
+                                    'collectionNum':'//em[@id="collectionNum"]/text()',
+                                    'helpfulNum':'//em[@id="helpfulNum"]/text()',
+                                    'unhelpfulNum':'//em[@id="unhelpfulNum"]/text()',
+                                    #第二部分不一样
+                                    'area':'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li[4]/a/text()',
+                                    'type':'//div[@class="article-title borderBom"]/div/h1/text()'   
+                            },
+                            "note":{
                                     #第一部分和NoteItem的一样
                                     'author':'//div[@class="article-title borderBom"]/p/span/span[@class="fkLnk hvrIE6"]/text()',
                                     'date':'//div[@class="article-title borderBom"]/p/span[2]/text()',
@@ -274,21 +314,21 @@ extractorConfig = {
                                     'publishDateRegex':u'时间：'+'(\S+)',
                             },
                 },
-                "bbkerSpider":{
-                            'Article':{
-                                    'content':'//div[@id="pageright"]/div[@class="doc"]/div[@class="doccol"]/div[@class="info"]/ul[normalize-space(li)="地图:"]/parent::*/following-sibling::*[@*]',
-                                    'title':'//div[@id="pageright"]/div[@class="doc"]/div[@class="doccol"]/center/text()',
-                                    'author':'//div[@class="info"]/ul[count(li)=5]/li[1]/a/text()',
-                            },
-                            'ArticleRegex':{
-                                    'geotag':'//div[@class="info"]/ul[normalize-space(li)="地理标签:"]',
-                                    'geotagRegex':'<a\s*[^>]*\s*>(.*?)<\s*/a\s*>',
-                                    'tag':'//div[@class="info"]/ul[normalize-space(li)="标签:"]',
-                                    'tagRegex':'<a\s*[^>]*\s*>(.*?)<\s*/a\s*>',
-                                    'publishDate':'//div[@class="info"]/ul[count(li)=5]/li[4]/text()',
-                                    'publishDateRegex':u'发表:\s*'+'(.*)',
-                            },
-                },
+#                "bbkerSpider":{
+#                            'Article':{
+#                                    'content':'//div[@id="pageright"]/div[@class="doc"]/div[@class="doccol"]/div[@class="info"]/ul[normalize-space(li)="地图:"]/parent::*/following-sibling::*[@*]',
+#                                    'title':'//div[@id="pageright"]/div[@class="doc"]/div[@class="doccol"]/center/text()',
+#                                    'author':'//div[@class="info"]/ul[count(li)=5]/li[1]/a/text()',
+#                            },
+#                            'ArticleRegex':{
+#                                    'geotag':'//div[@class="info"]/ul[normalize-space(li)="地理标签:"]',
+#                                    'geotagRegex':'<a\s*[^>]*\s*>(.*?)<\s*/a\s*>',
+#                                    'tag':'//div[@class="info"]/ul[normalize-space(li)="标签:"]',
+#                                    'tagRegex':'<a\s*[^>]*\s*>(.*?)<\s*/a\s*>',
+#                                    'publishDate':'//div[@class="info"]/ul[count(li)=5]/li[4]/text()',
+#                                    'publishDateRegex':u'发表:\s*'+'(.*)',
+#                            },
+#                },
                 "21cnSpider":{
                             'Article':{
                                     'title':'//div[@id="text"]/div[@class="bd"]/h1/text()',
