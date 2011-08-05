@@ -46,7 +46,7 @@ class Parse(object):
             self.ResponseDb=settings.get('RESPONSE_DB')
             if not self.ResponseDb :
                 self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
-                raise NotConfigured
+                raise NotConfigured('没有配置CRAWL_DB！，请检查settings')
             self.mongoApt=MongoDbApt()
                 
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
@@ -163,12 +163,14 @@ class Parse(object):
             config=extractorConfig[spiderName]
         if not config:
             self.parseLog('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName, level=LogLevel.ERROR)
-            raise NotConfigured
+            raise NotConfigured('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName)
         
         hxs=HtmlXPathSelector(response)
         if not itemCollectionName or not itemCollectionName in config:
-            self.parseLog('类型没有找到：%s ' % itemCollectionName, level=LogLevel.ERROR)
-            raise NotConfigured
+            self.parseLog('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName), level=LogLevel.ERROR)
+            print '%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName)
+            return None
+#            raise NotConfigured('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName))
         
         #耦合较大且代码重复，后续计划用工厂模式取代
 #        item=None
