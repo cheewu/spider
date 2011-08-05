@@ -47,7 +47,10 @@ spiderConfig = {
                      },
     "daodaoSpider":{
         'allowedDomains':["daodao.com"],
-        'startUrls':['http://www.daodao.com/Attractions-g294211-Activities-China.html'],
+        'startUrls':[
+                     'http://www.daodao.com/Tourism-g608470-c4-n1544491_Yule.html'
+#                     'http://www.daodao.com/Attractions-g294211-Activities-China.html'
+                     ],
         #普通list页正则表达式
         'normalRegex':[
             {
@@ -786,11 +789,12 @@ spiderConfig = {
 	      "bbsSpider2":{
                      'allowedDomains':['www.go2eu.com'],
                      'startUrls':[
-                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=79&page=1'
+                                  'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=93313'
+#                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=79&page=1'
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
-                                    {'regex':r'forumdisplay.php\?fid=\d+', 'priority':700, 'region':'//div/div[@class="pages"]'}, #列表后续页，在板块页中找 &page=\d+$
+#                                    {'regex':r'forumdisplay.php\?fid=\d+', 'priority':700, 'region':'//div/div[@class="pages"]'}, #列表后续页，在板块页中找 &page=\d+$
                                     ],
                      #item页正则表达式 itemCollectionName对应item存放的数据表名
                      'itemRegex':[
@@ -805,7 +809,10 @@ spiderConfig = {
 
 	      "55bbsSpider":{
                      'allowedDomains':["bbs.55bbs.com"],
-                     'startUrls':['http://bbs.55bbs.com/forum-34-1.html'],
+                     'startUrls':[
+                                  'http://bbs.55bbs.com/thread-5730685-1-1.html',
+#                                  'http://bbs.55bbs.com/forum-34-1.html'
+                                  ],
 		      #普通list页正则表达式
 		     'normalRegex':[
 			     {'regex':r'forum-34-\d+.html$', 'priority':1000, 'region':'//div[@class="pages"]'},
@@ -878,11 +885,12 @@ spiderConfig = {
 	   "lvyeSpider":{
                        'allowedDomains':["bbs.lvye.cn"],
                        'startUrls':[
+                                    'http://bbs.lvye.cn/forum-viewthread-action-printable-tid-318979.html'
                                 #'http://bbs.lvye.cn/forum-1559-1.html',#自驾
 				#'htp://bbs.lvye.cn/forum-8-1.html',#游记攻略
 				#'http://bbs.lvye.cn/forum-1815-1.html',#背包自助
 				#'http://bbs.lvye.cn/forum-354-1.html',#户外摄影
-				'http://bbs.lvye.cn/forum-haiwai-1.html'#海外
+#				'http://bbs.lvye.cn/forum-haiwai-1.html'#海外
 		        ],
 		     
 		      #普通list页正则表达式
@@ -905,13 +913,14 @@ spiderConfig = {
                            'homePage':'http://club.travel.sina.com.cn',
                            'allowedDomains':["club.travel.sina.com.cn"],
                            'startUrls':[
-                                        'http://club.travel.sina.com.cn/forum-2-1.html', #旅行天下
-					'http://club.travel.sina.com.cn/forum-4-1.html', #驴友同行
-					'http://club.travel.sina.com.cn/forum-21-1.html', #光影记录
+                                        'http://club.travel.sina.com.cn/thread-349694-1-1.html',
+#                                        'http://club.travel.sina.com.cn/forum-2-1.html', #旅行天下
+#					'http://club.travel.sina.com.cn/forum-4-1.html', #驴友同行
+#					'http://club.travel.sina.com.cn/forum-21-1.html', #光影记录
                                         ],
                             #普通list页正则表达式
                             'normalRegex':[
-                                            {'regex':r'forum-\d+-\d+.html$', 'priority':700, 'region':'//div[@class="pages"]'}, #帖子列表页
+#                                            {'regex':r'forum-\d+-\d+.html$', 'priority':700, 'region':'//div[@class="pages"]'}, #帖子列表页
                                            
                                             ],
                             #item页正则表达式 itemCollectionName对应item存放的数据表名

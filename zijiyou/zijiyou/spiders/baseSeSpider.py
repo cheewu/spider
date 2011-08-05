@@ -14,7 +14,7 @@ from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-from zijiyou.spiders.offlineCrawl.extractText import doExtract, getText
+from zijiyou.common.extractText import doExtract, getText
 import datetime
 import re
 import string

@@ -102,9 +102,17 @@ class MongoDbApt(object):
                 results.append(p)
         return results
     
-    def findCursor(self,colName=None,whereJson={},fieldsJson={}):
-        cursor = self.db[colName].find(whereJson,fieldsJson)
-        return cursor 
+    def findCursor(self,colName=None,whereJson={},fieldsJson={},sortField=None):
+        if sortField:
+            if len(fieldsJson)>0:
+                return self.db[colName].find(whereJson,fieldsJson).sort(sortField)
+            else:
+                return self.db[colName].find(whereJson).sort(sortField)
+        else:
+            if len(fieldsJson) > 0:
+                return self.db[colName].find(whereJson,fieldsJson)
+            else:
+                return self.db[colName].find(whereJson)
     
     def findFieldsWithLimit(self,colName,whereJson={},limitNum=-1):
         mycursor=None

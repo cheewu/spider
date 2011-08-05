@@ -59,97 +59,92 @@ class Parse(object):
         self.bbsSpiderName = settings.get('BBS_SPIDER_NAME')
         self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50# test should be 50 
-        self.responseTotalNum=0#self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
+        self.responseTotalNum=0
+        #self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
 #        self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
         self.curSeek=0
 #        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
 #        print 'init完成'
-        self.txtDupChecker=TxtDuplicateFilter(md5SourceCols=['Article','Note'])
+#        self.txtDupChecker=TxtDuplicateFilter(md5SourceCols=['Article','Note','POI'])
     
     def parse(self):
         '''
         离线爬虫入口
         '''
-        if self.responseTotalNum<1:
-            self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
-            self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
-        
+#        self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
         heard={'Content-type':'text/html',
                'encoding':'gb18030',#uft-8
                'Content-Type': ['text/html;charset=gb18030'], #UTF-8
                'Pragma': ['no-cache'], 
                'Cache-Control': ['no-cache,no-store,must-revalidate']
                }
-        self.countSuc=0;
-        self.countFail=0
-        def _parse():
-            items={}
-            for p in self.responseBodys:
-                if not ('spiderName' in p and 'itemCollectionName' in p):
-                    self.parseLog( '缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
-                    continue
-                spiderName=p['spiderName']
-                
-                itemCollectionName=re.sub('[\r\n]', "", p['itemCollectionName'])
-                item = None
-                if itemCollectionName in self.specialItem:
-                    item = self.parseSpecialItem(itemCollectionName, p)
-                else:
-                    if 'headers' in p:
-                        heard=p['headers']
-                    #对body进行编码
-                    responseBody=p['responseBody']
-                    if 'coding' in p:
-                        responseBody=responseBody.decode('utf-8').encode(p['coding'])
-                    response=HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None )
-                    item = self.parseItem(spiderName,itemCollectionName, response,responseBody=p['responseBody']) # test
-                whereJson={'_id':ObjectId(p['_id'])}
-                if itemCollectionName in self.collectionNameMap:
-                    itemCollectionName=self.collectionNameMap[itemCollectionName]
-                if item:
-                    if not itemCollectionName in items:
-                        items[itemCollectionName]=[]
-                    items[itemCollectionName].append(item)
-                    # parse item successful, and then update the status to 200
-                    updateJson={'status':200}
-                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
-                    self.countSuc+=1
-                else:
-                    # fail in parsing item , and then update the status to 101
-                    updateJson={'status':101}
-                    self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
-                    self.countFail+=1
-                    
-            if items and len(items)>0:
-                for k,v in items.items():
-                    if len(v)<1:
-                        continue
-                    else:
-                        print '新item的数量：%s，类型：%s' % (len(v),k)
-                    #拆箱-向后兼容
-#                    newItem={}
-#                    for k,v in item.items():
-#                        newItem[k] = v
-#                    objId = self.mongoApt.saveItem(k, newItem)
-                    objId = self.mongoApt.saveItem(k, v)
-                    print '保存新item：%s, objId:%s' % (itemCollectionName,objId)
-                    if objId:
-                        self.parseLog('item保存成功,collectionsName:%s, objectId:%s' % (k,objId), level=LogLevel.INFO)
-                    else:
-                        self.parseLog('item保存失败！,collectionsName:%s ' % (k), level=LogLevel.ERROR)
-                items = {}
+        spiderCodingMap={'55bbsSpider':'gb18030','daodaoSpider':'UTF-8',
+                         'bbsSpider2':'gb18030',
+                         'go2euSpider':'gb18030','lvpingSpider':'utf-8',
+                         'lvyeSpider':'utf-8','sinabbsSpider':'gb18030'}
+        self.countSuc = 0;
+        self.countFail = 0
+        cursor=self.mongoApt.findCursor(colName=self.ResponseDb, whereJson=self.whereJson, sortField='status')
+        #进度条
+        numAll=cursor.count()
+        thredHold = numAll / 100
+        curNum = 0
+        percents = 0.0
+        print '开始初始化md5值...总数量：%s' % numAll
+        for p in cursor:
+            #进度条
+            curNum += 1
+            if curNum >= thredHold:
+                curNum = 0
+                percents += 1.0
+                print '当前进度：百分之%s' % percents
             
-        #非递归parse
-        while (self.curSeek < self.responseTotalNum):
-            self.parseLog('成功完成一轮递归，curSeek:%s' % self.curSeek, level=LogLevel.INFO)
-            self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
-            self.curSeek+=len(self.responseBodys)
-            _parse()
+            if not ('spiderName' in p and ('itemCollectionName' in p or p['spiderName'] in self.bbsSpiderName)):
+                self.parseLog('缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
+                continue
+            spiderName = p['spiderName']
+                
+            itemCollectionName = ''
+            if 'itemCollectionName' in p:
+                itemCollectionName = re.sub('[\r\n]', "", p['itemCollectionName'])
+            else:
+                itemCollectionName='Article'
+            item = None
+            if itemCollectionName in self.specialItem:
+                item = self.parseSpecialItem(itemCollectionName, p)
+            else:
+                if 'headers' in p:
+                    heard = p['headers']
+                #对body进行编码
+                responseBody = p['responseBody']
+                if 'coding' in p:
+                    responseBody = responseBody.decode('utf-8').encode(p['coding'])
+                else:
+                    coding='utf-8'
+                    if spiderName in spiderCodingMap:
+                        coding=spiderCodingMap[spiderName]
+                    responseBody = responseBody.decode('utf-8').encode(coding)
+                response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
+                item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
+            whereJson = {'_id':ObjectId(p['_id'])}
+            if itemCollectionName in self.collectionNameMap:
+                itemCollectionName = self.collectionNameMap[itemCollectionName]
+            #成功解析出来item，保存item，更新pagedb状态为200
+            if item:
+                self.mongoApt.saveItem(itemCollectionName, item)
+                # 更新pagedb
+                updateJson = {'status':200}
+                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                self.countSuc += 1
+            #没有成功解析item，pagedb更新为失败状态：101
+            else:
+                updateJson = {'status':101}
+                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                self.countFail += 1
+
         self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.INFO)
         
         #离线爬虫关闭日志
-        self.parseLog('parse 完成', level=LogLevel.INFO)
-        self.loger.close()
         if not self.loger.closed :
             self.loger.close()
             print 'OK !关闭日志'
@@ -169,7 +164,6 @@ class Parse(object):
         if not config:
             self.parseLog('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName, level=LogLevel.ERROR)
             raise NotConfigured
-        
         
         hxs=HtmlXPathSelector(response)
         if not itemCollectionName or not itemCollectionName in config:
@@ -275,7 +269,7 @@ class Parse(object):
                         '时间:',
                     ]
                     filter = []
-                    count_p = 0
+#                    count_p = 0
                     sig_p = 0
                     sig_start = 1
                     #过滤空字符
@@ -301,8 +295,6 @@ class Parse(object):
                         else:
                             filter.append('\t'+p_strip+"<br/>")
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
-#                    print value
-#                    exit()
             #bbs单独处理end
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
@@ -343,16 +335,16 @@ class Parse(object):
                 value=self.parseSpecialField(k, value)
             item[k]=value
             
-        #文本排重
-        if item['collectionName'] in self.needMd5:
-            if 'content' in item:
-                isDup,md5Val = self.txtDupChecker.checkDuplicate(item['url'], item['content'])
-                item['md5']=md5Val
-                if isDup:
-                    self.parseLog('duplicate id为“%s”的输入被确定与md5Vale为“%s”的现有文本重复' % (id,md5Val), level=LogLevel.WARNING)
-                    item['isDup']='Ture'
-                else:
-                    item['isDup']='False'
+#        #文本排重
+#        if item['collectionName'] in self.needMd5:
+#            if 'content' in item:
+#                isDup,md5Val = self.txtDupChecker.checkDuplicate(item['url'], item['content'])
+#                item['md5']=md5Val
+#                if isDup:
+#                    self.parseLog('duplicate id为“%s”的输入被确定与md5Vale为“%s”的现有文本重复' % (id,md5Val), level=LogLevel.WARNING)
+#                    item['isDup']='Ture'
+#                else:
+#                    item['isDup']='False'
                     #暂时注释：认定重复的文档页保存，但标注重复
 #                    return None
 #                else:

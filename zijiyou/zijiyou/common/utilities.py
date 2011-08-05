@@ -63,7 +63,7 @@ class TxtDuplicateFilter(object):
             #从数据库加载md5
             mongoApt=MongoDbApt()
             for colName in md5SourceCols:
-                cursor=mongoApt.findCursor(colName=colName, whereJson={}, fieldsJson={'md5':1})
+                cursor=mongoApt.findCursor(colName=colName, whereJson={'md5':{'$exists':True}}, fieldsJson={'md5':1},sortField='md5')
                 for p in cursor:
                     if 'md5' in p:
                         self.md5s.add(p['md5'])

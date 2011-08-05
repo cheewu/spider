@@ -56,12 +56,14 @@ def initUrlMd5(dbHost='localHost', port=27017, dbName='spiderV21', urlDbName='Ur
     db = con[dbName]
     urlCol = db[urlDbName]
     urlCur = urlCol.find({'md5':None}, {'url':1})
+    #进度条
     tolNum = urlCol.find({'md5':None}).count()
     thredHold = tolNum / 100
     curNum = 0
     percents = 0.0
     print '开始初始化md5值...总数量：%s' % tolNum
     for p in urlCur:
+        #进度条
         curNum += 1
         if curNum >= thredHold:
             curNum = 0
@@ -73,7 +75,7 @@ def initUrlMd5(dbHost='localHost', port=27017, dbName='spiderV21', urlDbName='Ur
         uj = {'$set':{'md5':md5Val}}
         urlCol.update(whereJson, uj, True, False)
         
-def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spidertest', colName='', contentField=''):
+def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content'):
     '''
     检测colName表中contentField是否有重复
     '''
@@ -83,11 +85,25 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spidertes
     db = con[dbName]
     col = db[colName]
     cursor = col.find({}, {contentField:1}) #'md5':None
-    dupChecker = TxtDuplicateFilter(md5SourceCols=[])
+    dupChecker = TxtDuplicateFilter(md5SourceCols=[colName])
     #重复文本数
     numDup=0.0001
+    #进度条
     numAll=cursor.count()
+    thredHold = numAll / 1000
+    curNum = 0
+    percents = 0.0
+    print '开始初始化md5值...总数量：%s' % numAll
     for p in cursor:
+        #进度条
+        curNum += 1
+        if curNum >= thredHold:
+            curNum = 0
+            percents += 0.1
+            print '当前进度：百分之%s' % percents
+            
+        if not (contentField in p):
+            continue
         content = p[contentField]
         #去掉html标签
         content = getText(content)
@@ -98,6 +114,34 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spidertes
         whereJson = {'_id':ObjectId(p['_id'])}
         col.update(whereJson, updateJson)
     print '完成排重，发现重复数量：%s 总文本数%s 重复比例%s' % (numDup,numAll,(numDup/numAll))
+
+def updateDaodaoResponseItemCollectionName(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='PageDb'):
+    '''
+    更新道道网的response类型
+    '''
+    nameMap={'note':'Note','Note':'Note','attraction':'Attraction','Attraction':'Attraction'}
+    #连接数据库
+    con=Connection(dbHost,port)
+    db=con[dbName]
+    col=db[colName]
+    cursor=col.find({'spiderName':'daodaoSpider'},{'itemCollectionName':1})
+    #进度条
+    tolNum = cursor.count()
+    thredHold = tolNum / 10000
+    curNum = 0
+    percents = 0.0
+    print '总数量：%s' % tolNum
+    for p in cursor:
+        #进度条
+        curNum += 1
+        if curNum >= thredHold:
+            curNum = 0
+            percents += 0.01
+            print '当前进度：百分之%s' % percents
+        itemCollectionName=(p['itemCollectionName']).strip()
+        updateJson={'$set':{'itemCollectionName':nameMap[itemCollectionName]}}
+        whereJson={'_id':ObjectId(p['_id'])}
+        col.update(whereJson,updateJson)
 
 def dumpResponse2PageDb(dbHostSource='192.168.0.183', dbHostTarget='192.168.0.183',
                         portSource=27017, portTarget=27017,
@@ -187,7 +231,7 @@ def dumpResponse2PageDb(dbHostSource='192.168.0.183', dbHostTarget='192.168.0.18
     print '重复：%s' % numDup
     print '完成Dump，目标集合共增加了%s个新item' % numAdd
     
-def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposne=False):
+def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposne=False,needUpdateDaodao=False):
     print 'begin to run task!'
     if needDumUrl:
         print 'run urlDump ... '
@@ -199,12 +243,14 @@ def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposn
         print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     if needCheckDup:
         print 'run dupCheck ...'
-        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='POI', contentField='desc')
+        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Note', contentField='content')
         print 'OK ! -----------dupCheck完成------------------- OK!'
     if needDumpResposne:
         print 'run DumpResposne ...'
         dumpResponse2PageDb(dbNameSource='daodaoDb', colNameSource='responseCol', needMap=True)
         print 'OK ! -----------DumpResposne完成--------------- OK!'
+    if needUpdateDaodao:
+        updateDaodaoResponseItemCollectionName()
     print 'all tasks have been complecated!'
     
 if __name__ == '__main__':

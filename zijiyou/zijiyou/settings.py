@@ -21,7 +21,7 @@ ITEM_PIPELINES=[
 # mongodb setting
 DB_HOST = '192.168.0.183' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188 
 DB_PORT=27017
-DB='spiderV21'#测试用spiderV21 spidertest bbstest
+DB='spiderV21'#测试用 spiderV21 spidertest bbstest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
@@ -43,9 +43,12 @@ DB_COLLECTIONS = ['PageDb',
                   'ImageDb',
                   'test',
                   'Profile',
+                  'KeyList'
                   ]
 COLLECTION_NAME_MAP = {
                     'Attraction':'POI',
+                    'article':'POI',
+                    'note':'Note',
                     'Hotel':'POI',
                     'Article1':'Article',
                     'Article2':'Article',
