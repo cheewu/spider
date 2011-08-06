@@ -4,7 +4,7 @@ Created on 2011-6-6
 本工具用于临时任务的执行，如将PageDb中的url导入到UrlDb
 @author: shiym
 '''
-from bson.objectid import ObjectId
+from pymongo import objectid
 from pymongo.connection import Connection
 from zijiyou.common import utilities
 from zijiyou.common.extractText import getText
@@ -117,7 +117,7 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21
         if isDup:
             numDup+=1
         updateJson = {'$set':{'md5':md5, 'isDup':isDup}}
-        whereJson = {'_id':ObjectId(p['_id'])}
+        whereJson = {'_id':objectid(p['_id'])}
         col.update(whereJson, updateJson)
     print '完成排重，数据集%s发现重复数量：%s 总文本数%s 重复比例%s' % (colName,numDup,tolNum,(numDup/tolNum))
 
@@ -148,7 +148,7 @@ def updateDaodaoResponseItemCollectionName(dbHost='192.168.0.183', port=27017, d
 #            print '当前进度：百分之%s' % percents
         itemCollectionName=(p['itemCollectionName']).strip()
         updateJson={'$set':{'itemCollectionName':nameMap[itemCollectionName]}}
-        whereJson={'_id':ObjectId(p['_id'])}
+        whereJson={'_id':objectid(p['_id'])}
         col.update(whereJson,updateJson)
 
 def dumpResponse2PageDb(dbHostSource='192.168.0.183', dbHostTarget='192.168.0.183',
@@ -272,7 +272,7 @@ def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposn
         print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     if needCheckDup:
         print 'run dupCheck ...'
-        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='POI', contentField='content')
+#        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='POI', contentField='content')
         checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Note', contentField='content')
         checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content')
         print 'OK ! -----------dupCheck完成------------------- OK!'
