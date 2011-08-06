@@ -63,7 +63,7 @@ class TxtDuplicateFilter(object):
             #从数据库加载md5
             mongoApt=MongoDbApt()
             for colName in md5SourceCols:
-                cursor=mongoApt.findCursor(colName=colName, whereJson={'md5':{'$exists':True}}, fieldsJson={'md5':1},sortField='md5')
+                cursor=mongoApt.findCursor(colName=colName, whereJson={'status':{'$gt':0},'isDup':False}, fieldsJson={'md5':1})
                 for p in cursor:
                     if 'md5' in p:
                         self.md5s.add(p['md5'])
@@ -111,6 +111,31 @@ class TxtDuplicateFilter(object):
         else:
             self.md5s.add(md5Val)
             return False,md5Val
+
+class ProcessBar(object):
+    '''
+    进度条
+    '''
+    def __init__(self,numAll=0,numUnit=1000):
+        if numAll < 1:
+            raise NotConfigured('总数量小于1，无法使用进度条！')
+        self.numAll=numAll
+        self.thredhold=self.numAll / numUnit
+        self.percents=0.0
+        self.curNum=0
+        self.minUnit= 100.0 / numUnit
+    
+    def printProcessBar(self):
+        '''
+        打印进度
+        '''
+        self.curNum+=1
+        if self.curNum >self.thredhold:
+            self.percents += self.minUnit
+            self.curNum=0
+            print '当前进度：百分之%s' % self.percents
+        
+        
 
 #测试 供理解代码参考
 #if __name__ == "__main__":

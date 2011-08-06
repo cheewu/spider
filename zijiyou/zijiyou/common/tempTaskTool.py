@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 from pymongo.connection import Connection
 from zijiyou.common import utilities
 from zijiyou.common.extractText import getText
-from zijiyou.common.utilities import TxtDuplicateFilter
+from zijiyou.common.utilities import TxtDuplicateFilter, ProcessBar
 import datetime
 
 def dumpUrlFromPageDb2UrlDb(dbHost='localHost', port=27017, dbName='spiderV21', pageDbName='PageDb', urlDbName='UrlDb'):
@@ -24,16 +24,18 @@ def dumpUrlFromPageDb2UrlDb(dbHost='localHost', port=27017, dbName='spiderV21', 
     whereJson = {'url':''}
     counter = 0
     tolNum = pageDbCur.count()
-    thredHold = tolNum / 100
-    curNum = 0
-    percents = 0.0
+    processBar=ProcessBar(numAll=tolNum)
+#    thredHold = tolNum / 100
+#    curNum = 0
+#    percents = 0.0
     print '开始dump...总数量：%s' % tolNum
     for p in pageDbCur:
-        curNum += 1
-        if curNum >= thredHold:
-            curNum = 0
-            percents += 1.0
-            print '当前进度：百分之%s' % percents
+        processBar.printProcessBar()
+#        curNum += 1
+#        if curNum >= thredHold:
+#            curNum = 0
+#            percents += 1.0
+#            print '当前进度：百分之%s' % percents
         url = p['url']
         if url == None or len(url) < 1:
             continue
@@ -58,23 +60,25 @@ def initUrlMd5(dbHost='localHost', port=27017, dbName='spiderV21', urlDbName='Ur
     urlCur = urlCol.find({'md5':None}, {'url':1})
     #进度条
     tolNum = urlCol.find({'md5':None}).count()
-    thredHold = tolNum / 100
-    curNum = 0
-    percents = 0.0
+    processBar=ProcessBar(numAll=tolNum)
+#    thredHold = tolNum / 100
+#    curNum = 0
+#    percents = 0.0
     print '开始初始化md5值...总数量：%s' % tolNum
     for p in urlCur:
         #进度条
-        curNum += 1
-        if curNum >= thredHold:
-            curNum = 0
-            percents += 1.0
-            print '当前进度：百分之%s' % percents
+        processBar.printProcessBar()
+#        curNum += 1
+#        if curNum >= thredHold:
+#            curNum = 0
+#            percents += 1.0
+#            print '当前进度：百分之%s' % percents
         url = p['url']
         md5Val = utilities.getFingerPrint([url], isUrl=True)
         whereJson = {'_id':p['_id']}
         uj = {'$set':{'md5':md5Val}}
         urlCol.update(whereJson, uj, True, False)
-        
+
 def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content'):
     '''
     检测colName表中contentField是否有重复
@@ -89,18 +93,20 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21
     #重复文本数
     numDup=0.0001
     #进度条
-    numAll=cursor.count()
-    thredHold = numAll / 1000
-    curNum = 0
-    percents = 0.0
-    print '开始初始化md5值...总数量：%s' % numAll
+    tolNum=cursor.count()
+    processBar=ProcessBar(numAll=tolNum,numUnit=100)
+#    thredHold = numAll / 1000
+#    curNum = 0
+#    percents = 0.0
+    print '开始对%s的字段%s检查重复...总数量：%s' % (colName,contentField,tolNum)
     for p in cursor:
         #进度条
-        curNum += 1
-        if curNum >= thredHold:
-            curNum = 0
-            percents += 0.1
-            print '当前进度：百分之%s' % percents
+        processBar.printProcessBar()
+#        curNum += 1
+#        if curNum >= thredHold:
+#            curNum = 0
+#            percents += 0.1
+#            print '当前进度：百分之%s' % percents
             
         if not (contentField in p):
             continue
@@ -113,7 +119,7 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21
         updateJson = {'$set':{'md5':md5, 'isDup':isDup}}
         whereJson = {'_id':ObjectId(p['_id'])}
         col.update(whereJson, updateJson)
-    print '完成排重，发现重复数量：%s 总文本数%s 重复比例%s' % (numDup,numAll,(numDup/numAll))
+    print '完成排重，数据集%s发现重复数量：%s 总文本数%s 重复比例%s' % (colName,numDup,tolNum,(numDup/tolNum))
 
 def updateDaodaoResponseItemCollectionName(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='PageDb'):
     '''
@@ -127,17 +133,19 @@ def updateDaodaoResponseItemCollectionName(dbHost='192.168.0.183', port=27017, d
     cursor=col.find({'spiderName':'daodaoSpider'},{'itemCollectionName':1})
     #进度条
     tolNum = cursor.count()
-    thredHold = tolNum / 10000
-    curNum = 0
-    percents = 0.0
+    processBar=ProcessBar(numAll=tolNum)
+#    thredHold = tolNum / 10000
+#    curNum = 0
+#    percents = 0.0
     print '总数量：%s' % tolNum
     for p in cursor:
         #进度条
-        curNum += 1
-        if curNum >= thredHold:
-            curNum = 0
-            percents += 0.01
-            print '当前进度：百分之%s' % percents
+        processBar.printProcessBar()
+#        curNum += 1
+#        if curNum >= thredHold:
+#            curNum = 0
+#            percents += 0.01
+#            print '当前进度：百分之%s' % percents
         itemCollectionName=(p['itemCollectionName']).strip()
         updateJson={'$set':{'itemCollectionName':nameMap[itemCollectionName]}}
         whereJson={'_id':ObjectId(p['_id'])}
@@ -166,20 +174,22 @@ def dumpResponse2PageDb(dbHostSource='192.168.0.183', dbHostTarget='192.168.0.18
     colSource = dbSource[colNameSource]
     colTarget = dbTarget[colNameTarget]
     cursor = colSource.find()
-    numAll = cursor.count()
+    tolNum = cursor.count()
     numAdd = 0
     numDup = 0
-    thredHold = numAll / 100
-    counter = 0
-    percents = 0.0
-    print '开始从%s向%s Dump %s 数据量：%s' % (dbHostSource, dbHostTarget, colNameSource, numAll)
+    processBar=ProcessBar(numAll=tolNum)
+#    thredHold = numAll / 100
+#    counter = 0
+#    percents = 0.0
+    print '开始从%s向%s Dump %s 数据量：%s' % (dbHostSource, dbHostTarget, colNameSource, tolNum)
     for p in cursor:
         #进度
-        counter += 1
-        if counter >= thredHold:
-            counter = 0
-            percents += 1.0
-            print '当前进度：百分之%s' % percents
+        processBar.printProcessBar()
+#        counter += 1
+#        if counter >= thredHold:
+#            counter = 0
+#            percents += 1.0
+#            print '当前进度：百分之%s' % percents
             
         url = ''
         if not ('url' in p):
@@ -231,7 +241,26 @@ def dumpResponse2PageDb(dbHostSource='192.168.0.183', dbHostTarget='192.168.0.18
     print '重复：%s' % numDup
     print '完成Dump，目标集合共增加了%s个新item' % numAdd
     
-def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposne=False,needUpdateDaodao=False):
+def dumpKeyWordsFromDb(dbHost='192.168.0.183', port=27017, dbName='KeyWordDB', colName='KeyWord',
+                       txtFileName='./keywords.txt'):
+    con=Connection(dbHost,port)
+    db=con[dbName]
+    col=db[colName]
+    cursor=col.find({},{'keyword':1})
+#    #进度条
+    tolNum = cursor.count()
+    processBar=ProcessBar(numAll=tolNum)
+    myFile=open(txtFileName,'w')
+    for p in cursor:
+        processBar.printProcessBar()
+#        aline=p['keyword']+'， n ， 100， 0\n'
+        aline=p['keyword']+'\n'
+        myFile.write(aline)
+    if not myFile.closed:
+        myFile.close()
+    
+def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposne=False,needUpdateDaodao=False,
+        needDumpKeyword=False):
     print 'begin to run task!'
     if needDumUrl:
         print 'run urlDump ... '
@@ -243,18 +272,28 @@ def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposn
         print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     if needCheckDup:
         print 'run dupCheck ...'
+        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='POI', contentField='content')
         checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Note', contentField='content')
+        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content')
         print 'OK ! -----------dupCheck完成------------------- OK!'
     if needDumpResposne:
         print 'run DumpResposne ...'
         dumpResponse2PageDb(dbNameSource='daodaoDb', colNameSource='responseCol', needMap=True)
         print 'OK ! -----------DumpResposne完成--------------- OK!'
     if needUpdateDaodao:
+        print 'run updateDaodaoResponseItemCollectionName ...'
         updateDaodaoResponseItemCollectionName()
+        print 'OK ! -----------updateDaodaoResponseItemCollectionName完成--------------- OK!'
+    if needDumpKeyword:
+        print 'run dumpKeyWordsFromDb ...'
+        dumpKeyWordsFromDb()
+        print 'OK ! -----------dumpKeyWordsFromDb--------------- OK!'
+    
+    
     print 'all tasks have been complecated!'
     
 if __name__ == '__main__':
-    run(needCheckDup=True)#needCheckDup=True
+    run(needCheckDup=True)
     
     
 
