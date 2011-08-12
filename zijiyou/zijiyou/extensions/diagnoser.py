@@ -4,15 +4,16 @@ Created on 2011-5-4
 
 @author: shiym
 '''
+from collections import defaultdict
 from scrapy import log, signals
 from scrapy.conf import settings
+from scrapy.mail import MailSender
 from scrapy.xlib.pydispatch import dispatcher
 from twisted.internet import reactor
-#from zijiyou.common.emailTool import sendMail
-from scrapy.mail import MailSender
-from zijiyou.db.mongoDbApt import MongoDbApt
-from collections import defaultdict
+from zijiyou.db.extensionApt import DiagnoserApt
+#from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
+#from zijiyou.common.emailTool import sendMail
 
 class Diagnoser(object):
     '''
@@ -41,8 +42,10 @@ class Diagnoser(object):
         #警告文件路径
         self.diagnoserPath=settings.get('DIAGNOSER_PATH','./diagnosePath')
         self.errorStatus=[400]
-        self.mongo=MongoDbApt()
-        self.crawlCol='UrlDb'
+#        self.mongo=MongoDbApt()
+        #诊断器的适配器
+        self.apt = DiagnoserApt()
+#        self.crawlCol='UrlDb'
         #发送邮件的时间间隔
         self.mailInterval=settings.get('MAIL_INTERVAL', 14400)
         #发送邮件最小间隔
@@ -136,8 +139,9 @@ class Diagnoser(object):
             content +=msg
 
         #总下载失败网页数量
-        whereJson={'status':{'$gte':400,'$lt':900}}
-        errorUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
+#        whereJson={'status':{'$gte':400,'$lt':900}}
+#        errorUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
+        errorUrlNum=self.apt.countErrorStatusUrls()
         if errorUrlNum>self.thresholdError:
             msg = "诊断警告 ：总下载失败网页数量为%s，高于于阀值%s" % (errorUrlNum,self.thresholdError)
             content += "\r\n" + msg
@@ -146,8 +150,9 @@ class Diagnoser(object):
             content += "\r\n" + msg
         
         #总剩余待爬取的网页数量
-        whereJson={'status':{'$gt':900}}
-        untouchedUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
+#        whereJson={'status':{'$gt':900}}
+#        untouchedUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
+        untouchedUrlNum=self.apt.countUncrawlUrls()
         if untouchedUrlNum<self.thresholdUntouchedUrl:
             msg = "爬虫诊断 总剩余待爬取的网页数量：%s，低于阀值%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
             content += "\r%s\n" % msg
@@ -165,10 +170,10 @@ class Diagnoser(object):
 #        self.pagecounts.clear()
         return content
     
-    '''
-    下载一个网页
-    '''
     def onResponseReceived(self,response, request, spider):
+        '''
+        下载一个网页
+        '''
 #        self.pagecounts[spider] += 1
         self.totalPagecounts += 1
         self.spiderDict[spider.name]['crawledCounter'] += 1

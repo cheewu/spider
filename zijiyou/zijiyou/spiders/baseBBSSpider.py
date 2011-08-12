@@ -32,8 +32,7 @@ class BaseBBSSpider(BaseCrawlSpider):
         requiredConfig = ['homePage', 'firstPageItemRegex', 'maxPageNumXpath', 'pagePattern', 'itemPriority']
         for v in requiredConfig:
             if not v in self.config:
-                log.msg("%s的配置文件没有%s，请检查!" % (self.name, v), level=log.ERROR)
-                raise NotConfigured
+                raise NotConfigured("%s的配置文件没有%s，请检查!" % (self.name, v))
         self.functionDic['baseParse'] = self.baseParse
         self.functionDic['parseItem'] = self.parseItem
         
@@ -44,13 +43,16 @@ class BaseBBSSpider(BaseCrawlSpider):
         
         if not self.hasInit:
             self.hasInit=True
-            self.initRequest()
-            if self.pendingRequest and len(self.pendingRequest)>0:
-                reqs.extend(self.pendingRequest)
-                log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
+            log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
+            pendingRequest=self.getPendingRequest()
+            updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
+            pendingRequest.extend(updateRequest)
+            if len(pendingRequest)>0:
+                reqs.extend(pendingRequest)
+                log.msg('爬虫%s正式启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(pendingRequest)), log.INFO)
             else:
-                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , level=log.INFO)
-        
+                log.msg('爬虫%s正式启动执行：解析startUrl页面' % self.name , log.INFO)
+                
         log.msg('解析开始link: %s' % response.url, log.INFO)
         dtBegin=datetime.datetime.now()
         #普通页link

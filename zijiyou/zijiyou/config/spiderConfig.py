@@ -48,9 +48,8 @@ spiderConfig = {
     "daodaoSpider":{
         'allowedDomains':["daodao.com"],
         'startUrls':[
-#                     'http://www.daodao.com/Tourism-g608470-c4-n1544491_Yule.html'
-                     'http://www.daodao.com/Attractions-g294211-Activities-China.html'
-                     ],
+                     'http://www.daodao.com/Lvyou'
+                    ],
         #普通list页正则表达式
         'normalRegex':[
             {

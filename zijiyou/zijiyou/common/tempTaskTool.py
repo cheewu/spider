@@ -4,7 +4,8 @@ Created on 2011-6-6
 本工具用于临时任务的执行，如将PageDb中的url导入到UrlDb
 @author: shiym
 '''
-from pymongo import objectid
+from pymongo.objectid import ObjectId
+#from bson.objectid import ObjectId
 from pymongo.connection import Connection
 from zijiyou.common import utilities
 from zijiyou.common.extractText import getText
@@ -25,17 +26,9 @@ def dumpUrlFromPageDb2UrlDb(dbHost='localHost', port=27017, dbName='spiderV21', 
     counter = 0
     tolNum = pageDbCur.count()
     processBar=ProcessBar(numAll=tolNum)
-#    thredHold = tolNum / 100
-#    curNum = 0
-#    percents = 0.0
     print '开始dump...总数量：%s' % tolNum
     for p in pageDbCur:
         processBar.printProcessBar()
-#        curNum += 1
-#        if curNum >= thredHold:
-#            curNum = 0
-#            percents += 1.0
-#            print '当前进度：百分之%s' % percents
         url = p['url']
         if url == None or len(url) < 1:
             continue
@@ -61,25 +54,17 @@ def initUrlMd5(dbHost='localHost', port=27017, dbName='spiderV21', urlDbName='Ur
     #进度条
     tolNum = urlCol.find({'md5':None}).count()
     processBar=ProcessBar(numAll=tolNum)
-#    thredHold = tolNum / 100
-#    curNum = 0
-#    percents = 0.0
     print '开始初始化md5值...总数量：%s' % tolNum
     for p in urlCur:
         #进度条
         processBar.printProcessBar()
-#        curNum += 1
-#        if curNum >= thredHold:
-#            curNum = 0
-#            percents += 1.0
-#            print '当前进度：百分之%s' % percents
         url = p['url']
         md5Val = utilities.getFingerPrint([url], isUrl=True)
         whereJson = {'_id':p['_id']}
         uj = {'$set':{'md5':md5Val}}
         urlCol.update(whereJson, uj, True, False)
 
-def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content'):
+def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content',needStrip=False):
     '''
     检测colName表中contentField是否有重复
     '''
@@ -88,36 +73,31 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21
     con = Connection(dbHost, port)
     db = con[dbName]
     col = db[colName]
-    cursor = col.find({}, {contentField:1}) #'md5':None
-    dupChecker = TxtDuplicateFilter(md5SourceCols=[colName])
+    cursor = col.find({"isDup":None}, {contentField:1}) #'md5':None
+    dupChecker = TxtDuplicateFilter(md5SourceCols=[])#colName
     #重复文本数
-    numDup=0.0001
+    numDup=0.01
     #进度条
     tolNum=cursor.count()
     processBar=ProcessBar(numAll=tolNum,numUnit=100)
-#    thredHold = numAll / 1000
-#    curNum = 0
-#    percents = 0.0
     print '开始对%s的字段%s检查重复...总数量：%s' % (colName,contentField,tolNum)
     for p in cursor:
         #进度条
         processBar.printProcessBar()
-#        curNum += 1
-#        if curNum >= thredHold:
-#            curNum = 0
-#            percents += 0.1
-#            print '当前进度：百分之%s' % percents
-            
         if not (contentField in p):
             continue
         content = p[contentField]
+        #脏数据
+        if len(content)>15000:
+            continue
         #去掉html标签
-        content = getText(content)
+        if needStrip:
+            content = getText(content)
         isDup, md5 = dupChecker.checkDuplicate(p['_id'], content)
         if isDup:
             numDup+=1
         updateJson = {'$set':{'md5':md5, 'isDup':isDup}}
-        whereJson = {'_id':objectid(p['_id'])}
+        whereJson = {'_id':ObjectId(p['_id'])}
         col.update(whereJson, updateJson)
     print '完成排重，数据集%s发现重复数量：%s 总文本数%s 重复比例%s' % (colName,numDup,tolNum,(numDup/tolNum))
 
@@ -148,7 +128,7 @@ def updateDaodaoResponseItemCollectionName(dbHost='192.168.0.183', port=27017, d
 #            print '当前进度：百分之%s' % percents
         itemCollectionName=(p['itemCollectionName']).strip()
         updateJson={'$set':{'itemCollectionName':nameMap[itemCollectionName]}}
-        whereJson={'_id':objectid(p['_id'])}
+        whereJson={'_id':ObjectId(p['_id'])}
         col.update(whereJson,updateJson)
 
 def dumpResponse2PageDb(dbHostSource='192.168.0.183', dbHostTarget='192.168.0.183',
@@ -178,19 +158,10 @@ def dumpResponse2PageDb(dbHostSource='192.168.0.183', dbHostTarget='192.168.0.18
     numAdd = 0
     numDup = 0
     processBar=ProcessBar(numAll=tolNum)
-#    thredHold = numAll / 100
-#    counter = 0
-#    percents = 0.0
     print '开始从%s向%s Dump %s 数据量：%s' % (dbHostSource, dbHostTarget, colNameSource, tolNum)
     for p in cursor:
         #进度
         processBar.printProcessBar()
-#        counter += 1
-#        if counter >= thredHold:
-#            counter = 0
-#            percents += 1.0
-#            print '当前进度：百分之%s' % percents
-            
         url = ''
         if not ('url' in p):
             url = (p['pageUrl']).strip()
@@ -272,9 +243,8 @@ def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposn
         print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     if needCheckDup:
         print 'run dupCheck ...'
-#        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='POI', contentField='content')
-        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Note', contentField='content')
-        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content')
+        checkDuplicatedContent(dbHost='192.168.0.172', port=27017, dbName='spiderV21', colName='Note', contentField='content')
+        checkDuplicatedContent(dbHost='192.168.0.172', port=27017, dbName='spiderV21', colName='Article', contentField='content')
         print 'OK ! -----------dupCheck完成------------------- OK!'
     if needDumpResposne:
         print 'run DumpResposne ...'

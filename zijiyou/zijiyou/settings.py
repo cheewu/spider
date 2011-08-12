@@ -19,9 +19,9 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = '192.168.0.183' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188 
+DB_HOST = 'beta.zijiyou.com' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188 
 DB_PORT=27017
-DB='spiderV21'#测试用 spiderV21 spidertest bbstest
+DB='daodao'#测试用 spiderV21 spidertest bbstest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
@@ -41,7 +41,6 @@ DB_COLLECTIONS = ['PageDb',
                   'MemberNoteList',
                   'KeyWord',
                   'ImageDb',
-                  'test',
                   'Profile',
                   'KeyList'
                   ]
@@ -69,8 +68,8 @@ CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
 LOG_LEVEL='INFO' #INFO DEBUG
-DOWNLOAD_DELAY = 0.1
-CONCURRENT_REQUESTS_PER_SPIDER=4
+DOWNLOAD_DELAY = 0.5
+CONCURRENT_REQUESTS_PER_SPIDER=2
 RECENT_URLS_SIZE = 3000000
 MAX_INII_REQUESTS_SIZE = 1000000
 #CLOSESPIDER_TIMEOUT=1800
@@ -97,7 +96,7 @@ DOWNLOADER_MIDDLEWARES = {
 SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.Cookies': 502}
 SPIDER_MIDDLEWARES = {
 #                      'zijiyou.middlewares.spidermid.UrlNormalizer': 503, #先归一化再排重
-                      'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
+#                      'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
 #                      'zijiyou.middlewares.spidermid.UpdateStrategy':500 #进行更新策略，删除PageDb、对应的item的数据库记录
                       #'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499
                       }
@@ -124,7 +123,7 @@ MAIL_PASS = 'zijiyou'
 #检测内存的使用-内存泄漏 scrapy.contrib.memdebug.MemoryDebugger
 MEMDEBUG_ENABLED=True
 MEMDEBUG_NOTIFY = [
-                "953227024@qq.com", 
+#                "953227024@qq.com", 
                 "1413614423@qq.com"
                 ]
 #检测内存的使用-占用内存容量
@@ -133,7 +132,7 @@ MEMUSAGE_NOTIFY_MAIL=2000
 MEMUSAGE_WARNING_MB=3000
 #MEMUSAGE_LIMIT_MB=5048
 MEMUSAGE_NOTIFY_MAIL = [
-                        "953227024@qq.com", 
+#                        "953227024@qq.com", 
                         "1413614423@qq.com"
                         ]
 
@@ -143,3 +142,8 @@ MEMUSAGE_NOTIFY_MAIL = [
 #                       r'(\?|\&amp;|\&amp;amp;)PHPSESSID=[a-zA-Z0-9]{32}$':r'',
 #                       r'(\?|&)PHPSESSID=[a-zA-Z0-9]{32}(&?)(.*)':r'\1\3'
 #                       }
+
+#telnet setting
+TELNETCONSOLE_PORT=[6023, 6073]
+TELNETCONSOLE_HOST='0.0.0.0'
+TRACK_REFS=True

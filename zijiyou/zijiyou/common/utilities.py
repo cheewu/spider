@@ -116,11 +116,10 @@ class ProcessBar(object):
     '''
     进度条
     '''
-    def __init__(self,numAll=0,numUnit=1000):
+    def __init__(self,numAll=0,numUnit=100):
         if numAll < 1:
             raise NotConfigured('总数量小于1，无法使用进度条！')
-        self.numAll=numAll
-        self.thredhold=self.numAll / numUnit
+        self.thredhold=numAll / numUnit
         self.percents=0.0
         self.curNum=0
         self.minUnit= 100.0 / numUnit

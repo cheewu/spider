@@ -11,7 +11,7 @@ extractorConfig = {
                                         }
                                 },
                 "daodaoSpider":{
-                            "POI":{
+                            "Attraction":{
                                     'name':'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
                                     'area':'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li/a/text()',
                                     'address':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
@@ -408,5 +408,17 @@ extractorConfig = {
                                     'content':'//body',
                                     'contentRegex':'\>([^<>]+?)<|(<img[^<]*>)',
                             },
+                             'BBSArticle':{
+                                           },
+                             'BBSArticleRegex':{
+                                    'title':'//body',
+                                    'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
+                                    'author':'//body',
+                                    'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',
+                                    'publishDate':'//body',
+                                    'publishDateRegex':u'(\d{4}-\d{1,2}-\d{1,2}\s*\d{2}:\d{2}).*?<b>标题',
+                                    'content':'//body',
+                                    'contentRegex':'\>([^<>]+?)<|(<img[^<]*>)',
+                                           },
                 },
 }

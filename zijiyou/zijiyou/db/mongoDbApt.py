@@ -8,13 +8,13 @@ from pymongo import Connection, DESCENDING
 from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-import gc
+#import gc
 
 class MongoDbApt(object):
     '''
-    save the data in mongo
+    mongodb的数据库支持类
     '''
-    
+
     def __init__(self):
         '''
         init the dataBase

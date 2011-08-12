@@ -9,8 +9,9 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http.request import Request
 from scrapy.utils.url import canonicalize_url
-from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.common import utilities
+from zijiyou.db.middlewaresApt import SpiderApt
+#from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
 import re
 #from scrapy.utils.url import canonicalize_url
@@ -23,18 +24,20 @@ class DuplicateUrlFilter(object):
     '''
     def __init__(self):
         '''init the dump of url which request successful'''
-        self.mon=MongoDbApt()
+#        self.mon=MongoDbApt()
+        self.apt=SpiderApt()
         self.urlDump=set()
         self.CrawlDb=settings.get('CRAWL_DB')
         self.ResponseDb=settings.get('RESPONSE_DB')
         if not self.CrawlDb or not self.ResponseDb:
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
             raise NotConfigured
-        whereJson={"status":{"$lt":400}}
-        fieldsJson={'url':1,'md5':1, 'status':1, 'updateInterval':1, 'dateTime':1} #status updateInterval用来判断
         dtBegin=datetime.datetime.now()
         log.msg('spider中间件开始从数据库加载UrlDb' , level=log.INFO)
-        crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
+#        whereJson={"status":{"$lt":400}}
+#        fieldsJson={'url':1,'md5':1, 'status':1, 'updateInterval':1, 'dateTime':1} #status updateInterval用来判断
+#        crawlUrls=self.mon.findFieldsAndSort(self.CrawlDb, whereJson=whereJson, fieldsJson=fieldsJson)
+        crawlUrls = self.apt.findUrlmd5sForDupfilterFromUrlDb()
         dtLoad=datetime.datetime.now()
         log.msg('spider中间件完成Url加载.从CrawlUrl加载%s个；加载数据时间花费：%s' %(len(crawlUrls),dtLoad-dtBegin), level=log.INFO)
         now = datetime.datetime.now()
@@ -80,7 +83,9 @@ class DuplicateUrlFilter(object):
                             log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
                         recentReq["spiderName"]=spider.name
                         recentReq['md5']=fp
-                        self.mon.saveItem(self.CrawlDb,recentReq)
+#                        self.mon.saveItem(self.CrawlDb,recentReq)
+                        self.apt.saveItem(self.CrawlDb, item=recentReq)
+                        
                         log.msg("保存新request：%s md5: %s" % (p.url,fp),level=log.DEBUG)
                         
                         #放回请求队列
@@ -107,7 +112,8 @@ class SaveNewRequestUrl(object):
     保存新产生的url
     '''
     def __init__(self):
-        self.mongoApt=MongoDbApt()
+#        self.mongoApt=MongoDbApt()
+        self.apt=SpiderApt()
         self.CrawlDb=settings.get('CRAWL_DB')
         if not self.CrawlDb :
             log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
@@ -120,8 +126,9 @@ class SaveNewRequestUrl(object):
         for p in result:
             newResult.append(p)
             if isinstance(p, Request):
-                queJson={"url":p.url}
-                if not self.mongoApt.isExist(self.CrawlDb, queJson):
+#                queJson={"url":p.url}
+#                if not self.mongoApt.isExist(self.CrawlDb, queJson):
+                if not self.apt.isUrlExistinUrlDb(p.url):
                     counterNew+=1
                     recentReq={"url":p.url,"callBack":None,"reference":None,"status":1000,"priority":p.priority,"dateTime":datetime.datetime.now()}
                     meta=p.meta
@@ -136,7 +143,8 @@ class SaveNewRequestUrl(object):
                     else:
                         log.msg('错误：meta.reference为空，url:%s' % p.url, level=log.ERROR)
                     recentReq["spiderName"]=spider.name
-                    self.mongoApt.saveItem(self.CrawlDb,recentReq)
+#                    self.mongoApt.saveItem(self.CrawlDb,recentReq)
+                    self.apt.saveItem(self.CrawlDb, item=recentReq)
                     log.msg("保存新request：%s" % p.url,level=log.INFO)
                 else:
                     counterExist+=1
@@ -180,18 +188,21 @@ class UrlNormalizer(object):
             log.msg("总共归一化数量为：%s" % counter, level=log.INFO)
         return newResult
         
-class UpdateStrategy(object):
-    '''
-    更新策略
-    '''
-    def __init__(self):
-        self.mongoApt=MongoDbApt()
-        
-    def process_spider_input(self, response, spider):
-        #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值不为None时为Response的Item类型，为None时为list页的Response
-        if response and 'updateStrategy' in response.meta and response.meta['updateStrategy']:
-            log.msg('进行更新策略，删除DB中的相应的url记录：%s' % response.url, level=log.DEBUG)
-            log.msg(response.meta['updateStrategy'], log=log.DEBUG)
-            whereJson = {'url':response.url}
-            self.mongoApt.remove('PageDb', whereJson)
-            self.mongoApt.remove(response.meta['updateStrategy'], whereJson)
+#class UpdateStrategy(object):
+#    '''
+#    更新策略
+#    '''
+#    def __init__(self):
+##        self.mongoApt=MongoDbApt()
+#        self.apt=SpiderApt()
+#        
+#    def process_spider_input(self, response, spider):
+#        #判断 response中的meta是否有一个标识字段，如 updateStrategy,其字段值不为None时为Response的Item类型，为None时为list页的Response
+#        if response and 'updateStrategy' in response.meta and response.meta['updateStrategy']:
+#            log.msg('进行更新策略，删除DB中的相应的url记录：%s' % response.url, level=log.DEBUG)
+#            log.msg(response.meta['updateStrategy'], log=log.DEBUG)
+##            whereJson = {'url':response.url}
+##            self.mongoApt.remove('PageDb', whereJson)
+#            self.apt.removeFromPageDbByUrl(response.url)
+##            self.mongoApt.remove(response.meta['updateStrategy'], whereJson)
+#            self.apt.removeItemByUrl(response.meta['updateStrategy'], response.url)

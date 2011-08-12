@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
-from bson.objectid import ObjectId
+#from bson.objectid import ObjectId
+from bson import ObjectId
 from collections import defaultdict
 from pymongo import Connection
 from scrapy import log
@@ -14,6 +15,45 @@ import os
 import pymongo
 import re
 import time
+from zijiyou.common.tempTaskTool import run
+#run(needCheckDup=True)
+
+#areas=['s','ssd','s3']
+#areasNew=areas[1:len(areas)]
+#print areasNew
+dic={"s":2}
+print  dic[None]
+#t='- - - +856 212 530-3  -'
+#match = re.search('\+(\d+) [0-9 -]+', t, 0)
+#if match:
+#    print match.group(0)
+#    print match.group(1)
+#s='ss：搜素：的'
+#print s.split(u'：')
+#mon=MongoDbApt()
+#cursor = mon.findCursor('Region')
+#for p in cursor:
+#    updateJson={}
+#    if 'name' in p:
+#        names=p['name'].split('：')
+#        if len(names)>0 :
+#            updateJson['name']=names[-1]
+#    if 'area' in p:
+#        areas=p['area'].split('-')
+#        if len(areas)>1:
+#            areasNew=areasNew=areas[1:len(areas)]
+#            updateJson['area']='-'.join(k for k in areasNew)
+#        elif len(areas)==1:
+#            updateJson['area']=areas[0]
+#        
+#    whereJson={'_id':ObjectId(p['_id'])}
+#    mon.updateItem('Region', whereJson=whereJson, updateJson=updateJson)
+
+
+
+
+#numUnit=1000
+#print 100.0 / numUnit
 
 #    else :
 #        print '%s 啥类型也不是' %k

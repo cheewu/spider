@@ -4,25 +4,26 @@ Created on 2011-4-20
 
 @author: shiym
 '''
-from pymongo.objectid import ObjectId
+#from pymongo.objectid import ObjectId
 from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
-from zijiyou.common import utilities
-from zijiyou.common.utilities import TxtDuplicateFilter
-from zijiyou.config.extractorConfig import extractorConfig
-from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.items.enumModel import LogLevel
-from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
-    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord, Region
 from zijiyou.common.extractText import doExtract
+from zijiyou.config.extractorConfig import extractorConfig
+#from zijiyou.db.mongoDbApt import MongoDbApt
+from zijiyou.db.spiderApt import OfflineApt
+from zijiyou.items.enumModel import LogLevel
 import datetime
 import json
 import os
 import re
 import string
+from zijiyou.common.tempTaskTool import run
+#from zijiyou.common.utilities import TxtDuplicateFilter
+#from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
+#    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord, Region
 
 class Parse(object):
     '''
@@ -47,7 +48,8 @@ class Parse(object):
             if not self.ResponseDb :
                 self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
                 raise NotConfigured('没有配置CRAWL_DB！，请检查settings')
-            self.mongoApt=MongoDbApt()
+#            self.mongoApt=MongoDbApt()
+            self.apt=OfflineApt()
                 
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
         
@@ -57,7 +59,7 @@ class Parse(object):
         self.needMd5=['Article','Note']
         self.collectionNameMap=settings.get('COLLECTION_NAME_MAP')
         self.bbsSpiderName = settings.get('BBS_SPIDER_NAME')
-        self.whereJson={'status':100}#{'status':100} 测试
+#        self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50# test should be 50 
         self.responseTotalNum=0
         #self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
@@ -84,13 +86,14 @@ class Parse(object):
                          'lvyeSpider':'utf-8','sinabbsSpider':'gb18030'}
         self.countSuc = 0;
         self.countFail = 0
-        cursor=self.mongoApt.findCursor(colName=self.ResponseDb, whereJson=self.whereJson, sortField='status')
+#        cursor=self.mongoApt.findCursor(colName=self.ResponseDb, whereJson=self.whereJson, sortField='status')
+        cursor=self.apt.findUnparsedPageByStatus()
         #进度条
         numAll=cursor.count()
         thredHold = numAll / 100
         curNum = 0
         percents = 0.0
-        print '开始初始化md5值...总数量：%s' % numAll
+        print '开始解析...总数量：%s' % numAll
         for p in cursor:
             #进度条
             curNum += 1
@@ -126,20 +129,23 @@ class Parse(object):
                     responseBody = responseBody.decode('utf-8').encode(coding)
                 response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
                 item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
-            whereJson = {'_id':ObjectId(p['_id'])}
+#            whereJson = {'_id':ObjectId(p['_id'])}
             if itemCollectionName in self.collectionNameMap:
                 itemCollectionName = self.collectionNameMap[itemCollectionName]
             #成功解析出来item，保存item，更新pagedb状态为200
             if item:
-                self.mongoApt.saveItem(itemCollectionName, item)
+#                self.mongoApt.saveItem(itemCollectionName, item)
+                self.apt.saveParsedItemToItemCollection(itemCollectionName, item)
                 # 更新pagedb
-                updateJson = {'status':200}
-                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+#                updateJson = {'status':200}
+#                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                self.apt.updatePageStatusAsSuccessById(p['_id'])
                 self.countSuc += 1
             #没有成功解析item，pagedb更新为失败状态：101
             else:
-                updateJson = {'status':101}
-                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
+                self.apt.updatePageStatusAsUnsuccessById(p['_id'])
+#                updateJson = {'status':101}
+#                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
                 self.countFail += 1
 
         self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.INFO)
@@ -173,7 +179,7 @@ class Parse(object):
 #            raise NotConfigured('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName))
         
         #耦合较大且代码重复，后续计划用工厂模式取代
-#        item=None
+#        item=None 
 #        if itemCollectionName == 'UrlDb':
 #            item=UrlDb()
 #        elif itemCollectionName == 'PageDb':
@@ -217,7 +223,9 @@ class Parse(object):
             '''处理电话号码'''
             if(k == 'telNum'):
                 if len(values) > 3:
-                    value = re.search('\+\d+ [0-9 -]+', value, 0)
+                    match = re.search('\+(\d+) [0-9 -]+', value, 0)
+                    if match:
+                        value=match.group(0)
             '''处理回复数'''
             if(k == 'replyNum'):
                 value = re.search('\d+', value)
@@ -459,3 +467,5 @@ if __name__ == '__main__':
     p=Parse(isOffline=True)
     p.parse()
     print '解析完成了！'
+    #初始排重
+    run(needCheckDup=True)
