@@ -12,7 +12,6 @@ from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
 from scrapy.http import Request
 from zijiyou.config.spiderConfig import spiderConfig
-#from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb
@@ -87,23 +86,21 @@ class BaseCrawlSpider(CrawlSpider):
         self.urlDump=set()
         urlForUpdateStategy=[]
         dtBegin=datetime.datetime.now()
-        crawlUrls = self.apt.findUrlmd5sForDupfilterFromUrlDb()
+        cursor = self.apt.findUrlsForDupfilter()
         dtLoad=datetime.datetime.now()
-        log.msg('爬虫排重库完成Url加载.从UrlDb加载%s个；加载数据时间花费：%s' %(len(crawlUrls),dtLoad-dtBegin), level=log.INFO)
+        log.msg('爬虫排重库完成Url加载.从UrlDb加载%s个；加载数据时间花费：%s' %(cursor.count(),dtLoad-dtBegin), level=log.INFO)
         #更新策略
         now = datetime.datetime.now()
-        for p in crawlUrls:
-            #判断是否是到达需要重新爬取的时刻，若需要重新爬取，则不放入dump中
+        for p in cursor:
+            #更新策略
             if 'updateInterval' in p and p['status'] in [200, 304] and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
-#                url=p["url"]
-#                callBackFunctionName=p["callBack"]
-#                pagePriority=p["priority"]
-#                meta={}
-#                headers={}
-#                if 'reference' in p :
-#                    meta['reference'] = p['reference']
-#                headers['If-Modified-Since'] = self.getGMTFormatDate(p['dateTime'])
-#                req=self.makeRequestWithMeta(url, callBackFunctionName=callBackFunctionName, meta=meta, priority=pagePriority, headers=headers)
+                meta={}
+                headers={}
+                if 'reference' in p :
+                    meta['reference'] = p['reference']
+                if self.updateStrategy in p:
+                    meta[self.updateStrategy]=p[self.updateStrategy]
+                    headers['If-Modified-Since'] = self.getGMTFormatDate(p['dateTime'])
                 req=self.makeRequest(p["url"], callBackFunctionName=p["callBack"], urlId=p['_id'],priority=p["priority"])
                 urlForUpdateStategy.append(req)
             else:
@@ -117,79 +114,22 @@ class BaseCrawlSpider(CrawlSpider):
         '''
         爬虫恢复初始化pendingRequest下载请求
         '''
-        # load the recentRequest from db
         dtBegin=datetime.datetime.now()
-        self.apt=OnlineApt()
-        pendingUrls = self.getStartUrls() 
+        #查询recent requests
+        cursor = self.apt.findPendingUrlsByStatusAndSpiderName(self.name)
         dtRecentReq=datetime.datetime.now()
         pendingRequest=[]
-        log.msg('%s爬虫恢复：完成数据库recentequest加载，时间花费：%s,recentequest数量=%s' % (self.name,dtRecentReq-dtBegin,len(pendingUrls)), level=log.INFO)
-            
-        if pendingUrls and len(pendingUrls)>0:
-            maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
-            while len(pendingUrls) > maxInitRequestSize:
-                pendingUrls.pop(0)
-            log.msg('第一个url : %s' % pendingUrls[0], level=log.INFO)
-                
-            for p in pendingUrls:
-                url=p["url"]
-                callBackFunctionName=p["callBack"]
-                pagePriority=p["priority"]
-                meta={}
-                headers={}
-                if 'reference' in p :
-                    meta['reference'] = p['reference']
-                if self.updateStrategy in p:
-                    meta[self.updateStrategy]=p[self.updateStrategy]
-                    headers['If-Modified-Since'] = self.getGMTFormatDate(p['dateTime'])
-#                req=self.makeRequestWithMeta(url, callBackFunctionName=callBackFunctionName, meta=meta, priority=pagePriority, headers=headers)
-                req=self.makeRequest(url, callBackFunctionName=callBackFunctionName, urlId=p['_id'],priority=pagePriority)
-                pendingRequest.append(req)
-            dtPendingReq=datetime.datetime.now();
-            log.msg("爬虫%s恢复：初始化pendingRequest，时间花费：%s，数量=%s" % (self.name,dtPendingReq-dtBegin,len(pendingRequest)),level=log.INFO)
-        else:
-            log.msg("爬虫%s的pendingRequest为空，交由scrapy从startUrl开始" % self.name,level=log.ERROR)
-        log.msg("爬虫%s完成恢复" % self.name,level=log.ERROR)
+        log.msg('%s爬虫恢复：完成数据库recentequest加载，时间花费：%s,recentequest数量=%s' % (self.name,dtRecentReq-dtBegin,cursor.count()), level=log.INFO)
+#            #限制pending_request的长度
+#            maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
+#            while len(pendingUrls) > maxInitRequestSize:
+#                pendingUrls.pop(0)
+        for p in cursor:
+            req=self.makeRequest(p["url"], callBackFunctionName=p["callBack"], urlId=p['_id'],priority=p["priority"])
+            pendingRequest.append(req)
+        dtPendingReq=datetime.datetime.now();
+        log.msg("爬虫%s完成恢复：初始化pendingRequest，时间花费：%s，数量=%s" % (self.name,dtPendingReq-dtBegin,len(pendingRequest)),level=log.INFO)
         return pendingRequest
-        
-    def getStartUrls(self): #spiderName=None,colName=None
-        """
-        查询recent requests
-        """
-        log.msg("%s爬虫恢复： 查询recentequest" % self.name ,level=log.INFO)
-        try:
-            #未被下载或下载失败的url
-            pendingUrl=self.apt.getPendingUrlsByStatusAndSpiderName(self.name)
-            log.msg("未被爬取的pending长度为：%s" % len(pendingUrl), level=log.INFO)
-            #获得下载过的Url，以便实现更新策略
-            updateUrl=self.apt.getUrlsForUpdatestrategy(self.name)
-            log.msg("需要判断是否更新的pending长度为：%s" % len(updateUrl), level=log.INFO)
-            #过滤掉已经爬完但并不需要更新或是更新时间未到的记录
-            now = datetime.datetime.now()
-            updateUrl = filter(lambda p:not (p["status"] in [200, 304] and p["updateInterval"] and now-datetime.timedelta(days=p["updateInterval"]) < p["dateTime"]),updateUrl)
-            log.msg("需要更新的pending长度为：%s" % len(updateUrl), level=log.INFO)
-            log.msg("为updateUrl添加更新策略标志位", level=log.INFO)
-            #在updateUrl的每一项加updateStrategy：itemCollectionName,若url不是Item页，则设置为None
-            for p in updateUrl:
-                itemCollectionName = None
-                for v in self.itemRegex:
-                    if re.search(v['regex'], p['url']):
-                        itemCollectionName=v['itemCollectionName']
-                        break
-                #验证数据库是否和类型配置对应
-                if itemCollectionName and not itemCollectionName in self.dbCollecions:
-                    raise NotConfigured('Response的type不能对应数据表！请检查配置文件spiderConfig的type配置：%s' % itemCollectionName)
-                p[self.updateStrategy] = itemCollectionName
-
-            pendingUrl.extend(updateUrl)
-            log.msg('总的pending长度为%s, 如下：' % len(pendingUrl), log.DEBUG)            
-            for i in pendingUrl:
-                log.msg(i['url'], log.DEBUG)
-            return pendingUrl
-        except (IOError,EOFError):
-            log.msg("查数据库异常" ,level=log.ERROR)
-            return []
-
     
     def baseParse(self, response):
         '''解析主逻辑'''
@@ -197,6 +137,7 @@ class BaseCrawlSpider(CrawlSpider):
         if not self.hasInit:
             self.hasInit=True
             log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
+            self.apt=OnlineApt()
             pendingRequest=self.getPendingRequest()
             updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
             pendingRequest.extend(updateRequest)
@@ -303,7 +244,7 @@ class BaseCrawlSpider(CrawlSpider):
         #排重
         newLinks=[]
         for p in links:
-            md5=getFingerPrint(p)
+            md5=getFingerPrint(inputs=[p.url],isUrl=True)
             if md5 in self.urlDump:
                 continue
             newLinks.append(p)

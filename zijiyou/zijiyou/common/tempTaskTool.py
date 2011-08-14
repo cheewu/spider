@@ -243,8 +243,8 @@ def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposn
         print 'OK!-------------urlMD5初始化完成----------------------OK!' 
     if needCheckDup:
         print 'run dupCheck ...'
-        checkDuplicatedContent(dbHost='192.168.0.172', port=27017, dbName='spiderV21', colName='Note', contentField='content')
-        checkDuplicatedContent(dbHost='192.168.0.172', port=27017, dbName='spiderV21', colName='Article', contentField='content')
+        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spider', colName='Note', contentField='content')
+        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spider', colName='Article', contentField='content')
         print 'OK ! -----------dupCheck完成------------------- OK!'
     if needDumpResposne:
         print 'run DumpResposne ...'

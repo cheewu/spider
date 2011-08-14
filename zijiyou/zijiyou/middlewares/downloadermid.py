@@ -7,9 +7,7 @@ Created on 2011-4-12
 from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-from zijiyou.common import utilities
 from zijiyou.db.middlewaresApt import DownloaderApt
-import datetime
 
 class ErrorFlag(object):
     ACCESS_DENY_FLAG = 0
@@ -30,16 +28,20 @@ class UpdateRequestedUrl(object):
 #        print 'downMid reqOut test get:%s' % request.url 
     
     def process_response(self, request, response, spider):
-        responseStatus=response.status
-        if responseStatus in [400, 403, 304]:
-            log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应或者该页面没有更新" % responseStatus, level=log.ERROR)
-        if 'urlId' in request.meta:
-            urlId=request.meta['urlId']
-            self.apt.updateUrlDbStatusById(urlId, status=responseStatus)
-        else:
-            self.apt.updateUrlDbStatusByUrl(request.url, status=responseStatus)
-            log.msg("没有urlId，可能是创建下载过程中丢失了，使用url更新访问状态 url:" % request.url, level=log.ERROR)
-        log.msg("更新url访问状态 url:" % request.url, level=log.INFO)
+        try:
+            responseStatus=response.status
+            if responseStatus in [400, 403, 304]:
+                log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应或者该页面没有更新" % responseStatus, level=log.ERROR)
+            if 'urlId' in request.meta:
+                urlId=request.meta['urlId']
+                self.apt.updateUrlDbStatusById(urlId, status=responseStatus)
+            else:
+                self.apt.updateUrlDbStatusByUrl(request.url, status=responseStatus)
+                log.msg("没有urlId，可能是创建下载过程中丢失了，使用url更新访问状态 url:" % request.url, level=log.ERROR)
+            log.msg("更新url访问状态 url:" % request.url, level=log.INFO)
+        except Exception,e:
+            log.msg("异常%s" % str(e), level=log.ERROR)
+            
         return response
 
 class RandomHttpProxy(object):

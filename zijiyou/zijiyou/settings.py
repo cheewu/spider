@@ -19,9 +19,9 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = 'beta.zijiyou.com' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188 
+DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188
 DB_PORT=27017
-DB='daodao'#测试用 spiderV21 spidertest bbstest
+DB='spider'#spiderV21 spidertest bbstest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
@@ -68,7 +68,7 @@ CRAWL_DB = 'UrlDb'
 RESPONSE_DB = 'PageDb'
 LOG_FILE='./zijiyou.log'
 LOG_LEVEL='INFO' #INFO DEBUG
-DOWNLOAD_DELAY = 0.5
+DOWNLOAD_DELAY = 1.0
 CONCURRENT_REQUESTS_PER_SPIDER=2
 RECENT_URLS_SIZE = 3000000
 MAX_INII_REQUESTS_SIZE = 1000000
@@ -76,7 +76,7 @@ MAX_INII_REQUESTS_SIZE = 1000000
 #CLOSESPIDER_ITEMPASSED=3000
 SCHEDULER_ORDER='DFO'
 
-DIAGNOSER_PATH = '/data/configs/diagnose.log'
+DIAGNOSER_PATH = './diagnose.log'
 OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym
 #OFFLINE_PARSE_LOG = '/home/cubee/python/spider/spider/zijiyou/offlineParseLog.log'
 
@@ -108,11 +108,11 @@ PROXY = ['local']
 MAIL_INTERVAL = 14400
 #发送对象列表
 MAIL_TO_LIST = [
-                "953227024@qq.com", 
+#                "953227024@qq.com", 
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL= True
+MAIL= False
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'
@@ -121,13 +121,13 @@ MAIL_PASS = 'zijiyou'
 #MAIL_POSTFIX = 'sina.com'
 
 #检测内存的使用-内存泄漏 scrapy.contrib.memdebug.MemoryDebugger
-MEMDEBUG_ENABLED=True
+#MEMDEBUG_ENABLED=True
 MEMDEBUG_NOTIFY = [
 #                "953227024@qq.com", 
                 "1413614423@qq.com"
                 ]
 #检测内存的使用-占用内存容量
-MEMUSAGE_ENABLED=True
+#MEMUSAGE_ENABLED=True
 MEMUSAGE_NOTIFY_MAIL=2000
 MEMUSAGE_WARNING_MB=3000
 #MEMUSAGE_LIMIT_MB=5048

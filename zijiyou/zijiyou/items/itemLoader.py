@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
 from scrapy.contrib.loader import XPathItemLoader
 from scrapy.contrib.loader.processor import TakeFirst, Compose, Join
 from scrapy.utils.markup import remove_entities

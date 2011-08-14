@@ -38,13 +38,14 @@ class BaseBBSSpider2(BaseCrawlSpider):
         if not self.hasInit:
             self.hasInit=True
             log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
-            self.initRequest();
-            if self.pendingRequest and len(self.pendingRequest)>0:
-                reqs.extend(self.pendingRequest)
-                log.msg('爬虫%s正式启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(self.pendingRequest)), log.INFO)
+            pendingRequest=self.getPendingRequest()
+            updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
+            pendingRequest.extend(updateRequest)
+            if len(pendingRequest)>0:
+                reqs.extend(pendingRequest)
+                log.msg('爬虫%s正式启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(pendingRequest)), log.INFO)
             else:
                 log.msg('爬虫%s正式启动执行：解析startUrl页面' % self.name , log.INFO)
-        
         log.msg('%s解析开始link: %s' % (self.name,response.url), log.INFO)
         dtBegin=datetime.datetime.now()
         #普通页link

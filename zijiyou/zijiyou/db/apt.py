@@ -17,25 +17,19 @@ class Mongodb(object):
     con=None
     #数据库
     db=None
-    #数据集
-    dbCols={}
     #适配器
     
     def __init__(self):
         dbHost=settings.get("DB_HOST")
         dbName=settings.get("DB")
-        dbCols=settings.get("DB_COLLECTIONS")
         port=settings.get("DB_PORT",27017)
-        if not dbHost or len(dbCols)<1 or not dbName:
+        if not dbHost or not dbName:
             log.msg("++初始化MongoDbApt失败！配置文件加载失败！++++++++++++++++++++++++++++++++++++",level=log.ERROR)
             raise NotConfigured
         
         #initiate the connection and the collection
         self.con=Connection(dbHost,port)
         self.db=self.con[dbName]
-        self.dbCollections={}
-        for p in dbCols:
-            self.dbCollections[p]=self.db[p]
     
     def saveItem(self,colName,item={}):
         '''
@@ -43,7 +37,7 @@ class Mongodb(object):
         '''
         if len(item)<1:
             raise NotConfigured('空item！无法保存到表%s' % colName)
-        objectId = self.dbCollections[colName].insert(item)
+        objectId = self.db[colName].insert(item)
         return objectId
     
     def countByWhere(self,colName,whereJson={}):

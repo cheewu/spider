@@ -5,12 +5,12 @@ Created on 2011-6-6
 @author: shiym
 '''
 from scrapy import log
+from scrapy.exceptions import NotConfigured
 from scrapy.utils.url import canonicalize_url
-import datetime
+from zijiyou.db.utilityApt import UtilityApt
 import hashlib
 import re
-from scrapy.exceptions import NotConfigured
-from zijiyou.db.mongoDbApt import MongoDbApt
+#from zijiyou.db.mongoDbApt import MongoDbApt
 
 def getFingerPrint(inputs=[],isUrl=False):
     '''
@@ -61,9 +61,10 @@ class TxtDuplicateFilter(object):
             print '完成文本排重器的md5初始化，共%s个md5值' % len(md5Vals)
         elif len(md5SourceCols) > 0:
             #从数据库加载md5
-            mongoApt=MongoDbApt()
+#            mongoApt=MongoDbApt()
+            apt=UtilityApt()
             for colName in md5SourceCols:
-                cursor=mongoApt.findCursor(colName=colName, whereJson={'status':{'$gt':0},'isDup':False}, fieldsJson={'md5':1})
+                cursor=apt.findMd5sFromCollection(colName)
                 for p in cursor:
                     if 'md5' in p:
                         self.md5s.add(p['md5'])
@@ -100,7 +101,7 @@ class TxtDuplicateFilter(object):
         '''
 #        dt1=datetime.datetime.now()
         input=self.getTopSentences(content, topNum=10)
-        md5Val=getFingerPrint(input)
+        md5Val=getFingerPrint(inputs=input)
 #        dt2=datetime.datetime.now()
 #        dt=dt2-dt1
 #        print '一次文本排重时间花费：%s' % dt

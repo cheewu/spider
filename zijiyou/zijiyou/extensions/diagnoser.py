@@ -7,13 +7,12 @@ Created on 2011-5-4
 from collections import defaultdict
 from scrapy import log, signals
 from scrapy.conf import settings
+from scrapy.http import Response
 from scrapy.mail import MailSender
 from scrapy.xlib.pydispatch import dispatcher
 from twisted.internet import reactor
 from zijiyou.db.extensionApt import DiagnoserApt
-#from zijiyou.db.mongoDbApt import MongoDbApt
 import datetime
-#from zijiyou.common.emailTool import sendMail
 
 class Diagnoser(object):
     '''
@@ -42,16 +41,13 @@ class Diagnoser(object):
         #警告文件路径
         self.diagnoserPath=settings.get('DIAGNOSER_PATH','./diagnosePath')
         self.errorStatus=[400]
-#        self.mongo=MongoDbApt()
         #诊断器的适配器
         self.apt = DiagnoserApt()
-#        self.crawlCol='UrlDb'
         #发送邮件的时间间隔
         self.mailInterval=settings.get('MAIL_INTERVAL', 14400)
         #发送邮件最小间隔
         self.minMailInterval=settings.get('MIN_MAIL_INTERVAL', 30)
         #爬虫系统速度
-#        self.pagecounts = defaultdict(int)
         self.totalPagecounts = 0
         #若有该邮件发送时间间隔配置信息，则进行定时发送诊断信息
         if self.mailInterval:
@@ -83,17 +79,17 @@ class Diagnoser(object):
                                         }
         print self.spiderDict
                 
-    def onSpiderClose(self,spider):
+    def onSpiderClose(self,spider,reason):
         self.closeSpiderNum+=1
-        log.msg('diagonoser： 爬虫%s关闭' % spider.name,level=log.INFO)
-        self.onSendMail(isClose=True)
+        log.msg('爬虫%s关闭，关闭原因：%s' % (spider.name,reason),level=log.INFO)
+        self.onSendMail(isClose=True,spiderName=spider.name,closedReason=reason)
         if spider.name in self.spiderDict:
             self.spiderDict.pop(spider.name)
         else:
             log.msg('diagonoser：爬虫%s关闭时发现其没有记录在spiderDict中！' % spider.name,level=log.ERROR)
     
-    def onSendMail(self, isClose=False,msg=None,spiderName='SpiderName'):
-        content = self.getDiagnoseContent(isClose=isClose,spiderName=spiderName)
+    def onSendMail(self, isClose=False,msg=None,spiderName='',closedReason=''):
+        content = self.getDiagnoseContent(isClose=isClose,spiderName=spiderName,closedReason=closedReason)
         log.msg("邮件内容 %s" %content , level=log.INFO)
         #判断时间间隔
         dtNow=datetime.datetime.now()
@@ -109,10 +105,10 @@ class Diagnoser(object):
         if not isClose:
             reactor.callLater(self.mailInterval, self.onSendMail)
             
-    def getDiagnoseContent(self, isClose=False,spiderName='SpiderName'):
+    def getDiagnoseContent(self, isClose=False,spiderName='',closedReason=''):
         content = ""
         if isClose:
-            content = "爬虫%s结束时邮件诊断信息\n" % spiderName 
+            content = "爬虫%s结束时邮件诊断信息\n关闭原因：%s" % (spiderName,closedReason) 
             endTime=datetime.datetime.now()
             intervalTemp=endTime - self.spiderDict[spiderName]['beginTime']
             interval=intervalTemp.seconds
@@ -130,17 +126,15 @@ class Diagnoser(object):
         
         #收集每个爬虫的执行情况
         for key in self.spiderDict.keys():
-            msg = "爬虫%s信息：\n" % key
-            msg += "\r下载网页总数：%s\n" % self.spiderDict[key]['crawledCounter']
-            msg += "\r速度：%s 每分钟\n" % (self.spiderDict[key]['crawledCounter'] / (datetime.datetime.now() - self.spiderDict[key]['beginTime']).seconds * 60)
+            msg = "爬虫%s的诊断信息：\n" % key
+            msg += "\r下载网页总数：%s " % self.spiderDict[key]['crawledCounter']
+            msg += "\r速度：%s 每分钟 " % (self.spiderDict[key]['crawledCounter'] / (datetime.datetime.now() - self.spiderDict[key]['beginTime']).seconds * 60)
             self.spiderDict[key]['crawledCounter'] = 0
             self.spiderDict[key]['beginTime'] = datetime.datetime.now()
             msg += "\r下载失败网页数信息：%s\n" % self.spiderDict[key]['faildedCounter']
             content +=msg
 
         #总下载失败网页数量
-#        whereJson={'status':{'$gte':400,'$lt':900}}
-#        errorUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
         errorUrlNum=self.apt.countErrorStatusUrls()
         if errorUrlNum>self.thresholdError:
             msg = "诊断警告 ：总下载失败网页数量为%s，高于于阀值%s" % (errorUrlNum,self.thresholdError)
@@ -150,8 +144,6 @@ class Diagnoser(object):
             content += "\r\n" + msg
         
         #总剩余待爬取的网页数量
-#        whereJson={'status':{'$gt':900}}
-#        untouchedUrlNum=self.mongo.countByWhere(self.crawlCol, whereJson)
         untouchedUrlNum=self.apt.countUncrawlUrls()
         if untouchedUrlNum<self.thresholdUntouchedUrl:
             msg = "爬虫诊断 总剩余待爬取的网页数量：%s，低于阀值%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
@@ -162,21 +154,30 @@ class Diagnoser(object):
             
         #爬虫总速度
         speed=self.totalPagecounts* 60.0 / self.mailInterval
-        content += "\r最近%s小时内，下载网页总数为%s个，爬虫系统总速度为:%s/分钟\n" % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
+        content += "\r最近%s小时内，下载网页总数为%s个，爬虫系统总速度为:%s/分钟 （关闭时的计算不准确）\n" % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
         #统计爬虫数
         content += "\r最近%s小时内执行过的爬虫有：%s\n" % (self.mailInterval / 3600.0 , self.spiderDict.keys())
         content += "\r当前还运行着的爬虫数有：%s\n" % (self.openSpiderNum - self.closeSpiderNum)
         self.totalPagecounts=0
-#        self.pagecounts.clear()
         return content
     
     def onResponseReceived(self,response, request, spider):
         '''
         下载一个网页
         '''
-#        self.pagecounts[spider] += 1
         self.totalPagecounts += 1
         self.spiderDict[spider.name]['crawledCounter'] += 1
-        if response and response.status in self.faildedStatus:
+        if isinstance(response,Response) and response.status in self.faildedStatus:
+            print '爬虫response:%s' % response
             self.spiderDict[spider.name]['faildedCounter'][response.status] += 1
+        else:
+            print '不是response'
+        
+#        try:
+#            if response and response.status in self.faildedStatus:
+#                print '爬虫response:%s' % response
+#                self.spiderDict[spider.name]['faildedCounter'][response.status] += 1
+#        except Exception ,e:
+#            print '事件异常：%s' % str(e)
+            
             

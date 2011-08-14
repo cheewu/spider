@@ -4,7 +4,7 @@ Created on 2011-5-16
 
 @author: shiym
 '''
-from zijiyou.db.mongoDbApt import MongoDbApt
+#from zijiyou.db.mongoDbApt import MongoDbApt
 
 from urllib2 import urlopen
 from urllib2 import URLError
@@ -23,7 +23,7 @@ class PostData(object):
         self.url=url
 #        self.data={}
         self.postColNames=['Article']
-        self.mongo=MongoDbApt()
+#        self.mongo=MongoDbApt()
         
     def post(self):
         '''

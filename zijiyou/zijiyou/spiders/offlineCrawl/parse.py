@@ -12,7 +12,6 @@ from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
 from zijiyou.common.extractText import doExtract
 from zijiyou.config.extractorConfig import extractorConfig
-#from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.db.spiderApt import OfflineApt
 from zijiyou.items.enumModel import LogLevel
 import datetime
@@ -48,7 +47,6 @@ class Parse(object):
             if not self.ResponseDb :
                 self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
                 raise NotConfigured('没有配置CRAWL_DB！，请检查settings')
-#            self.mongoApt=MongoDbApt()
             self.apt=OfflineApt()
                 
         self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
@@ -59,21 +57,14 @@ class Parse(object):
         self.needMd5=['Article','Note']
         self.collectionNameMap=settings.get('COLLECTION_NAME_MAP')
         self.bbsSpiderName = settings.get('BBS_SPIDER_NAME')
-#        self.whereJson={'status':100}#{'status':100} 测试
         self.limitNum=50# test should be 50 
         self.responseTotalNum=0
-        #self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
-#        self.responseBodys=self.mongoApt.findFieldsWithLimit(self.ResponseDb, self.whereJson, self.limitNum)
         self.curSeek=0
-#        self.parseLog( '初始length of response:%s，总长度：%s' % (self.curSeek,self.responseTotalNum), level=LogLevel.INFO)
-#        print 'init完成'
-#        self.txtDupChecker=TxtDuplicateFilter(md5SourceCols=['Article','Note','POI'])
     
     def parse(self):
         '''
         离线爬虫入口
         '''
-#        self.responseTotalNum=self.mongoApt.countByWhere(self.ResponseDb, self.whereJson)
         heard={'Content-type':'text/html',
                'encoding':'gb18030',#uft-8
                'Content-Type': ['text/html;charset=gb18030'], #UTF-8
@@ -86,7 +77,6 @@ class Parse(object):
                          'lvyeSpider':'utf-8','sinabbsSpider':'gb18030'}
         self.countSuc = 0;
         self.countFail = 0
-#        cursor=self.mongoApt.findCursor(colName=self.ResponseDb, whereJson=self.whereJson, sortField='status')
         cursor=self.apt.findUnparsedPageByStatus()
         #进度条
         numAll=cursor.count()
@@ -106,7 +96,9 @@ class Parse(object):
                 self.parseLog('缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
                 continue
             spiderName = p['spiderName']
-                
+            if spiderName in ['sozhenSpider','bbkerSpider','mafengwoSpider','lvyou114Spider']:
+                continue
+            
             itemCollectionName = ''
             if 'itemCollectionName' in p:
                 itemCollectionName = re.sub('[\r\n]', "", p['itemCollectionName'])
@@ -120,32 +112,30 @@ class Parse(object):
                     heard = p['headers']
                 #对body进行编码
                 responseBody = p['responseBody']
-                if 'coding' in p:
-                    responseBody = responseBody.decode('utf-8').encode(p['coding'])
-                else:
-                    coding='utf-8'
-                    if spiderName in spiderCodingMap:
-                        coding=spiderCodingMap[spiderName]
-                    responseBody = responseBody.decode('utf-8').encode(coding)
-                response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
-                item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
+                try:
+                    if 'coding' in p:
+                        responseBody = responseBody.decode('utf-8').encode(p['coding'])
+                    else:
+                        coding='utf-8'
+                        if spiderName in spiderCodingMap:
+                            coding=spiderCodingMap[spiderName]
+                        responseBody = responseBody.decode('utf-8').encode(coding)
+                    response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
+                    item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
+                except Exception ,e:
+                        print '解析异常。id为%s的page编码为：%s，异常信息：%s' % (p['_id'],p['coding'],str(e))
+                        continue
 #            whereJson = {'_id':ObjectId(p['_id'])}
             if itemCollectionName in self.collectionNameMap:
                 itemCollectionName = self.collectionNameMap[itemCollectionName]
             #成功解析出来item，保存item，更新pagedb状态为200
             if item:
-#                self.mongoApt.saveItem(itemCollectionName, item)
                 self.apt.saveParsedItemToItemCollection(itemCollectionName, item)
-                # 更新pagedb
-#                updateJson = {'status':200}
-#                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
                 self.apt.updatePageStatusAsSuccessById(p['_id'])
                 self.countSuc += 1
             #没有成功解析item，pagedb更新为失败状态：101
             else:
                 self.apt.updatePageStatusAsUnsuccessById(p['_id'])
-#                updateJson = {'status':101}
-#                self.mongoApt.updateItem(self.ResponseDb, whereJson, updateJson)
                 self.countFail += 1
 
         self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.INFO)
@@ -174,9 +164,9 @@ class Parse(object):
         hxs=HtmlXPathSelector(response)
         if not itemCollectionName or not itemCollectionName in config:
             self.parseLog('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName), level=LogLevel.ERROR)
-            print '%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName)
-            return None
-#            raise NotConfigured('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName))
+#            print '%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName)
+#            return None
+            raise NotConfigured('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName))
         
         #耦合较大且代码重复，后续计划用工厂模式取代
 #        item=None 

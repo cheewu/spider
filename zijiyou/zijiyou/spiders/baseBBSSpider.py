@@ -71,9 +71,7 @@ class BaseBBSSpider(BaseCrawlSpider):
         if 'firstPageItemRegex' in self.config:
             reqsItem = self.extractRequests(response, self.config['itemPriority'], callBackFunctionName = 'parseItem', allow = self.config['firstPageItemRegex'])
             itemReqs.extend(reqsItem)
-            log.msg("第一页item", level=log.DEBUG)
-        for i in itemReqs:
-            log.msg("%s" % i, level=log.DEBUG)
+        log.msg("第一页item %s" % itemReqs, level=log.DEBUG)
             
         log.msg("获得第一页总数量为，%s" % len(itemReqs), level=log.INFO)
         #获得每个item项的总页数(每个帖子的总页数)

@@ -4,17 +4,15 @@ Created on 2011-3-28
 
 @author: shiym
 '''
-from scrapy import log, signals
+from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
-from scrapy.xlib.pydispatch import dispatcher
+from zijiyou.common.extractText import doExtract, getText
 from zijiyou.config.spiderConfig import spiderConfig
-from zijiyou.db.mongoDbApt import MongoDbApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-from zijiyou.common.extractText import doExtract, getText
 import datetime
 import re
 import string
@@ -50,51 +48,20 @@ class BaseSeSpider(BaseCrawlSpider):
         self.nextPageField=['content'] #在下一页取得的Field
         self.articleMetaName = 'Article'
         self.urlPatternMeta = 'urlPattern'
-        #清空搜素引擎中间页面的数据库，防止因爬虫崩溃导致下一次抓取时中间页被错误过滤
-        self.clearUrlDb()
-#        dispatcher.connect(self.onSeSpiderClosed, signal=signals.spider_closed)
-#        self.initRequest()
-        
-#    def onSeSpiderClosed(self):
-#        '''清空数据库中的SeSpider中的搜索页列表'''
-#        log.msg('开始清空数据库中的SeSpider中的搜索页列表，长度：%s' % len(self.seResultList), level=log.INFO)
-#        if len(self.seResultList)>0:
-#            whereJson={}
-#            for url in self.seResultList :
-#                whereJson['url']=url
-#                self.mongoApt.remove(self.CrawlDb,whereJson)
-#            log.msg('清空数据库中的SeSpider中的搜索链接数量：%s' % len(self.seResultList), level=log.INFO)
-#        self.seResultList=[]
         
     def clearUrlDb(self):
+        '''
+        清空搜索引擎数据
+        '''
         log.msg("开始清空搜索引擎数据" ,level=log.INFO)
-        if not self.mongoApt:
-            log.msg("self.mongoApt为空，初始化mongod链接" ,level=log.INFO)
-            self.mongoApt=MongoDbApt()
-        whereJsonItem = {"spiderName":self.name, "status":1000}
-#        log.msg("清除未完成的item和搜索引擎list页：",level=log.INFO)
-#        urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonItem)
-#        for u in urls:
-#            log.msg(u["url"] ,level=log.INFO)
-        itemCount = self.mongoApt.countByWhere(self.CrawlDb, whereJsonItem)
-        self.mongoApt.remove(self.CrawlDb, whereJsonItem)
+        itemCount = self.apt.getUncompelitedSeUrlNumber()
+        self.apt.removeUncompelitedSeUrl()
         log.msg("成功清除未完成的item和搜索引擎list页：共%s个" % itemCount ,level=log.INFO)
-        normalRegex = "normalRegex"
-        if normalRegex in self.config:
-            regexes = ("|".join("%s" % p for p in self.config[normalRegex]))
-#            print regexes
-            whereJsonList = {"spiderName":self.name, "url":{"$regex":regexes}}
-#            log.msg("清除已经完成的搜索引擎list页：",level=log.INFO)
-#            urls = self.mongoApt.findByDictionaryAndSort(self.CrawlDb, whereJsonList)
-#            for u in urls:
-#                log.msg(u["url"] ,level=log.INFO)
-            listCount = self.mongoApt.countByWhere(self.CrawlDb, whereJsonList)
-            self.mongoApt.remove(self.CrawlDb, whereJsonList)
-            log.msg("清除已经完成的搜索引擎list页：%s" % listCount ,level=log.INFO)
-        else:
-            log.msg("配置文件中缺少 normalRegex配置，不能将数据库中的搜索引擎列表页清空" ,level=log.ERROR)
-            raise NotConfigured
-        log.msg("清除搜索引擎数据完成" ,level=log.INFO)
+        
+        listCount=self.apt.getCompelitedSeListUrl()
+        self.apt.removeCompelitedSeListUrl()
+        log.msg("清除已经完成的搜索引擎list页：%s" % listCount ,level=log.INFO)
+        log.msg("完成清理搜索引擎数据" ,level=log.INFO)
         
     def makeFirstPageRequestByKeywordForSEs(self):
         '''
@@ -104,7 +71,7 @@ class BaseSeSpider(BaseCrawlSpider):
         
         #load关键字
         reqs=[]
-        keyWords=self.mongoApt.findByDictionaryAndSort('KeyWord', {}, 'priority')
+        keyWords = self.apt.findKerwordsForSespider()
         if not keyWords and len(keyWords)<1:
             log.msg("没有关键字！", level=log.ERROR)
             return []
@@ -177,7 +144,7 @@ class BaseSeSpider(BaseCrawlSpider):
         for i in range(totalPage, 1, -1):
             url = urlPattern + str(i)
 #            log.msg('makeRequestByFirstPageForSEs 得到Url：%s' % url, level=log.INFO)#debug
-            request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=meta['priority'])
+            request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=1000)
             reqs.append(request)
 #            log.msg('makeRequestByFirstPageForSEs 得到Res：%s' % url, level=log.INFO)#debug
                     
@@ -191,21 +158,17 @@ class BaseSeSpider(BaseCrawlSpider):
         
         if not self.hasInit:
             self.hasInit=True
-#            self.initRequest()
-#            if self.pendingRequest and len(self.pendingRequest)>0:
-#                reqs.extend(self.pendingRequest)
-#                log.msg('从数据库查询的url开始crawl，len(pendingRequest)= %s' % len(self.pendingRequest), log.INFO)
-#            else:
-#                log.msg('没有从数据库获得合适的url，将从stat_url开始crawl' , level=log.INFO)
+            #清空搜素引擎中间页面的数据库，防止因爬虫崩溃导致下一次抓取时中间页被错误过滤
+            self.clearUrlDb()
             seReqs=self.makeFirstPageRequestByKeywordForSEs()
             if seReqs and len(seReqs)>0:
                 reqs.extend(seReqs)
             else:
                 log.msg('关键字没有生成任何Request!，请检查配置文件spiderConfig中baseSeSpider的url格式或数据库关键字表',level=log.ERROR)
                 raise NotConfigured
-        #拦截
+        #拦截第一次解析，提交搜素引擎关键字创建的request
         if len(reqs)>0:
-            log.msg('拦截Request。url： %s' % response.url, log.INFO)
+            log.msg('拦截第一次解析，提交搜素引擎关键字创建的request，共%s个' % len(reqs), log.INFO)
             return reqs
         
         if not (response.meta and len(response.meta)>0):
@@ -213,11 +176,9 @@ class BaseSeSpider(BaseCrawlSpider):
             return reqs
         meta=response.meta
         meta['reference']=response.url
-#        print meta
         #item页链接请求
         itemsReq=[]
         homePage=meta['homePage']
-        print homePage
         resultItemLinkXpath=meta['resultItemLinkXpath']
         hxs=HtmlXPathSelector(response)
         links=hxs.select(resultItemLinkXpath).extract()
@@ -286,11 +247,6 @@ class BaseSeSpider(BaseCrawlSpider):
         log.msg("保存item页，类型:%s"%str(itemCollectionName) , level=log.INFO)
         #ResponseBody
         loader = ZijiyouItemLoader(PageDb(),response=response)
-#        loader.add_value('spiderName', self.name)
-#        loader.add_value('url', response.url)
-#        loader.add_value('itemCollectionName', itemCollectionName)
-#        loader.add_value('responseBody', response.body_as_unicode())
-#        loader.add_value('optDateTime', datetime.datetime.now())
         pageResponse = loader.load_item()
         pageResponse.setdefault('spiderName', self.name)
         pageResponse.setdefault('url', response.url)
@@ -318,14 +274,11 @@ class BaseSeSpider(BaseCrawlSpider):
         
         xpathItems = self.config['seXpath'][response.meta['seName']]
         hxs=HtmlXPathSelector(response)
-#        loader = ZijiyouItemLoader(Article(),response=response)
         article=Article()
         #添加前一页的field项
         if self.articleMetaName in response.meta:
             for k,v in response.meta[self.articleMetaName].items():
                 v = unicode(str(v), 'utf8')
-#                print k
-#                print getText(v)
                 article.setdefault(k, getText(v))
         #添加下一页的field项
         for k,v in xpathItems.items():
@@ -341,13 +294,8 @@ class BaseSeSpider(BaseCrawlSpider):
                     value=self.parseSpecialField(k, value)
                 if value:
                     article.setdefault(k, getText(value))
-#                    loader.add_value(k, getText(value))
         article.setdefault('url', response.url)
         article.setdefault('spiderName', response.url)
-#        loader.add_value('url', response.url)
-#        loader.add_value('spiderName', self.name)
-#        noteItem = loader.load_item()
-#        return noteItem
         return article
     
     def parseSpecialField(self,name,content):

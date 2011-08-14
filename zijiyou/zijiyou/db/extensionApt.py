@@ -17,7 +17,7 @@ class DiagnoserApt(object):
         '''
         colName='UrlDb'
         whereJson={'status':{'$gte':400,'$lt':900}}
-        errorUrlNum=mongoApt.countByWhere(colName, whereJson=whereJson)#self.mongo.countByWhere(self.crawlCol, whereJson)
+        errorUrlNum=mongoApt.countByWhere(colName, whereJson=whereJson)
         return errorUrlNum
         
     def countUncrawlUrls(self):
@@ -26,5 +26,5 @@ class DiagnoserApt(object):
         '''
         colName='UrlDb'
         whereJson={'status':{'$gt':900}}
-        uncrawlNum=self.mongo.countByWhere(colName, whereJson=whereJson)
+        uncrawlNum=mongoApt.countByWhere(colName, whereJson=whereJson)#self.mongo.countByWhere(colName, whereJson=whereJson)
         return uncrawlNum

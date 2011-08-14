@@ -13,15 +13,13 @@ class OnlineApt(object):
     在线爬虫的数据库适配器
     '''
     
-    def getPendingUrlsByStatusAndSpiderName(self,spiderName):
+    def findPendingUrlsByStatusAndSpiderName(self,spiderName):
         '''
         未被下载或下载失败的url，以便相应爬虫的恢复
         '''
         colName='UrlDb'
         whereJson={"status":{"$gte":400},"spiderName":spiderName}
-        fieldName='url'
-        results = mongoApt.getSingalFieldHits(colName, fieldName=fieldName, whereJson=whereJson)
-        return results
+        return mongoApt.find(colName, whereJson=whereJson)
 
     def updateUrlDbStatusByUrl(self,url,status=200):
         '''
@@ -32,14 +30,13 @@ class OnlineApt(object):
         updateJson={"status":status, "dateTime":datetime.datetime.now()}
         mongoApt.update(colName, whereJson=whereJson, updateJson=updateJson)
     
-    def findUrlmd5sForDupfilter(self):
+    def findUrlsForDupfilter(self):
         '''
         加载用于排重的url的md5值
         '''
         colName='UrlDb'
         whereJson={"status":{"$lt":400}}
-        fieldsJson={'url':1,'md5':1, 'status':1, 'updateInterval':1, 'dateTime':1} #status updateInterval用来判断
-        return mongoApt.find(colName, whereJson=whereJson, fieldsJson=fieldsJson, sortField='status')
+        return mongoApt.find(colName, whereJson=whereJson, sortField='status')
 
     def saveNewUrl(self,urlItem={}):
         '''
@@ -47,6 +44,7 @@ class OnlineApt(object):
         '''
         colName='UrlDb'
         return mongoApt.saveItem(colName, item=urlItem)
+    
     
     def getUncompelitedSeUrlNumber(self):
         '''
