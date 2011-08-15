@@ -25,9 +25,6 @@ class Diagnoser(object):
     '''
     
     def __init__(self):
-        #记录当前爬虫的数量
-        self.closeSpiderNum=0
-        self.openSpiderNum=0
         #某些错误出现次数
         self.errorCounter=0
         #某些错误出现次数下限阀值
@@ -49,6 +46,7 @@ class Diagnoser(object):
         self.minMailInterval=settings.get('MIN_MAIL_INTERVAL', 30)
         #爬虫系统速度
         self.totalPagecounts = 0
+        self.dtBegin=datetime.datetime.now()
         #若有该邮件发送时间间隔配置信息，则进行定时发送诊断信息
         if self.mailInterval:
             self.mail=settings.get('MAIL')
@@ -65,7 +63,6 @@ class Diagnoser(object):
         dispatcher.connect(self.onResponseReceived, signal=signals.response_received)
     
     def onSpiderOpen(self,spider):
-        self.openSpiderNum+=1
         self.beginTime=datetime.datetime.now()#可能要改
         log.msg('diagonoser： 爬虫%s开始运行' % spider.name,level=log.INFO)
         spiderName=spider.name
@@ -77,10 +74,8 @@ class Diagnoser(object):
                                          'crawledCounter':0, #下载网页数
                                          'faildedCounter':defaultdict(int), #失败网页数={失败的code：数量}
                                         }
-        print self.spiderDict
                 
     def onSpiderClose(self,spider,reason):
-        self.closeSpiderNum+=1
         log.msg('爬虫%s关闭，关闭原因：%s' % (spider.name,reason),level=log.INFO)
         self.onSendMail(isClose=True,spiderName=spider.name,closedReason=reason)
         if spider.name in self.spiderDict:
@@ -100,7 +95,6 @@ class Diagnoser(object):
         
         if self.mail:
             self.mailer.send(to=self.mailTos, subject='爬虫诊断信息', body=content)
-        log.msg("诊断邮件发送完成 时间：%s，邮件内容：%s" % (datetime.datetime.now(),content) , level=log.INFO)
         #若关闭spider则不再发送邮件
         if not isClose:
             reactor.callLater(self.mailInterval, self.onSendMail)
@@ -108,57 +102,45 @@ class Diagnoser(object):
     def getDiagnoseContent(self, isClose=False,spiderName='',closedReason=''):
         content = ""
         if isClose:
-            content = "爬虫%s结束时邮件诊断信息\n关闭原因：%s" % (spiderName,closedReason) 
+            content = "爬虫%s关闭。关闭原因：%s  " % (spiderName,closedReason) 
             endTime=datetime.datetime.now()
             intervalTemp=endTime - self.spiderDict[spiderName]['beginTime']
             interval=intervalTemp.seconds
-            log.msg('运行时间=%s秒' % (interval),level=log.INFO)
-            if interval<self.thresholdRuntime:
-                msg = "运行时间小于阀值。总运行时间：%s秒，间隔阀值：%s秒" % (interval,self.thresholdRuntime)
-                content += "\r%s\n" % msg
-                log.msg(msg, level=log.ERROR)
-            elif (interval + 100) < self.closeSpiderTimeout:
-                msg = "运行时间小于爬虫规定的运行时间间隔。运行时间：%s秒，setting的时间间隔：%s秒" % (interval,self.closeSpiderTimeout)
-                content += "\r%s\n" % msg
-                log.msg(msg, level=log.WARNING)
+            content += "总运行时间：%s秒  " % (interval)
+            content += "下载网页总数：%s  " % self.spiderDict[spiderName]['crawledCounter']
+            content +="速度：%s/分钟  \n" % (self.spiderDict[spiderName]['crawledCounter'] * 60.0 / interval )
+            content +="下载失败网页数信息：%s\n" % (self.spiderDict[spiderName]['faildedCounter'])
+            #清除爬虫
+            self.spiderDict.pop(spiderName)
         else:
-            content = "运行时邮件诊断信息"
+            content = "运行时邮件诊断信息\n"
         
         #收集每个爬虫的执行情况
         for key in self.spiderDict.keys():
-            msg = "爬虫%s的诊断信息：\n" % key
-            msg += "\r下载网页总数：%s " % self.spiderDict[key]['crawledCounter']
-            msg += "\r速度：%s 每分钟 " % (self.spiderDict[key]['crawledCounter'] / (datetime.datetime.now() - self.spiderDict[key]['beginTime']).seconds * 60)
+            msg = "爬虫%s的诊断信息：" % key
+            msg += "  下载网页总数：%s " % self.spiderDict[key]['crawledCounter']
+            msg += "  速度：%s/分钟 " % (self.spiderDict[key]['crawledCounter'] * 60 / (datetime.datetime.now() - self.spiderDict[key]['beginTime']).seconds )
             self.spiderDict[key]['crawledCounter'] = 0
             self.spiderDict[key]['beginTime'] = datetime.datetime.now()
-            msg += "\r下载失败网页数信息：%s\n" % self.spiderDict[key]['faildedCounter']
+            msg += "  下载失败网页数信息：%s\n" % self.spiderDict[key]['faildedCounter']
             content +=msg
 
-        #总下载失败网页数量
-        errorUrlNum=self.apt.countErrorStatusUrls()
-        if errorUrlNum>self.thresholdError:
-            msg = "诊断警告 ：总下载失败网页数量为%s，高于于阀值%s" % (errorUrlNum,self.thresholdError)
-            content += "\r\n" + msg
-        else:
-            msg = "诊断：总下载失败网页数量为%s" % errorUrlNum
-            content += "\r\n" + msg
+        #收集爬虫系统总体信息
+        if self.totalPagecounts >10:
+            interval=(datetime.datetime.now()-self.dtBegin).seconds
+            #总下载失败网页数量
+            errorUrlNum=self.apt.countErrorStatusUrls()
+            content += "爬虫系统总体状态：\n总下载失败网页数量为%s  " % errorUrlNum
+            #总剩余待爬取的网页数量
+            untouchedUrlNum=self.apt.countUncrawlUrls()
+            content += "总剩余待爬取的网页数量：%s  \n" % (untouchedUrlNum)
+            #爬虫总速度
+            speed=self.totalPagecounts * 60.0 / interval
+            content += "最近%s小时内，下载网页总数为%s个，总速度为:%s/分钟 " % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
+            #统计爬虫数
+            content += "爬虫队列：%s " % (self.spiderDict.keys())
+            self.totalPagecounts=0
         
-        #总剩余待爬取的网页数量
-        untouchedUrlNum=self.apt.countUncrawlUrls()
-        if untouchedUrlNum<self.thresholdUntouchedUrl:
-            msg = "爬虫诊断 总剩余待爬取的网页数量：%s，低于阀值%s" % (untouchedUrlNum,self.thresholdUntouchedUrl)
-            content += "\r%s\n" % msg
-        else:
-            msg = "爬虫诊断 总剩余待爬取的网页数量：%s" % (untouchedUrlNum)
-            content += "\r%s\n" % msg
-            
-        #爬虫总速度
-        speed=self.totalPagecounts* 60.0 / self.mailInterval
-        content += "\r最近%s小时内，下载网页总数为%s个，爬虫系统总速度为:%s/分钟 （关闭时的计算不准确）\n" % (self.mailInterval / 3600.0 ,self.totalPagecounts, speed) 
-        #统计爬虫数
-        content += "\r最近%s小时内执行过的爬虫有：%s\n" % (self.mailInterval / 3600.0 , self.spiderDict.keys())
-        content += "\r当前还运行着的爬虫数有：%s\n" % (self.openSpiderNum - self.closeSpiderNum)
-        self.totalPagecounts=0
         return content
     
     def onResponseReceived(self,response, request, spider):
@@ -168,16 +150,4 @@ class Diagnoser(object):
         self.totalPagecounts += 1
         self.spiderDict[spider.name]['crawledCounter'] += 1
         if isinstance(response,Response) and response.status in self.faildedStatus:
-            print '爬虫response:%s' % response
             self.spiderDict[spider.name]['faildedCounter'][response.status] += 1
-        else:
-            print '不是response'
-        
-#        try:
-#            if response and response.status in self.faildedStatus:
-#                print '爬虫response:%s' % response
-#                self.spiderDict[spider.name]['faildedCounter'][response.status] += 1
-#        except Exception ,e:
-#            print '事件异常：%s' % str(e)
-            
-            

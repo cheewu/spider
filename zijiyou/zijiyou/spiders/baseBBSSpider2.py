@@ -6,6 +6,8 @@ Created on 2011-3-28
 '''
 from scrapy import log
 from scrapy.http.request import Request
+from zijiyou.common.utilities import getFingerPrint
+from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import datetime
 import re
@@ -38,6 +40,7 @@ class BaseBBSSpider2(BaseCrawlSpider):
         if not self.hasInit:
             self.hasInit=True
             log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
+            self.apt=OnlineApt()
             pendingRequest=self.getPendingRequest()
             updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
             pendingRequest.extend(updateRequest)
@@ -59,7 +62,7 @@ class BaseBBSSpider2(BaseCrawlSpider):
         
         normalNum = len(reqs)
  
-        '''item页link'''
+        #item页link
         for v in self.itemRegex:
             links=[]
             # 抽item的link
@@ -74,11 +77,20 @@ class BaseBBSSpider2(BaseCrawlSpider):
                 match=re.search(v['itemTidRegex'], link.url, 0)
                 if match and match.group(1):
                     tid=match.group(1)
-                    newLink=v['itemPrintPageFormat'] % tid
-                    log.msg("拼凑item打印链接：%s" %newLink, level=log.DEBUG)
-                    newReq=self.makeRequest(newLink,reference=response.url,priority=v['priority'])
-#                    self.printRequest(newReq)
-                    reqs.append(newReq)
+                    newUrl=v['itemPrintPageFormat'] % tid
+                    #排重
+                    md5=getFingerPrint(inputs=[newUrl],isUrl=True)
+                    if md5 in self.urlDump:
+                        continue
+                    #保存新url
+                    self.urlDump.add(md5)
+                    urlItem={"url":newUrl,"md5":md5,"callBack":'parseItem',
+                             "spiderName":self.name,"reference":response.url,
+                             "status":1000,"priority":1000,"dateTime":datetime.datetime.now()}
+                    urlId = self.apt.saveNewUrl(urlItem)
+                    req=self.makeRequest(newUrl, callBackFunctionName='parseItem',urlId=urlId,priority=1000)
+                    reqs.append(req)
+                    log.msg("拼凑item打印链接：%s" %newUrl, level=log.DEBUG)
                 else:
                     log.msg("抽出的link:%s 没有发现tid，不能拼凑出新链接。请检查正则是否有误： linkXpath：%s、tid正则:%s" %(link.url,v['regex'],v['itemTidRegex']), level=log.ERROR)
                 

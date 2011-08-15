@@ -20,6 +20,7 @@ class Mongodb(object):
     #适配器
     
     def __init__(self):
+        print '初始化Mongodb连接'
         dbHost=settings.get("DB_HOST")
         dbName=settings.get("DB")
         port=settings.get("DB_PORT",27017)

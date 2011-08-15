@@ -125,7 +125,6 @@ class Parse(object):
                 except Exception ,e:
                         print '解析异常。id为%s的page编码为：%s，异常信息：%s' % (p['_id'],p['coding'],str(e))
                         continue
-#            whereJson = {'_id':ObjectId(p['_id'])}
             if itemCollectionName in self.collectionNameMap:
                 itemCollectionName = self.collectionNameMap[itemCollectionName]
             #成功解析出来item，保存item，更新pagedb状态为200

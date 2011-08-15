@@ -38,7 +38,7 @@ class StoragePipeline(object):
         values = {}
         for k,v in item.items():
             values[k] = v
-        obj=self.apt.saveItem(collectionName, item)
+        obj=self.apt.saveItem(collectionName, values)
         print '++++saveItem2Mongodb++++col:%s,objectId:%s' % (collectionName ,obj)
         log.msg('++++saveItem2Mongodb++++col:%s,objectId:%s+++++++++++' % (collectionName ,obj), level = log.INFO)
         

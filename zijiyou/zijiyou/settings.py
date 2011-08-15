@@ -108,11 +108,11 @@ PROXY = ['local']
 MAIL_INTERVAL = 14400
 #发送对象列表
 MAIL_TO_LIST = [
-#                "953227024@qq.com", 
+                "953227024@qq.com", 
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL= False
+MAIL= True
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'
@@ -123,7 +123,7 @@ MAIL_PASS = 'zijiyou'
 #检测内存的使用-内存泄漏 scrapy.contrib.memdebug.MemoryDebugger
 #MEMDEBUG_ENABLED=True
 MEMDEBUG_NOTIFY = [
-#                "953227024@qq.com", 
+                "953227024@qq.com", 
                 "1413614423@qq.com"
                 ]
 #检测内存的使用-占用内存容量
@@ -132,7 +132,7 @@ MEMUSAGE_NOTIFY_MAIL=2000
 MEMUSAGE_WARNING_MB=3000
 #MEMUSAGE_LIMIT_MB=5048
 MEMUSAGE_NOTIFY_MAIL = [
-#                        "953227024@qq.com", 
+                        "953227024@qq.com", 
                         "1413614423@qq.com"
                         ]
 

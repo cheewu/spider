@@ -241,21 +241,20 @@ class BaseCrawlSpider(CrawlSpider):
         抽取新链接，排重，保存新有效链接，为有效链接创建Request
         '''
         links = self.extractLinks(response, **extra)
-        #排重
-        newLinks=[]
+        reqs=[]
+        #排重，保存
         for p in links:
             md5=getFingerPrint(inputs=[p.url],isUrl=True)
             if md5 in self.urlDump:
                 continue
-            newLinks.append(p)
             #保存新url
             self.urlDump.add(md5)
             urlItem={"url":p.url,"md5":md5,"callBack":callBackFunctionName,
                      "spiderName":self.name,"reference":response.url,
                      "status":1000,"priority":pagePriority,"dateTime":datetime.datetime.now()}
             urlId = self.apt.saveNewUrl(urlItem)
-            
-        reqs = [self.makeRequest(link.url, callBackFunctionName=callBackFunctionName,urlId=urlId,priority=pagePriority) for link in newLinks]
+            req=self.makeRequest(p.url, callBackFunctionName=callBackFunctionName,urlId=urlId,priority=pagePriority)
+            reqs.append(req)
         return reqs
 
     def makeRequest(self, url, callBackFunctionName=None,urlId=None,meta={}, **kw): 
