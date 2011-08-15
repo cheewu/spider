@@ -203,7 +203,7 @@ class BaseCrawlSpider(CrawlSpider):
         pageResponse.setdefault('responseBody', (response.body_as_unicode()).encode('utf-8'))
         pageResponse.setdefault('optDateTime', datetime.datetime.now())
         pageResponse.setdefault('coding', response.encoding)
-        pageResponse.setdefault('headers', response.headers)
+#        pageResponse.setdefault('headers', response.headers)
         items.append(pageResponse)
 
 
@@ -258,7 +258,7 @@ class BaseCrawlSpider(CrawlSpider):
             req=self.makeRequest(p.url, callBackFunctionName=callBackFunctionName,urlId=urlId,priority=pagePriority)
             reqs.append(req)
         dtEnd=datetime.datetime.now()
-        log.msg('参数：%s' % extra, level=log.DEBUG)
+        log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.DEBUG)
         return reqs
 
     def makeRequest(self, url, callBackFunctionName=None,urlId=None,meta={}, **kw): 
