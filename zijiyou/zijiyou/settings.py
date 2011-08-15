@@ -106,7 +106,7 @@ PROXY = ['local']
 
 #Email Configure
 MAIL_INTERVAL = 14400
-#发送对象列表
+#发送对象列表 
 MAIL_TO_LIST = [
                 "953227024@qq.com", 
                 "1413614423@qq.com"
