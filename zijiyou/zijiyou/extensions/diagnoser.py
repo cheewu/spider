@@ -105,7 +105,7 @@ class Diagnoser(object):
             content = "爬虫%s关闭。关闭原因：%s  " % (spiderName,closedReason) 
             endTime=datetime.datetime.now()
             intervalTemp=endTime - self.spiderDict[spiderName]['beginTime']
-            interval=intervalTemp.seconds
+            interval=intervalTemp.seconds+1
             content += "总运行时间：%s秒  " % (interval)
             content += "下载网页总数：%s  " % self.spiderDict[spiderName]['crawledCounter']
             content +="速度：%s/分钟  \n" % (self.spiderDict[spiderName]['crawledCounter'] * 60.0 / interval )
@@ -127,7 +127,7 @@ class Diagnoser(object):
 
         #收集爬虫系统总体信息
         if self.totalPagecounts >10:
-            interval=(datetime.datetime.now()-self.dtBegin).seconds
+            interval=(datetime.datetime.now()-self.dtBegin).seconds + 1
             #总下载失败网页数量
             errorUrlNum=self.apt.countErrorStatusUrls()
             content += "爬虫系统总体状态：\n总下载失败网页数量为%s  " % errorUrlNum
