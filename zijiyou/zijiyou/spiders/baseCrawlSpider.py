@@ -228,11 +228,12 @@ class BaseCrawlSpider(CrawlSpider):
         抽取链接
         """
         link_extractor = SgmlLinkExtractor(**extra)
-        try:
-            links = link_extractor.extract_links(response)
-        except Exception ,e:
-            log.msg('Exception:%s' % str(e),level=log.DEBUG)
-            log.msg('参数：%s' % extra, level=log.DEBUG)
+        links = link_extractor.extract_links(response)
+#        try:
+#            links = link_extractor.extract_links(response)
+#        except Exception ,e:
+#            log.msg('Exception:%s' % str(e),level=log.DEBUG)
+#            log.msg('参数：%s' % extra, level=log.DEBUG)
         log.msg('从%s抽取到的链接:%s' % (response.url,links), level=log.DEBUG)
         return links
 
@@ -242,6 +243,7 @@ class BaseCrawlSpider(CrawlSpider):
         '''
         links = self.extractLinks(response, **extra)
         reqs=[]
+        dtBegin=datetime.datetime.now()
         #排重，保存
         for p in links:
             md5=getFingerPrint(inputs=[p.url],isUrl=True)
@@ -255,6 +257,8 @@ class BaseCrawlSpider(CrawlSpider):
             urlId = self.apt.saveNewUrl(urlItem)
             req=self.makeRequest(p.url, callBackFunctionName=callBackFunctionName,urlId=urlId,priority=pagePriority)
             reqs.append(req)
+        dtEnd=datetime.datetime.now()
+        log.msg('参数：%s' % extra, level=log.DEBUG)
         return reqs
 
     def makeRequest(self, url, callBackFunctionName=None,urlId=None,meta={}, **kw): 

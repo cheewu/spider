@@ -28,18 +28,14 @@ class Cookies(object):
             config = cookiesConfig[spiderName]
             cookiesEndTime = datetime.datetime.now()
             if (not spiderName in self._cookies) or (not spiderName in self._cookiesStartTime) or (cookiesEndTime - self._cookiesStartTime[spiderName]).seconds > config["timeout"]:
-                print "get new cookie"
                 log.msg("%s 获得新的cookies" % spiderName, log.INFO)
                 self._cookiesStartTime[spiderName] = cookiesEndTime
                 self._cookies[spiderName] = {}
-#                print config["domain"]
-#                print config["url"]
                 conn = HTTPConnection(config["domain"])
                 conn.request("HEAD", config["url"])
                 resp = conn.getresponse()
                 conn.close()
                 cks = resp.getheader("set-cookie")
-                print "new cookies：", cks
                 if cks:
                     for v in cks.split(';'):
                         ck = v.split('=')
