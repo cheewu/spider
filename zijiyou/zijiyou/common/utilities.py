@@ -5,7 +5,6 @@ Created on 2011-6-6
 @author: shiym
 '''
 from scrapy import log
-from scrapy.exceptions import NotConfigured
 from scrapy.utils.url import canonicalize_url
 from zijiyou.db.utilityApt import UtilityApt
 import hashlib
@@ -81,7 +80,7 @@ class TxtDuplicateFilter(object):
     
     def getTopSentences(self,content='',topNum=10):
         '''
-        获得长度最长的10个句子
+        获得长度最长的topNum个句子
         '''
         content=re.sub(unicode(self.delimeters), unicode(','), unicode(content))
         topSegments=[];
@@ -100,7 +99,7 @@ class TxtDuplicateFilter(object):
         id：输入文本的id
         '''
 #        dt1=datetime.datetime.now()
-        input=self.getTopSentences(content, topNum=10)
+        input=self.getTopSentences(content, topNum=50)
         md5Val=getFingerPrint(inputs=input)
 #        dt2=datetime.datetime.now()
 #        dt=dt2-dt1
@@ -118,8 +117,6 @@ class ProcessBar(object):
     进度条
     '''
     def __init__(self,numAll=0,numUnit=100):
-        if numAll < 1:
-            raise NotConfigured('总数量小于1，无法使用进度条！')
         self.thredhold=numAll / numUnit
         self.percents=0.0
         self.curNum=0

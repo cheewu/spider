@@ -21,7 +21,7 @@ ITEM_PIPELINES=[
 # mongodb setting
 DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188
 DB_PORT=27017
-DB='spiderv22'#spiderV21 spidertest bbstest
+DB='spiderv21'#spiderV21 spidertest bbstest
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',
