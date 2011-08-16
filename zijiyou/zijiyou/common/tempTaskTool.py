@@ -5,11 +5,11 @@ Created on 2011-6-6
 @author: shiym
 '''
 from pymongo.objectid import ObjectId
-#from bson.objectid import ObjectId
 from pymongo.connection import Connection
 from zijiyou.common import utilities
 from zijiyou.common.extractText import getText
 from zijiyou.common.utilities import TxtDuplicateFilter, ProcessBar
+from scrapy.conf import settings
 import datetime
 
 def dumpUrlFromPageDb2UrlDb(dbHost='localHost', port=27017, dbName='spiderV21', pageDbName='PageDb', urlDbName='UrlDb'):
@@ -232,7 +232,14 @@ def dumpKeyWordsFromDb(dbHost='192.168.0.183', port=27017, dbName='KeyWordDB', c
     
 def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposne=False,needUpdateDaodao=False,
         needDumpKeyword=False):
+    dbHost=settings.get('DB_HOST')
+    dbName=settings.get('DB')
     print 'begin to run task!'
+    if needCheckDup:
+        print 'run dupCheck ...'
+        checkDuplicatedContent(dbHost=dbHost, port=27017, dbName=dbName, colName='Note', contentField='content')
+        checkDuplicatedContent(dbHost=dbHost, port=27017, dbName=dbName, colName='Article', contentField='content')
+        print 'OK ! -----------dupCheck完成------------------- OK!'
     if needDumUrl:
         print 'run urlDump ... '
         newNum = dumpUrlFromPageDb2UrlDb()
@@ -241,11 +248,6 @@ def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposn
         print 'run urlInit ... '
         initUrlMd5()
         print 'OK!-------------urlMD5初始化完成----------------------OK!' 
-    if needCheckDup:
-        print 'run dupCheck ...'
-        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spider', colName='Note', contentField='content')
-        checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spider', colName='Article', contentField='content')
-        print 'OK ! -----------dupCheck完成------------------- OK!'
     if needDumpResposne:
         print 'run DumpResposne ...'
         dumpResponse2PageDb(dbNameSource='daodaoDb', colNameSource='responseCol', needMap=True)
