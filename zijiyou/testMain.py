@@ -4,10 +4,12 @@
 #from collections import defaultdict
 from pymongo.connection import Connection
 from pymongo.objectid import ObjectId
+from zijiyou.common.extractText import getText
+from zijiyou.common.utilities import getFingerPrint, TxtDuplicateFilter, \
+    ProcessBar
 #from scrapy import log
 #from scrapy.conf import settings
 #from zijiyou.common.tempTaskTool import run
-from zijiyou.common.utilities import getFingerPrint
 #from zijiyou.spiders.offlineCrawl.parse import Parse
 #import datetime
 #import hashlib
@@ -15,6 +17,44 @@ from zijiyou.common.utilities import getFingerPrint
 #import re
 #import time
 #run(needCheckDup=True)
+
+def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content',needStrip=False):
+    '''
+    检测colName表中contentField是否有重复
+    '''
+    con = Connection(dbHost, port)
+    db = con[dbName]
+    col = db[colName]
+    cursor = col.find({}, {contentField:1}) #'md5':None
+    dupChecker = TxtDuplicateFilter(md5SourceCols=[])#colName
+    #重复文本数
+    numDup=0
+    #进度条
+    tolNum=cursor.count()
+    processBar=ProcessBar(numAll=tolNum,numUnit=100)
+    print '开始对%s的字段%s检查重复...总数量：%s' % (colName,contentField,tolNum)
+    for p in cursor:
+        #进度条
+        processBar.printProcessBar()
+        if not (contentField in p):
+            continue
+        content = p[contentField]
+        #脏数据
+        if len(content)>15000:
+            continue
+        #去掉html标签
+        if needStrip:
+            content = getText(content)
+        isDup, md5 = dupChecker.checkDuplicate(p['_id'], content)
+        if isDup:
+            numDup+=1
+        updateJson = {'$set':{'md5':md5, 'isDup':isDup}}
+        whereJson = {'_id':ObjectId(p['_id'])}
+        col.update(whereJson, updateJson)
+    print '完成排重，数据集%s发现重复数量：%s 总文本数%s 重复比例：百分之%s' % (colName,numDup,tolNum,(numDup*100.0/tolNum))
+
+checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Article', contentField='content')
+checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='Note', contentField='content')
 
 
 def initItemMd5WithUrl(dbHost,dbName,colName):
@@ -25,14 +65,25 @@ def initItemMd5WithUrl(dbHost,dbName,colName):
     db = con[dbName]
     col = db[colName]
     cursor=col.find({'pid':{'$exists':False}})
-    print '总数：%s' % cursor.count()
+    tolNum=cursor.count()
+    processBar=ProcessBar(numAll=tolNum,numUnit=100)
+    print '总数：%s' % tolNum
     for p in cursor:
+        processBar.printProcessBar()
         whereJson={'_id':ObjectId(p['_id'])}
         pid=getFingerPrint(inputs=[p['url']], isUrl=True)
         updateJson={'$set':{'pid':pid}}
         col.update(whereJson, updateJson)
+    print '完成 %s的pid初始化' % colName
 initItemMd5WithUrl('192.168.0.183','spiderV21','Article')
-#initItemMd5WithUrl('192.168.0.183','spiderV21','Note')
+initItemMd5WithUrl('192.168.0.183','spiderV21','Note')
+print '全部完成'
+
+
+
+
+
+
 #areas=['s','ssd','s3']
 #areasNew=areas[1:len(areas)]
 #print areasNew
