@@ -86,7 +86,7 @@ class BaseCrawlSpider(CrawlSpider):
         self.urlDump=set()
         urlForUpdateStategy=[]
         dtBegin=datetime.datetime.now()
-        cursor = self.apt.findUrlsForDupfilter()
+        cursor = self.apt.findUrlsForDupfilter(self.name)
         dtLoad=datetime.datetime.now()
         log.msg('爬虫排重库完成Url加载.从UrlDb加载%s个；加载数据时间花费：%s' %(cursor.count(),dtLoad-dtBegin), level=log.INFO)
         #更新策略
@@ -258,7 +258,7 @@ class BaseCrawlSpider(CrawlSpider):
             req=self.makeRequest(p.url, callBackFunctionName=callBackFunctionName,urlId=urlId,priority=pagePriority)
             reqs.append(req)
         dtEnd=datetime.datetime.now()
-        log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.DEBUG)
+        log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.INFO)
         return reqs
 
     def makeRequest(self, url, callBackFunctionName=None,urlId=None,meta={}, **kw): 

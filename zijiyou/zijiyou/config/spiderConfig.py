@@ -738,37 +738,37 @@ spiderConfig = {
         ],
         #普通list页正则表达式
         'normalRegex':[
-            #测试
-            {'regex':r'(/Journals\.aspx\?)?type=2&title=&district=0&IsTitle=T&selecttype=2&orderby=r&pageindex=.*', 'priority':200}, 
+#            #测试
+#            {'regex':r'(/Journals\.aspx\?)?type=2&title=&district=0&IsTitle=T&selecttype=2&orderby=r&pageindex=.*', 'priority':200}, 
                        
-#            {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':200}, #国家
-#            {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':400}, #景点列表
-#            {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-s\d+-[r]+\w+\d+/\w+:\w+\.html$', 'priority':500}, #景点列表
-#            {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
-#            {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-[r]+\w+\d+-\w+\.html$', 'priority':450}, #景点列表
-#            
-#            {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':700},# 会员游记列表
-#            {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=0.*', 'priority':700},# 游记列表
-#            {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':700},# 攻略列表
-#            {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+\.html$', 'priority':400},    #常识列表页1
-#            {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+:brochure\.html#\w+', 'priority':400} #常识列表页2
+            {'regex':r'(http://www.lvping.com/)?(tourism)+-g\d+-\w+\.html$', 'priority':200}, #国家
+            {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-\w+\.html$', 'priority':400}, #景点列表
+            {'regex':r'(http://www.lvping.com/)?(attractions-)+d\d+-s\d+-[r]+\w+\d+/\w+:\w+\.html$', 'priority':500}, #景点列表
+            {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-\w+\.html$', 'priority':400}, #景点列表
+            {'regex':r'(http://www.lvping.com/)?(attractions-)+g\d+-[r]+\w+\d+-\w+\.html$', 'priority':450}, #景点列表
+            
+            {'regex':r'(http://www.lvping.com)?(/members/)+(\w/)+journals$', 'priority':700},# 会员游记列表
+            {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=0.*', 'priority':700},# 游记列表
+            {'regex':r'(http://www.lvping.com)?/Journals.aspx\?.*selecttype=2.*', 'priority':700},# 攻略列表
+            {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+\.html$', 'priority':400},    #常识列表页1
+            {'regex':r'(http://www.lvping.com/)?(travel-)+d\d+-\w+:brochure\.html#\w+', 'priority':400} #常识列表页2
         ],
         #item页正则表达式 type对应item存放的数据表名
         'itemRegex':[
-            #测试
-            {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':1000}, #攻略 作者 发表时间 浏览次数 评论次数
-                     
-#            {'itemCollectionName':'Note','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-s\w?\d+/\w+:+\w+.*\.html$', 'priority':1000},  #国家介绍 概况、气候等常识
-#            {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':1000}, #短文攻略(类别 内容 目的地)
+#            #测试
 #            {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':1000}, #攻略 作者 发表时间 浏览次数 评论次数
-#            {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+$', 'priority':1000}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
-#            {'itemCollectionName':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':1}, #用户
-#            #                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':1}, #足迹
-#            {'itemCollectionName':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':1}, #好友
-#            {'itemCollectionName':'MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记
-#            
-#            {'itemCollectionName':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
-#            {'itemCollectionName':'Region', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
+                     
+            {'itemCollectionName':'Note','regex':r'(http://www.lvping.com/)?(travel)+-d\d+-s\w?\d+/\w+:+\w+.*\.html$', 'priority':1000},  #国家介绍 概况、气候等常识
+            {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(travel-)+d1-+s\d+/\w+:\w+\.html$', 'priority':1000}, #短文攻略(类别 内容 目的地)
+            {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?(showjournal-)+d\d+-r\d+-journals+\.html$', 'priority':1000}, #攻略 作者 发表时间 浏览次数 评论次数
+            {'itemCollectionName':'Article','regex':r'(http://www.lvping.com/)?journals/AllSingleJournals.aspx\?Writing=\d+$', 'priority':1000}, #第二种攻略游记情况 http://www.lvping.com/journals/AllSingleJournals.aspx?Writing=1322380
+            {'itemCollectionName':'MemberInfo','regex':r'(http://www.lvping.com/)?(members/)+\w+$', 'priority':1}, #用户
+            #                                  {'itemCollectionName':'MemberTrack','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/travelmap-public)+$', 'priority':1}, #足迹
+            {'itemCollectionName':'MemberFriend','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/friends)+$', 'priority':1}, #好友
+            {'itemCollectionName':'MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记MemberNoteList','regex':r'(http://www.lvping.com/)?(members/)+(\w)+(/journals)+$', 'priority':1},  #游记
+            
+            {'itemCollectionName':'Attraction','regex':r'(http://www.lvping.com/)?(attraction_review-)+d\d+-s\d+-[(detail)(attraction)]+\.html$', 'priority':1000}, #景点
+            {'itemCollectionName':'Region', 'regex':r'(http://www.lvping.com)?(/tourism-)+d\d+-\w+\.html$', 'priority':300}, #城市景区
         ],
         'imageXpath':['//div[@class="yjDetail cf"]//img/@src']
     },
@@ -839,41 +839,41 @@ spiderConfig = {
 	      'go2euSpider':{
                            'allowedDomains':["go2eu.com"],
                            'startUrls':[
-                                #测试
-                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=98',
+#                                #测试
+#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=98',
                                 
                                         
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=12', #德国
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=14', #法国
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=13', #意大利
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=17', #荷比卢
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=18', #西班牙葡萄牙
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=19', #奥地利
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=16', #英国
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=15', #瑞士
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=26', #希腊土耳其
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=25', #北欧
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=24', #东欧
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=58', #东南亚
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=57', #东亚
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=59', #西亚南亚
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=51', #中国
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=52', #港澳台
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=53', #美国
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=54', #加拿大
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=55', #拉美
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=56', #澳大利亚
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=83', #新西兰
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=86', #埃及
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=60', #非洲
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=94', #游轮
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=3', #签证
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=1', #多国
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=62', #廉航
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=79', #交通
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=33', #自驾
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=80', #购物
-#            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=100', #银联
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=12', #德国
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=14', #法国
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=13', #意大利
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=17', #荷比卢
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=18', #西班牙葡萄牙
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=19', #奥地利
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=16', #英国
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=15', #瑞士
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=26', #希腊土耳其
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=25', #北欧
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=24', #东欧
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=58', #东南亚
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=57', #东亚
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=59', #西亚南亚
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=51', #中国
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=52', #港澳台
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=53', #美国
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=54', #加拿大
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=55', #拉美
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=56', #澳大利亚
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=83', #新西兰
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=86', #埃及
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=60', #非洲
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=94', #游轮
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=3', #签证
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=1', #多国
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=62', #廉航
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=79', #交通
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=33', #自驾
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=80', #购物
+            					'http://www.go2eu.com/bbs/forumdisplay.php?fid=100', #银联
 					           ],
 			    
 			     #普通list页正则表达式

@@ -30,12 +30,12 @@ class OnlineApt(object):
         updateJson={"status":status, "dateTime":datetime.datetime.now()}
         mongoApt.update(colName, whereJson=whereJson, updateJson=updateJson)
     
-    def findUrlsForDupfilter(self):
+    def findUrlsForDupfilter(self,spiderName):
         '''
         加载用于排重的url的md5值
         '''
         colName='UrlDb'
-        whereJson={"status":{"$lt":400}}
+        whereJson={"status":{"$lt":400},"spiderName":spiderName}
         return mongoApt.find(colName, whereJson=whereJson, sortField='status')
 
     def saveNewUrl(self,urlItem={}):

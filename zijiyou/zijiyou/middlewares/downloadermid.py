@@ -29,13 +29,11 @@ class UpdateRequestedUrl(object):
 #        print 'downMid reqOut test get:%s' % request.url 
     
     def process_response(self, request, response, spider):
-#        if not isinstance(response,Response):
-#            return response
+        print '下载调度%s' % spider.name
         responseStatus=response.status
         if responseStatus in [400, 403, 304]:
             log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应或者该页面没有更新" % responseStatus, level=log.ERROR)
         if 'urlId' in request.meta:
-            print '下载调度%s' % spider.name
             urlId=request.meta['urlId']
             self.apt.updateUrlDbStatusById(urlId, status=responseStatus)
         else:
