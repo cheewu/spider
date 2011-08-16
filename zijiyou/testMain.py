@@ -1,28 +1,56 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
-#from bson.objectid import ObjectId
-from bson import ObjectId
-from collections import defaultdict
-from pymongo import Connection
-from scrapy import log
-from scrapy.conf import settings
-from zijiyou.db.mongoDbApt import MongoDbApt
-from zijiyou.spiders.offlineCrawl.parse import Parse
-import datetime
-import hashlib
-import os
-import pymongo
-import re
-import time
-from zijiyou.common.tempTaskTool import run
+#from collections import defaultdict
+from pymongo.connection import Connection
+from pymongo.objectid import ObjectId
+#from scrapy import log
+#from scrapy.conf import settings
+#from zijiyou.common.tempTaskTool import run
+from zijiyou.common.utilities import getFingerPrint
+#from zijiyou.spiders.offlineCrawl.parse import Parse
+#import datetime
+#import hashlib
+#import os
+#import re
+#import time
 #run(needCheckDup=True)
 
+
+def initItemMd5WithUrl(dbHost,dbName,colName):
+    '''
+    初始化item表的pid作为唯一主键
+    '''
+    con = Connection(dbHost, 27017)
+    db = con[dbName]
+    col = db[colName]
+    cursor=col.find({'pid':{'$exists':False}})
+    print '总数：%s' % cursor.count()
+    for p in cursor:
+        whereJson={'_id':ObjectId(p['_id'])}
+        pid=getFingerPrint(inputs=[p['url']], isUrl=True)
+        updateJson={'$set':{'pid':pid}}
+        col.update(whereJson, updateJson)
+initItemMd5WithUrl('192.168.0.183','spiderV21','Article')
+#initItemMd5WithUrl('192.168.0.183','spiderV21','Note')
 #areas=['s','ssd','s3']
 #areasNew=areas[1:len(areas)]
 #print areasNew
-dic={"s":2}
-print  dic[None]
+#dic={
+#  "_id": ObjectId("4e4814edd8091f7108843128"),
+#  "articleId": "4e44fa9a4ccdb4610d0027d8",
+#  "category": "介绍|0.8768079 ",
+#  "collectionName": "Note",
+#  "content": "　　来自欧洲城市博物馆和街头上那种与艺术珍藏近乎零距离欣赏所产生的艺术自由感，不同于书，不同于史，感受着文物的历史气息和艺术的思想熏陶，让我对博物馆的功能定位有了新的思考：今天的博物馆不应成为文物垄断的代名词。中国的历史很悠久，但能展示给社会大众的珍贵文物却很少，原因就在于藏宝于馆的惯有思维依然盛行。在这一点上，欧洲博物馆积极倡导的“推广、普及、研究、保护”式开放理念值得我们借鉴，博物馆社会化不仅可以丰富一个城市文化内涵和提高大众艺术品位，还能使原本就属于全社会宝贵遗产的历史文物更好地为时代发展服务。\n\n　　今天，我们与其在旅游景点上耗费大量钱财为将来制造越来越多的水泥钢筋式“文物”，不如以建立分馆的形式，将可分散保管的文物尽可能分流，好处至少有五点：一能避免群毁群损的现象发生，二能便于精心保管保养，三能提高文物的展览利用率，四能丰富分馆所在城市的文化内涵，五能增强社会大众的文物保护意识。何乐而不为呢！",
+#  "keywords": "原因 旅游 展览 时代 服务 景点 全 思维 思想 艺术品 思考 欣赏 推广 城市 分散 保养 中国 艺术 大众 展示 保护 研究 史 历史 文化 欧洲 街头 珍藏 定位 自由 感受 开放 新 发展 博物馆 遗产 社会 气息 现象 文物 功能 感 ",
+#  "publishDate": "2009年05月15日11:42",
+#  "status": 220,
+#  "title": "",
+#  "url": "http:\/\/travel.people.com.cn\/GB\/9307796.html"
+#}
+#objId = mongoApt.saveItem('Note', item=dic)
+#print objId
+
 #t='- - - +856 212 530-3  -'
 #match = re.search('\+(\d+) [0-9 -]+', t, 0)
 #if match:

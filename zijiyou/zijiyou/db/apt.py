@@ -95,7 +95,7 @@ class Mongodb(object):
             results.append(result)
         return results
     
-    def find(self,colName,whereJson={},fieldsJson={},sortField=None,limitNum=0):
+    def find(self,colName,whereJson={},fieldsJson=None,sortField=None,limitNum=0):
         '''
         查询，返回游标，可选择是否排序、是否查询全字段。 limitNum指定是否限制返回集合个数，0为不限制
         '''
