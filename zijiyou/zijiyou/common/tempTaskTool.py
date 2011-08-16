@@ -73,10 +73,10 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21
     con = Connection(dbHost, port)
     db = con[dbName]
     col = db[colName]
-    cursor = col.find({"isDup":None}, {contentField:1}) #'md5':None
+    cursor = col.find({"isDup":{'$exists':False}}, {contentField:1}) #'md5':None
     dupChecker = TxtDuplicateFilter(md5SourceCols=[])#colName
     #重复文本数
-    numDup=0.01
+    numDup=0
     #进度条
     tolNum=cursor.count()
     processBar=ProcessBar(numAll=tolNum,numUnit=100)
@@ -99,7 +99,7 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21
         updateJson = {'$set':{'md5':md5, 'isDup':isDup}}
         whereJson = {'_id':ObjectId(p['_id'])}
         col.update(whereJson, updateJson)
-    print '完成排重，数据集%s发现重复数量：%s 总文本数%s 重复比例%s' % (colName,numDup,tolNum,(numDup/tolNum))
+    print '完成排重，数据集%s发现重复数量：%s 总文本数%s 重复比例：百分之%s' % (colName,numDup,tolNum,(numDup*100.0/tolNum))
 
 def updateDaodaoResponseItemCollectionName(dbHost='192.168.0.183', port=27017, dbName='spiderV21', colName='PageDb'):
     '''
@@ -237,29 +237,29 @@ def run(needDumUrl=False, needInitUrl=False, needCheckDup=False, needDumpResposn
     print 'begin to run task!'
     if needCheckDup:
         print 'run dupCheck ...'
-        checkDuplicatedContent(dbHost=dbHost, port=27017, dbName=dbName, colName='Note', contentField='content')
         checkDuplicatedContent(dbHost=dbHost, port=27017, dbName=dbName, colName='Article', contentField='content')
+        checkDuplicatedContent(dbHost=dbHost, port=27017, dbName=dbName, colName='Note', contentField='content')
         print 'OK ! -----------dupCheck完成------------------- OK!'
-    if needDumUrl:
-        print 'run urlDump ... '
-        newNum = dumpUrlFromPageDb2UrlDb()
-        print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' % newNum
-    if needInitUrl:
-        print 'run urlInit ... '
-        initUrlMd5()
-        print 'OK!-------------urlMD5初始化完成----------------------OK!' 
-    if needDumpResposne:
-        print 'run DumpResposne ...'
-        dumpResponse2PageDb(dbNameSource='daodaoDb', colNameSource='responseCol', needMap=True)
-        print 'OK ! -----------DumpResposne完成--------------- OK!'
-    if needUpdateDaodao:
-        print 'run updateDaodaoResponseItemCollectionName ...'
-        updateDaodaoResponseItemCollectionName()
-        print 'OK ! -----------updateDaodaoResponseItemCollectionName完成--------------- OK!'
-    if needDumpKeyword:
-        print 'run dumpKeyWordsFromDb ...'
-        dumpKeyWordsFromDb()
-        print 'OK ! -----------dumpKeyWordsFromDb--------------- OK!'
+#    if needDumUrl:
+#        print 'run urlDump ... '
+#        newNum = dumpUrlFromPageDb2UrlDb()
+#        print 'OK!-------------从PageDb向UrlDb插入个数%s----------------------OK!' % newNum
+#    if needInitUrl:
+#        print 'run urlInit ... '
+#        initUrlMd5()
+#        print 'OK!-------------urlMD5初始化完成----------------------OK!' 
+#    if needDumpResposne:
+#        print 'run DumpResposne ...'
+#        dumpResponse2PageDb(dbNameSource='daodaoDb', colNameSource='responseCol', needMap=True)
+#        print 'OK ! -----------DumpResposne完成--------------- OK!'
+#    if needUpdateDaodao:
+#        print 'run updateDaodaoResponseItemCollectionName ...'
+#        updateDaodaoResponseItemCollectionName()
+#        print 'OK ! -----------updateDaodaoResponseItemCollectionName完成--------------- OK!'
+#    if needDumpKeyword:
+#        print 'run dumpKeyWordsFromDb ...'
+#        dumpKeyWordsFromDb()
+#        print 'OK ! -----------dumpKeyWordsFromDb--------------- OK!'
     
     
     print 'all tasks have been complecated!'
