@@ -11,7 +11,7 @@ class BaseItem(Item):
     结构化信息父类，包含了子类必须有的字段
     '''
     status=Field()     # log the operation. default is 100, indicates initial status
-    pushDateTime=Field()    #最近一次推送日期
+    optDateTime=Field()    
     spiderName=Field()      #爬虫名
     url=Field()             #来源网页链接
 

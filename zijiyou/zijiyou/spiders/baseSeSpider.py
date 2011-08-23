@@ -5,19 +5,19 @@ Created on 2011-3-28
 @author: shiym
 '''
 from scrapy import log
-from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
 from zijiyou.common.extractText import doExtract, getText
 from zijiyou.config.spiderConfig import spiderConfig
+from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import datetime
 import re
 import string
-import time
 import urllib
+#import time
 
 class BaseSeSpider(BaseCrawlSpider):
     '''
@@ -34,14 +34,10 @@ class BaseSeSpider(BaseCrawlSpider):
     
     def __init__(self,*a,**kw):
         super(BaseSeSpider,self).__init__(*a,**kw)
-        self.CrawlDb=settings.get('CRAWL_DB')
-        if not self.CrawlDb :
-            log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
-            raise NotConfigured
         self.config=spiderConfig[self.name]
         if not 'seUrlFormat' in self.config:
             log.msg("baseSeSpider的配置文件没有seUrlFormat!", level=log.ERROR)
-            raise NotConfigured
+            raise NotConfigured("baseSeSpider的配置文件没有seUrlFormat!")
         self.functionDic['baseParse'] = self.baseParse
         self.seUrlFormat=self.config['seUrlFormat']
         self.specailField=['content','publishDate']#,'content'
@@ -87,29 +83,34 @@ class BaseSeSpider(BaseCrawlSpider):
                       'sePageNum':keyWord['pageNumber'],
                       'priority':keyWord['priority'],
                       'resultItemLinkXpath':v['resultItemLinkXpath'],
-                      'nextPageLinkXpath':v['nextPageLinkXpath'],
+#                      'nextPageLinkXpath':v['nextPageLinkXpath'],
                       'totalRecordXpath':v['totalRecordXpath'],
                       'totalRecordRegex':v['totalRecordRegex'],
                       'seName':v['seName'],
                       'homePage':v['homePage'],
                       'reference':None}
                 meta[self.urlPatternMeta] = format % (encodeWords, '')
-                request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
+                request=self.makeRequest(url,callBackFunctionName='baseParse',meta=meta,priority=pagePriority)
                 reqs.append(request)
                     
                 self.seResultList.append(url)
         log.msg('生成了%s个关键字搜索请求' % len(reqs), level=log.INFO)
         return reqs
     
-    def makeRequestByFirstPageForSEs(self, response, pageSize=10):
-        if not response or not self.urlPatternMeta in response.meta or not response.meta[self.urlPatternMeta]:
-            return None
-        
+    def makeListRequestByFirstPageForSEs(self, response, pageSize=10):
+        '''
+        生成后续搜素list页请求
+        '''
         totalRecord = 0
         urlPattern = response.meta[self.urlPatternMeta]
         response.meta[self.urlPatternMeta] = None
         meta = response.meta
         meta['reference']=response.url
+        #清除urlPattern
+        meta.pop(self.urlPatternMeta)
+        curMaxPageNum=self.maxPageNum
+        if 'sePageNum' in meta:
+            curMaxPageNum=meta['sePageNum']
         
         #获得总的记录数
         totalRecordXpath = meta['totalRecordXpath']
@@ -122,7 +123,7 @@ class BaseSeSpider(BaseCrawlSpider):
             totalRecordValues = hxs.select(totalRecordXpath).re(totalRecordRegex)
         else:
             log.msg("配置有误，totalRecordXpath是必须的，totalRecordRegex是可选的，%s" % response.url, level=log.ERROR)
-            return None
+            return NotConfigured("配置有误，totalRecordXpath是必须的，totalRecordRegex是可选的，%s" % response.url)
         if totalRecordValues and len(totalRecordValues) > 0:
             #将字符串中的逗号去掉，并转为整型
             totalRecord = string.atoi(totalRecordValues[0].replace(',', ''))
@@ -131,8 +132,9 @@ class BaseSeSpider(BaseCrawlSpider):
             return None
         totalPage = (totalRecord-1) / pageSize + 1
         #设定最多爬取页数
-        if totalPage > self.maxPageNum:
-            totalPage = self.maxPageNum
+        if totalPage > curMaxPageNum:
+            totalPage = int(curMaxPageNum)
+#        print '总记录数：%s 总页数%s curMaxPageNum:%s' % (totalRecord,totalPage,curMaxPageNum)
         log.msg("关键字第一页url:%s" % response.url, level=log.INFO)
         log.msg("根据第一页获得搜索结果总数%s，每页%s项，最大的爬取页数为%s，总页数为%s" % (totalRecord, pageSize, self.maxPageNum, totalPage), level=log.INFO)
         if totalPage <= 1:
@@ -143,29 +145,31 @@ class BaseSeSpider(BaseCrawlSpider):
         #递减
         for i in range(totalPage, 1, -1):
             url = urlPattern + str(i)
-#            log.msg('makeRequestByFirstPageForSEs 得到Url：%s' % url, level=log.INFO)#debug
-            request=self.makeRequestWithMeta(url,callBackFunctionName='baseParse',meta=meta,priority=1000)
+            log.msg('makeRequestByFirstPageForSEs 得到Url：%s' % url, level=log.DEBUG)#debug
+            request=self.makeRequest(url,referenceUrl=response.url,callBackFunctionName='baseParse',meta=meta,priority=1000)
             reqs.append(request)
-#            log.msg('makeRequestByFirstPageForSEs 得到Res：%s' % url, level=log.INFO)#debug
                     
             self.seResultList.append(url)
         return reqs
     
     def baseParse(self,response):
-        print '解析搜索引擎结果'
         log.msg('解析搜索引擎结果link: %s' % response.url, level=log.INFO)
         reqs = []
         
         if not self.hasInit:
             self.hasInit=True
+            self.apt=OnlineApt()
             #清空搜素引擎中间页面的数据库，防止因爬虫崩溃导致下一次抓取时中间页被错误过滤
             self.clearUrlDb()
+            updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
+            if len(updateRequest)>0:
+                reqs.extend(updateRequest)
             seReqs=self.makeFirstPageRequestByKeywordForSEs()
             if seReqs and len(seReqs)>0:
                 reqs.extend(seReqs)
             else:
                 log.msg('关键字没有生成任何Request!，请检查配置文件spiderConfig中baseSeSpider的url格式或数据库关键字表',level=log.ERROR)
-                raise NotConfigured
+                raise NotConfigured('关键字没有生成任何Request!，请检查配置文件spiderConfig中baseSeSpider的url格式或数据库关键字表')
         #拦截第一次解析，提交搜素引擎关键字创建的request
         if len(reqs)>0:
             log.msg('拦截第一次解析，提交搜素引擎关键字创建的request，共%s个' % len(reqs), log.INFO)
@@ -177,65 +181,112 @@ class BaseSeSpider(BaseCrawlSpider):
         meta=response.meta
         meta['reference']=response.url
         #item页链接请求
-        itemsReq=[]
-        homePage=meta['homePage']
         resultItemLinkXpath=meta['resultItemLinkXpath']
         hxs=HtmlXPathSelector(response)
-        links=hxs.select(resultItemLinkXpath).extract()
-        
-        #判断是否是第一页搜索结果，是，则抽取出总搜索结果数，计算出总页数，生成剩余页数的request
-        if self.urlPatternMeta in response.meta:
-            pageLinks = self.makeRequestByFirstPageForSEs(response, len(links))
-            if pageLinks:
-                reqs.extend(pageLinks)
-                log.msg("第一页：%s，生成剩余的搜索页面数为：：%s" % (response.url, len(pageLinks)), level=log.INFO)
-            else:
-                log.msg("只生成了一页：%s" % response.url, level=log.INFO)
-        
-        #开始抓取页面上的搜索结果
-        if links and len(links)>0:
-            metaItem = {}
-            #判断配置是否正确
-            if self.checkXathConfig(response):
-                xpathItems = self.config['seXpath'][response.meta['seName']]
-                for k,v in xpathItems.items():
-                    if k in self.nextPageField:
-                        continue
-                    values = hxs.select(v).extract()
-                    if not values or len(values) != len(links):
-                        log.msg("%s未抓取到或是抓取到的数量没有和link数一样，可能是xpath有问题" % k, log.WARNING)
-                        continue
-                    for i in range(len(values)):
-                        values[i] = values[i].encode('utf-8')
-                        if k in self.specailField:
-                            values[i]=self.parseSpecialField(k, values[i])
-                    metaItem[k] = values
-#                log.msg('解析搜素结果页面%s' % (response.url), level=log.INFO) #debug
-#                log.msg('meta为%s' % (metaItem), level=log.INFO) #debug
-                if metaItem:
-                    item = {}
-                    for k,v in metaItem.items():
-                        item[k] = v[i]
-                    if item:
-                        meta[self.articleMetaName] = item
-            for  i in range(len(links)):
-                link = links[i]
-                
-#                log.msg('%s' % link, level=log.INFO)#debug
-#                log.msg('baseParse将抽取的link创建Req Url是：%s' % link, level=log.INFO)#debug
-                req=self.makeRequestWithMeta(homePage+link, callBackFunctionName='parseItem', meta=meta,priority=self.itemPriority)
-                itemsReq.append(req)
-        else:
+        blocks=hxs.select(resultItemLinkXpath)
+        if blocks==None or len(blocks)<1:
             log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
-        
-        reqs.extend(itemsReq)
-        log.msg("%s parse 产生item页的Request数量：%s" % (response.url, len(itemsReq)), level=log.INFO)
-        
+            return reqs
+        #第一页搜索结果抽取出总搜索结果数，生成剩余list页的request
+        if self.urlPatternMeta in response.meta:
+            pageRequests = self.makeListRequestByFirstPageForSEs(response, len(blocks))
+            if pageRequests and len(pageRequests):
+                reqs.extend(pageRequests)
+                log.msg("第一页：%s，生成剩余的搜索页面数为：：%s" % (response.url, len(pageRequests)), level=log.INFO)
+            else:
+                log.msg("第一页没有生成其他list搜素页，可能是搜素结果不足一页。url：%s" % response.url, level=log.INFO)
+        #抽取item页的link，同时传递发表时间、摘要等信息
+        for block in blocks:
+            metaItem = {}
+            xpathItems = self.config['seXpath'][response.meta['seName']]
+            for k,v in xpathItems.items():
+                if k in self.nextPageField:
+                    continue
+                values = block.select(v).extract()
+                if values and len(values)>0:
+                    metaItem[k] = "".join(p for p in values)
+            meta[self.articleMetaName]=metaItem
+            if len(metaItem)<3:
+                log.msg('没有在豆腐块里找全摘要等信息，只找到%s：xpaht：%s url:%s' % (metaItem.keys(),xpathItems,response.url),level=log.DEBUG)
+            log.msg('metaItem%s' % (metaItem), level=log.DEBUG)
+            if 'url' in xpathItems:
+                #获得了itemurl
+                itemUrlXpath=xpathItems['url']
+                itemUrls=block.select(itemUrlXpath).extract()
+                itemUrl=None
+                if len(itemUrls)>0:
+                    itemUrl=itemUrls[0]
+                elif len(itemUrls)>1:
+                    log.msg('豆腐块里没有找到itemurl，xpath：%s' % itemUrlXpath,level=log.DEBUG)
+                    continue
+                log.msg('搜素结果豆腐块里找到的itemurl:%s' % itemUrl, level=log.DEBUG)
+                req=self.makeRequest(itemUrl,referenceUrl=response.url, callBackFunctionName='parseItem', meta=meta,priority=1000)
+                reqs.append(req)
+            else:
+                log.msg('在搜素结果豆腐块里没有找到itemurl，无法下载item页，url：%s' % response.url, level=log.WARNING)
+            
+        log.msg("%s 解析产生Request总数量数量：%s" % (response.url, len(reqs)), level=log.INFO)
         return reqs
+        
+        
+#        links=hxs.select(resultItemLinkXpath).extract()
+#        if links==None or len(links)<1:
+#            log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
+#            return reqs
+#        
+#        #判断是否是第一页搜索结果，是，则抽取出总搜索结果数，计算出总页数，生成剩余页数的request
+#        if self.urlPatternMeta in response.meta:
+#            pageRequests = self.makeListRequestByFirstPageForSEs(response, len(links))
+#            if pageRequests:
+#                reqs.extend(pageRequests)
+#                log.msg("第一页：%s，生成剩余的搜索页面数为：：%s" % (response.url, len(pageRequests)), level=log.INFO)
+#            else:
+#                log.msg("只生成了一页：%s" % response.url, level=log.INFO)
+#        
+#        #开始抓取页面上的搜索结果
+#        if links and len(links)>0:
+#            metaItem = {}
+#            #判断配置是否正确
+#            if self.checkXathConfig(response):
+#                xpathItems = self.config['seXpath'][response.meta['seName']]
+#                for k,v in xpathItems.items():
+#                    if k in self.nextPageField:
+#                        continue
+#                    values = hxs.select(v).extract()
+#                    if not values or len(values) != len(links):
+#                        log.msg("%s未抓取到或是抓取到的数量没有和link数一样，可能是xpath有问题" % k, log.WARNING)
+#                        continue
+#                    for i in range(len(values)):
+#                        values[i] = values[i].encode('utf-8')
+#                        if k in self.specailField:
+#                            values[i]=self.parseSpecialField(k, values[i])
+#                    metaItem[k] = values
+#                log.msg('解析搜素结果页面%s' % (response.url), level=log.DEBUG) #debug
+#                log.msg('meta为%s' % (metaItem), level=log.DEBUG) #debug
+#                if metaItem:
+#                    item = {}
+#                    for k,v in metaItem.items():
+#                        item[k] = v[i]
+#                    if item:
+#                        meta[self.articleMetaName] = item
+#            for  i in range(len(links)):
+#                link = links[i]
+#                
+#                log.msg('%s' % link, level=log.DEBUG)#debug
+#                log.msg('baseParse将抽取的link创建Req Url是：%s' % link, level=log.DEBUG)#debug
+#                req=self.makeRequest(homePage+link,referenceUrl=response.url, callBackFunctionName='parseItem', meta=meta,priority=self.itemPriority)
+#                itemsReq.append(req)
+#        else:
+#            log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
+#        
+#        reqs.extend(itemsReq)
+#        log.msg("%s parse 产生item页的Request数量：%s" % (response.url, len(itemsReq)), level=log.INFO)
+#        
+#        return reqs
     
     def parseItem(self,response):
         '''解析搜索目标页'''
-        log.msg("解析搜索目标页", level=log.INFO)
+        log.msg("解析搜索目标页", level=log.DEBUG)
         items=[]
         
         meta=response.meta
@@ -254,7 +305,7 @@ class BaseSeSpider(BaseCrawlSpider):
         pageResponse.setdefault('responseBody', response.body_as_unicode().encode('utf-8'))
         pageResponse.setdefault('optDateTime', datetime.datetime.now())
         pageResponse.setdefault('coding', response.encoding)
-        pageResponse.setdefault('headers', response.headers)
+#        pageResponse.setdefault('headers', response.headers)
         
         items.append(pageResponse)
         
@@ -275,12 +326,12 @@ class BaseSeSpider(BaseCrawlSpider):
         xpathItems = self.config['seXpath'][response.meta['seName']]
         hxs=HtmlXPathSelector(response)
         article=Article()
-        #添加前一页的field项
+        #添加搜素结果页的field项
         if self.articleMetaName in response.meta:
             for k,v in response.meta[self.articleMetaName].items():
                 v = unicode(str(v), 'utf8')
                 article.setdefault(k, getText(v))
-        #添加下一页的field项
+        #添加目标页的field项
         for k,v in xpathItems.items():
             if k in self.nextPageField:
                 value = None
@@ -294,8 +345,9 @@ class BaseSeSpider(BaseCrawlSpider):
                     value=self.parseSpecialField(k, value)
                 if value:
                     article.setdefault(k, getText(value))
-        article.setdefault('url', response.url)
-        article.setdefault('spiderName', response.url)
+#        article.setdefault('url', response.url)
+        article.setdefault('spiderName', self.name)
+        article.setdefault('optDateTime', datetime.datetime.now())
         return article
     
     def parseSpecialField(self,name,content):
@@ -309,10 +361,10 @@ class BaseSeSpider(BaseCrawlSpider):
             if value:
                 return value.group(0)
             else:
-                return time.strftime("%Y年%m月%d日")
+                return value
+#                return time.strftime("%Y年%m月%d日")
         if name == 'content':
             mainText = doExtract(content,threshold=False)
-#            print mainText
             return mainText
     
     def checkXathConfig(self, response):

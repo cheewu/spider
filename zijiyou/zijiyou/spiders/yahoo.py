@@ -4,7 +4,6 @@ Created on 2011-3-28
 
 @author: wuqi
 '''
-from scrapy import log
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 class yahoo(BaseCrawlSpider):
     '''

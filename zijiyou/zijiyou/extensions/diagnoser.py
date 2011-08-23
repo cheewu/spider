@@ -119,7 +119,7 @@ class Diagnoser(object):
         for key in self.spiderDict.keys():
             msg = "爬虫%s的诊断信息：" % key
             msg += " 下载网页总数：%s" % self.spiderDict[key]['crawledCounter']
-            msg += " 速度：%s/分钟" % (self.spiderDict[key]['crawledCounter'] * 60 / (datetime.datetime.now() - self.spiderDict[key]['beginTime']).seconds )
+            msg += " 速度：%s/分钟" % (self.spiderDict[key]['crawledCounter'] * 60 / ((datetime.datetime.now() - self.spiderDict[key]['beginTime']).seconds+1.0) )
             self.spiderDict[key]['crawledCounter'] = 0
             self.spiderDict[key]['beginTime'] = datetime.datetime.now()
             msg += " 下载失败网页数信息：%s\n" % self.spiderDict[key]['faildedCounter']

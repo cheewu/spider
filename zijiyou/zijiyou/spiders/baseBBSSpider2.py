@@ -78,17 +78,7 @@ class BaseBBSSpider2(BaseCrawlSpider):
                 if match and match.group(1):
                     tid=match.group(1)
                     newUrl=v['itemPrintPageFormat'] % tid
-                    #排重
-                    md5=getFingerPrint(inputs=[newUrl],isUrl=True)
-                    if md5 in self.urlDump:
-                        continue
-                    #保存新url
-                    self.urlDump.add(md5)
-                    urlItem={"url":newUrl,"md5":md5,"callBack":'parseItem',
-                             "spiderName":self.name,"reference":response.url,
-                             "status":1000,"priority":1000,"dateTime":datetime.datetime.now()}
-                    urlId = self.apt.saveNewUrl(urlItem)
-                    req=self.makeRequest(newUrl, callBackFunctionName='parseItem',urlId=urlId,priority=1000)
+                    req=self.makeRequest(newUrl,referenceUrl=response.url, callBackFunctionName='parseItem',priority=1000)
                     reqs.append(req)
                     log.msg("拼凑item打印链接：%s" %newUrl, level=log.DEBUG)
                 else:

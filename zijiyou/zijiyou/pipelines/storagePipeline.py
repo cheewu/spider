@@ -34,12 +34,12 @@ class StoragePipeline(object):
         self.fileApt.write(values+"\n")
         
     def saveItem2Mongodb(self,item, collectionName):
-        print '表名：%s' % collectionName
+#        print '表名：%s' % collectionName
         values = {}
         for k,v in item.items():
             values[k] = v
         obj=self.apt.saveItem(collectionName, values)
-        print '++++saveItem2Mongodb++++col:%s,objectId:%s' % (collectionName ,obj)
+#        print '++++saveItem2Mongodb++++col:%s,objectId:%s' % (collectionName ,obj)
         log.msg('++++saveItem2Mongodb++++col:%s,objectId:%s+++++++++++' % (collectionName ,obj), level = log.INFO)
         
     

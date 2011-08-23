@@ -229,11 +229,6 @@ class BaseCrawlSpider(CrawlSpider):
         """
         link_extractor = SgmlLinkExtractor(**extra)
         links = link_extractor.extract_links(response)
-#        try:
-#            links = link_extractor.extract_links(response)
-#        except Exception ,e:
-#            log.msg('Exception:%s' % str(e),level=log.DEBUG)
-#            log.msg('参数：%s' % extra, level=log.DEBUG)
         log.msg('从%s抽取到的链接:%s' % (response.url,links), level=log.DEBUG)
         return links
 
@@ -244,33 +239,36 @@ class BaseCrawlSpider(CrawlSpider):
         links = self.extractLinks(response, **extra)
         reqs=[]
         dtBegin=datetime.datetime.now()
-        #排重，保存
         for p in links:
-            md5=getFingerPrint(inputs=[p.url],isUrl=True)
-            if md5 in self.urlDump:
-                continue
-            #保存新url
-            self.urlDump.add(md5)
-            urlItem={"url":p.url,"md5":md5,"callBack":callBackFunctionName,
-                     "spiderName":self.name,"reference":response.url,
-                     "status":1000,"priority":pagePriority,"dateTime":datetime.datetime.now()}
-            urlId = self.apt.saveNewUrl(urlItem)
-            req=self.makeRequest(p.url, callBackFunctionName=callBackFunctionName,urlId=urlId,priority=pagePriority)
-            reqs.append(req)
+            req=self.makeRequest(p.url,referenceUrl=response.url, callBackFunctionName=callBackFunctionName,priority=pagePriority)
+            if req != None:
+                reqs.append(req)
         dtEnd=datetime.datetime.now()
-        log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.INFO)
+        log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.DEBUG)
         return reqs
 
-    def makeRequest(self, url, callBackFunctionName=None,urlId=None,meta={}, **kw): 
+    def makeRequest(self, url, referenceUrl=None,callBackFunctionName=None,meta={},priority=1, **kw): 
         '''
-        创建Request
+        排重 保存url到数据库 创建Request返回。如果重复，则返回None
         '''
+        #排重
+        md5=getFingerPrint(inputs=[url],isUrl=True)
+        if md5 in self.urlDump:
+            return None
+        self.urlDump.add(md5)
+        #保存url到数据库
+        urlItem={"url":url,"md5":md5,"callBack":callBackFunctionName,
+                 "spiderName":self.name,"reference":referenceUrl,
+                 "status":1000,"priority":priority,"dateTime":datetime.datetime.now()}
+        urlId = self.apt.saveNewUrl(urlItem)
+        
         if not urlId:
             raise NotConfigured('爬虫%s创建Request的url%s没有提供id，将导致无法更新url的状态' % (self.name,url))
         if(callBackFunctionName != None):
             kw.setdefault('callback', self.functionDic[callBackFunctionName])
-        meta={'urlId':urlId}
+        meta['urlId']=urlId
         kw.setdefault('meta',meta)
+        kw.setdefault('priority',priority)
         return Request(url, **kw)
 
     def getGMTFormatDate(self, date):

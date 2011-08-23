@@ -68,12 +68,10 @@ def checkDuplicatedContent(dbHost='192.168.0.183', port=27017, dbName='spiderV21
     '''
     检测colName表中contentField是否有重复
     '''
-    if colName == '' or contentField == '':
-        return
     con = Connection(dbHost, port)
     db = con[dbName]
     col = db[colName]
-    cursor = col.find({"isDup":{'$exists':False}}, {contentField:1}) #'md5':None
+    cursor = col.find({}, {contentField:1}) #'md5':None
     dupChecker = TxtDuplicateFilter(md5SourceCols=[])#colName
     #重复文本数
     numDup=0

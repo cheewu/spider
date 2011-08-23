@@ -7,7 +7,6 @@ Created on 2011-4-12
 from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-from scrapy.http.response import Response
 from zijiyou.db.middlewaresApt import DownloaderApt
 
 class ErrorFlag(object):
@@ -36,10 +35,10 @@ class UpdateRequestedUrl(object):
         if 'urlId' in request.meta:
             urlId=request.meta['urlId']
             self.apt.updateUrlDbStatusById(urlId, status=responseStatus)
+            log.msg("用urlId更新url访问状态 url:%s" % request.url, level=log.INFO)
         else:
             self.apt.updateUrlDbStatusByUrl(request.url, status=responseStatus)
-            log.msg("没有urlId，可能是创建下载过程中丢失了，使用url更新访问状态 url:%s" % request.url, level=log.ERROR)
-        log.msg("更新url访问状态 url:%s" % request.url, level=log.INFO)
+            log.msg("没有urlId，可能是种子url，使用url更新访问状态 url:%s" % request.url, level=log.ERROR)
         
         return response
 

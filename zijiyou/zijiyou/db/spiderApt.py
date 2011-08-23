@@ -67,7 +67,7 @@ class OnlineApt(object):
         已经完成的搜索引擎list页的总数
         '''
         colName='UrlDb'
-        whereJson = {"status":{"lte":300},"spiderName":'baseSeSpider',"priority":{"$lt":1000}}
+        whereJson = {"status":{"$lte":300},"spiderName":'baseSeSpider',"priority":{"$lt":1000}}
         return mongoApt.countByWhere(colName, whereJson=whereJson)
     
     def removeCompelitedSeListUrl(self):
@@ -75,14 +75,14 @@ class OnlineApt(object):
         清除已经完成的搜索引擎list页
         '''
         colName='UrlDb'
-        whereJson = {"status":{"lte":300},"spiderName":'baseSeSpider',"priority":{"$lt":1000}}
+        whereJson = {"status":{"$lte":300},"spiderName":'baseSeSpider',"priority":{"$lt":1000}}
         mongoApt.remove(colName, whereJson=whereJson)
         
     def findKerwordsForSespider(self):
         '''
         加载Se爬虫的搜素关键字
         '''
-        colName='KeyWord'
+        colName='Keyword'
         return mongoApt.find(colName)
     
 class OfflineApt(object):
@@ -104,14 +104,14 @@ class OfflineApt(object):
         更新PageDb的状态为解析成功状态
         '''
         colName='PageDb'
-        mongoApt.update(colName, whereJson={'_id':ObjectId(pageId)}, updateJson={'status':200})
+        mongoApt.update(colName, whereJson={'_id':ObjectId(pageId)}, updateJson={'status':200,'optDateTime':datetime.datetime.now()})
         
     def updatePageStatusAsUnsuccessById(self,pageId):
         '''
         更新PageDb的状态为解析失败状态
         '''
         colName='PageDb'
-        mongoApt.update(colName, whereJson={'_id':ObjectId(pageId)}, updateJson={'status':101})
+        mongoApt.update(colName, whereJson={'_id':ObjectId(pageId)}, updateJson={'status':101,'optDateTime':datetime.datetime.now()})
         
     def saveParsedItemToItemCollection(self,itemCollectionName,item):
         '''
