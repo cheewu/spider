@@ -252,14 +252,25 @@ class BaseCrawlSpider(CrawlSpider):
         排重 保存url到数据库 创建Request返回。如果重复，则返回None
         '''
         #排重
-        md5=getFingerPrint(inputs=[url],isUrl=True)
-        if md5 in self.urlDump:
+        originUrl=None
+        if 'originUrl' in meta and meta['originUrl'] !=None:
+            originUrl=meta['originUrl']
+            log.msg('对原始url排重 %s' % originUrl, level=log.DEBUG)
+        #有originalurl的，对originalurl作为排重url
+        md5=None
+        if originUrl:
+            md5=getFingerPrint(inputs=[originUrl],isUrl=True)
+        else:
+            md5=getFingerPrint(inputs=[url],isUrl=True)
+        if not md5 or md5 in self.urlDump:
             return None
         self.urlDump.add(md5)
         #保存url到数据库
         urlItem={"url":url,"md5":md5,"callBack":callBackFunctionName,
                  "spiderName":self.name,"reference":referenceUrl,
                  "status":1000,"priority":priority,"dateTime":datetime.datetime.now()}
+        if originUrl:
+            urlItem['originUrl']=originUrl
         urlId = self.apt.saveNewUrl(urlItem)
         
         if not urlId:

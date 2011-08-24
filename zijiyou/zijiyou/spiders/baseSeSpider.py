@@ -146,7 +146,7 @@ class BaseSeSpider(BaseCrawlSpider):
         for i in range(totalPage, 1, -1):
             url = urlPattern + str(i)
             log.msg('makeRequestByFirstPageForSEs 得到Url：%s' % url, level=log.DEBUG)#debug
-            request=self.makeRequest(url,referenceUrl=response.url,callBackFunctionName='baseParse',meta=meta,priority=1000)
+            request=self.makeRequest(url,referenceUrl=response.url,callBackFunctionName='baseParse',meta=meta,priority=100)
             reqs.append(request)
                     
             self.seResultList.append(url)
@@ -180,12 +180,13 @@ class BaseSeSpider(BaseCrawlSpider):
             return reqs
         meta=response.meta
         meta['reference']=response.url
+        homeUrl=meta['homePage']
         #item页链接请求
         resultItemLinkXpath=meta['resultItemLinkXpath']
         hxs=HtmlXPathSelector(response)
         blocks=hxs.select(resultItemLinkXpath)
         if blocks==None or len(blocks)<1:
-            log.msg("没有抓取到任何目标页链接！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
+            log.msg("没有抓取到任何目标页豆腐块！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
             return reqs
         #第一页搜索结果抽取出总搜索结果数，生成剩余list页的request
         if self.urlPatternMeta in response.meta:
@@ -206,9 +207,11 @@ class BaseSeSpider(BaseCrawlSpider):
                 if values and len(values)>0:
                     metaItem[k] = "".join(p for p in values)
             meta[self.articleMetaName]=metaItem
+            #添加originrl
+            if 'originUrl' in metaItem:
+                meta['originUrl']=metaItem['originUrl']
             if len(metaItem)<3:
                 log.msg('没有在豆腐块里找全摘要等信息，只找到%s：xpaht：%s url:%s' % (metaItem.keys(),xpathItems,response.url),level=log.DEBUG)
-            log.msg('metaItem%s' % (metaItem), level=log.DEBUG)
             if 'url' in xpathItems:
                 #获得了itemurl
                 itemUrlXpath=xpathItems['url']
@@ -219,6 +222,9 @@ class BaseSeSpider(BaseCrawlSpider):
                 elif len(itemUrls)>1:
                     log.msg('豆腐块里没有找到itemurl，xpath：%s' % itemUrlXpath,level=log.DEBUG)
                     continue
+                #补齐schema
+                if not re.search(r'http://', itemUrl):
+                    itemUrl = homeUrl+itemUrl
                 log.msg('搜素结果豆腐块里找到的itemurl:%s' % itemUrl, level=log.DEBUG)
                 req=self.makeRequest(itemUrl,referenceUrl=response.url, callBackFunctionName='parseItem', meta=meta,priority=1000)
                 reqs.append(req)
@@ -227,7 +233,6 @@ class BaseSeSpider(BaseCrawlSpider):
             
         log.msg("%s 解析产生Request总数量数量：%s" % (response.url, len(reqs)), level=log.INFO)
         return reqs
-        
         
 #        links=hxs.select(resultItemLinkXpath).extract()
 #        if links==None or len(links)<1:
@@ -285,8 +290,9 @@ class BaseSeSpider(BaseCrawlSpider):
 #        return reqs
     
     def parseItem(self,response):
-        '''解析搜索目标页'''
-        log.msg("解析搜索目标页", level=log.DEBUG)
+        '''
+        解析搜索目标页
+        '''
         items=[]
         
         meta=response.meta
@@ -345,7 +351,7 @@ class BaseSeSpider(BaseCrawlSpider):
                     value=self.parseSpecialField(k, value)
                 if value:
                     article.setdefault(k, getText(value))
-#        article.setdefault('url', response.url)
+        article.setdefault('url', response.url)
         article.setdefault('spiderName', self.name)
         article.setdefault('optDateTime', datetime.datetime.now())
         return article
