@@ -23,24 +23,24 @@ spiderConfig = {
                                      #搜素引擎域
                                      'homePage':'http://blog.soso.com'                                  
                                      },
-#                                    {
-#                                     #搜索引擎名称
-#                                     'seName':'qihoo',
-#                                     #搜素格式
-#                                     'format':'http://www.qihoo.com/wenda.php?kw=%s&do=search&src=wenda_search&area=0&page=%s',#搜索格式
-#                                     #输入编码
-#                                     'encode':'GBK',
-#                                     #搜素结果中，目标页的url的xpath
-#                                     'resultItemLinkXpath':'//td[2]/div/table//tr/td',
-#                                     #搜素结果中搜素结果页数xpath
-#                                     'totalRecordXpath':'//div[@class="ibtn"]/em[@class="sinfo"]/text()',
-#                                     #搜素结果中搜素结果页数
-#                                     'totalRecordRegex':r'[\d|,]+',
-#                                     #搜素引擎下一页的格式
-#                                     'nextPagePattern':'http://www.qihoo.com/wenda.php?kw=%s&do=search&src=wenda_search&area=0&page=%s',
-#                                     #搜素引擎域
-#                                     'homePage':'http://www.qihoo.com'                                  
-#                                     }
+                                    {
+                                     #搜索引擎名称
+                                     'seName':'qihoo',
+                                     #搜素格式
+                                     'format':'http://www.qihoo.com/wenda.php?kw=%s&do=search&src=wenda_search&area=0&page=%s',#搜索格式
+                                     #输入编码
+                                     'encode':'GBK',
+                                     #搜素结果中，目标页的url的xpath
+                                     'resultItemLinkXpath':'//tr/td[2]/div[2]/table//tr/td',
+                                     #搜素结果中搜素结果页数xpath
+                                     'totalRecordXpath':'//div[@class="ibtn"]/em[@class="sinfo"]/text()',
+                                     #搜素结果中搜素结果页数
+                                     'totalRecordRegex':r'[\d|,]+',
+                                     #搜素引擎下一页的格式
+                                     'nextPagePattern':'http://www.qihoo.com/wenda.php?kw=%s&do=search&src=wenda_search&area=0&page=%s',
+                                     #搜素引擎域
+                                     'homePage':'http://www.qihoo.com'                                  
+                                     }
                                     ],
                     'seXpath':{
                                #解析搜素结果页中的数据，如标题、发布时间、摘要、作者等
@@ -67,8 +67,10 @@ spiderConfig = {
                                            r'content':'//body',
                                            #摘要
                                            r'abstract':r'font[3]/text()',
+                                           #原文链接
+                                           r'originUrl':r'a/@href',
                                            #url链接
-                                           r'url':r'a/@href'
+                                           r'urlRegex':r'<!-- <a href="(\S*)" target="_blank" class=m>正文快照</a>'
                                            }
                                },
                      #普通list页正则表达式

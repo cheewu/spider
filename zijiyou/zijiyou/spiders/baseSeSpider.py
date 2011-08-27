@@ -188,19 +188,32 @@ class BaseSeSpider(BaseCrawlSpider):
         if blocks==None or len(blocks)<1:
             log.msg("没有抓取到任何目标页豆腐块！resultItemLinkXpath：%s；url：%s" % (resultItemLinkXpath,response.url), level=log.ERROR)
             return reqs
-        #第一页搜索结果抽取出总搜索结果数，生成剩余list页的request
-        if self.urlPatternMeta in response.meta:
-            pageRequests = self.makeListRequestByFirstPageForSEs(response, len(blocks))
-            if pageRequests and len(pageRequests):
-                reqs.extend(pageRequests)
-                log.msg("第一页：%s，生成剩余的搜索页面数为：：%s" % (response.url, len(pageRequests)), level=log.INFO)
-            else:
-                log.msg("第一页没有生成其他list搜素页，可能是搜素结果不足一页。url：%s" % response.url, level=log.INFO)
+#        #第一页搜索结果抽取出总搜索结果数，生成剩余list页的request
+#        if self.urlPatternMeta in response.meta:
+#            pageRequests = self.makeListRequestByFirstPageForSEs(response, len(blocks))
+#            if pageRequests and len(pageRequests):
+#                reqs.extend(pageRequests)
+#                log.msg("第一页：%s，生成剩余的搜索页面数为：：%s" % (response.url, len(pageRequests)), level=log.INFO)
+#            else:
+#                log.msg("第一页没有生成其他list搜素页，可能是搜素结果不足一页。url：%s" % response.url, level=log.INFO)
         #抽取item页的link，同时传递发表时间、摘要等信息
-        for block in blocks:
+        xpathItems = self.config['seXpath'][response.meta['seName']]
+        itemLinks=[]
+        if 'urlRegex' in  xpathItems:
+            body=response.body_as_unicode().encode('utf-8')
+            print '转吗长度%s' % len(body)
+            matchs=re.findall(r'<!-- <a href="(\S*)" target="_blank" class=m>正文快照</a>', body)
+            for p in matchs:
+                print p
+                itemLinks.append(p)
+            log.msg('直接从搜素结果list页里得到快照的链接数：%s,regex:%s ,url:%s' % (len(itemLinks),xpathItems['urlRegex'],response.url), level=log.INFO)
+            
+        for index in range(0,len(blocks)):
+            block=blocks[index]
             metaItem = {}
-            xpathItems = self.config['seXpath'][response.meta['seName']]
             for k,v in xpathItems.items():
+                if re.search('Regex', k):
+                    continue
                 if k in self.nextPageField:
                     continue
                 values = block.select(v).extract()
@@ -225,6 +238,12 @@ class BaseSeSpider(BaseCrawlSpider):
                 #补齐schema
                 if not re.search(r'http://', itemUrl):
                     itemUrl = homeUrl+itemUrl
+                log.msg('搜素结果豆腐块里找到的itemurl:%s' % itemUrl, level=log.DEBUG)
+                req=self.makeRequest(itemUrl,referenceUrl=response.url, callBackFunctionName='parseItem', meta=meta,priority=1000)
+                reqs.append(req)
+            elif len(itemLinks)>0 and index<len(itemLinks):
+                #获得了itemurl
+                itemUrl=itemLinks[index]
                 log.msg('搜素结果豆腐块里找到的itemurl:%s' % itemUrl, level=log.DEBUG)
                 req=self.makeRequest(itemUrl,referenceUrl=response.url, callBackFunctionName='parseItem', meta=meta,priority=1000)
                 reqs.append(req)
