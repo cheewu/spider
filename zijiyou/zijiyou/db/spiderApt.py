@@ -43,7 +43,7 @@ class OnlineApt(object):
         保存
         '''
         colName='UrlDb'
-        return mongoApt.saveItem(colName, item=urlItem)
+        return mongoApt.save(colName, item=urlItem)
     
     
     def getUncompelitedSeUrlNumber(self):
@@ -118,4 +118,4 @@ class OfflineApt(object):
         保存解析结果
         '''
         colName=itemCollectionName
-        mongoApt.saveItem(colName, item)
+        mongoApt.save(colName, item)

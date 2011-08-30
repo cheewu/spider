@@ -22,6 +22,8 @@ ITEM_PIPELINES=[
 DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188
 DB_PORT=27017
 DB='sespider'#spiderV21 spidertest bbstest
+DB_ITEM='tripfm'
+DB_SPIDER=['PageDb','UrlDb']
 DB_COLLECTIONS = ['PageDb',
                   'UrlDb',
                   'POI',

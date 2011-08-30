@@ -160,10 +160,12 @@ class BaseSeSpider(BaseCrawlSpider):
             self.hasInit=True
             self.apt=OnlineApt()
             #清空搜素引擎中间页面的数据库，防止因爬虫崩溃导致下一次抓取时中间页被错误过滤
-            self.clearUrlDb()
+#            self.clearUrlDb()
+            pendingRequest=self.getPendingRequest()
             updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
-            if len(updateRequest)>0:
-                reqs.extend(updateRequest)
+            pendingRequest.extend(updateRequest)
+            if len(pendingRequest)>0:
+                reqs.extend(pendingRequest)
             seReqs=self.makeFirstPageRequestByKeywordForSEs()
             if seReqs and len(seReqs)>0:
                 reqs.extend(seReqs)
@@ -203,7 +205,6 @@ class BaseSeSpider(BaseCrawlSpider):
             body=response.body_as_unicode().encode('utf-8')
             matchs=re.findall(xpathItems['urlRegex'], body)
             for p in matchs:
-                print p
                 itemLinks.append(p)
             if len(itemLinks)<1:
                 log.msg('没有直接从搜素结果list页里得到快照的链接,regex:%s ,url:%s' % (xpathItems['urlRegex'],response.url), level=log.ERROR)
@@ -231,9 +232,9 @@ class BaseSeSpider(BaseCrawlSpider):
                 #获得了itemurl
                 itemUrlXpath=xpathItems['url']
                 itemUrls=block.select(itemUrlXpath).extract()
-                itemUrl=None
+                itemUrl=''
                 if len(itemUrls)>0:
-                    itemUrl=itemUrls[0]
+                    itemUrl=itemUrls[0].strip()
                 elif len(itemUrls)>1:
                     log.msg('豆腐块里没有找到itemurl，xpath：%s' % itemUrlXpath,level=log.DEBUG)
                     continue

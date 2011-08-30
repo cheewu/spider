@@ -252,6 +252,7 @@ class BaseCrawlSpider(CrawlSpider):
         排重 保存url到数据库 创建Request返回。如果重复，则返回None
         '''
         #排重
+        url=url.strip()
         originUrl=None
         if 'originUrl' in meta and meta['originUrl'] !=None:
             originUrl=meta['originUrl']
@@ -259,7 +260,7 @@ class BaseCrawlSpider(CrawlSpider):
         #有originalurl的，对originalurl作为排重url
         md5=None
         if originUrl:
-            md5=getFingerPrint(inputs=[originUrl],isUrl=True)
+            md5=getFingerPrint(inputs=[originUrl.strip()],isUrl=True)
         else:
             md5=getFingerPrint(inputs=[url],isUrl=True)
         if not md5 or md5 in self.urlDump:

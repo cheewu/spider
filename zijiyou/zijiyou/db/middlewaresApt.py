@@ -8,12 +8,6 @@ from pymongo.objectid import ObjectId
 from zijiyou.db.apt import mongoApt
 import datetime
 
-#class SpiderApt(object):
-#    '''
-#    爬虫中间件的db适配器
-#    '''
-    
-        
 class DownloaderApt(object):
     '''
     下载器中间件的db适配器

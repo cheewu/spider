@@ -23,6 +23,8 @@ class Mongodb(object):
         print '初始化Mongodb连接'
         dbHost=settings.get("DB_HOST")
         dbName=settings.get("DB")
+        itemDbName=settings.get("DB_ITEM")
+        self.spiderCols=settings.get('DB_SPIDER', ['PageDb','UrlDb'])
         port=settings.get("DB_PORT",27017)
         if not dbHost or not dbName:
             log.msg("++初始化MongoDbApt失败！配置文件加载失败！++++++++++++++++++++++++++++++++++++",level=log.ERROR)
@@ -31,15 +33,20 @@ class Mongodb(object):
         #initiate the connection and the collection
         self.con=Connection(dbHost,port)
         self.db=self.con[dbName]
+        self.dbItem=self.con[itemDbName]
     
-    def saveItem(self,colName,item={}):
+    def save(self,colName,item={}):
         '''
-        保存item，返回id
+        保存PageDb或url，返回id
         '''
         if len(item)<1:
             raise NotConfigured('空item！无法保存到表%s' % colName)
-        objectId = self.db[colName].insert(item)
-        return objectId
+        if colName in self.spiderCols:
+            objectId = self.db[colName].insert(item)
+            return objectId
+        else:
+            objectId = self.dbItem[colName].insert(item)
+            return objectId
     
     def countByWhere(self,colName,whereJson={}):
         '''
