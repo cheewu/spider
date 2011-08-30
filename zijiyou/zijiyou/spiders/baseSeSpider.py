@@ -392,7 +392,7 @@ class BaseSeSpider(BaseCrawlSpider):
                 return value
 #                return time.strftime("%Y年%m月%d日")
         if name == 'content':
-            mainText = doExtract(content,threshold=False)
+            mainText = doExtract(content)
             return mainText
     
     def checkXathConfig(self, response):
