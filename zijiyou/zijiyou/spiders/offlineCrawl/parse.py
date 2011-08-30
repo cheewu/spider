@@ -374,7 +374,7 @@ class Parse(object):
                 newContent = matches.group(1)
                 return newContent
         if name == 'content':
-            mainText = doExtract(content,threshold=False)
+            mainText = doExtract(content)
             #print mainText
             return mainText
         if name == 'noteType':

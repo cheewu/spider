@@ -12,7 +12,7 @@ import re
 control_chars = ''.join(map(unichr, range(0,32) + range(127,160)))
 control_char_re = re.compile('[%s]' % re.escape(control_chars))
 
-def doExtract(html,threshold=None):
+def doExtract(html,threshold=0.12):
     threshold = threshold == None and 0.5 or float(threshold)
     html = unicode(html, 'utf8')
     mtHtml = _extMainText(html, threshold)
