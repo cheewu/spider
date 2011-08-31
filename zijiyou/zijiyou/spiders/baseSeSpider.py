@@ -161,8 +161,8 @@ class BaseSeSpider(BaseCrawlSpider):
             self.apt=OnlineApt()
             #清空搜素引擎中间页面的数据库，防止因爬虫崩溃导致下一次抓取时中间页被错误过滤
 #            self.clearUrlDb()
-            pendingRequest=self.getPendingRequest()
             updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
+            pendingRequest=self.getPendingRequest()
             pendingRequest.extend(updateRequest)
             if len(pendingRequest)>0:
                 reqs.extend(pendingRequest)

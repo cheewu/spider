@@ -88,7 +88,7 @@ class BaseCrawlSpider(CrawlSpider):
         dtBegin=datetime.datetime.now()
         cursor = self.apt.findUrlsForDupfilter(self.name)
         dtLoad=datetime.datetime.now()
-        log.msg('爬虫排重库完成Url加载.从UrlDb加载%s个；加载数据时间花费：%s' %(cursor.count(),dtLoad-dtBegin), level=log.INFO)
+        log.msg('爬虫%s排重库完成Url加载.从UrlDb加载%s个；数据库查询时间花费：%s' %(self.name,cursor.count(),dtLoad-dtBegin), level=log.INFO)
         #更新策略
         now = datetime.datetime.now()
         for p in cursor:
@@ -138,8 +138,8 @@ class BaseCrawlSpider(CrawlSpider):
             self.hasInit=True
             log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
             self.apt=OnlineApt()
-            pendingRequest=self.getPendingRequest()
             updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
+            pendingRequest=self.getPendingRequest()
             pendingRequest.extend(updateRequest)
             if len(pendingRequest)>0:
                 reqs.extend(pendingRequest)
@@ -229,7 +229,7 @@ class BaseCrawlSpider(CrawlSpider):
         """
         link_extractor = SgmlLinkExtractor(**extra)
         links = link_extractor.extract_links(response)
-        log.msg('从%s抽取到的链接:%s' % (response.url,links), level=log.DEBUG)
+        log.msg('从%s抽取到的链接:%s' % (response.url,len(links)), level=log.DEBUG)
         return links
 
     def extractRequests(self, response, pagePriority, callBackFunctionName=None, **extra): 
@@ -247,7 +247,7 @@ class BaseCrawlSpider(CrawlSpider):
         log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.DEBUG)
         return reqs
 
-    def makeRequest(self, url, referenceUrl=None,callBackFunctionName=None,meta={},priority=1, **kw): 
+    def makeRequest(self, url, referenceUrl=None,callBackFunctionName=None,meta={},urlId=None,priority=1, **kw): 
         '''
         排重 保存url到数据库 创建Request返回。如果重复，则返回None
         '''

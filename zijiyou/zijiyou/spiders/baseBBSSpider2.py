@@ -41,8 +41,8 @@ class BaseBBSSpider2(BaseCrawlSpider):
             self.hasInit=True
             log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
             self.apt=OnlineApt()
-            pendingRequest=self.getPendingRequest()
             updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
+            pendingRequest=self.getPendingRequest()
             pendingRequest.extend(updateRequest)
             if len(pendingRequest)>0:
                 reqs.extend(pendingRequest)

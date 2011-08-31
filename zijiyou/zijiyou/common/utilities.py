@@ -9,7 +9,6 @@ from scrapy.utils.url import canonicalize_url
 from zijiyou.db.utilityApt import UtilityApt
 import hashlib
 import re
-#from zijiyou.db.mongoDbApt import MongoDbApt
 
 def getFingerPrint(inputs=[],isUrl=False):
     '''
@@ -28,10 +27,8 @@ def getFingerPrint(inputs=[],isUrl=False):
                     newTokens.extend(temps)
                 else:
                     newTokens.extend(temps)
-                    log.msg('%s ?后面的url只有一个参数' % p, level=log.DEBUG) 
             else:
                 newTokens.extend(tokens)
-                log.msg('%s url没有参数' % p, level=log.DEBUG)
                 
             newInputs.extend(newTokens)
     else:
