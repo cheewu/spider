@@ -19,8 +19,6 @@ import json
 import os
 import re
 import string
-from zijiyou.common.tempTaskTool import run
-#from zijiyou.common.utilities import TxtDuplicateFilter
 #from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
 #    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord, Region
 
@@ -35,6 +33,7 @@ class Parse(object):
         '''
         #离线爬虫初始化
         self.isOffline=isOffline
+        self.apt=OfflineApt()
         if self.isOffline:   
             #需要单独的日志记录
             logFileName=settings.get('OFFLINE_PARSE_LOG')
@@ -42,15 +41,7 @@ class Parse(object):
                 self.loger=open(logFileName,'a')
             else:
                 self.loger=open(logFileName,'w')
-            #加载离线爬虫配置信息
-            self.ResponseDb=settings.get('RESPONSE_DB')
-            if not self.ResponseDb :
-                self.parseLog('没有配置CRAWL_DB！，请检查settings', level=LogLevel.ERROR)
-                raise NotConfigured('没有配置CRAWL_DB！，请检查settings')
-            self.apt=OfflineApt()
                 
-        self.parseLog( '开始解析程序，初始化。' , level=LogLevel.INFO)
-        
         self.requiredField= ['name','content','title']
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
@@ -61,7 +52,7 @@ class Parse(object):
         self.responseTotalNum=0
         self.curSeek=0
     
-    def parse(self):
+    def parse(self,spiderName=[]):
         '''
         离线爬虫入口
         '''
@@ -77,7 +68,7 @@ class Parse(object):
                          'lvyeSpider':'utf-8','sinabbsSpider':'gb18030'}
         self.countSuc = 0;
         self.countFail = 0
-        cursor=self.apt.findUnparsedPageByStatus()
+        cursor=self.apt.findUnparsedPageByStatus(spiderName=spiderName)
         #进度条
         numAll=cursor.count()
         thredHold = numAll / 100
@@ -96,8 +87,8 @@ class Parse(object):
                 self.parseLog('缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
                 continue
             spiderName = p['spiderName']
-            if spiderName in ['sozhenSpider','bbkerSpider','mafengwoSpider','lvyou114Spider']:
-                continue
+#            if spiderName in ['sozhenSpider','bbkerSpider','mafengwoSpider','lvyou114Spider']:
+#                continue
             
             itemCollectionName = ''
             if 'itemCollectionName' in p:
@@ -123,8 +114,8 @@ class Parse(object):
                     response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
                     item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
                 except Exception ,e:
-                        print '解析异常。id为%s的page编码为：%s，异常信息：%s' % (p['_id'],p['coding'],str(e))
-                        continue
+                    self.parseLog('解析异常。id为%s的page编码为：%s，异常信息：%s' % (p['_id'],p['coding'],str(e)), level=LogLevel.ERROR)
+                    continue
             if itemCollectionName in self.collectionNameMap:
                 itemCollectionName = self.collectionNameMap[itemCollectionName]
             #成功解析出来item，保存item，更新pagedb状态为200
@@ -137,10 +128,10 @@ class Parse(object):
                 self.apt.updatePageStatusAsUnsuccessById(p['_id'])
                 self.countFail += 1
 
-        self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.INFO)
+        self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.DEBUG)
         
         #离线爬虫关闭日志
-        if not self.loger.closed :
+        if self.loger and not self.loger.closed :
             self.loger.close()
             print 'OK !关闭日志'
 
@@ -157,14 +148,10 @@ class Parse(object):
         else:
             config=extractorConfig[spiderName]
         if not config:
-            self.parseLog('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName, level=LogLevel.ERROR)
             raise NotConfigured('解析配置信息没有找到，请检查extracotrConfig是否有爬虫%s的配置！ ' % spiderName)
         
         hxs=HtmlXPathSelector(response)
         if not itemCollectionName or not itemCollectionName in config:
-            self.parseLog('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName), level=LogLevel.ERROR)
-#            print '%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName)
-#            return None
             raise NotConfigured('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName))
         
         #耦合较大且代码重复，后续计划用工厂模式取代
@@ -198,7 +185,6 @@ class Parse(object):
         item['collectionName']=itemCollectionName
         if itemCollectionName in self.collectionNameMap:
             item['collectionName']=self.collectionNameMap[itemCollectionName]
-#            print '切换类型：%s' % item['collectionName']
         item['url']=response.url
         item['status']=100
         item['spiderName'] = spiderName
@@ -206,22 +192,9 @@ class Parse(object):
         for k,v in xpathItem.items():
             values = hxs.select(v).extract()
             if not values or len(values)<1:
-                self.parseLog('字段%s 为空 url：%s' %(k,response.url) ,level=LogLevel.WARNING)
+                self.parseLog('字段%s 为空 url：%s' %(k,response.url) ,level=LogLevel.DEBUG)
                 continue
             value=("-".join("%s" % p for p in values)).encode("utf-8")
-            '''处理电话号码'''
-            if(k == 'telNum'):
-                if len(values) > 3:
-                    match = re.search('\+(\d+) [0-9 -]+', value, 0)
-                    if match:
-                        value=match.group(0)
-            '''处理回复数'''
-            if(k == 'replyNum'):
-                value = re.search('\d+', value)
-                if value:
-                    value = value.group(0)
-                else:
-                    value = '0'
             '''有些属性是必选的，有些属性是可选的，若必选的属性未抽取到，则说明该页面不是item页，直接返回None，若是可选的，则在判断条件中加入可选的属性进行过滤，如：attractions，feature'''
             if not value and k in self.requiredField:
                 self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
@@ -245,7 +218,7 @@ class Parse(object):
                 regex=regexItem[regex]
             values=hxs.select(v).re(regex)
             if not values or len(values)<1:
-                self.parseLog('字段为空:%s  url：%s' %(k,response.url) ,level=LogLevel.WARNING)
+                self.parseLog('字段为空:%s  url：%s' %(k,response.url) ,level=LogLevel.DEBUG)
                 continue
             value=None
             if len(values) == 1:
@@ -268,7 +241,6 @@ class Parse(object):
                         '时间:',
                     ]
                     filter = []
-#                    count_p = 0
                     sig_p = 0
                     sig_start = 1
                     #过滤空字符
@@ -333,23 +305,8 @@ class Parse(object):
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
-            
-#        #文本排重
-#        if item['collectionName'] in self.needMd5:
-#            if 'content' in item:
-#                isDup,md5Val = self.txtDupChecker.checkDuplicate(item['url'], item['content'])
-#                item['md5']=md5Val
-#                if isDup:
-#                    self.parseLog('duplicate id为“%s”的输入被确定与md5Vale为“%s”的现有文本重复' % (id,md5Val), level=LogLevel.WARNING)
-#                    item['isDup']='Ture'
-#                else:
-#                    item['isDup']='False'
-                    #暂时注释：认定重复的文档页保存，但标注重复
-#                    return None
-#                else:
-#                    item['md5']=md5Val
         
-        self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.INFO)
+        self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.DEBUG)
         return item
     
     def parseSpecialField(self,name,content):
@@ -390,7 +347,7 @@ class Parse(object):
         '''
         特殊Item解析
         '''
-        self.parseLog('解析special item ：%s' % itemCollectionName, level=LogLevel.INFO)
+        self.parseLog('解析special item ：%s' % itemCollectionName, level=LogLevel.DEBUG)
         
         if not itemCollectionName or not pageItem or (not itemCollectionName in self.specialItem):
             return None
@@ -430,9 +387,8 @@ class Parse(object):
                     for k,v in fieldMap.items():
                         item[v] = trackInfo[k]
                         
-#                    print item
         else:
-            self.parseLog('%s 是一个specialItem，但是没被处理' % itemCollectionName, level=LogLevel.WARNING)
+            self.parseLog('%s 是一个specialItem，但是没被处理' % pageItem['url'], level=LogLevel.WARNING)
             return None
         
         return item
@@ -451,10 +407,10 @@ class Parse(object):
     def ExtText(self,input):
         pass
 
-#测试
-if __name__ == '__main__':
-    p=Parse(isOffline=True)
-    p.parse()
-    print '解析完成了！'
-    #初始排重
-    run(needCheckDup=True)
+##测试
+#if __name__ == '__main__':
+#    p=Parse(isOffline=True)
+#    p.parse()
+#    print '解析完成了！'
+#    #初始排重
+#    run(needCheckDup=True)

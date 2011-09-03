@@ -90,12 +90,14 @@ class OfflineApt(object):
     离线爬虫apt
     '''
     
-    def findUnparsedPageByStatus(self): 
+    def findUnparsedPageByStatus(self,spiderNames=[]):
         '''
         查询待解析的Page，通过状态
         '''
         colName='PageDb'
         whereJson={'status':100} #,'spiderName':{'$nin':['sozhenSpider','bbkerSpider','mafengwoSpider','lvyou114Spider']}
+        if spiderNames != None and len(spiderNames)>0:
+            whereJson['spiderName']={'$in':spiderNames}
         cursor = mongoApt.find(colName, whereJson=whereJson)
         return cursor
     

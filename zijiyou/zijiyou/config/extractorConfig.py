@@ -62,28 +62,36 @@ extractorConfig = {
                                     'date':'//div[@class="article-title borderBom"]/p/span[2]/text()',
                                     'content':'//div[@class="article-content"]',
                                     'pvNum':'//em[@id="pvNum"]/text()',
-                                    'replyNum':'//div[@class="interaction clearfix"]/span/a[@href="#"]/parent::*/text()',
                                     'collectionNum':'//em[@id="collectionNum"]/text()',
                                     'helpfulNum':'//em[@id="helpfulNum"]/text()',
                                     'unhelpfulNum':'//em[@id="unhelpfulNum"]/text()',
                                     #第二部分不一样
                                     'area':'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li[4]/a/text()',
-                                    'type':'//div[@class="article-title borderBom"]/div/h1/text()'   
+                                    'type':'//div[@class="article-title borderBom"]/div/h1/text()',
+                                    'title':'//div[1]/div/h1/text()'
                             },
+                            "NoteRegex":{
+                                    'replyNum':'//div[2]/span[2]/text()',
+                                    'replyNumRegex':'(\d+)',
+                                },
                             "note":{
                                     #第一部分和NoteItem的一样
                                     'author':'//div[@class="article-title borderBom"]/p/span/span[@class="fkLnk hvrIE6"]/text()',
                                     'date':'//div[@class="article-title borderBom"]/p/span[2]/text()',
                                     'content':'//div[@class="article-content"]',
                                     'pvNum':'//em[@id="pvNum"]/text()',
-                                    'replyNum':'//div[@class="interaction clearfix"]/span/a[@href="#"]/parent::*/text()',
                                     'collectionNum':'//em[@id="collectionNum"]/text()',
                                     'helpfulNum':'//em[@id="helpfulNum"]/text()',
                                     'unhelpfulNum':'//em[@id="unhelpfulNum"]/text()',
                                     #第二部分不一样
                                     'area':'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li[4]/a/text()',
-                                    'type':'//div[@class="article-title borderBom"]/div/h1/text()'   
+                                    'type':'//div[@class="article-title borderBom"]/div/h1/text()',
+                                    'title':'//div[1]/div/h1/text()'
                             },
+                            "noteRegex":{
+                                    'replyNum':'//div[2]/span[2]/text()',
+                                    'replyNumRegex':'(\d+)',
+                            }
                 },
                    
                 "lvpingSpider":{
@@ -119,33 +127,23 @@ extractorConfig = {
                                     'author':'//div[@class="memberInfor cf desDistance"]/a[1]/text()',
                                     'publishDate':'//div[@class="memberInfor cf desDistance"]/em/text()',
                                     'content':'//div[@class="yjDetail cf"]',
-#                                    'pvNum':'',
                                     'replyNum':'//div[@class="memberInfor cf desDistance"]/a[2]/text()',
-#                                    'collectionNum':'',
-#                                    'helpfulNum':'',
-#                                    'unhelpfulNum':'',
                                         #第二部分不一样
                                     'title':'//div[@class="viewnameShow"]/h1/text()',
                                     'area':'//div[@class="breadBar"]/a//text()',
                                     'type':'//div[@class="breadBar"]/a[5]/text()',
                                     'destination':'//div[@class="breadBar"]/a[4]/text()',
-#                                    'tag':'',
-#                                    'attractions':'',
-#                                    'feature':'',
                             },                            
                             
                             "Note":{
                                         #第一部分和NoteItem的一样
-#                                    'author':'',
-                                    'publishDate':'//h6[@class="cf"]/span[2]/text()',
+                                    'author':'//div[3]/div[1]/div[1]/h6/span/a/text()',
+                                    'publishDate':'//div[3]/div[1]/div[1]/h6/span/text()',
                                     'content':'//ul[@class="playAt_detail"]',
-#                                    'pvNum':'//em[@id="pvNum"]/text()',
                                     'replyNum':'//h6[@class="cf"]/span[2]/a/text()',
-#                                    'collectionNum':'//em[@id="collectionNum"]/text()',
-#                                    'helpfulNum':'//em[@id="helpfulNum"]/text()',
-#                                    'unhelpfulNum':'//em[@id="unhelpfulNum"]/text()',
-                                        #第二部分不一样
+                                    #第二部分不一样
                                     'area':'//div[@class="breadBar"]/a//text()',
+                                    'title':'//div[2]/div[2]/h1/text()'
                                           
                             },
                             
@@ -213,11 +211,24 @@ extractorConfig = {
                    
                 "mafengwoSpider":{
                             "Article":{
-                                    'author':'//div[@id="first_lz_area"]/div[@class="top_area"]/div[@class="nameanddate"]/span[@class="author_name"]/a/text()',
-                                    'publishDate':'//div[@id="first_lz_area"]/div[@class="top_area"]/div[@class="nameanddate"]/span[@class="date m_l_5"]/text()',
-                                    'title':'//div[@class="M_nav"]/div[@class="Mztit"]/h1/text()',
-                                    'content':'//div[@id="first_lz_area"]/div[@id="pnl_contentinfo"]',
+                                    'author':'//div[2]/div[1]/span[1]/a/text()',
+                                    'publishDate':'//div[2]/div[1]/span[2]/text()',
+                                    'title':'//div[1]/h1/text()',
+                                    'content':'id("pnl_contentinfo")/p[3]',
                                     'destination':'//div[@class="r_con"]/div[@class="xg_mdd"]/div[@class="mdd_name"]/a/text()',
+                            },
+                            "POI":{
+                                    'name':'//div[@class="main_nav"]/div[@class="mddtit"]/h1/text()',
+                                    'area':'//div[@class="spot_head"]/div[@class="l_area"]/div[@class="spot_name"]/text()',
+                            },
+                },
+                "sozhenSpider":{
+                            "Article":{
+                                    'author':'//div[2]/div[2]/div[1]/ul/li[1]/text()',
+                                    'publishDate':'//div[2]/div[2]/div[1]/ul/li[2]/text()',
+                                    'title':'//div[2]/div[2]/div[2]/div[1]/h4/text()',
+                                    'content':'//div[2]/div[2]/div[2]/div[2]/div[2]/div[2]',
+                                    'destination':'//div[2]/div[2]/div[2]/div[2]/div[1]/h2/text()',
                             },
                             "POI":{
                                     'name':'//div[@class="main_nav"]/div[@class="mddtit"]/h1/text()',
@@ -314,21 +325,22 @@ extractorConfig = {
                                     'publishDateRegex':u'时间：'+'(\S+)',
                             },
                 },
-#                "bbkerSpider":{
-#                            'Article':{
-#                                    'content':'//div[@id="pageright"]/div[@class="doc"]/div[@class="doccol"]/div[@class="info"]/ul[normalize-space(li)="地图:"]/parent::*/following-sibling::*[@*]',
-#                                    'title':'//div[@id="pageright"]/div[@class="doc"]/div[@class="doccol"]/center/text()',
-#                                    'author':'//div[@class="info"]/ul[count(li)=5]/li[1]/a/text()',
-#                            },
-#                            'ArticleRegex':{
-#                                    'geotag':'//div[@class="info"]/ul[normalize-space(li)="地理标签:"]',
-#                                    'geotagRegex':'<a\s*[^>]*\s*>(.*?)<\s*/a\s*>',
-#                                    'tag':'//div[@class="info"]/ul[normalize-space(li)="标签:"]',
-#                                    'tagRegex':'<a\s*[^>]*\s*>(.*?)<\s*/a\s*>',
-#                                    'publishDate':'//div[@class="info"]/ul[count(li)=5]/li[4]/text()',
-#                                    'publishDateRegex':u'发表:\s*'+'(.*)',
-#                            },
-#                },
+                "bbkerSpider":{
+                            'Article':{
+                                    'content':'//div[@id="pageright"]/div/div[2]',
+                                    'title':'//div/div[2]/center/h2/text()',
+                                    'author':'//div[@class="info"]/ul[count(li)=5]/li[1]/a/text()',
+                                    'publishDate':'//div[@class="info"]/ul[count(li)=5]/li[4]/text()',
+                            }
+                },
+                "lvyou114Spider":{
+                            'Article':{
+                                    'content':'//div[3]/div[1]/div[1]/div[3]//div',
+                                    'title':'//div[3]/div[1]/div[1]/div[1]/h1/text()',
+                                    'author':'//div[1]/div[1]/div[2]/a[3]/text()',
+                                    'publishDate':'//div[3]/div[1]/div[1]/div[2]/text()',
+                            }
+                },
                 "21cnSpider":{
                             'Article':{
                                     'title':'//div[@id="text"]/div[@class="bd"]/h1/text()',
