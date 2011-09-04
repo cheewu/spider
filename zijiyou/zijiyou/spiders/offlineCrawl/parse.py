@@ -68,7 +68,7 @@ class Parse(object):
                          'lvyeSpider':'utf-8','sinabbsSpider':'gb18030'}
         self.countSuc = 0;
         self.countFail = 0
-        cursor=self.apt.findUnparsedPageByStatus(spiderName=spiderName)
+        cursor=self.apt.findUnparsedPageByStatus(spiderNames=spiderName)
         #进度条
         numAll=cursor.count()
         thredHold = numAll / 100
