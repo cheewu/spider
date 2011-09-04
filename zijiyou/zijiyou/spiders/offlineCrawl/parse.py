@@ -114,7 +114,7 @@ class Parse(object):
                     response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
                     item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
                 except Exception ,e:
-                    self.parseLog('解析异常。id为%s的page编码为：%s，异常信息：%s' % (p['_id'],p['coding'],str(e)), level=LogLevel.ERROR)
+                    self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
                     continue
             if itemCollectionName in self.collectionNameMap:
                 itemCollectionName = self.collectionNameMap[itemCollectionName]
@@ -191,14 +191,11 @@ class Parse(object):
         xpathItem = config[itemCollectionName]
         for k,v in xpathItem.items():
             values = hxs.select(v).extract()
-            if not values or len(values)<1:
-                self.parseLog('字段%s 为空 url：%s' %(k,response.url) ,level=LogLevel.DEBUG)
-                continue
-            value=("-".join("%s" % p for p in values)).encode("utf-8")
             '''有些属性是必选的，有些属性是可选的，若必选的属性未抽取到，则说明该页面不是item页，直接返回None，若是可选的，则在判断条件中加入可选的属性进行过滤，如：attractions，feature'''
-            if not value and k in self.requiredField:
-                self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
+            if (not values or len(values)<1) and k in self.requiredField:
+                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
                 return None
+            value=("-".join("%s" % p for p in values)).encode("utf-8")
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
@@ -217,17 +214,15 @@ class Parse(object):
             else:
                 regex=regexItem[regex]
             values=hxs.select(v).re(regex)
-            if not values or len(values)<1:
-                self.parseLog('字段为空:%s  url：%s' %(k,response.url) ,level=LogLevel.DEBUG)
-                continue
+            '''有些属性是必选的，有些属性是可选的，若必选的属性未抽取到，则说明该页面不是item页，直接返回None，若是可选的，则在判断条件中加入可选的属性进行过滤，如：attractions，feature'''
+            if (not values or len(values)<1) and k in self.requiredField:
+                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
+                return None
             value=None
             if len(values) == 1:
                 value=("-".join("%s" % p for p in values)).encode("utf-8")
             else:
                 value=values
-            if not value and k in self.requiredField:
-                self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
-                return None
             #对bbs进行单独处理 
             #@author 侯睿
             if isbbsSpider:
@@ -300,8 +295,10 @@ class Parse(object):
                 value = response.status
             
             if not value and k in self.requiredField:
-                self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (k,itemCollectionName,response.url), level=LogLevel.WARNING)                
+                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)                
                 return None
+            elif not value:
+                continue
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
             item[k]=value
