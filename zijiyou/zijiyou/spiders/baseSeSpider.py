@@ -328,6 +328,7 @@ class BaseSeSpider(BaseCrawlSpider):
         loader = ZijiyouItemLoader(PageDb(),response=response)
         pageResponse = loader.load_item()
         pageResponse.setdefault('spiderName', self.name)
+        pageResponse['status']=200
         pageResponse.setdefault('url', response.url)
         pageResponse.setdefault('itemCollectionName', itemCollectionName)
         pageResponse.setdefault('responseBody', response.body_as_unicode().encode('utf-8'))

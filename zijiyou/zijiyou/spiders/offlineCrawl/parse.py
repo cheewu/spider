@@ -10,7 +10,7 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
-from zijiyou.common.extractText import doExtract
+from zijiyou.common.extractText import doExtract, getText
 from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.spiderApt import OfflineApt
 from zijiyou.items.enumModel import LogLevel
@@ -19,8 +19,6 @@ import json
 import os
 import re
 import string
-#from zijiyou.items.zijiyouItem import UrlDb, PageDb, POI, Article, Note, \
-#    MemberInfo, MemberTrack, MemberFriend, MemberNoteList, KeyWord, Region
 
 class Parse(object):
     '''
@@ -103,19 +101,32 @@ class Parse(object):
                     heard = p['headers']
                 #对body进行编码
                 responseBody = p['responseBody']
-                try:
-                    if 'coding' in p:
-                        responseBody = responseBody.decode('utf-8').encode(p['coding'])
-                    else:
-                        coding='utf-8'
-                        if spiderName in spiderCodingMap:
-                            coding=spiderCodingMap[spiderName]
-                        responseBody = responseBody.decode('utf-8').encode(coding)
-                    response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
-                    item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
-                except Exception ,e:
-                    self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
-                    continue
+                
+                
+                if 'coding' in p:
+                    responseBody = responseBody.decode('utf-8').encode(p['coding'])
+                else:
+                    coding='utf-8'
+                    if spiderName in spiderCodingMap:
+                        coding=spiderCodingMap[spiderName]
+                    responseBody = responseBody.decode('utf-8').encode(coding)
+                response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
+                item = self.parseItem(spiderName, itemCollectionName, response, responseBody=responseBody) # test
+                
+                
+#                try:
+#                    if 'coding' in p:
+#                        responseBody = responseBody.decode('utf-8').encode(p['coding'])
+#                    else:
+#                        coding='utf-8'
+#                        if spiderName in spiderCodingMap:
+#                            coding=spiderCodingMap[spiderName]
+#                        responseBody = responseBody.decode('utf-8').encode(coding)
+#                    response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
+#                    item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
+#                except Exception ,e:
+#                    self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
+#                    continue
             if itemCollectionName in self.collectionNameMap:
                 itemCollectionName = self.collectionNameMap[itemCollectionName]
             #成功解析出来item，保存item，更新pagedb状态为200
@@ -154,34 +165,7 @@ class Parse(object):
         if not itemCollectionName or not itemCollectionName in config:
             raise NotConfigured('%s下载网页的类型%s没有找到，请检查解析配置文件' % (spiderName,itemCollectionName))
         
-        #耦合较大且代码重复，后续计划用工厂模式取代
-#        item=None 
-#        if itemCollectionName == 'UrlDb':
-#            item=UrlDb()
-#        elif itemCollectionName == 'PageDb':
-#            item=PageDb()
-#        elif itemCollectionName == 'POI':
-#            item=POI()
-#        elif itemCollectionName == 'Article':
-#            item=Article()
-#        elif itemCollectionName == 'Note':
-#            item=Note()
-#        elif itemCollectionName == 'MemberInfo':
-#            item=MemberInfo()
-#        elif itemCollectionName == 'MemberTrack':
-#            item=MemberTrack()
-#        elif itemCollectionName == 'MemberFriend':
-#            item=MemberFriend()
-#        elif itemCollectionName == 'MemberNoteList':
-#            item=MemberNoteList()
-#        elif itemCollectionName == 'Region':
-#            item=Region()
-#        elif itemCollectionName == 'KeyWord':
-#            item=KeyWord()
-#        else:
-#            raise NotConfigured
         item={};
-        
         item['collectionName']=itemCollectionName
         if itemCollectionName in self.collectionNameMap:
             item['collectionName']=self.collectionNameMap[itemCollectionName]
@@ -190,16 +174,27 @@ class Parse(object):
         item['spiderName'] = spiderName
         xpathItem = config[itemCollectionName]
         for k,v in xpathItem.items():
+            value=''
+            if v == "" and k == 'content':
+                value=doExtract(responseBody)
+                if value and value.strip() !="":
+                    item[k]=value
+                    continue
+                else:
+                    self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
+                    return None
+                
             values = hxs.select(v).extract()
-            '''有些属性是必选的，有些属性是可选的，若必选的属性未抽取到，则说明该页面不是item页，直接返回None，若是可选的，则在判断条件中加入可选的属性进行过滤，如：attractions，feature'''
-            if (not values or len(values)<1) and k in self.requiredField:
+            if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:
                 self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
                 return None
             value=("-".join("%s" % p for p in values)).encode("utf-8")
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
+            if not value or value.strip()=="":
+                continue;
             item[k]=value
-        #用正则表达式
+            
         regexItem={}
         regexName=itemCollectionName+'Regex'
         if regexName in config:
@@ -207,24 +202,8 @@ class Parse(object):
         for k,v in regexItem.items():
             if k.endswith('Regex'):
                 continue
-            regex=k+'Regex'
-            if not regex in regexItem:
-                self.parseLog('找不到匹配的正则表达式，配置文件的%s配置缺少相应的%s' %(k,regex) ,level=LogLevel.ERROR)
-                continue
-            else:
-                regex=regexItem[regex]
-            values=hxs.select(v).re(regex)
-            '''有些属性是必选的，有些属性是可选的，若必选的属性未抽取到，则说明该页面不是item页，直接返回None，若是可选的，则在判断条件中加入可选的属性进行过滤，如：attractions，feature'''
-            if (not values or len(values)<1) and k in self.requiredField:
-                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
-                return None
-            value=None
-            if len(values) == 1:
-                value=("-".join("%s" % p for p in values)).encode("utf-8")
-            else:
-                value=values
-            #对bbs进行单独处理 
-            #@author 侯睿
+            value=''
+            #对bbs进行单独处理 @author 侯睿
             if isbbsSpider:
                 if k != 'content':
                     if type(value) == list:
@@ -261,9 +240,30 @@ class Parse(object):
                         else:
                             filter.append('\t'+p_strip+"<br/>")
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
+                    if value.strp()=="" and k in self.requiredField:
+                        self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
+                        return None
             #bbs单独处理end
-            if k in self.specialField:
-                value=self.parseSpecialField(k, value)
+            
+            else:
+                regex=k+'Regex'
+                if not regex in regexItem:
+                    raise NotConfigured('找不到匹配的正则表达式，配置文件的%s配置缺少相应的%s' %(k,regex))
+                else:
+                    regex=regexItem[regex]
+                values=hxs.select(v).re(regex)
+                if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:
+                    self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
+                    return None
+                if len(values) == 1:
+                    value=("-".join("%s" % p for p in values)).encode("utf-8")
+                else:
+                    value=values
+                if k in self.specialField:
+                    value=self.parseSpecialField(k, value)
+            
+            if not value or value.strip()=="":
+                continue;
             item[k]=value
             
         #解析response中的数据
@@ -303,7 +303,6 @@ class Parse(object):
                 value=self.parseSpecialField(k, value)
             item[k]=value
         
-        self.parseLog('成功解析出一个item，类型：%s' % itemCollectionName, level=LogLevel.DEBUG)
         return item
     
     def parseSpecialField(self,name,content):
@@ -328,7 +327,9 @@ class Parse(object):
                 newContent = matches.group(1)
                 return newContent
         if name == 'content':
-            mainText = doExtract(content)
+            if content == None or len(content)<100:
+                return content
+            mainText = getText(content)
             #print mainText
             return mainText
         if name == 'noteType':

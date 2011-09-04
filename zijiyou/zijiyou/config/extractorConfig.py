@@ -6,7 +6,7 @@ extractorConfig = {
                                },
                 "baseSeSpider":{
                                 "Article":{
-                                    'content':'//body',
+                                    'content':'',
                                     'title':'//div/h3/text()'
                                         }
                                 },
@@ -97,27 +97,17 @@ extractorConfig = {
                 "lvpingSpider":{
                             "Attraction":{
                                     'name':'//h1[@property="v:name"]/text()',
-#                                    'address':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
                                     'desc':'//div[@id="hiddenContent"]',
                                     'area':'//div[@class="breadBar"]/a//text()', 
-#                                    'descLink':'//div[@class="clearfix"]/div/div[@class="review-intro"]',
-#                                    'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
-#                                    'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()'
                                     'ticket':'//div[@id="hiddenContent"]/span[2]/following-sibling::p/text()',
                                     'replyNum':'//em[@property="v:count"]/text()',
                                     'popularity':'//div[@class="order_num"]/text()'
                             },                                    
                             "AttractionRegex":{
-#                                    'address':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/span/text()',
-#                                    'descLink':'//div[@class="clearfix"]/div/div[@class="review-intro"]',
-#                                    'popularity':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
-#                                    'telNum':'//div[@class="leftContent"]/div[@class="ar-detail"]/ul/li/text()',
                                     'center':'//div[@class="hotel_map_detail"]/div[@class="search_map_blk"]/a/img/@src',
                                     'centerRegex':'center=(\d+[.]?\d*)[,](\d+[.]\d*)[&]*',
                                     'englishName':'//h1[@property="v:name"]/i/text()',
                                     'englishNameRegex':'([\w _-]+)',      
-#                                    'area':'//div[@class="breadBar"]/a//text()',    
-#                                    'areaRegex':'首页[ -]+(.*)-[^-]*景点'
                                     'traffic':'//div[@id="hiddenContent"]',
                                     'trafficRegex':'<span style="font-weight:bold;.*<span style="font-weight:bold;">',
                             },
@@ -163,20 +153,10 @@ extractorConfig = {
                                     'travelPreference':'//div[@class="aboutmecon"]/dl/dd[7]/span//text()',
                                     'travelPartner':'//div[@class="aboutmecon"]/dl/dd[8]/span//text()',
                             },
-                            #js方式，暂时爬不到数据
-#                                    "MemberTrack":{
-#                                    'name':'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
-#                                    'gone':'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon01.gif"]/parent::*/a/text()',
-#                                    'know':'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon02.gif"]/parent::*/a/text()',
-#                                    'like':'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon03.gif"]/parent::*/a/text()',
-#                                    'plan':'//div[@class="alldistrict"]/div/ul/div/ul/li/img[@src="/members/img/icon04.gif"]/parent::*/a/text()'
-#                                    },
                             "MemberFriend":{
                                     'name':'//div[@class="personalinfor"]/ul/li[2]/p[1]/strong/text()',
                                     'nameList':'//li[@class="two"]/a/text()',
                                     'cityList':'//li[@class="two"]/span/text()',
-#                                    'goneNumList':'//li[@class="three"]/text()',
-#                                    'discoverList':'//li[@class="three"]/span/text()',
                                     'linkList':'//li[@class="two"]/a/@href',
                             },
                             "MemberNoteList":{
@@ -214,7 +194,7 @@ extractorConfig = {
                                     'author':'//div[2]/div[1]/span[1]/a/text()',
                                     'publishDate':'//div[2]/div[1]/span[2]/text()',
                                     'title':'//div[1]/h1/text()',
-                                    'content':'id("pnl_contentinfo")/p[3]',
+                                    'content':'//div[@id="pnl_contentinfo"]',
                                     'destination':'//div[@class="r_con"]/div[@class="xg_mdd"]/div[@class="mdd_name"]/a/text()',
                             },
                             "POI":{
@@ -239,10 +219,9 @@ extractorConfig = {
                 "17uSpider":{
                              #第一部分
                             "Article1":{
-                                    
                                     'author':'//div[@id="bContent"]/div[@id="bArticleBody"]/div[@class="bArticleHeader"]/span[@class="bArtitleAutor"]/a[1]/text()',
                                     'category':'//div[@id="bArticleContent"]/div[@class="info"]/a/text()',
-                                    'content':'//div[@id="bArticleContent"]/font/text()',
+                                    'content':'//div[@id="bArticleContent"]/font',
                                     
                             },
                             "Article1Regex":{
@@ -408,7 +387,6 @@ extractorConfig = {
                 },
                 "BBsSpider":{
                             'Article':{
-#                                    'text':'//body/table/preceding::*',
                             },
                             'ArticleRegex':{
                                     'title':'//body',
@@ -417,13 +395,13 @@ extractorConfig = {
                                     'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',
                                     'publishDate':'//body',
                                     'publishDateRegex':u'(\d{4}-\d{1,2}-\d{1,2}\s*\d{2}:\d{2}).*?<b>标题',
-                                    'content':'//body',
+                                    'content':'',
                                     'contentRegex':'\>([^<>]+?)<|(<img[^<]*>)',
                             },
                              'BBSArticle':{
                                            },
                              'BBSArticleRegex':{
-                                    'title':'//body',
+                                    'title':'',
                                     'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
                                     'author':'//body',
                                     'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',

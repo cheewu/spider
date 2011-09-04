@@ -12,15 +12,17 @@ import re
 control_chars = ''.join(map(unichr, range(0,32) + range(127,160)))
 control_char_re = re.compile('[%s]' % re.escape(control_chars))
 
-def doExtract(html,threshold=0.12):
+def doExtract(html,threshold=0.16):
     threshold = threshold == None and 0.5 or float(threshold)
     html = unicode(html, 'utf8')
     mtHtml = _extMainText(html, threshold)
     # Transfer to plain text:
-    text = getText(mtHtml)
+    text = getText(mtHtml,isextract=True)
     return text
 
-def getText(html):
+def getText(html,isextract=False):
+    if not isextract:
+        html = unicode(html, 'utf8')
     root = fromstring(html)
 #    root = libxml2.html
     tagsIgnore=["head", "style", "script", "noscript", "<built-in function comment>", "option"],
