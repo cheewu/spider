@@ -101,32 +101,19 @@ class Parse(object):
                     heard = p['headers']
                 #对body进行编码
                 responseBody = p['responseBody']
-                
-                
-                if 'coding' in p:
-                    responseBody = responseBody.decode('utf-8').encode(p['coding'])
-                else:
-                    coding='utf-8'
-                    if spiderName in spiderCodingMap:
-                        coding=spiderCodingMap[spiderName]
-                    responseBody = responseBody.decode('utf-8').encode(coding)
-                response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
-                item = self.parseItem(spiderName, itemCollectionName, response, responseBody=responseBody) # test
-                
-                
-#                try:
-#                    if 'coding' in p:
-#                        responseBody = responseBody.decode('utf-8').encode(p['coding'])
-#                    else:
-#                        coding='utf-8'
-#                        if spiderName in spiderCodingMap:
-#                            coding=spiderCodingMap[spiderName]
-#                        responseBody = responseBody.decode('utf-8').encode(coding)
-#                    response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
-#                    item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
-#                except Exception ,e:
-#                    self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
-#                    continue
+                try:
+                    if 'coding' in p:
+                        responseBody = responseBody.decode('utf-8').encode(p['coding'])
+                    else:
+                        coding='utf-8'
+                        if spiderName in spiderCodingMap:
+                            coding=spiderCodingMap[spiderName]
+                        responseBody = responseBody.decode('utf-8').encode(coding)
+                    response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
+                    item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
+                except Exception ,e:
+                    self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
+                    continue
             if itemCollectionName in self.collectionNameMap:
                 itemCollectionName = self.collectionNameMap[itemCollectionName]
             #成功解析出来item，保存item，更新pagedb状态为200
@@ -186,14 +173,14 @@ class Parse(object):
                 
             values = hxs.select(v).extract()
             if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:
-                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
+                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s,xpath=%s, url:%s' % (k,itemCollectionName,spiderName,v,response.url), level=LogLevel.ERROR)
                 return None
             value=("-".join("%s" % p for p in values)).encode("utf-8")
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
-            if not value or value.strip()=="":
-                continue;
-            item[k]=value
+                
+            if value :
+                item[k]=value
             
         regexItem={}
         regexName=itemCollectionName+'Regex'
@@ -262,9 +249,8 @@ class Parse(object):
                 if k in self.specialField:
                     value=self.parseSpecialField(k, value)
             
-            if not value or value.strip()=="":
-                continue;
-            item[k]=value
+            if value :
+                item[k]=value
             
         #解析response中的数据
         respItem={}

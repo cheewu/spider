@@ -197,6 +197,9 @@ extractorConfig = {
                                     'content':'//div[@id="pnl_contentinfo"]',
                                     'destination':'//div[@class="r_con"]/div[@class="xg_mdd"]/div[@class="mdd_name"]/a/text()',
                             },
+                            "Profile":{
+                                       'error':'error'
+                                       },
                             "POI":{
                                     'name':'//div[@class="main_nav"]/div[@class="mddtit"]/h1/text()',
                                     'area':'//div[@class="spot_head"]/div[@class="l_area"]/div[@class="spot_name"]/text()',
@@ -210,6 +213,13 @@ extractorConfig = {
                                     'content':'//div[2]/div[2]/div[2]/div[2]/div[2]/div[2]',
                                     'destination':'//div[2]/div[2]/div[2]/div[2]/div[1]/h2/text()',
                             },
+                            "Article1":{
+                                    'author':'//div[2]/div[1]/div[1]/ul/li[2]/text()',
+                                    'publishDate':'//div[2]/div[1]/div[1]/ul/li[1]/text()',
+                                    'title':'//div[2]/div[1]/div[1]/h3/text()',
+                                    'content':'//div[2]/div[1]/div[2]',
+                                    'destination':'//div[2]/div[2]/div/div[1]/dl',
+                            },
                             "POI":{
                                     'name':'//div[@class="main_nav"]/div[@class="mddtit"]/h1/text()',
                                     'area':'//div[@class="spot_head"]/div[@class="l_area"]/div[@class="spot_name"]/text()',
@@ -219,20 +229,11 @@ extractorConfig = {
                 "17uSpider":{
                              #第一部分
                             "Article1":{
-                                    'author':'//div[@id="bContent"]/div[@id="bArticleBody"]/div[@class="bArticleHeader"]/span[@class="bArtitleAutor"]/a[1]/text()',
-                                    'category':'//div[@id="bArticleContent"]/div[@class="info"]/a/text()',
-                                    'content':'//div[@id="bArticleContent"]/font',
+                                    'title':'//div[@id="bArticleContent"]/div[8]/font',
+                                    'author':'//div[@id="bArticleBody"]/div[1]/span/a/text()',
+                                    'publishDate':'//div[@id="bArticleBody"]/div[1]/span/text()',
+                                    'content':'//div[@id="bArticleContent"]',
                                     
-                            },
-                            "Article1Regex":{
-                                    'title':'//div[@id="bContent"]/div[@id="bArticleBody"]/div[@class="bArticleHeader"]/h3/text()',
-                                    'titleRegex':'(.*)\r\s*',
-                                    'publishDate':'//div[@id="bContent"]/div[@id="bArticleBody"]/div[@class="bArticleHeader"]/span[@class="bArtitleAutor"]/a[2]/@title',
-                                    'publishDateRegex':'(\d{4}-\d{1,2}-\d{1,2})',
-                                    'pvNum':'//div[@id="bArticleAttribute"]/span[@class="bAttrLeft"]',
-                                    'pvNumRegex':u'点击'+'：(\d+)',
-                                    'replyNum':'//div[@id="bArticleAttribute"]/span[@class="bAttrLeft"]',
-                                    'replyNumRegex':u'评论'+'：(\d+)',
                             },
                             "Article2":{
                                     'title':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/h2[@class="leftside_head"]/text()',
@@ -244,14 +245,10 @@ extractorConfig = {
                    
                 "lotourSpider":{
                             "Article1":{
-                                    'title':'//div[@class="dzw_main"]/div[@class="dzw_left"]/div[@class="dzw_lefta"]/div[@class="dzw_leftat"]/div[@class="dzw_leftatl"]/h1/text()',
-                                    'publishDate':'//div[@class="dzw_main"]/div[@class="dzw_left"]/div[@class="dzw_lefta"]/div[@class="dzw_leftat"]/div[@class="dzw_leftatl"]/p/span[1]/text()',
-                                    'content':'//div[@class="dzw_main"]/div[@class="dzw_left"]/div[@class="dzw_lefta"]/div[@class="dzw_leftam"]',
-                                    'destination':'//div[@class="dzw_main"]/div[@class="dzw_left"]/div[@class="dzw_lefta"]/div[@class="dzw_leftxgmdd"]/div[@class="dzw_leftxgmddt"]/h1/a/text()',
-                            },
-                            "Article1Regex":{
-                                    'author':'//div[@class="dzw_main"]/div[@class="dzw_left"]/div[@class="dzw_lefta"]/div[@class="dzw_leftat"]/div[@class="dzw_leftatl"]/p/span[3]/text()',
-                                    'authorRegex':u'作者：'+'\s*(.*)',
+                                    'title':'//div[@id="maincontent"]/h6//text()',
+                                    'publishDate':'//div[@id="maincontent"]/p[1]/span/text()',
+                                    'content':'//div[@id="zoom"]',
+                                    'destination':'//td[2]/ul/li//text()',
                             },
                             "Article2":{
                                     'title':'//div[@id="maincontent"]/h6/text()',
@@ -265,44 +262,36 @@ extractorConfig = {
                    
                 "sinaSpider":{
                             'Article1':{
-                                    'title':'h1[@id="artibodyTitle"]/text()',
+                                    'title':'//h1[@id="artibodyTitle"]/text()',
                                     'publishDate':'//span[@id="pub_date"]/text()',
                                     'content':'//div[@id="artibody"]',
-                                    'destination':'//p[@id="lo_links"]/a[4]/text()',
                             },
                 },
                 "hexunSpider":{
                             'Article':{
-                                    'title':'//div[@id="artibodyTitle"]/h1/text()',
-                                    'publishDate':'//div[@id="artibodyTitle"]/div[@class="a"]/span[@class="gray"]/text()',
-                                    'content':'//div[@id="artibody"]',
+                                    'title':'//div[@id="mainbox"]/div[2]/p[1]/text()',
+                                    'publishDate':'//div[@id="mainbox"]/div[2]/div[1]/font/text()',
+                                    'content':'//div[@id="mainbox"]/div[2]/div[3]/div',
                             },
                 },
                 "peopleSpider":{
                             'Article':{
-                                    'title':'//h1[@id="p_title"]/text()',
-                                    'publishDate':'//span[@id="p_publishtime"]/text()',
+                                    'title':'//div[@id="p_title"]/text()',
+                                    'publishDate':'//div[@id="p_publishtime"]/text()',
                                     'content':'//div[@id="p_content"]',
                             },
                 },
                 "sohuSpider":{
                             'Article1':{
-                                    'title':'//div[@id="contentA"]/div[@class="left"]/h1/text()',
-                                    'content':'//div[@id="contentText"]',
-                                    'publishDate':'//div[@id="contentA"]/div[@class="left"]/div[@class="sourceTime"]/div[@class="r"]/text()',
-                            },
-                            'Article1Regex':{
-                                    'author':'//div[@id="contentA"]/div[@class="left"]/div[@class="sourceTime"]/div[@class="l"]/text()',
-                                    'authorRegex':u'作者：'+'\s*(.*)[\s]*',
+                                    'title':'//div[1]/div[1]/h1/text()',
+                                    'content':'//div[@id="sohu_content"]',
+                                    'publishDate':'//div[1]/div[1]/div[1]/span/text()',
                             },
                             'Article2':{
-                                    'title':'//table/tbody/tr/td[@class="c_title bold"]/text()',
-                                    'content':'//td[@id="fontzoom"]'
-                            },
-                            'Article2Regex':{
-                                    'publishDate':'//table[@bgcolor="#d4e8f9"]/form/tbody/tr/td[@class="pd3"]/text()',
-                                    'publishDateRegex':u'时间：'+'(\S+)',
-                            },
+                                    'title':'//div[5]/div[1]/div[1]/h1/text()',
+                                    'content':'//div[@id="sohu_content"]',
+                                    'publishDate':'//div[5]/div[1]/div[1]/div[1]/div[1]/span/text()',
+                            }
                 },
                 "bbkerSpider":{
                             'Article':{
@@ -314,7 +303,7 @@ extractorConfig = {
                 },
                 "lvyou114Spider":{
                             'Article':{
-                                    'content':'//div[3]/div[1]/div[1]/div[3]//div',
+                                    'content':'//div[1]/div[1]/div[4]',
                                     'title':'//div[3]/div[1]/div[1]/div[1]/h1/text()',
                                     'author':'//div[1]/div[1]/div[2]/a[3]/text()',
                                     'publishDate':'//div[3]/div[1]/div[1]/div[2]/text()',
@@ -322,28 +311,20 @@ extractorConfig = {
                 },
                 "21cnSpider":{
                             'Article':{
-                                    'title':'//div[@id="text"]/div[@class="bd"]/h1/text()',
-                                    'publishDate':'//div[@id="text"]/div[@class="bd"]/address/span[@class="time"]/text()',
-                                    'content':'//div[@id="text"]/div[@class="bd"]/address/following-sibling::*[name()!="div"]',
+                                    'title':'//div[@id="wrap"]//div[1]/div[2]/h2/text()',
+                                    'publishDate':'//div[@id="wrap"]//div[1]/div[2]/div/div/span/text()',
+                                    'content':'//div[@id="text"]',
                             },
                 },
                 "bytravelSpider":{
                             'Article1':{
-                                    'title':'//table/tr/th[@bgcolor="f7f8f9"]/h1/text()',
-                                    'content':'//td[@class="f14"]/font[@class="f14"]/div[@class="f14b"]/preceding-sibling::*'
-                            },
-                            'Article1Regex':{
-                                    'destination':'//table/tr/th[@bgcolor="f7f8f9"]/following-sibling::script/text()',
-                                    'destinationRegex':'="(.*)"',
+                                    'title':'//table[2]//tr[1]/th/h1/text()',
+                                    'content':'//table[2]//tr[4]/td/div/font'
                             },
                             'Article2':{
-                                    'title':'//table/tr/td/div/a/span[@class="title"]/text()',
-                                    'content':'//tbody/tr/td[@valign="top"]',
-                            },
-                            'Article2Regex':{
-                                    'destination':'//td[@class="f12"]/span[@class="t360"]/strong/a[last()]/text()',
-                                    'destinationRegex':'(.*)'+u'特产',
-                            },
+                                    'title':'//table[2]//tr[1]/th/h1/text()',
+                                    'content':'//table[2]//tr[4]/td/div/font'
+                            }
                 },
                 "yahooSpider":{
                             'Article1':{
