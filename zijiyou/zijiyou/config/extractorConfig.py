@@ -126,15 +126,12 @@ extractorConfig = {
                             },                            
                             
                             "Note":{
-                                        #第一部分和NoteItem的一样
-                                    'author':'//div[3]/div[1]/div[1]/h6/span/a/text()',
-                                    'publishDate':'//div[3]/div[1]/div[1]/h6/span/text()',
-                                    'content':'//ul[@class="playAt_detail"]',
-                                    'replyNum':'//h6[@class="cf"]/span[2]/a/text()',
+                                    #第一部分和NoteItem的一样
+                                    'title':'//form[@id="newMasterForm"]/div[4]/div[2]/div[2]/h1/text()',
+                                    'publishDate':'//form[@id="newMasterForm"]/div[4]/div[2]/div[3]/div[1]/div[1]/h6/span/text()',
+                                    'content':'//form[@id="newMasterForm"]//ul[@class="playAt_detail"]',
                                     #第二部分不一样
-                                    'area':'//div[@class="breadBar"]/a//text()',
-                                    'title':'//div[2]/div[2]/h1/text()'
-                                          
+                                    'area':'//form[@id="newMasterForm"]/div[4]/div[2]/div[1]//text()',
                             },
                             
                             "NoteResp":{
@@ -220,6 +217,13 @@ extractorConfig = {
                                     'content':'//div[2]/div[1]/div[2]',
                                     'destination':'//div[2]/div[2]/div/div[1]/dl',
                             },
+                            "Article2":{
+                                    'title':'//div[2]/div[2]/div[2]/div[2]/div[1]/h4/text()',
+                                    'author':'//div[2]/div[2]/div[2]/div[2]/div[1]/ul/li[1]/text()',
+                                    'publishDate':'//div[2]/div[2]/div[2]/div[2]/div[1]/ul/li[2]/text()',
+                                    'content':'//div[2]/div[2]/div[2]/div[2]/div[2]',
+                                    'destination':'//form/div[2]/div[2]/div[1]//dd//text()',
+                            },
                             "POI":{
                                     'name':'//div[@class="main_nav"]/div[@class="mddtit"]/h1/text()',
                                     'area':'//div[@class="spot_head"]/div[@class="l_area"]/div[@class="spot_name"]/text()',
@@ -238,9 +242,13 @@ extractorConfig = {
                             "Article2":{
                                     'title':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/h2[@class="leftside_head"]/text()',
                                     'content':'//div[@id="infor_main"]',
-                                    'abstract':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/div[@class="leftside_col"]/text()',
                                     'publishDate':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/div[@class="zxd_artinfo"]/span[1]/text()',
                             },
+                            "Article3":{
+                                    'title':'//div[@id="bArticleBody"]/div[1]/h3/text()',
+                                    'content':'//div[@id="bArticleContent"]/div[6]',
+                                    'publishDate':'//div[@id="bArticleBody"]/div[1]/span/text()',
+                            }
                 },
                    
                 "lotourSpider":{
@@ -251,8 +259,10 @@ extractorConfig = {
                                     'destination':'//td[2]/ul/li//text()',
                             },
                             "Article2":{
-                                    'title':'//div[@id="maincontent"]/h6/text()',
-                                    'content':'//div[@id="maincontent"]/div[@class="mccont02"]',
+                                    'title':'//div[5]/div[1]/div[1]/div[1]/div[1]/h1/text()',
+                                    'publishDate':'//div[5]/div[1]/div[1]/div[1]/div[1]/p/span[1]/text()',
+                                    'content':'//div[1]/div[5]/div[1]/div[1]/div[2]',
+                                    'destination':'//body/div[1]/div[4]/div[2]//text()',
                             },
                             "Article2Regex":{
                                     'publishDate':'//div[@id="maincontent"]/p[@class="mcplp"]/span[@class="mtile"]/text()',
@@ -264,6 +274,11 @@ extractorConfig = {
                             'Article1':{
                                     'title':'//h1[@id="artibodyTitle"]/text()',
                                     'publishDate':'//span[@id="pub_date"]/text()',
+                                    'content':'//div[@id="artibody"]',
+                            },
+                            'Article2':{
+                                    'title':'//div[@id="artibodyTitle"]/h1/text()',
+                                    'publishDate':'//div[@id="artibodyTitle"]/div/text()',
                                     'content':'//div[@id="artibody"]',
                             },
                 },
@@ -280,6 +295,11 @@ extractorConfig = {
                                     'publishDate':'//div[@id="p_publishtime"]/text()',
                                     'content':'//div[@id="p_content"]',
                             },
+                            'Article2':{
+                                    'title':'//table[3]//tr[1]/td[1]/table[2]//tr[2]/td/text()',
+                                    'publishDate':'//body/div/table[3]//tr[1]/td[1]/table[3]//tr[2]/td[2]/text()',
+                                    'content':'//font[@id="zoom"]',
+                            },
                 },
                 "sohuSpider":{
                             'Article1':{
@@ -288,9 +308,9 @@ extractorConfig = {
                                     'publishDate':'//div[1]/div[1]/div[1]/span/text()',
                             },
                             'Article2':{
-                                    'title':'//div[5]/div[1]/div[1]/h1/text()',
-                                    'content':'//div[@id="sohu_content"]',
-                                    'publishDate':'//div[5]/div[1]/div[1]/div[1]/div[1]/span/text()',
+                                    'title':'//table[2]//tr[2]/td[1]/table[2]//tr[2]/td//text()',
+                                    'content':'//table[4]//tr[4]',
+                                    'publishDate':'//table[2]//tr[2]/td[1]/table[3]//tr/td[1]/text()',
                             }
                 },
                 "bbkerSpider":{
@@ -315,6 +335,11 @@ extractorConfig = {
                                     'publishDate':'//div[@id="wrap"]//div[1]/div[2]/div/div/span/text()',
                                     'content':'//div[@id="text"]',
                             },
+                            'Article2':{
+                                    'title':'//div[@id="text"]/div/h1/text()',
+                                    'publishDate':'//div[@id="text"]/div/address/span[1]/text()',
+                                    'content':'//div[@id="text"]/div/p',
+                            }
                 },
                 "bytravelSpider":{
                             'Article1':{
@@ -323,7 +348,7 @@ extractorConfig = {
                             },
                             'Article2':{
                                     'title':'//table[2]//tr[1]/th/h1/text()',
-                                    'content':'//table[2]//tr[4]/td/div/font'
+                                    'content':'//table[2]//tr/td[1]/table[2]//tr[2]/td'
                             }
                 },
                 "yahooSpider":{
