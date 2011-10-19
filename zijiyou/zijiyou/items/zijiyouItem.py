@@ -39,6 +39,7 @@ class PageDb(BaseItem):
     
     coding=Field()#编码
     headers=Field()#文件头
+    meta=Field()    #元数据
     
 #    def __str__(self):
 #        return 'PageDbItem'

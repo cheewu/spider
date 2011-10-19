@@ -66,65 +66,64 @@ class Parse(object):
                          'lvyeSpider':'utf-8','sinabbsSpider':'gb18030'}
         self.countSuc = 0;
         self.countFail = 0
-        cursor=self.apt.findUnparsedPageByStatus(spiderNames=spiderName)
-        #进度条
-        numAll=cursor.count()
-        thredHold = numAll / 100
-        curNum = 0
-        percents = 0.0
-        print '开始解析...总数量：%s' % numAll
-        for p in cursor:
+        for sn in spiderName:
+            cursor=self.apt.findUnparsedPageByStatus(sn)
             #进度条
-            curNum += 1
-            if curNum >= thredHold:
-                curNum = 0
-                percents += 1.0
-                print '当前进度：百分之%s' % percents
-            
-            if not ('spiderName' in p and ('itemCollectionName' in p or p['spiderName'] in self.bbsSpiderName)):
-                self.parseLog('缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
-                continue
-            spiderName = p['spiderName']
-#            if spiderName in ['sozhenSpider','bbkerSpider','mafengwoSpider','lvyou114Spider']:
-#                continue
-            
-            itemCollectionName = ''
-            if 'itemCollectionName' in p:
-                itemCollectionName = re.sub('[\r\n]', "", p['itemCollectionName'])
-            else:
-                itemCollectionName='Article'
-            item = None
-            if itemCollectionName in self.specialItem:
-                item = self.parseSpecialItem(itemCollectionName, p)
-            else:
-                if 'headers' in p:
-                    heard = p['headers']
-                #对body进行编码
-                responseBody = p['responseBody']
-                try:
-                    if 'coding' in p:
-                        responseBody = responseBody.decode('utf-8').encode(p['coding'])
-                    else:
-                        coding='utf-8'
-                        if spiderName in spiderCodingMap:
-                            coding=spiderCodingMap[spiderName]
-                        responseBody = responseBody.decode('utf-8').encode(coding)
-                    response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
-                    item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
-                except Exception ,e:
-                    self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
+            numAll=cursor.count()
+            thredHold = numAll / 100
+            curNum = 0
+            percents = 0.0
+            print '开始解析%s...总数量：%s' % (sn,numAll)
+            for p in cursor:
+                #进度条
+                curNum += 1
+                if curNum >= thredHold:
+                    curNum = 0
+                    percents += 1.0
+                    print '当前进度：百分之%s' % percents
+                
+                if not ('spiderName' in p and ('itemCollectionName' in p or p['spiderName'] in self.bbsSpiderName)):
+                    self.parseLog('缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
                     continue
-            if itemCollectionName in self.collectionNameMap:
-                itemCollectionName = self.collectionNameMap[itemCollectionName]
-            #成功解析出来item，保存item，更新pagedb状态为200
-            if item:
-                self.apt.saveParsedItemToItemCollection(itemCollectionName, item)
-                self.apt.updatePageStatusAsSuccessById(p['_id'])
-                self.countSuc += 1
-            #没有成功解析item，pagedb更新为失败状态：101
-            else:
-                self.apt.updatePageStatusAsUnsuccessById(p['_id'])
-                self.countFail += 1
+                spiderName = p['spiderName']
+                
+                itemCollectionName = ''
+                if 'itemCollectionName' in p:
+                    itemCollectionName = re.sub('[\r\n]', "", p['itemCollectionName'])
+                else:
+                    itemCollectionName='Article'
+                item = None
+                if itemCollectionName in self.specialItem:
+                    item = self.parseSpecialItem(itemCollectionName, p)
+                else:
+                    if 'headers' in p:
+                        heard = p['headers']
+                    #对body进行编码
+                    responseBody = p['responseBody']
+                    try:
+                        if 'coding' in p:
+                            responseBody = responseBody.decode('utf-8').encode(p['coding'])
+                        else:
+                            coding='utf-8'
+                            if spiderName in spiderCodingMap:
+                                coding=spiderCodingMap[spiderName]
+                            responseBody = responseBody.decode('utf-8').encode(coding)
+                        response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
+                        item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
+                    except Exception ,e:
+                        self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
+                        continue
+                if itemCollectionName in self.collectionNameMap:
+                    itemCollectionName = self.collectionNameMap[itemCollectionName]
+                #成功解析出来item，保存item，更新pagedb状态为200
+                if item:
+                    self.apt.saveParsedItemToItemCollection(itemCollectionName, item)
+                    self.apt.updatePageStatusAsSuccessById(p['_id'],sn)
+                    self.countSuc += 1
+                #没有成功解析item，pagedb更新为失败状态：101
+                else:
+                    self.apt.updatePageStatusAsUnsuccessById(p['_id'],sn)
+                    self.countFail += 1
 
         self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.DEBUG)
         

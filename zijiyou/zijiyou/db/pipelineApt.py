@@ -10,5 +10,5 @@ class StorageApt(object):
     classdocs
     '''
     
-    def saveItem(self,itemCollectionName,item):
-        return mongoApt.save(itemCollectionName, item)
+    def saveItem(self,itemCollectionName,item,spiderName):
+        return mongoApt.save(spiderName,itemCollectionName, item)

@@ -15,11 +15,9 @@ from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb
-#from zijiyou.spiders.offlineCrawl.parse import Parse
 import datetime
 import re
 from zijiyou.common.utilities import getFingerPrint
-
 
 class BaseCrawlSpider(CrawlSpider):
     '''
@@ -29,7 +27,8 @@ class BaseCrawlSpider(CrawlSpider):
     allowed_domains = ["daodao.com"]
     start_urls = []
     rules = [Rule(r'.*', 'baseParse')]
-    name ="BaseCrawlSpider"
+    name ='BaseCrawlSpider'
+    handle_httpstatus_list = [302,400,403,404,407,408,500,502,503,504]
     
     #parse函数字典
     functionDic={}
@@ -39,8 +38,6 @@ class BaseCrawlSpider(CrawlSpider):
     itemRegex = None
     #imageXpath 图片xpath
     imageXpath = None
-#    #更新策略标志位
-#    updateStrategy='updateStrategy'
     #验证数据库是否和type配置对应
     dbCollecions=[]
     hasInit=False
@@ -49,7 +46,7 @@ class BaseCrawlSpider(CrawlSpider):
     weekMap = {'0':'Sun', '1':'Mon', '2':'Tue', '3':'Wed', '4':'Thu', '5':'Fri', '6':'Sat'}
     monthMap = {'01':'Jan', '02':'Feb', '03':'Mar', '04':'Apr', '05':'May', '06':'Jun', '07':'Jul', '08':'Aug', '09':'Sep', '10':'Oct', '11':'Nov', '12':'Dec'}
 
-    def __init__(self, *a, **kw):      
+    def __init__(self, *a, **kw):
         super(BaseCrawlSpider, self).__init__(*a, **kw)
         if(not self.initConfig()):
                 raise NotConfigured('爬虫%s配置文件加载失败！'%self.name)
@@ -59,8 +56,18 @@ class BaseCrawlSpider(CrawlSpider):
         初始化加载配置文件
         '''
         log.msg('爬虫%s初始配置信息' %self.name, level=log.INFO)
-        #加载setting的配置
-        self.dbCollecions=settings.get('DB_COLLECTIONS', [])
+        #离线调度阀值
+        self.pendingRequestCounter=settings.get('PENDING_REQUEST_COUNTER')
+#        #离线调度延迟
+#        self.reopenSpiderDelay=settings.get('REOPEN_SPIDER_DELAY')
+        #持续运行爬虫的开关。可以设置为false关掉，当需要测试爬虫的url正则是否能让parser准确地抽取目标url
+        self.keepCrawlingSwitch=settings.get('KEEP_CRAWLING_SWITCH')
+#        #爬虫当前的request队列长度
+#        self.numPendingRequest=1
+        
+        self.dbCollecions=settings.get('DB_ITEM_COLLECTIONS')
+        #pengdingRequest长度限制
+        self.urlIncreasement=settings.get('MAX_INII_REQUESTS_SIZE')
         self.functionDic["parseItem"]=self.parseItem
         self.functionDic['baseParse'] = self.baseParse
         #加载spiderConfig配置
@@ -78,37 +85,52 @@ class BaseCrawlSpider(CrawlSpider):
             log.msg("spider配置异常，缺少必要的配置信息。爬虫名:%s" % self.name, level=log.ERROR)
             return False
 
-    def initUrlDupfilterAndgetRequsetForUpdate(self):
-        '''
-        初始化爬虫排重库，并找出需要更新的网页Reqest
-        '''
-        log.msg('初始化爬虫%s排重库' % self.name, level=log.INFO)
-        self.urlDump=set()
-        urlForUpdateStategy=[]
-        dtBegin=datetime.datetime.now()
-        cursor = self.apt.findUrlsForDupfilter(self.name)
-        dtLoad=datetime.datetime.now()
-        log.msg('爬虫%s排重库完成Url加载.从UrlDb加载%s个；数据库查询时间花费：%s' %(self.name,cursor.count(),dtLoad-dtBegin), level=log.INFO)
-        #更新策略
-        now = datetime.datetime.now()
+#    def initUrlDupfilter(self):
+#        '''
+#        初始化爬虫排重库，并找出需要更新的网页Reqest
+#        '''
+#        log.msg('初始化爬虫%s排重库' % self.name, level=log.INFO)
+#        self.urlDump=set()
+#        urlForUpdateStategy=[]
+#        dtBegin=datetime.datetime.now()
+#        cursor = self.apt.findUrlsForDupfilter(self.name)
+#        dtLoad=datetime.datetime.now()
+#        log.msg('爬虫%s排重库完成Url加载.从UrlDb加载%s个；数据库查询时间花费：%s' %(self.name,cursor.count(),dtLoad-dtBegin), level=log.INFO)
+#        #更新策略
+#        now = datetime.datetime.now()
+#        for p in cursor:
+#            #更新策略
+#            if 'updateInterval' in p and p['status'] in [200, 304] and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
+#                continue
+##                meta={}
+##                headers={}
+##                if 'reference' in p :
+##                    meta['reference'] = p['reference']
+##                if self.updateStrategy in p:
+##                    meta[self.updateStrategy]=p[self.updateStrategy]
+##                    headers['If-Modified-Since'] = self.getGMTFormatDate(p['dateTime'])
+##                req=self.makeRequest(p["url"], callBackFunctionName=p["callBack"], urlId=p['_id'],priority=p["priority"])
+##                urlForUpdateStategy.append(req)
+#            else:
+#                self.urlDump.add(p['md5'])
+#        dtDump=datetime.datetime.now()
+#        log.msg("爬虫排重库完成初始化. 排重库的容量=%s；初始化Dump花费时间花费：%s" % (len(self.urlDump),dtDump-dtLoad), level=log.INFO)
+#        log.msg("爬虫%s需要更新的网页数量有%s" % (self.name,len(urlForUpdateStategy)), level=log.INFO)
+#        return urlForUpdateStategy
+
+    def getRequestsFromCursor(self,cursor,num):
+        pendingRequestTemp=[]
         for p in cursor:
-            #更新策略
-            if 'updateInterval' in p and p['status'] in [200, 304] and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
-                meta={}
-                headers={}
-                if 'reference' in p :
-                    meta['reference'] = p['reference']
-                if self.updateStrategy in p:
-                    meta[self.updateStrategy]=p[self.updateStrategy]
-                    headers['If-Modified-Since'] = self.getGMTFormatDate(p['dateTime'])
-                req=self.makeRequest(p["url"], callBackFunctionName=p["callBack"], urlId=p['_id'],priority=p["priority"])
-                urlForUpdateStategy.append(req)
-            else:
-                self.urlDump.add(p['md5'])
-        dtDump=datetime.datetime.now()
-        log.msg("爬虫排重库完成初始化. 排重库的容量=%s；初始化Dump花费时间花费：%s" % (len(self.urlDump),dtDump-dtLoad), level=log.INFO)
-        log.msg("爬虫%s需要更新的网页数量有%s" % (self.name,len(urlForUpdateStategy)), level=log.INFO)
-        return urlForUpdateStategy
+            meta={}
+            if 'meta' in p:
+                meta=p['meta']
+            req=self.makeRequest(p["url"],isNeedSavetoDb=False, callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])
+            if req:
+                pendingRequestTemp.append(req)
+            #限制pending_request的长度
+            if len(pendingRequestTemp)>= num:
+                break
+        return pendingRequestTemp
 
     def getPendingRequest(self):
         '''
@@ -116,64 +138,97 @@ class BaseCrawlSpider(CrawlSpider):
         '''
         dtBegin=datetime.datetime.now()
         #查询recent requests
-        cursor = self.apt.findPendingUrlsByStatusAndSpiderName(self.name)
-        dtRecentReq=datetime.datetime.now()
         pendingRequest=[]
-        log.msg('%s爬虫恢复：完成数据库recentequest加载，时间花费：%s,recentequest数量=%s' % (self.name,dtRecentReq-dtBegin,cursor.count()), level=log.INFO)
-#            #限制pending_request的长度
-#            maxInitRequestSize=settings.get('MAX_INII_REQUESTS_SIZE',1000)
-#            while len(pendingUrls) > maxInitRequestSize:
-#                pendingUrls.pop(0)
-        for p in cursor:
-            req=self.makeRequest(p["url"], callBackFunctionName=p["callBack"], urlId=p['_id'],priority=p["priority"])
-            pendingRequest.append(req)
-        dtPendingReq=datetime.datetime.now();
-        log.msg("爬虫%s完成恢复：初始化pendingRequest，时间花费：%s，数量=%s" % (self.name,dtPendingReq-dtBegin,len(pendingRequest)),level=log.INFO)
+        #调度-10% 为下载异常
+        cursorExp = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=800, statusEnd=900)
+        numExp = 0.1 * self.urlIncreasement
+        pendingRequest.extend(self.getRequestsFromCursor(cursorExp, numExp))
+        numExp = len(pendingRequest)
+        #调度-10% 为下载失败
+        cursorExp = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=301, statusEnd=800)
+        numFailed = 0.1 * self.urlIncreasement
+        pendingRequest.extend(self.getRequestsFromCursor(cursorExp, numFailed))
+        numFailed = len(pendingRequest) - numExp
+        #调度剩下的为新url
+        cursorNew = self.apt.findPendingUrlsByStatusAndSpiderName(self.name,statusBegin=1000,statusEnd=1001)
+        numNew = self.urlIncreasement - numExp - numFailed
+        pendingRequest.extend(self.getRequestsFromCursor(cursorNew, numNew))
+        numNew = len(pendingRequest) - numFailed - numExp
+        #新url不够，则调度异常和失败
+        numLast = self.urlIncreasement - len(pendingRequest)
+        if numLast > 0 :
+            cursorLst = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=301, statusEnd=1000)
+            pendingRequest.extend(self.getRequestsFromCursor(cursorLst, numLast))
+        dtEnd=datetime.datetime.now()
+        #重置下载计数器
+        self.pendingRequestCounter = settings.get('PENDING_REQUEST_COUNTER')
+        if self.pendingRequestCounter < len(pendingRequest):
+            self.pendingRequestCounter = len(pendingRequest)
+        print "爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s 时间花费：%s" % (self.name,numExp,numFailed,numNew,numLast,dtEnd-dtBegin)
+        log.msg("爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s 时间花费：%s" % (self.name,numExp,numFailed,numNew,numLast,dtEnd-dtBegin),level=log.INFO)
         return pendingRequest
     
     def baseParse(self, response):
         '''解析主逻辑'''
+        print '下载完成，状态值:%s，开始解析%s ' % (response.status,response.url)
         reqs = []
+        #初始化操作
         if not self.hasInit:
             self.hasInit=True
-            log.msg('爬虫%s 在第一次的baseParse中拦截，执行initRequest，进行爬虫恢复' %self.name, level=log.INFO)
             self.apt=OnlineApt()
-            updateRequest= self.initUrlDupfilterAndgetRequsetForUpdate()
-            pendingRequest=self.getPendingRequest()
-            pendingRequest.extend(updateRequest)
-            if len(pendingRequest)>0:
+#            self.initUrlDupfilter()
+            if self.keepCrawlingSwitch:
+                pendingRequest=self.getPendingRequest()
                 reqs.extend(pendingRequest)
-                log.msg('爬虫%s正式启动执行: 从数据库查询的url开始crawl，len(pendingRequest)= %s' % (self.name,len(pendingRequest)), log.INFO)
-            else:
-                log.msg('爬虫%s正式启动执行：解析startUrl页面' % self.name , log.INFO)
-        log.msg('解析开始link: %s' % response.url, log.INFO)
-        dtBegin=datetime.datetime.now()
-        #普通页link
-        for v in self.normalRegex:
-            reqsNormal=[]
-            if 'region' in v:
-                reqsNormal=self.extractRequests(response, v['priority'], allow = v['regex'],restrict_xpaths=v['region'])
-            else:
-                reqsNormal=self.extractRequests(response, v['priority'], allow = v['regex'])
-            reqs.extend(reqsNormal)
-        normalNum = len(reqs)
- 
-        #item页
-        for v in self.itemRegex:
-            reqsItem=[]
-            if 'region' in v:
-                reqsItem=self.extractRequests(response, v['priority'], allow = v['regex'],restrict_xpaths=v['region'])
-            else:
-                reqsItem=self.extractRequests(response, v['priority'], allow = v['regex'])
-            reqs.extend(reqsItem)
-        itemNum = len(reqs) - normalNum
-        items = self.parseItem(response)
-        if items and len(items)>0:
-            log.msg('得到items，数量：%s'% len(items),level=log.DEBUG)
-            reqs.extend(items)
-        dtEnd=datetime.datetime.now()
-        dtInterval=dtEnd - dtBegin
-        log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,总数：%s ，花费时间：%s" % (response.url, itemNum, normalNum, len(reqs),dtInterval), level=log.INFO)
+            #初始双倍加载
+            self.pendingRequestCounter = 0
+
+        #处理下载正常的response
+        if response.status == 200:
+            log.msg('解析开始link: %s' % response.url, log.INFO)
+            dtBegin=datetime.datetime.now()
+            #普通页link
+            counterNor = 0
+            for v in self.normalRegex:
+                linksNormal=[]
+                if 'region' in v:
+                    linksNormal=self.extractLinks(response,allow = v['regex'],restrict_xpaths = v['region'])
+                else:
+                    linksNormal=self.extractLinks(response,allow = v['regex'])
+                counterNor += len(linksNormal)
+                #保存新url
+                for newlink in linksNormal:
+                    url=newlink.url
+                    self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url, priority=v['priority'])
+           
+            #item页
+            counterItem = 0
+            for v in self.itemRegex:
+                linksItem=[]
+                if 'region' in v:
+                    linksItem=self.extractLinks(response,allow = v['regex'],restrict_xpaths = v['region'])
+                else:
+                    linksItem=self.extractLinks(response,allow = v['regex'])
+                counterItem += len(linksItem)
+                #保存新url
+                for newlink in linksItem:
+                    url=newlink.url
+                    self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url, priority=v['priority'])
+            #item
+            items = self.parseItem(response)
+            if items and len(items)>0:
+                log.msg('得到items，数量：%s'% len(items),level=log.DEBUG)
+                reqs.extend(items)
+            dtEnd=datetime.datetime.now()
+            dtInterval=dtEnd - dtBegin
+            log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,总数：%s ，花费时间：%s" % (response.url, counterItem, counterNor, len(reqs),dtInterval), level=log.INFO)
+        
+        #计数下载次数
+        self.pendingRequestCounter -= 1
+        #补充request
+        if self.keepCrawlingSwitch and self.pendingRequestCounter <= 0:
+            pendingRequest = self.getPendingRequest()
+            reqs.extend(pendingRequest)
         return reqs
 
     def parseItem(self, response):
@@ -203,9 +258,7 @@ class BaseCrawlSpider(CrawlSpider):
         pageResponse.setdefault('responseBody', (response.body_as_unicode()).encode('utf-8'))
         pageResponse.setdefault('optDateTime', datetime.datetime.now())
         pageResponse.setdefault('coding', response.encoding)
-#        pageResponse.setdefault('headers', response.headers)
         items.append(pageResponse)
-
 
 #        #解析item
 #        dtParseItemBegin=datetime.datetime.now()
@@ -232,48 +285,77 @@ class BaseCrawlSpider(CrawlSpider):
         log.msg('从%s抽取到的链接:%s' % (response.url,len(links)), level=log.DEBUG)
         return links
 
-    def extractRequests(self, response, pagePriority, callBackFunctionName=None, **extra): 
-        '''
-        抽取新链接，排重，保存新有效链接，为有效链接创建Request
-        '''
-        links = self.extractLinks(response, **extra)
-        reqs=[]
-        dtBegin=datetime.datetime.now()
-        for p in links:
-            req=self.makeRequest(p.url,referenceUrl=response.url, callBackFunctionName=callBackFunctionName,priority=pagePriority)
-            if req != None:
-                reqs.append(req)
-        dtEnd=datetime.datetime.now()
-        log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.DEBUG)
-        return reqs
-
-    def makeRequest(self, url, referenceUrl=None,callBackFunctionName=None,meta={},urlId=None,priority=1, **kw): 
+#    def extractRequests(self, response, pagePriority, callBackFunctionName=None, **extra): 
+#        '''
+#        抽取新链接，排重，保存新有效链接，为有效链接创建Request
+#        '''
+#        links = self.extractLinks(response, **extra)
+#        reqs=[]
+#        dtBegin=datetime.datetime.now()
+#        for p in links:
+#            req=self.makeRequest(p.url,referenceUrl=response.url, callBackFunctionName=callBackFunctionName,priority=pagePriority)
+#            if req:
+#                reqs.append(req)
+#        dtEnd=datetime.datetime.now()
+#        if len(links)>0:
+#            log.msg('对%s个新url排重，重复%s，时间花费%s' % (len(links),(len(links)-len(reqs)),(dtEnd-dtBegin)), level=log.INFO)
+#        return reqs
+#
+#    def checkDupAndSaveUrl(self,url,isNeedUpdateUrldump=False,isNeedSavetoDb=True,referenceUrl=None,callBackFunctionName=None, meta={},urlId=None,priority=1):
+#        """
+#        保存url。先排重，排重时可指定是否需要更新排重库；重复的不入库以降低数据库IO压力。返回(isnotDup,urlId,md5)
+#        """
+#        if url:
+#            #url特征
+#            md5 = None
+#            if 'originUrl' in meta:
+#                md5=getFingerPrint(inputs=[meta['originUrl'].strip()], isUrl=True)
+#            else:
+#                md5=getFingerPrint(inputs=[url.strip()])
+#            if not md5 in self.urlDump:
+#                #更新urlDump
+#                if isNeedUpdateUrldump:
+#                    self.urlDump.add(md5)
+#                #保存url到数据库
+#                urlItem={"url":url,"md5":md5,"callBack":callBackFunctionName,
+#                         "spiderName":self.name,"reference":referenceUrl,
+#                         "status":1000,"priority":priority,"dateTime":datetime.datetime.now()}
+#                if len(meta)>0:
+#                    urlItem['meta']=meta
+#                if 'originUrl' in meta:
+#                    urlItem['originUrl']=meta['originUrl']
+#                #保存到数据库
+#                urlId = None
+#                if isNeedSavetoDb:
+#                    urlId = self.apt.saveNewUrl(self.name,urlItem=urlItem)
+#                return (True,urlId,md5)
+#        return (None,None,None)
+    
+    def saveUrl(self,url,isNeedUpdateUrldump=False,isNeedSavetoDb=True,referenceUrl=None,callBackFunctionName=None, meta={},urlId=None,priority=1):
+        """
+        保存url。先排重，排重时可指定是否需要更新排重库；重复的不入库以降低数据库IO压力。返回(isnotDup,urlId,md5)
+        """
+        if url:
+            #url特征
+            md5 = None
+            if 'originUrl' in meta:
+                md5=getFingerPrint(inputs=[meta['originUrl'].strip()], isUrl=True)
+            else:
+                md5=getFingerPrint(inputs=[url.strip()])
+            #保存url到数据库
+            urlItem={"url":url,"md5":md5,"callBack":callBackFunctionName,
+                         "spiderName":self.name,"reference":referenceUrl,
+                         "status":1000,"priority":priority,"dateTime":datetime.datetime.now()}
+            if len(meta)>0:
+                urlItem['meta']=meta
+            if 'originUrl' in meta:
+                urlItem['originUrl']=meta['originUrl']
+            self.apt.saveNewUrl(self.name,urlItem=urlItem)
+            
+    def makeRequest(self, url,isNeedSavetoDb=True,referenceUrl=None,callBackFunctionName=None,meta={},urlId=None,priority=1, **kw): 
         '''
         排重 保存url到数据库 创建Request返回。如果重复，则返回None
         '''
-        #排重
-        url=url.strip()
-        originUrl=None
-        if 'originUrl' in meta and meta['originUrl'] !=None:
-            originUrl=meta['originUrl']
-            log.msg('对原始url排重 %s' % originUrl, level=log.DEBUG)
-        #有originalurl的，对originalurl作为排重url
-        md5=None
-        if originUrl:
-            md5=getFingerPrint(inputs=[originUrl.strip()],isUrl=True)
-        else:
-            md5=getFingerPrint(inputs=[url],isUrl=True)
-        if not md5 or md5 in self.urlDump:
-            return None
-        self.urlDump.add(md5)
-        #保存url到数据库
-        urlItem={"url":url,"md5":md5,"callBack":callBackFunctionName,
-                 "spiderName":self.name,"reference":referenceUrl,
-                 "status":1000,"priority":priority,"dateTime":datetime.datetime.now()}
-        if originUrl:
-            urlItem['originUrl']=originUrl
-        urlId = self.apt.saveNewUrl(urlItem)
-        
         if not urlId:
             raise NotConfigured('爬虫%s创建Request的url%s没有提供id，将导致无法更新url的状态' % (self.name,url))
         if(callBackFunctionName != None):

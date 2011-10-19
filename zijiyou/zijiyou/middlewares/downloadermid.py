@@ -7,7 +7,14 @@ Created on 2011-4-12
 from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
+from scrapy.utils.httpobj import urlparse_cached
+from twisted.internet import reactor
+from urllib import unquote, proxy_bypass
+from urllib2 import _parse_proxy
+from urlparse import urlunparse
 from zijiyou.db.middlewaresApt import DownloaderApt
+import base64
+import datetime
 
 class ErrorFlag(object):
     ACCESS_DENY_FLAG = 0
@@ -18,49 +25,181 @@ class UpdateRequestedUrl(object):
     '''
     def __init__(self):
         self.apt=DownloaderApt()
-        self.CrawlDb=settings.get('CRAWL_DB')
-        self.ResponseDb=settings.get('RESPONSE_DB')
-        if not self.CrawlDb or not self.ResponseDb:
-            log.msg('没有配置CRAWL_DB！，请检查settings', level=log.ERROR)
-            raise NotConfigured
-    
-#    def process_request(self,request, spider):
-#        print 'downMid reqOut test get:%s' % request.url 
     
     def process_response(self, request, response, spider):
-        print '下载调度%s' % spider.name
         responseStatus=response.status
-        if responseStatus in [400, 403, 304]:
+        if responseStatus in [400, 403, 304,404]:
             log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应或者该页面没有更新" % responseStatus, level=log.ERROR)
         if 'urlId' in request.meta:
             urlId=request.meta['urlId']
-            self.apt.updateUrlDbStatusById(urlId, status=responseStatus)
+            self.apt.updateUrlDbStatusById(urlId,spider.name, status=responseStatus)
             log.msg("用urlId更新url访问状态 url:%s" % request.url, level=log.INFO)
         else:
-            self.apt.updateUrlDbStatusByUrl(request.url, status=responseStatus)
-            log.msg("没有urlId，可能是种子url，使用url更新访问状态 url:%s" % request.url, level=log.ERROR)
-        
+#            self.apt.updateUrlDbStatusByUrl(request.url,spider.name, status=responseStatus)
+            log.msg("没有urlId，请确认是否种子url url:%s" % request.url, level=log.WARNING)
         return response
 
 class RandomHttpProxy(object):
-    proxyNum  = -1
-    curProxyIndex = -1 # use local network, not set proxy
-    proxies = []
-    
-    def process_request(self, request, spider):
-        '''init proxy configure'''
-        if(self.proxyNum == -1 and settings['PROXY'] != None):
-            self.proxies = settings['PROXY']
-            self.proxyNum = len(self.proxies)
+    def __init__(self):
+        self.proxies = {}
         
-        if(self.proxyNum > 0):
-            #next proxy
-            self.curProxyIndex = (self.curProxyIndex + 1) % self.proxyNum
-            #ignore the next proxy is local
-            if(self.proxies[self.curProxyIndex] != 'local'):
-                #set proxy
-                request.meta['proxy'] = '%s' % self.proxies[self.curProxyIndex]
-                log.msg('change proxy:'+self.proxies[self.curProxyIndex], level = log.INFO)
+        #数据库适配器
+        self.apt=DownloaderApt()
+        #循环代理计数器
+        self.proxyCounter=0
+        #公网ip更新周期
+        self.proxyUpdatePeriod=settings.get('PROXY_UPDATE_PERIOD')
+        #代理公网ip文件
+        self.proxyFile=settings.get('PROXY_FILE_NAME')
+        #初始化代理
+        self.proxyDeadThreshold=settings.get('PROXY_DEAD_THRESHOLD')
+        #无效代理缓存表
+        self.proxyDead=[]
+        self.updateProxy()
+
+        if not self.proxies:
+            raise NotConfigured
+
+    def updateProxy(self):
+        """
+        加载代理列表，更新代理
+        """
+        print '加载或更新公网代理：%s' % datetime.datetime.now()
+        log.msg('加载或更新公网代理：%s' % datetime.datetime.now(),level=log.INFO)
+        f=open(self.proxyFile)
+        for p in f:
+            pdict=p.split('=')
+            if len(pdict) == 2:
+                type=pdict[0].strip()
+                url=pdict[1].strip()
+                if not type in self.proxies.keys():
+                    self.proxies[type]=[]
+                creds, proxyUrl=self._get_proxy(url, type)
+                if proxyUrl in self.proxyDead:
+                    continue
+                newProxy={'creds':creds,'proxyUrl':proxyUrl,'failsNum':0}
+                #本机代理永不失效
+                if url[:9] == '127.0.0.1':
+                    newProxy['failNum'] = -999999999
+                self.proxies[type].append(newProxy)
             else:
-                log.msg('change proxy:use local network', level = log.INFO)
+                print '无效的代理：%s' % p
+                log.msg('无效的代理：%s' % p,level=log.ERROR)
+        #周期性加载更新
+        reactor.callLater(self.proxyUpdatePeriod, self.updateProxy)
+
+    def clearProxyDead(self):
+        """
+        清空无效proxy缓存表
+        """
+        print '清空无效proxy缓存表：%s' % datetime.datetime.now()
+        log.msg('清空无效proxy缓存表：%s' % datetime.datetime.now(),level=log.INFO)
+        self.proxyDead = []
+        reactor.callLater(self.proxyUpdatePeriod*8,self.clearProxyDead)
+
+    def _get_proxy(self, url, orig_type):
+        proxy_type, user, password, hostport = _parse_proxy(url)
+        proxy_url = urlunparse((proxy_type or orig_type, hostport, '', '', '', ''))
+
+        if user and password:
+            user_pass = '%s:%s' % (unquote(user), unquote(password))
+            creds = base64.b64encode(user_pass).strip()
+        else:
+            creds = None
+
+        return creds, proxy_url
+
+    def process_request(self, request, spider):
+        # ignore if proxy is already seted
+        if 'proxy' in request.meta:
+            return
+
+        parsed = urlparse_cached(request)
+        scheme = parsed.scheme
+
+        # 'no_proxy' is only supported by http schemes
+        if scheme in ('http', 'https') and proxy_bypass(parsed.hostname):
+            return
+
+        if scheme in self.proxies:
+            self._set_proxy(request, scheme)
+    
+    def process_response(self,request,response,spider):
+        """
+        如果下载失败，可能是代理有失效。
+        需要更新代理失败次数以便标识出无效的代理；更新次request的代理，交给引擎判定是否需要再次发送该请求
+        """
+        cstatus=response.status
+        #处理下载失败：更新下载失败次数、清除无效代理
+        if cstatus > 302:
+            parsed = urlparse_cached(request)
+            scheme = parsed.scheme
+            if scheme in self.proxies and 'proxy' in request.meta:
+                proxy=request.meta['proxy']
+                #更新代理的失败次数
+                for pdict in self.proxies[scheme]:
+                    if proxy == pdict['proxyUrl']:
+                        #判断代理的失败次数是否超出限定
+                        if pdict['failsNum'] >= self.proxyDeadThreshold:
+                            self.proxies[scheme].remove(pdict)
+                            self.proxyDead.append(proxy)
+                        else:
+                            pdict['failsNum'] = 1+pdict['failsNum']
+                        break
+                #更新次request的代理
+                self._set_proxy(request, scheme)
+                newProxy={}
+                if 'proxy' in request.meta:
+                    newProxy=request.meta
+                print '更新代理。原代理：%s  新代理：%s' % (proxy,newProxy)
+        
+        return response
+    
+    def process_exception(self,request,exception,spider):
+        """
+        下载异常，可能是代理无效了，对代理进行惩罚性失败次数更新：10
+        """
+        print '下载异常，可能是被封锁了ip，异常：%s' % exception
+        parsed = urlparse_cached(request)
+        scheme = parsed.scheme
+        if scheme in self.proxies and 'proxy' in request.meta:
+            proxy=request.meta['proxy']
+            #更新代理的失败次数
+            for pdict in self.proxies[scheme]:
+                if proxy == pdict['proxyUrl']:
+                    #判断代理的失败次数是否超出限定
+                    if pdict['failsNum'] >= self.proxyDeadThreshold:
+                        self.proxies[scheme].remove(pdict)
+                        self.proxyDead.append(proxy)
+                    else:
+                        pdict['failsNum'] = 50+pdict['failsNum']
+                    break
+        #更新代理
+        self._set_proxy(request, scheme)
+        #更新数据库的url状态为800
+        if 'urlId' in request.meta:
+            urlId=request.meta['urlId']
+            self.apt.updateUrlDbStatusById(urlId,spider.name, status=800)
+            log.msg("用urlId更新url访问状态为异常 url:%s" % request.url, level=log.INFO)
+            print "用urlId更新url访问状态为异常 url:%s" % request.url
         return None
+    
+    def _set_proxy(self, request, scheme):
+        """
+        循环选择一个代理ip
+        """
+        proxyLength = len(self.proxies[scheme])
+        if proxyLength == 0:
+            #取消代理，直接访问
+            if 'proxy' in request.meta:
+                request.meta.pop('proxy')
+        else:
+            self.proxyCounter +=1
+            proxyIndex = self.proxyCounter % proxyLength
+            proxydict = self.proxies[scheme][proxyIndex]
+            creds=proxydict['creds']
+            proxy=proxydict['proxyUrl']
+            
+            request.meta['proxy'] = proxy
+            if creds:
+                request.headers['Proxy-Authorization'] = 'Basic ' + creds

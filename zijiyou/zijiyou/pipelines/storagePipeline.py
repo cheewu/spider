@@ -18,7 +18,7 @@ class StoragePipeline(object):
         if not item['collectionName']:
             log.msg("Item的collectionName空！请检查zijiyouItem中是否有未定义collectionName的Item！", level=log.ERROR)
             raise NotConfigured
-        self.saveItem2Mongodb(item, item['collectionName'])
+        self.saveItem2Mongodb(item, item['collectionName'],spider.name)
         
     def saveItem2File(self,item, collectionName = None):
         values = collectionName + '\n'
@@ -33,11 +33,11 @@ class StoragePipeline(object):
             values += value
         self.fileApt.write(values+"\n")
         
-    def saveItem2Mongodb(self,item, collectionName):
+    def saveItem2Mongodb(self,item, collectionName,spiderName):
         values = {}
         for k,v in item.items():
             values[k] = v
-        obj=self.apt.saveItem(collectionName, values)
+        obj=self.apt.saveItem(collectionName, values,spiderName)
         log.msg('++++saveItem2Mongodb++++col:%s,objectId:%s+++++++++++' % (collectionName ,obj), level = log.INFO)
         
     

@@ -6,8 +6,8 @@
 #
 #     http://doc.scrapy.org/topics/settings.html
 
-BOT_NAME = 'zijiyou'
-BOT_VERSION = '1.0'
+BOT_NAME = 'Mozilla'
+BOT_VERSION = '4.0 (compatible; MSIE 6.0; Windows NT 5.1) '
 USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
 
 SPIDER_MODULES = ['zijiyou.spiders']
@@ -20,12 +20,70 @@ ITEM_PIPELINES=[
 
 # mongodb setting
 DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188
-DB_PORT=27017
-DB='spider'#spiderV21 spidertest bbstest
+PORT=27017
+DB_URL='url'
 DB_ITEM='tripfm'
-DB_SPIDER=['PageDb','UrlDb']
-DB_COLLECTIONS = ['PageDb',
-                  'UrlDb',
+#page按domain分库存储
+DB_MAP={
+        'url':'url',
+        'tripfm':'tripfm',
+        '17uSpider':'page17u',
+        '21cnSpider':'page21cn',
+        '55bbsSpider':'page55bbs',
+        'bbkerSpider':'pagebbker',
+        'bytravelSpider':'pagebytravel',
+        'daodaoSpider':'pagedaodao',
+        'go2euSpider':'pagego2eu',
+        'hexunSpider':'pagehexun',
+        'lotourSpider':'pagelotour',
+        'lotourbbsSpider':'pagelotourbbs',
+        'lvpingSpider':'pagelvping',
+        'lvrenSpider':'pagelvren',
+        'lvyeSpider':'pagelvye',
+        'lvyou114Spider':'pagelvyou114',
+        'mafengwoSpider':'pagemafengwo',
+        'meishiSpider':'pagemeishi',
+        'peopleSpider':'pagepeople',
+        'QQBlogSpider':'pageqqblog',
+        'sinaSpider':'pagesina',
+        'sinabbsSpider':'pagesinabbs',
+        'sohuSpider':'pagesohu',
+        'sozhenSpider':'pagesozhen',
+        'xcarSpider':'pagexcar',
+        'yahooSpider':'pageyahoo',
+        'baseSeSpider':'pagebasese',
+        'bbsSpider2':'pagebbs'
+        }
+#url独立数据库存储，按照domain分表存储
+DB_URL_COLLECTIONS_MAP = {
+                    '17uSpider':'yiqi17u',
+                    '21cnSpider':'eryi21cn',
+                    '55bbsSpider':'wuwu55bbs',
+                    'bbkerSpider':'bbker',
+                    'bytravelSpider':'bytravel',
+                    'daodaoSpider':'daodao',
+                    'go2euSpider':'go2eu',
+                    'hexunSpider':'hexun',
+                    'lotourSpider':'lotour',
+                    'lotourbbsSpider':'lotourbbs',
+                    'lvpingSpider':'lvping',
+                    'lvrenSpider':'lvren',
+                    'lvyeSpider':'lvye',
+                    'lvyou114Spider':'lvyou114',
+                    'mafengwoSpider':'mafengwo',
+                    'meishiSpider':'meishi',
+                    'peopleSpider':'people',
+                    'QQBlogSpider':'qqblog',
+                    'sinaSpider':'sina',
+                    'sinabbsSpider':'sinabbs',
+                    'sohuSpider':'sohu',
+                    'sozhenSpider':'sozhen',
+                    'xcarSpider':'xcar',
+                    'yahooSpider':'yahoo',
+                    'baseSeSpider':'basese',
+                    'bbsSpider2':'bbs'
+                      }
+DB_ITEM_COLLECTIONS = [
                   'POI',
                   'Attraction',
                   'Hotel',
@@ -66,17 +124,37 @@ BBS_SPIDER_NAME = [
         'lotourbbsSpider',
 ]
 
-CRAWL_DB = 'UrlDb'
-RESPONSE_DB = 'PageDb'
-LOG_FILE='./zijiyou.log'
+LOG_FILE='./zijiyou.log' #./zijiyou.log /home/shiym/spider/zijiyou
 LOG_LEVEL='INFO' #INFO DEBUG
-DOWNLOAD_DELAY = 0.5
+DOWNLOAD_DELAY = 10
+#遵守robots协议
+#ROBOTSTXT_OBEY = True
+#爬虫监控器服务的日志
+WEBSERVICE_LOGFILE = './webservice.log'
+#爬虫监控服务端口
+WEBSERVICE_PORT = [6080, 7030]
+#多线程
 CONCURRENT_REQUESTS_PER_SPIDER=2
-RECENT_URLS_SIZE = 3000000
-MAX_INII_REQUESTS_SIZE = 1000000
-#CLOSESPIDER_TIMEOUT=1800
-#CLOSESPIDER_ITEMPASSED=3000
-SCHEDULER_ORDER='DFO'
+#离线调度阀值 一般设为MAX_INII_REQUESTS_SIZE的80%
+PENDING_REQUEST_COUNTER= 80
+#pengdingRequest长度限制
+MAX_INII_REQUESTS_SIZE = 100
+#公网ip更新周期
+PROXY_UPDATE_PERIOD = 3600*4 #3600*4
+#下载超时
+DOWNLOAD_TIMEOUT = 60
+#代理公网ip文件
+PROXY_FILE_NAME='./proxy.txt'#./proxy.txt /home/shiym/spider/zijiyou
+#代理无效判断标准
+PROXY_DEAD_THRESHOLD = 100
+#持续运行爬虫的开关。可以设置为False关掉，当需要测试爬虫的url正则是否能让parser准确地抽取目标url
+KEEP_CRAWLING_SWITCH = False
+#重复次数
+RETRY_TIMES = 10
+#重新下载
+RETRY_HTTP_CODES = [ '302','400','403','404','407', '408','500','502','503','504']
+#遍历方式
+#SCHEDULER_ORDER='DFO'
 
 DIAGNOSER_PATH = './diagnose.log'
 OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym
@@ -91,11 +169,13 @@ EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
               }
 
 DOWNLOADER_MIDDLEWARES = {
-#                            'zijiyou.middlewares.downloadermid.RandomHttpProxy': 750,
+                            'zijiyou.middlewares.downloadermid.RandomHttpProxy': 749,
                             'zijiyou.middlewares.downloadermid.UpdateRequestedUrl':901
                             }
 
-SCHEDULER_MIDDLEWARES = {'zijiyou.middlewares.schedulermid.Cookies': 502}
+SCHEDULER_MIDDLEWARES = {
+                         'zijiyou.middlewares.schedulermid.Cookies': 502
+                         }
 SPIDER_MIDDLEWARES = {
 #                      'zijiyou.middlewares.spidermid.UrlNormalizer': 503, #先归一化再排重
 #                      'zijiyou.middlewares.spidermid.DuplicateUrlFilter': 501,
@@ -103,8 +183,8 @@ SPIDER_MIDDLEWARES = {
                       #'zijiyou.middlewares.spidermid.SaveNewRequestUrl':499
                       }
 
-#proxy server
-PROXY = ['local']
+##proxy server
+#PROXY = ['local']
 
 #Email Configure
 MAIL_INTERVAL = 14400
@@ -114,7 +194,7 @@ MAIL_TO_LIST = [
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL= True
+MAIL = False
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'
@@ -137,14 +217,6 @@ MEMUSAGE_NOTIFY_MAIL = [
                         "953227024@qq.com", 
                         "1413614423@qq.com"
                         ]
-
-
-#URLNormallizer_Rules(URL 归一化)
-#URLNORMALIZER_RULES = {
-#                       r'(\?|\&amp;|\&amp;amp;)PHPSESSID=[a-zA-Z0-9]{32}$':r'',
-#                       r'(\?|&)PHPSESSID=[a-zA-Z0-9]{32}(&?)(.*)':r'\1\3'
-#                       }
-
 #telnet setting
 TELNETCONSOLE_PORT=[6023, 6073]
 TELNETCONSOLE_HOST='0.0.0.0'

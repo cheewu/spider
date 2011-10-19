@@ -10,5 +10,6 @@ class Lvping(BaseCrawlSpider):
     Spider for www.lvping.com
     '''
     name ="lvpingSpider"
+    download_delay = 3
     
 SPIDER = Lvping()

@@ -24,10 +24,25 @@ def getFingerPrint(inputs=[],isUrl=False):
                 newTokens.append(tokens[0])
                 temps=tokens[1].split('&')
                 if len(temps)>1:
+                    #对参数排序：冒泡排序  与canonicalize_url重复了。。。
+                    end = len(temps)-1
+                    while end > 0:
+                        lastX=0
+                        index=0
+                        while index < end:
+                            if temps[index] > temps[index+1]:
+                                temp = temps[index]
+                                temps[index]= temps[index+1]
+                                temps[index+1]=temp
+                                lastX = index
+                            index += 1
+                        end = lastX
                     newTokens.extend(temps)
                 else:
+                    #不需要调整参数位置
                     newTokens.extend(temps)
             else:
+                #没有参数
                 newTokens.extend(tokens)
                 
             newInputs.extend(newTokens)

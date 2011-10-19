@@ -135,9 +135,10 @@ class Diagnoser(object):
             content +="---------------"
 
         #收集爬虫系统总体信息
-        if self.totalPagecounts >10:
+        if self.totalPagecounts >50:
             content +="\n----------------------爬虫系统总体信息-------------------------\n"
             interval=(datetime.datetime.now()-self.dtBegin).seconds + 1
+            self.dtBegin = datetime.datetime.now()
             #总下载失败网页数量
             errorUrlNum=self.apt.countErrorStatusUrls()
             content += "爬虫系统总体状态：\n总下载失败网页数量为%s  " % errorUrlNum
