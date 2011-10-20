@@ -95,7 +95,7 @@ class RandomHttpProxy(object):
         print '清空无效proxy缓存表：%s' % datetime.datetime.now()
         log.msg('清空无效proxy缓存表：%s' % datetime.datetime.now(),level=log.INFO)
         self.proxyDead = []
-        reactor.callLater(self.proxyUpdatePeriod*8,self.clearProxyDead)
+        reactor.callLater(self.proxyUpdatePeriod*10,self.clearProxyDead)
 
     def _get_proxy(self, url, orig_type):
         proxy_type, user, password, hostport = _parse_proxy(url)
@@ -150,7 +150,7 @@ class RandomHttpProxy(object):
                 self._set_proxy(request, scheme)
                 newProxy={}
                 if 'proxy' in request.meta:
-                    newProxy=request.meta
+                    newProxy=request.meta['proxy']
                 print '更新代理。原代理：%s  新代理：%s' % (proxy,newProxy)
         
         return response

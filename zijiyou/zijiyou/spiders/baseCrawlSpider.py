@@ -136,7 +136,7 @@ class BaseCrawlSpider(CrawlSpider):
         '''
         爬虫恢复初始化pendingRequest下载请求
         '''
-        dtBegin=datetime.datetime.now()
+#        dtBegin=datetime.datetime.now()
         #查询recent requests
         pendingRequest=[]
         #调度-10% 为下载异常
@@ -159,13 +159,14 @@ class BaseCrawlSpider(CrawlSpider):
         if numLast > 0 :
             cursorLst = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=301, statusEnd=1000)
             pendingRequest.extend(self.getRequestsFromCursor(cursorLst, numLast))
-        dtEnd=datetime.datetime.now()
+            numLast = len(pendingRequest) - numNew - numFailed - numExp
+#        dtEnd=datetime.datetime.now()
         #重置下载计数器
         self.pendingRequestCounter = settings.get('PENDING_REQUEST_COUNTER')
-        if self.pendingRequestCounter < len(pendingRequest):
-            self.pendingRequestCounter = len(pendingRequest)
-        print "爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s 时间花费：%s" % (self.name,numExp,numFailed,numNew,numLast,dtEnd-dtBegin)
-        log.msg("爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s 时间花费：%s" % (self.name,numExp,numFailed,numNew,numLast,dtEnd-dtBegin),level=log.INFO)
+        if self.pendingRequestCounter > len(pendingRequest):
+            self.pendingRequestCounter = len(pendingRequest) - 10
+        print "爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s ；pendingRequestCounter:%s ;url补充总数：%s" % (self.name,numExp,numFailed,numNew,numLast,self.pendingRequestCounter,len(pendingRequest))
+        log.msg("爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s ；pendingRequestCounter:%s ;url补充总数：%s" % (self.name,numExp,numFailed,numNew,numLast,self.pendingRequestCounter,len(pendingRequest)),level=log.INFO)
         return pendingRequest
     
     def baseParse(self, response):
@@ -240,7 +241,7 @@ class BaseCrawlSpider(CrawlSpider):
                 itemCollectionName=v['itemCollectionName']
                 break
         if itemCollectionName == None:
-            log.msg("不是item的urlLink：%s" %  response.url, level=log.WARNING)
+            log.msg("不是item的urlLink：%s" %  response.url, level=log.INFO)
             return None
         #验证数据库是否和类型配置对应
         if not itemCollectionName in self.dbCollecions:

@@ -126,7 +126,7 @@ BBS_SPIDER_NAME = [
 
 LOG_FILE='./zijiyou.log' #./zijiyou.log /home/shiym/spider/zijiyou
 LOG_LEVEL='INFO' #INFO DEBUG
-DOWNLOAD_DELAY = 10
+DOWNLOAD_DELAY = 1
 #遵守robots协议
 #ROBOTSTXT_OBEY = True
 #爬虫监控器服务的日志
@@ -148,7 +148,7 @@ PROXY_FILE_NAME='./proxy.txt'#./proxy.txt /home/shiym/spider/zijiyou
 #代理无效判断标准
 PROXY_DEAD_THRESHOLD = 100
 #持续运行爬虫的开关。可以设置为False关掉，当需要测试爬虫的url正则是否能让parser准确地抽取目标url
-KEEP_CRAWLING_SWITCH = False
+KEEP_CRAWLING_SWITCH = True
 #重复次数
 RETRY_TIMES = 10
 #重新下载
@@ -194,7 +194,7 @@ MAIL_TO_LIST = [
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL = False
+MAIL = True
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'
