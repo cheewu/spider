@@ -64,7 +64,7 @@ class BaseBBSSpider2(BaseCrawlSpider):
                     if match and match.group(1):
                         tid=match.group(1)
                         newUrl=v['itemPrintPageFormat'] % tid
-                        self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url, priority=v['priority'])
+                        self.saveUrl(newUrl, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url, priority=v['priority'])
                         log.msg("拼凑item打印链接：%s" %newUrl, level=log.DEBUG)
                     else:
                         log.msg("抽出的link:%s 没有发现tid，不能拼凑出新链接。请检查正则是否有误： linkXpath：%s、tid正则:%s" %(link.url,v['regex'],v['itemTidRegex']), level=log.ERROR)
