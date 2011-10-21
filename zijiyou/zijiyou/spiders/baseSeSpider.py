@@ -13,6 +13,7 @@ from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import PageDb, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
+import codecs
 import datetime
 import re
 import string
@@ -69,26 +70,33 @@ class BaseSeSpider(BaseCrawlSpider):
             log.msg("没有关键字！", level=log.ERROR)
             return []
         counterFirstPageNum = 0
-        for keyWord in keyWords:
+        for keyword in keyWords:
             for v in self.seUrlFormat:
                 #设置默认值
                 format = v['format']
                 encodeType = v['encode']
-                encodeWords = urllib.quote(keyWord['keyWord'].encode(encodeType))
-                pagePriority = keyWord['priority']
-                url = format % (encodeWords, 1)
-                meta = {'itemCollectionName':keyWord['itemCollectionName'],
-                      'sePageNum':keyWord['pageNumber'],
-                      'priority':keyWord['priority'],
-                      'resultItemLinkXpath':v['resultItemLinkXpath'],
-                      'totalRecordXpath':v['totalRecordXpath'],
-                      'totalRecordRegex':v['totalRecordRegex'],
-                      'seName':v['seName'],
-                      'homePage':v['homePage'],
-                      'reference':None}
-                meta[self.urlPatternMeta] = format % (encodeWords, '')
-                self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=v['homePage'], meta=meta, priority=pagePriority)
-                counterFirstPageNum += 1
+                word = keyword['keyWord']
+#                if word[:3] == codecs.BOM_UTF8:
+#                    word = word[3:]
+                try:
+                    encodeWords = urllib.quote(word.encode(encodeType))
+                    pagePriority = keyword['priority']
+                    url = format % (encodeWords, 1)
+                    meta = {'itemCollectionName':keyword['itemCollectionName'],
+                          'sePageNum':keyword['pageNumber'],
+                          'priority':keyword['priority'],
+                          'resultItemLinkXpath':v['resultItemLinkXpath'],
+                          'totalRecordXpath':v['totalRecordXpath'],
+                          'totalRecordRegex':v['totalRecordRegex'],
+                          'seName':v['seName'],
+                          'homePage':v['homePage'],
+                          'reference':None}
+                    meta[self.urlPatternMeta] = format % (encodeWords, '')
+                    self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=v['homePage'], meta=meta, priority=pagePriority)
+                    counterFirstPageNum += 1
+                except Exception,e:
+                    print '生成关键字%s请求的异常%s' % (keyword['keyWord'],str(e))
+                    log.msg('生成关键字%s请求的异常%s' % (keyword['keyWord'],str(e)) , level=log.ERROR)
         log.msg('生成了%s个关键字搜索请求' % counterFirstPageNum, level=log.INFO)
     
     def makeListRequestByFirstPageForSEs(self, response, pageSize=10):
