@@ -135,7 +135,7 @@ class Diagnoser(object):
             content +="---------------"
 
         #收集爬虫系统总体信息
-        if self.totalPagecounts >50:
+        if self.totalPagecounts >1:
             content +="\n----------------------爬虫系统总体信息-------------------------\n"
             interval=(datetime.datetime.now()-self.dtBegin).seconds + 1
             self.dtBegin = datetime.datetime.now()

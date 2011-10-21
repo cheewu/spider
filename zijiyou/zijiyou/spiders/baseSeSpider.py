@@ -49,14 +49,13 @@ class BaseSeSpider(BaseCrawlSpider):
         清空搜索引擎数据
         '''
         log.msg("开始清空搜索引擎数据" , level=log.INFO)
-        itemCount = self.apt.getUncompelitedSeUrlNumber(self.name)
-        self.apt.removeUncompelitedSeUrl(self.name)
-        log.msg("成功清除未完成的item和搜索引擎list页：共%s个" % itemCount , level=log.INFO)
+#        itemCount = self.apt.getUncompelitedSeUrlNumber(self.name)
+#        self.apt.removeUncompelitedSeUrl(self.name)
+#        log.msg("成功清除未完成的item和搜索引擎item页：共%s个" % itemCount , level=log.INFO)
         
         listCount = self.apt.getCompelitedSeListUrl(self.name)
         self.apt.removeCompelitedSeListUrl(self.name)
         log.msg("清除已经完成的搜索引擎list页：%s" % listCount , level=log.INFO)
-        log.msg("完成清理搜索引擎数据" , level=log.INFO)
         
     def makeFirstPageRequestByKeywordForSEs(self):
         '''
@@ -147,7 +146,7 @@ class BaseSeSpider(BaseCrawlSpider):
             self.hasInit = True
             self.apt = OnlineApt()
             #清空搜素引擎中间页面的数据库，防止因爬虫崩溃导致下一次抓取时中间页被错误过滤
-#            self.clearUrlDb()
+            self.clearUrlDb()
             self.makeFirstPageRequestByKeywordForSEs()
             #下载搜素引擎
             if self.keepCrawlingSwitch:

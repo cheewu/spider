@@ -51,32 +51,32 @@ class OnlineApt(object):
         '''
         return mongoApt.save(self.urlDbnamekey,self.urlCollectionsMap[spiderName], item=urlItem)
     
-    def getUncompelitedSeUrlNumber(self,spiderName):
-        '''
-        未完成的item和搜索引擎list页的总数
-        '''
-        whereJson = {"status":1000,"spiderName":'baseSeSpider'}
-        return mongoApt.countByWhere(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
+#    def getUncompelitedSeUrlNumber(self,spiderName):
+#        '''
+#        未完成的item和搜索引擎item页的总数
+#        '''
+#        whereJson = {"status":1000,"spiderName":'baseSeSpider'}
+#        return mongoApt.countByWhere(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
     
-    def removeUncompelitedSeUrl(self,spiderName):
-        '''
-        删除未完成的item和搜索引擎list页
-        '''
-        whereJson = {"status":1000,"spiderName":'baseSeSpider'}
-        mongoApt.remove(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
+#    def removeUncompelitedSeUrl(self,spiderName):
+#        '''
+#        删除未完成的item和搜索引擎item页
+#        '''
+#        whereJson = {"status":1000,"spiderName":'baseSeSpider'}
+#        mongoApt.remove(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
     
     def getCompelitedSeListUrl(self,spiderName):
         '''
         已经完成的搜索引擎list页的总数
         '''
-        whereJson = {"status":{"$lte":300},"spiderName":'baseSeSpider',"priority":{"$lt":1000}}
+        whereJson = {"status":{"$lte":400},"spiderName":'baseSeSpider',"priority":{"$lt":999}}
         return mongoApt.countByWhere(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
     
     def removeCompelitedSeListUrl(self,spiderName):
         '''
         清除已经完成的搜索引擎list页
         '''
-        whereJson = {"status":{"$lte":300},"spiderName":'baseSeSpider',"priority":{"$lt":1000}}
+        whereJson = {"status":{"$lte":400},"spiderName":'baseSeSpider',"priority":{"$lt":999}}
         mongoApt.remove(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
         
     def findKerwordsForSespider(self):

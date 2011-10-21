@@ -56,15 +56,12 @@ class BaseCrawlSpider(CrawlSpider):
         初始化加载配置文件
         '''
         log.msg('爬虫%s初始配置信息' %self.name, level=log.INFO)
+        #过滤器
+        self.urlDump = set()
         #离线调度阀值
         self.pendingRequestCounter=settings.get('PENDING_REQUEST_COUNTER')
-#        #离线调度延迟
-#        self.reopenSpiderDelay=settings.get('REOPEN_SPIDER_DELAY')
         #持续运行爬虫的开关。可以设置为false关掉，当需要测试爬虫的url正则是否能让parser准确地抽取目标url
         self.keepCrawlingSwitch=settings.get('KEEP_CRAWLING_SWITCH')
-#        #爬虫当前的request队列长度
-#        self.numPendingRequest=1
-        
         self.dbCollecions=settings.get('DB_ITEM_COLLECTIONS')
         #pengdingRequest长度限制
         self.urlIncreasement=settings.get('MAX_INII_REQUESTS_SIZE')
@@ -118,13 +115,21 @@ class BaseCrawlSpider(CrawlSpider):
 #        log.msg("爬虫%s需要更新的网页数量有%s" % (self.name,len(urlForUpdateStategy)), level=log.INFO)
 #        return urlForUpdateStategy
 
-    def getRequestsFromCursor(self,cursor,num):
+    def getRequestsFromCursor(self,cursor,num,isneedDump=True):
         pendingRequestTemp=[]
         for p in cursor:
             meta={}
             if 'meta' in p:
                 meta=p['meta']
-            req=self.makeRequest(p["url"],isNeedSavetoDb=False, callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])
+            if not 'md5' in p:
+                log.msg('没有md5的url：%s' % p['url'],level=log.ERROR)
+            if isneedDump and p['md5'] in self.urlDump:
+                log.msg('url已经加入过pengdingequest中。%s' % p['url'], level=log.DEBUG)
+                continue
+            self.urlDump.add(p['md5'])
+            req=self.makeRequest(p["url"],isNeedSavetoDb=False, callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])#dont_filter = True
+#            if not isneedDump:
+#                req.dont_filter=True
             if req:
                 pendingRequestTemp.append(req)
             #限制pending_request的长度
@@ -164,7 +169,7 @@ class BaseCrawlSpider(CrawlSpider):
         #重置下载计数器
         self.pendingRequestCounter = settings.get('PENDING_REQUEST_COUNTER')
         if self.pendingRequestCounter > len(pendingRequest):
-            self.pendingRequestCounter = len(pendingRequest) - 10
+            self.pendingRequestCounter = len(pendingRequest) - 20
         print "爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s ；pendingRequestCounter:%s ;url补充总数：%s" % (self.name,numExp,numFailed,numNew,numLast,self.pendingRequestCounter,len(pendingRequest))
         log.msg("爬虫%s补充request成分：下载异常%s；下载失败：%s ；新url数：%s ；最后补充调度:%s ；pendingRequestCounter:%s ;url补充总数：%s" % (self.name,numExp,numFailed,numNew,numLast,self.pendingRequestCounter,len(pendingRequest)),level=log.INFO)
         return pendingRequest
@@ -201,7 +206,7 @@ class BaseCrawlSpider(CrawlSpider):
                 for newlink in linksNormal:
                     url=newlink.url
                     self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url, priority=v['priority'])
-           
+            
             #item页
             counterItem = 0
             for v in self.itemRegex:
