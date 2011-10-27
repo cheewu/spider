@@ -64,7 +64,7 @@ class Parse(object):
                          'bbsSpider2':'gb18030',
                          'go2euSpider':'gb18030','lvpingSpider':'utf-8',
                          'lvyeSpider':'utf-8','sinabbsSpider':'gb18030'}
-        self.countSuc = 0;
+        self.countSuc = 0
         self.countFail = 0
         for sn in spiderName:
             cursor=self.apt.findUnparsedPageByStatus(sn)
@@ -385,7 +385,7 @@ class Parse(object):
                 return
             self.loger.write('%s level=%s  :%s \n' %(datetime.datetime.now(),level,msg))
         else:
-            log.msg('%s level=%s  :%s \n' %(datetime.datetime.now()), level=level)
+            log.msg('%s level=%s  :%s \n' %(datetime.datetime.now(), level,msg))
         
     def ExtText(self,input):
         pass
