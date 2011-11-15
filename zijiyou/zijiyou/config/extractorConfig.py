@@ -35,8 +35,6 @@ extractorConfig = {
                                     'area':'//ul[@class="article-extra borderBom"]/li[1]/div/a/text()',
                                     'type':'//ul[@class="article-extra borderBom"]/li[2]/a/text()',
                                     'tag':'//ul[@class="article-extra borderBom"]/li[3]/div/a/text()',
-                                    'attractions':'//ul[@class="article-senior-tags borderBom"]/li[1]/div/a/text()',
-                                    'feature':'//ul[@class="article-senior-tags borderBom"]/li[2]/div/a/text()'
                             },
                             "article":{
                                     #第一部分和CommonSenseItem的一样
