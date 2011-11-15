@@ -11,7 +11,7 @@ from zijiyou.common.extractText import doExtract
 from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import PageDb, Article
+from zijiyou.items.zijiyouItem import Page, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
 import codecs
 import datetime
@@ -95,8 +95,8 @@ class BaseSeSpider(BaseCrawlSpider):
                     self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=v['homePage'], meta=meta, priority=pagePriority)
                     counterFirstPageNum += 1
                 except Exception,e:
-                    print '生成关键字%s请求的异常%s' % (keyword['keyWord'],str(e))
-                    log.msg('生成关键字%s请求的异常%s' % (keyword['keyWord'],str(e)) , level=log.ERROR)
+                    print '生成关键字%s请求的异常%s' % (word,str(e))
+                    log.msg('生成关键字%s请求的异常%s' % (word,str(e)) , level=log.ERROR)
         log.msg('生成了%s个关键字搜索请求' % counterFirstPageNum, level=log.INFO)
     
     def makeListRequestByFirstPageForSEs(self, response, pageSize=10):
@@ -258,7 +258,7 @@ class BaseSeSpider(BaseCrawlSpider):
             itemCollectionName = meta['itemCollectionName']
             log.msg("保存item页，url:%s" % response.url , level=log.INFO)
             #ResponseBody
-            loader = ZijiyouItemLoader(PageDb(), response=response)
+            loader = ZijiyouItemLoader(Page(), response=response)
             pageResponse = loader.load_item()
             pageResponse.setdefault('spiderName', self.name)
             pageResponse['status'] = 200

@@ -14,7 +14,7 @@ from scrapy.http import Request
 from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import PageDb
+from zijiyou.items.zijiyouItem import Page
 import datetime
 import re
 from zijiyou.common.utilities import getFingerPrint
@@ -127,7 +127,7 @@ class BaseCrawlSpider(CrawlSpider):
                 log.msg('url已经加入过pengdingequest中。%s' % p['url'], level=log.DEBUG)
                 continue
             self.urlDump.add(p['md5'])
-            req=self.makeRequest(p["url"],isNeedSavetoDb=False, callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])#dont_filter = True
+            req=self.makeRequest(p["url"],callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])#dont_filter = True
 #            if not isneedDump:
 #                req.dont_filter=True
             if req:
@@ -197,6 +197,7 @@ class BaseCrawlSpider(CrawlSpider):
             counterNor = 0
             for v in self.normalRegex:
                 linksNormal=[]
+                meta={'multitype':'multitype' in v and v['multitype'] or False}
                 if 'region' in v:
                     linksNormal=self.extractLinks(response,allow = v['regex'],restrict_xpaths = v['region'])
                 else:
@@ -205,12 +206,13 @@ class BaseCrawlSpider(CrawlSpider):
                 #保存新url
                 for newlink in linksNormal:
                     url=newlink.url
-                    self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url, priority=v['priority'])
+                    self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url,meta=meta, priority=v['priority'])
             
             #item页
             counterItem = 0
             for v in self.itemRegex:
                 linksItem=[]
+                multitype = 'multitype' in v and v['multitype'] or False
                 if 'region' in v:
                     linksItem=self.extractLinks(response,allow = v['regex'],restrict_xpaths = v['region'])
                 else:
@@ -219,12 +221,17 @@ class BaseCrawlSpider(CrawlSpider):
                 #保存新url
                 for newlink in linksItem:
                     url=newlink.url
-                    self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url, priority=v['priority'])
+                    if multitype:
+                        self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url,meta={'multitype':multitype}, priority=v['priority'])
+                    else:
+                        self.saveUrl(url, isNeedUpdateUrldump=False, isNeedSavetoDb=True, referenceUrl=response.url,callBackFunctionName='parseItem',meta={'multitype':multitype}, priority=v['priority'])
             #item
-            items = self.parseItem(response)
-            if items and len(items)>0:
-                log.msg('得到items，数量：%s'% len(items),level=log.DEBUG)
-                reqs.extend(items)
+            meta = response.meta
+            if 'multitype' in meta and meta['multitype'] or not 'multitype' in meta : 
+                items = self.parseItem(response)
+                if items and len(items)>0:
+                    log.msg('得到items，数量：%s'% len(items),level=log.DEBUG)
+                    reqs.extend(items)
             dtEnd=datetime.datetime.now()
             dtInterval=dtEnd - dtBegin
             log.msg("解析完成 %s parse 产生 Item页url数量：%s ,普通页数量:%s ,总数：%s ，花费时间：%s" % (response.url, counterItem, counterNor, len(reqs),dtInterval), level=log.INFO)
@@ -256,7 +263,7 @@ class BaseCrawlSpider(CrawlSpider):
         #保存PageDb
         items=[]
         log.msg('保存item页，类型： %s' % itemCollectionName, level=log.INFO)         
-        loader = ZijiyouItemLoader(PageDb(),response=response)
+        loader = ZijiyouItemLoader(Page(),response=response)
         pageResponse = loader.load_item()
         pageResponse.setdefault('itemCollectionName', itemCollectionName)
         pageResponse.setdefault('spiderName', self.name)
@@ -358,7 +365,7 @@ class BaseCrawlSpider(CrawlSpider):
                 urlItem['originUrl']=meta['originUrl']
             self.apt.saveNewUrl(self.name,urlItem=urlItem)
             
-    def makeRequest(self, url,isNeedSavetoDb=True,referenceUrl=None,callBackFunctionName=None,meta={},urlId=None,priority=1, **kw): 
+    def makeRequest(self, url,referenceUrl=None,callBackFunctionName=None,meta={},urlId=None,priority=1, **kw): 
         '''
         排重 保存url到数据库 创建Request返回。如果重复，则返回None
         '''
