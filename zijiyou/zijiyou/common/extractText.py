@@ -45,11 +45,11 @@ def getText(html,isextract=False):
             text += "<" + tag + " "
             #读取标签属性
             for k,v in tree.attrib.items():
-                text += k + "='" + v + "' "
+                text += " "+k + " ='" + v + "' "
             if tree.text or hasChild:
-                text += ">"
+                text += " >"
             else:
-                text += "/>"
+                text += " />"
         #添加文本和继续往下遍历
         if tree.text != None:
             text += tree.text
