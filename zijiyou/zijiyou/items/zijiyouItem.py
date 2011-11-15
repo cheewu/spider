@@ -27,7 +27,7 @@ class UrlDb(BaseItem):
         super(UrlDb, self).__init__(*kw)
         self['collectionName']="UrlDb"
     
-class PageDb(BaseItem):
+class Page(BaseItem):
     '''
     存储所有的page content，景点 景区 攻略 用户 个人页面
     '''
@@ -45,8 +45,8 @@ class PageDb(BaseItem):
 #        return 'PageDbItem'
     
     def __init__(self,*kw):
-        super(PageDb, self).__init__(*kw)
-        self['collectionName']="PageDb"
+        super(Page, self).__init__(*kw)
+        self['collectionName']="Page"
 
 class POI(BaseItem):
     '''
