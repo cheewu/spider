@@ -40,7 +40,7 @@ class Parse(object):
             else:
                 self.loger=open(logFileName,'w')
                 
-        self.requiredField= ['name','content','title']
+        self.requiredField= ['publishDate','content','title']
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
         self.needMd5=['Article','Note']
@@ -126,7 +126,7 @@ class Parse(object):
                     self.countFail += 1
 
         self.parseLog('解析完成，解析成功items数：%s 失败数量：%s' % (self.countSuc,self.countFail), level=LogLevel.DEBUG)
-        
+
         #离线爬虫关闭日志
         if self.loger and not self.loger.closed :
             self.loger.close()
