@@ -19,12 +19,13 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.185 127.0.0.1 192.168.0.188
+DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.184 127.0.0.1 192.168.0.188
 PORT=27017
 DB_URL='url'
-DB_ITEM='tripfm'
+DB_ITEM='page'
 #page按domain分库存储
 DB_MAP={
+        'page':'page',
         'url':'url',
         'tripfm':'tripfm',
         '17uSpider':'page17u',

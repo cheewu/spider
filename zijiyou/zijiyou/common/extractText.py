@@ -15,29 +15,29 @@ class Extracter(object):
     tagsIgnore=["head","style", "script", "noscript", "<built-in function comment>", "option"]
     title = ''
     publishDate = ''
-    pdateReg = r'(\d{4}[年-]+\d{1,2}[月-]+\d{1,2}[日]?)'
+    pdateReg = r'(\d{4}[年-]+\d{1,2}[月-]+\d{1,2}[日]*)'
     
-    def doExtract(self,html,threshold=0.16):
+    def doExtract(self,html,threshold=None):
         """
         抽取正文
+        threshold 纯文本密度默认0.16
         RETURN:
         标题，发布时间，正文
         """
-        #初始化title
+        #初始化title publishdate
         self.title = ''
-        threshold = threshold == None and float(0.5) or float(threshold)
-        html = unicode(html, 'utf8')
+        self.publishDate = ''
+        threshold = threshold == None and float(0.16) or float(threshold)
+        if not type(html) == unicode:
+            html = unicode(html,'utf-8')
         mtHtml = self._extMainText(html, threshold)
         # Transfer to plain text:
         text = self.getText(mtHtml,isextract=True)
-#        head = "标题："+ self.title if len(self.title) > 1 else ""
-#        head = head + "\n发布时间："+ self.publishDate if len(self.publishDate) > 1 else head
-#        text = head +"\n" + text if len(head) > 1 else text
-        return self.title,self.publishDate,text
+        return self.title,self.publishDate,text.strip()
     
     def getText(self,html,isextract=False):
-        if not isextract:
-            html = unicode(html, 'utf8')
+        if not type(html) == unicode:
+            html = unicode(html, 'utf-8')
         root = fromstring(html)
         tagsNewline=["p", "div", "h1", "h2", "h3", "h4", "h5", "h6", "br", "li"]
         tagsSave = ["img"]
@@ -133,6 +133,7 @@ class Extracter(object):
             for subtag in subtags:
                 if str(subtag.tag) == 'title':
                     self.title = subtag.text
+                    self.title = self.title.strip()
                     break
         if tag in self.tagsIgnore:
             return {'self': (0.0, 0, 0, tree)}
@@ -140,9 +141,10 @@ class Extracter(object):
         text = tree.text if tree.text != None else ''
         #找时间
         if len(self.publishDate) < 1 :
-            match = re.search(self.pdateReg, text)
+            match = re.search(self.pdateReg, str(text))
             if match :
                 self.publishDate = match.group(1)
+                self.publishDate = self.publishDate.strip().encode('utf-8')
         #an optional tail string. be used to hold additional data associated with the element. contains any text found after the element’s end tag and before the next tag.
         tail = tree.tail if tree.tail != None else ''
         countTextLen = len(text.strip()) + len(tail.strip())

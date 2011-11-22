@@ -7,13 +7,12 @@ Created on 2011-3-28
 from scrapy import log
 from scrapy.exceptions import NotConfigured
 from scrapy.selector import HtmlXPathSelector
-from zijiyou.common.extractText import doExtract
+from zijiyou.common.extractText import Extracter
 from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
 from zijiyou.items.zijiyouItem import Page, Article
 from zijiyou.spiders.baseCrawlSpider import BaseCrawlSpider
-import codecs
 import datetime
 import re
 import string
@@ -44,6 +43,7 @@ class BaseSeSpider(BaseCrawlSpider):
         self.nextPageField = ['content'] #在下一页取得的Field
         self.articleMetaName = 'Article'
         self.urlPatternMeta = 'urlPattern'
+        self.ext = Extracter()
         
     def clearUrlDb(self):
         '''
@@ -331,7 +331,7 @@ class BaseSeSpider(BaseCrawlSpider):
                 return value
 #                return time.strftime("%Y年%m月%d日")
         if name == 'content':
-            mainText = doExtract(content)
+            mainText = self.ext.doExtract(content,threshold=0.3)
             return mainText
     
     def checkXathConfig(self, response):

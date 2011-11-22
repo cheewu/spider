@@ -10,7 +10,7 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from scrapy.selector import HtmlXPathSelector
-from zijiyou.common.extractText import doExtract, getText
+from zijiyou.common.extractText import Extracter
 from zijiyou.config.extractorConfig import extractorConfig
 from zijiyou.db.spiderApt import OfflineApt
 from zijiyou.items.enumModel import LogLevel
@@ -19,16 +19,19 @@ import json
 import os
 import re
 import string
+import traceback
 
 class Parse(object):
     '''
     模拟爬虫解析网页
     '''
 
-    def __init__(self,isOffline=False):
+    def __init__(self,isOffline=True):
         '''
         Constructor
         '''
+        #正文抽取器
+        self.ext = Extracter()
         #离线爬虫初始化
         self.isOffline=isOffline
         self.apt=OfflineApt()
@@ -83,10 +86,9 @@ class Parse(object):
                     print '当前进度：百分之%s' % percents
                 
                 if not ('spiderName' in p and ('itemCollectionName' in p or p['spiderName'] in self.bbsSpiderName)):
-                    self.parseLog('缺失spiderName 或 itemCollectionName. Url:%s' % (p['url']), level=LogLevel.ERROR)
+                    self.parseLog('缺失spiderName 或 itemCollectionName. pageid:%s' % (p['_id']), level=LogLevel.ERROR)
                     continue
                 spiderName = p['spiderName']
-                
                 itemCollectionName = ''
                 if 'itemCollectionName' in p:
                     itemCollectionName = re.sub('[\r\n]', "", p['itemCollectionName'])
@@ -100,18 +102,26 @@ class Parse(object):
                         heard = p['headers']
                     #对body进行编码
                     responseBody = p['responseBody']
+                    if len(responseBody) <300 :
+                        self.parseLog('responseBody为空或过少。id为%s，spidername=%s' % (p['_id'],p['spiderName']), level=LogLevel.ERROR)
+                        continue
                     try:
                         if 'coding' in p:
-                            responseBody = responseBody.decode('utf-8').encode(p['coding'])
+                            if p['coding'] in ['windows-1252']:
+                                responseBody = responseBody.decode('utf-8').encode('gb18030')
+                            else:
+                                responseBody = responseBody.decode('utf-8').encode(p['coding'])
                         else:
                             coding='utf-8'
                             if spiderName in spiderCodingMap:
                                 coding=spiderCodingMap[spiderName]
                             responseBody = responseBody.decode('utf-8').encode(coding)
                         response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody), flags=None, request=None)
-                        item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody']) # test
+                        item = self.parseItem(spiderName, itemCollectionName, response, responseBody=p['responseBody'],pageid=p['_id'])
                     except Exception ,e:
                         self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
+                        traceback.print_exc()
+                        print '异常page的id：%s' % p['_id']
                         continue
                 if itemCollectionName in self.collectionNameMap:
                     itemCollectionName = self.collectionNameMap[itemCollectionName]
@@ -132,7 +142,7 @@ class Parse(object):
             self.loger.close()
             print 'OK !关闭日志'
 
-    def parseItem(self,spiderName=None, itemCollectionName=None, response=None,responseBody=''):
+    def parseItem(self,spiderName=None, itemCollectionName=None, response=None,responseBody='',pageid = ''):
         '''
         parse the page, get the information of attraction to initiate noteItem, then return items to pipeLine
         the pipeLine configured by "settings" will store the data
@@ -159,28 +169,50 @@ class Parse(object):
         item['status']=100
         item['spiderName'] = spiderName
         xpathItem = config[itemCollectionName]
+        #使用正文抽取，只要title、publishdate、content
+        if 'mainext' in xpathItem and xpathItem['mainext']:
+            title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+            if len(title) <1:
+                self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                return None
+            if len(content) <10:
+                self.parseLog('正文抽取未获得content，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                return None
+            if len(publishdate) < 1:
+                self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                return None
+            item['title'] = title
+            item['publishDate'] = publishdate
+            item['content'] = content
+            return item
+        #xpath解析
         for k,v in xpathItem.items():
             value=''
-            if v == "" and k == 'content':
-                value=doExtract(responseBody)
-                if value and value.strip() !="":
-                    item[k]=value
-                    continue
-                else:
-                    self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
-                    return None
-                
             values = hxs.select(v).extract()
             if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:
-                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s,xpath=%s, url:%s' % (k,itemCollectionName,spiderName,v,response.url), level=LogLevel.ERROR)
-                return None
+                self.parseLog('xpath解析发现item缺失属性：%s，类型： %s，spiderName:%s,xpath=%s, pageid:%s 。改用正文抽取尝试' % (k,itemCollectionName,spiderName,v,pageid), level=LogLevel.ERROR)
+                #若为Article，xpath没有解析出来，就用正文抽取再解析一次
+                if item['collectionName'] == 'Article':
+                    title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+                    if len(title) <1:
+                        self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                        return None
+                    if len(content) <10:
+                        self.parseLog('正文抽取未获得content，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                        return None
+                    if len(publishdate) < 1:
+                        self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                        return None
+                    item['title'] = title
+                    item['publishDate'] = publishdate
+                    item['content'] = content
+                    return item
             value=("-".join("%s" % p for p in values)).encode("utf-8")
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
-                
             if value :
-                item[k]=value
-            
+                item[k]=value.strip()
+        #regex+xpath解析
         regexItem={}
         regexName=itemCollectionName+'Regex'
         if regexName in config:
@@ -227,10 +259,9 @@ class Parse(object):
                             filter.append('\t'+p_strip+"<br/>")
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
                     if value.strp()=="" and k in self.requiredField:
-                        self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
+                        self.parseLog('regex+xpath解析发现item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.ERROR)
                         return None
             #bbs单独处理end
-            
             else:
                 regex=k+'Regex'
                 if not regex in regexItem:
@@ -239,8 +270,23 @@ class Parse(object):
                     regex=regexItem[regex]
                 values=hxs.select(v).re(regex)
                 if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:
-                    self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)
-                    return None
+                    self.parseLog('regex+xpath解析item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s 。改用正文抽取尝试' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.ERROR)
+                    #若为Article，xpath没有解析出来，就用正文抽取再解析一次
+                    if item['collectionName'] == 'Article':
+                        title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+                        if len(title) <1:
+                            self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                            return None
+                        if len(content) <10:
+                            self.parseLog('正文抽取未获得content，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                            return None
+                        if len(publishdate) < 1:
+                            self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                            return None
+                        item['title'] = title
+                        item['publishDate'] = publishdate
+                        item['content'] = content
+                        return item
                 if len(values) == 1:
                     value=("-".join("%s" % p for p in values)).encode("utf-8")
                 else:
@@ -249,8 +295,7 @@ class Parse(object):
                     value=self.parseSpecialField(k, value)
             
             if value :
-                item[k]=value
-            
+                item[k]=value.strip()
         #解析response中的数据
         respItem={}
         respName=itemCollectionName+'Resp'
@@ -269,25 +314,39 @@ class Parse(object):
                             self.parseLog('response.headers中没有该属性：%s，类型： %s' % (hk,itemCollectionName), level=LogLevel.WARNING)
                             continue
                         if not value and hk in self.requiredField:
-                            self.parseLog('非item页，因为缺失属性：%s，类型： %s， url:%s' % (hk,itemCollectionName,response.url), level=LogLevel.WARNING)                
-                            return None
+                            self.parseLog('非item页，因为缺失属性：%s，类型： %s， pageid:%s' % (hk,itemCollectionName,pageid), level=LogLevel.WARNING)                
+                            #若为Article，xpath没有解析出来，就用正文抽取再解析一次
+                            if item['collectionName'] == 'Article':
+                                title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+                                if len(title) <1:
+                                    self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                                    return None
+                                if len(content) <10:
+                                    self.parseLog('正文抽取未获得content，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                                    return None
+                                if len(publishdate) < 1:
+                                    self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.ERROR)
+                                    return None
+                                item['title'] = title
+                                item['publishDate'] = publishdate
+                                item['content'] = content
+                                return item
                         if hk in self.specialField:
                             value=self.parseSpecialField(hk, value)
-                        item[hk]=value
+                        item[hk]=value.strip()
                     continue
                 value = response.headers
             elif k == 'status':
                 value = response.status
             
             if not value and k in self.requiredField:
-                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, url:%s' % (k,itemCollectionName,spiderName,response.url), level=LogLevel.ERROR)                
+                self.parseLog('item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.ERROR)                
                 return None
             elif not value:
                 continue
             if k in self.specialField:
                 value=self.parseSpecialField(k, value)
-            item[k]=value
-        
+            item[k]=value.strip()
         return item
     
     def parseSpecialField(self,name,content):
@@ -314,7 +373,7 @@ class Parse(object):
         if name == 'content':
             if content == None or len(content)<100:
                 return content
-            mainText = getText(content)
+            mainText = self.ext.getText(content)
             #print mainText
             return mainText
         if name == 'noteType':
