@@ -6,9 +6,8 @@ extractorConfig = {
                                },
                 "baseSeSpider":{
                                 "Article":{
-                                    'content':'',
-                                    'title':'//div/h3/text()'
-                                        }
+                                           'mainext':True,
+                                           }
                                 },
                 "daodaoSpider":{
                                 'threshold':0.4,
@@ -243,21 +242,24 @@ extractorConfig = {
                              'threshold':0.4,
                              #第一部分
                             "Article1":{
-                                    'title':'//div[@id="bArticleContent"]/div[8]/font',
-                                    'author':'//div[@id="bArticleBody"]/div[1]/span/a/text()',
-                                    'publishDate':'//div[@id="bArticleBody"]/div[1]/span/text()',
-                                    'content':'//div[@id="bArticleContent"]',
-                                    },
+                                        'mainext':True,
+#                                        'title':'//div[@id="bArticleContent"]/div[8]/font',
+#                                        'author':'//div[@id="bArticleBody"]/div[1]/span/a/text()',
+#                                        'publishDate':'//div[@id="bArticleBody"]/div[1]/span/text()',
+#                                        'content':'//div[@id="bArticleContent"]',
+                                        },
                             "Article2":{
-                                    'title':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/h2[@class="leftside_head"]/text()',
-                                    'content':'//div[@id="infor_main"]',
-                                    'publishDate':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/div[@class="zxd_artinfo"]/span[1]/text()',
-                                    },
+                                        'mainext':True,
+#                                        'title':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/h2[@class="leftside_head"]/text()',
+#                                        'content':'//div[@id="infor_main"]',
+#                                        'publishDate':'//div[@class="center"]/div[@class="leftside"]/div[@class="leftside_top"]/div[@class="zxd_artinfo"]/span[1]/text()',
+                                        },
                             "Article3":{
-                                    'title':'//div[@id="bArticleBody"]/div[1]/h3/text()',
-                                    'content':'//div[@id="bArticleContent"]/div[6]',
-                                    'publishDate':'//div[@id="bArticleBody"]/div[1]/span/text()',
-                                    }
+                                        'mainext':True,
+#                                        'title':'//div[@id="bArticleBody"]/div[1]/h3/text()',
+#                                        'content':'//div[@id="bArticleContent"]/div[6]',
+#                                        'publishDate':'//div[@id="bArticleBody"]/div[1]/span/text()',
+                                        }
                              },
                 "lotourSpider":{
                                 'threshold':0.4,
@@ -280,17 +282,19 @@ extractorConfig = {
                                         },
                                 },
                 "sinaSpider":{
-                              'threshold':0.16,
-                              'Article1':{
-                                        'title':'//h1[@id="artibodyTitle"]/text()',
-                                        'publishDate':'//span[@id="pub_date"]/text()',
-                                        'content':'//div[@id="artibody"]',
-                                        },
-                            'Article2':{
-                                        'title':'//div[@id="artibodyTitle"]/h1/text()',
-                                        'publishDate':'//div[@id="artibodyTitle"]/div/text()',
-                                        'content':'//div[@id="artibody"]',
-                                        },
+                                'threshold':0.16,
+                                'Article1':{
+                                            'mainext':True,
+#                                            'title':'//h1[@id="artibodyTitle"]/text()',
+#                                            'publishDate':'//span[@id="pub_date"]/text()',
+#                                            'content':'//div[@id="artibody"]',
+                                            },
+                                'Article2':{
+                                            'mainext':True,
+#                                            'title':'//div[@id="artibodyTitle"]/h1/text()',
+#                                            'publishDate':'//div[@id="artibodyTitle"]/div/text()',
+#                                            'content':'//div[@id="artibody"]',
+                                            },
                               },
                 "hexunSpider":{
                                'threshold':0.4,
@@ -329,10 +333,11 @@ extractorConfig = {
                 "bbkerSpider":{
                                'threshold':0.4,
                                'Article':{
-                                          'content':'//div[@id="pageright"]/div/div[2]',
-                                          'title':'//div/div[2]/center/h2/text()',
-                                          'author':'//div[@class="info"]/ul[count(li)=5]/li[1]/a/text()',
-                                          'publishDate':'//div[@class="info"]/ul[count(li)=5]/li[4]/text()',
+                                          'mainext':True,
+#                                          'content':'//div[@id="pageright"]/div/div[2]',
+#                                          'title':'//div/div[2]/center/h2/text()',
+#                                          'author':'//div[@class="info"]/ul[count(li)=5]/li[1]/a/text()',
+#                                          'publishDate':'//div[@class="info"]/ul[count(li)=5]/li[4]/text()',
                                           }
                                },
                 "lvyou114Spider":{
@@ -347,25 +352,29 @@ extractorConfig = {
                 "21cnSpider":{
                               'threshold':0.4,
                               'Article':{
-                                         'title':'//div[@id="wrap"]//div[1]/div[2]/h2/text()',
-                                         'publishDate':'//div[@id="wrap"]//div[1]/div[2]/div/div/span/text()',
-                                         'content':'//div[@id="text"]',
+                                         'mainext':True,
+#                                         'title':'//div[@id="wrap"]//div[1]/div[2]/h2/text()',
+#                                         'publishDate':'//div[@id="wrap"]//div[1]/div[2]/div/div/span/text()',
+#                                         'content':'//div[@id="text"]',
                                          },
                               'Article2':{
-                                          'title':'//div[@id="text"]/div/h1/text()',
-                                          'publishDate':'//div[@id="text"]/div/address/span[1]/text()',
-                                          'content':'//div[@id="text"]/div/p',
+                                          'mainext':True,
+#                                          'title':'//div[@id="text"]/div/h1/text()',
+#                                          'publishDate':'//div[@id="text"]/div/address/span[1]/text()',
+#                                          'content':'//div[@id="text"]/div/p',
                                           }
                               },
                 "bytravelSpider":{
                                   'threshold':0.75,
                                   'Article1':{
-                                              'title':'//table[2]//tr[1]/th/h1/text()',
-                                              'content':'//table[2]//tr[4]/td/div/font',
+                                              'mainext':True,
+#                                              'title':'//table[2]//tr[1]/th/h1/text()',
+#                                              'content':'//table[2]//tr[4]/td/div/font',
                                               },
                                   'Article2':{
-                                              'title':'//table[2]//tr[1]/th/h1/text()',
-                                              'content':'//table[2]//tr/td[1]/table[2]//tr[2]/td',
+                                              'mainext':True,
+#                                              'title':'//table[2]//tr[1]/th/h1/text()',
+#                                              'content':'//table[2]//tr/td[1]/table[2]//tr[2]/td',
                                               }
                                   },
                 "yahooSpider":{
@@ -414,32 +423,13 @@ extractorConfig = {
                              'Article':{
                                         'mainext':True,
                                        },
-                             'ArticleRegex':{
-                                            'title':'//body',
-                                            'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
-                                            'author':'//body',
-                                            'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',
-                                            'publishDate':'//body',
-                                            'publishDateRegex':u'(\d{4}-\d{1,2}-\d{1,2}\s*\d{2}:\d{2}).*?<b>标题',
-                                            'content':'',
-                                            'contentRegex':'\>([^<>]+?)<|(<img[^<]*>)',
-                                            },
                              'BBSArticle':{
+                                           'mainext':True,
                                            },
-                             'BBSArticleRegex':{
-                                                'title':'',
-                                                'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
-                                                'author':'//body',
-                                                'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',
-                                                'publishDate':'//body',
-                                                'publishDateRegex':u'(\d{4}-\d{1,2}-\d{1,2}\s*\d{2}:\d{2}).*?<b>标题',
-                                                'content':'//body',
-                                                'contentRegex':'\>([^<>]+?)<|(<img[^<]*>)',
-                                                },
                              },
-                   'QQBlogSpider':{
-                                   'Article':{
-                                              'mainext':True,
-                                              }
-                                   }
+                'QQBlogSpider':{
+                                'Article':{
+                                            'mainext':True,
+                                            }
+                                }
                    }
