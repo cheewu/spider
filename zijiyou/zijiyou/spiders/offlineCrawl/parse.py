@@ -117,7 +117,7 @@ class Parse(object):
                                 coding=spiderCodingMap[spiderName]
                             responseBody = responseBody.decode('utf-8').encode(coding)
                         response = HtmlResponse(str(p['url']), status=200, headers=heard, body=str(responseBody).strip(), flags=None, request=None)
-                        item = self.parseItem(spiderName, itemCollectionName, response, responseBody=str(responseBody).strip(),pageid=p['_id'])
+                        item = self.parseItem(spiderName, itemCollectionName, response, responseBody=str(p['responseBody']).strip(),pageid=p['_id'])
                     except Exception ,e:
                         self.parseLog('解析异常。id为%s的page编码为：%s，spidername=%s，异常信息：%s' % (p['_id'],p['coding'],p['spiderName'],str(e)), level=LogLevel.ERROR)
                         traceback.print_exc()
