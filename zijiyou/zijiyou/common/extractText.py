@@ -5,6 +5,7 @@ Created on 2011-5-15
 @author: shiym
 '''
 from lxml.html import fromstring
+from lxml.html import tostring
 from lxml import etree
 import re
 
@@ -15,7 +16,7 @@ class Extracter(object):
     tagsIgnore=["head","style", "script", "noscript", "<built-in function comment>", "option"]
     title = ''
     publishDate = ''
-    pdateReg = r'(\d{4}[年-]+\d{1,2}[月-]+\d{1,2}[日]*)'
+    pdateReg = r'(\d{4}[年-]+\d{1,2}[月-]+\d{1,2})'
     
     def doExtract(self,html,threshold=None):
         """
@@ -84,17 +85,6 @@ class Extracter(object):
         filterMode - 是否使用过滤模式(小于阀值直接删除)
         RETURN:
         正文片段
-        
-        
-        Parses HTML and keeps only main text parts.
-    
-        PARAMETERS:
-        html - Input html text, MUST BE UNICODE!
-        threshold - The density threshold to distinguish major content & others.
-        filterMode - Use normal 'Extract' mode or the other 'Filter' mode.
-    
-        RETURN:
-        html fragments of main text
         """
         html = self._removeControlChars(html)
         root = fromstring(html)
@@ -118,12 +108,6 @@ class Extracter(object):
         'self': (标签密度, 纯文本长度, 标签下的文本总长度 , etree实例), 
         'child': 子标签的密度字典
         }
-        
-        Calculate the text density for every etree branch. The define of text density is:
-        (the length of pure text content under current html tag) / (total length of all content under current html tag)
-    
-        Return: {'self': (tag density, length of pure text, total length of html tags and text, etree instance), 
-        'child': list of density dics for child entities }
         """
         #a tag which is a string identifying what kind of data this element represents (the element type, in other words).
         tag = str(tree.tag).lower()
@@ -131,10 +115,11 @@ class Extracter(object):
         if len(self.title) < 1 and tag == 'head':
             subtags = tree[:]
             for subtag in subtags:
-                if str(subtag.tag) == 'title':
-                    self.title = subtag.text
-                    self.title = self.title.strip()
-                    break
+                if str(subtag.tag) == 'title' and subtag.text:
+                    self.title = str(subtag.text)
+                    if self.title:
+                        self.title = self.title.strip()
+                        break
         if tag in self.tagsIgnore:
             return {'self': (0.0, 0, 0, tree)}
         #a text string.
@@ -144,7 +129,7 @@ class Extracter(object):
             match = re.search(self.pdateReg, str(text))
             if match :
                 self.publishDate = match.group(1)
-                self.publishDate = self.publishDate.strip().encode('utf-8')
+                self.publishDate = self.publishDate.strip()
         #an optional tail string. be used to hold additional data associated with the element. contains any text found after the element’s end tag and before the next tag.
         tail = tree.tail if tree.tail != None else ''
         countTextLen = len(text.strip()) + len(tail.strip())
