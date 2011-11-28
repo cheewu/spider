@@ -43,7 +43,7 @@ class Parse(object):
             else:
                 self.loger=open(logFileName,'w')
                 
-        self.requiredField= ['publishDate','content','title']
+        self.requiredField= ['content','title']
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
         self.needMd5=['Article','Note']
