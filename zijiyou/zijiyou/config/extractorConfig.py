@@ -420,12 +420,28 @@ extractorConfig = {
                                },
                 "BBsSpider":{
                              'threshold':0.19,
-                             'Article':{
-                                        'mainext':True,
-                                       },
+                             'ArticleRegex':{
+                                            'title':'//body',
+                                            'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
+                                            'author':'//body',
+                                            'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',
+                                            'publishDate':'//body',
+                                            'publishDateRegex':u'(\d{4}-\d{1,2}-\d{1,2}\s*\d{2}:\d{2}).*?<b>标题',
+                                            'content':'//body',
+                                            'contentRegex':'\>([^<>]+?)<|(<img[^<]*>)',
+                                            },
                              'BBSArticle':{
-                                           'mainext':True,
                                            },
+                             'BBSArticleRegex':{
+                                                'title':'//body',
+                                                'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
+                                                'author':'//body',
+                                                'authorRegex':u'</b>([^<>]*?)\s+<b>[^<>]*</b>[^<>]*<b>标题',
+                                                'publishDate':'//body',
+                                                'publishDateRegex':u'(\d{4}-\d{1,2}-\d{1,2}\s*\d{2}:\d{2}).*?<b>标题',
+                                                'content':'//body',
+                                                'contentRegex':'\>([^<>]+?)<|(<img[^<]*>)',
+                                                },
                              },
                 'QQBlogSpider':{
                                 'Article':{
