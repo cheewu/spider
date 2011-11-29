@@ -11,20 +11,21 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib_exp.crawlspider import CrawlSpider, Rule
 from scrapy.exceptions import NotConfigured
 from scrapy.http import Request
+from zijiyou.common.utilities import getFingerPrint
 from zijiyou.config.spiderConfig import spiderConfig
 from zijiyou.db.spiderApt import OnlineApt
 from zijiyou.items.itemLoader import ZijiyouItemLoader
-from zijiyou.items.zijiyouItem import Page
+from zijiyou.items.zijiyouItem import Page, ImageItem
+from zijiyou.spiders.offlineCrawl.parse import Parse
 import datetime
 import re
-from zijiyou.common.utilities import getFingerPrint
 
 class BaseCrawlSpider(CrawlSpider):
     '''
     基础spider，负责从数据库中取得高优先级url，重新开始spider
     所有spider的父类
     '''
-    allowed_domains = ["daodao.com"]
+    allowed_domains = []
     start_urls = []
     rules = [Rule(r'.*', 'baseParse')]
     name ='BaseCrawlSpider'
@@ -41,6 +42,8 @@ class BaseCrawlSpider(CrawlSpider):
     #验证数据库是否和type配置对应
     dbCollecions=[]
     hasInit=False
+    #指示是否需要马上解析item
+    needParse = False
     
     #GMT格式
     weekMap = {'0':'Sun', '1':'Mon', '2':'Tue', '3':'Wed', '4':'Thu', '5':'Fri', '6':'Sat'}
@@ -50,6 +53,8 @@ class BaseCrawlSpider(CrawlSpider):
         super(BaseCrawlSpider, self).__init__(*a, **kw)
         if(not self.initConfig()):
                 raise NotConfigured('爬虫%s配置文件加载失败！'%self.name)
+        if self.needParse:
+            self.parser = Parse()
             
     def initConfig(self):
         '''
@@ -273,20 +278,29 @@ class BaseCrawlSpider(CrawlSpider):
         pageResponse.setdefault('coding', response.encoding)
         items.append(pageResponse)
 
-#        #解析item
-#        dtParseItemBegin=datetime.datetime.now()
-#        item=self.itemParser.parseItem(spiderName=self.name, itemCollectionName=itemCollectionName, response=response)
-#        dtParseItemEnd=datetime.datetime.now()
-#        dtCost=dtParseItemEnd-dtParseItemBegin
-#        log.msg('解析item时间花费：%s' % dtCost, level=log.INFO)
-#        if item:
-#            #测试图像下载
-#            if item.has_key('imageUrls'):
-#                print '测试图像下载，加入2个imgurls'
-#                item['imageUrls']=['http://images3.ctrip.com/images/uploadphoto/photo/0318/636632.jpg','http://images3.ctrip.com/images/uploadphoto/photo/0318/636633.jpg']
-#            items.append(item)
-#            pageResponse['status']=200
-            
+        #解析item
+        if self.needParse:
+            item=self.parser.parseItem(spiderName=self.name, itemCollectionName=itemCollectionName, response = response, responseBody = response.body_as_unicode(), pageid = response.url)
+            if item:
+                #若有图片，判断是否需要对图片补充domain
+                if 'imageUrls' in item:
+                    newimglist = []
+                    for img in item['imageUrls']:
+                        if not re.search('www', img):
+                            newimg = "http://" + self.allowed_domains[0] + img
+                            newimglist.append(newimg)
+                    item['imageUrls'] = newimglist
+                #装箱
+                newitem = ImageItem()
+                #临时
+                if itemCollectionName == 'ImageItem':
+                    newitem = ImageItem()
+                for k,v in item.items():
+                    newitem[k] = v
+                items.append(newitem)
+                log.msg('在线解析item成功,url:%s' % response.url,level= log.INFO)
+                print '在线解析item成功,url:%s' % response.url
+                pageResponse['status']=200
         return items
 
     def extractLinks(self, response, **extra): 

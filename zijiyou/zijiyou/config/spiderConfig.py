@@ -1909,12 +1909,163 @@ spiderConfig = {
         ]
                 
     },
-        
-        
-
-        
-
+    "jinghuaSpider":{
+                     'allowedDomains':[
+                                       "www.lvping.com",
+                                       "www.go2eu.com",
+                                       "www.17u.com",
+                                       "bbs.55bbs.com",
+                                       ],
+                     'startUrls':[
+                                  'http://www.lvping.com/Journals.aspx?type=1&pageindex=1', 
+                                  'http://www.lvping.com/Journals.aspx?type=2&pageindex=1', #lvping
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=53&filter=digest&page=1', #穷游精选 美国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=112&filter=digest&page=1', #穷游精选 欧洲
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=14&filter=digest&page=1',#穷游精选 法国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=12&filter=digest&page=1',#德国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=13&filter=digest&page=1',#意大利
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=17&filter=digest&page=1',#荷兰比利时
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=16&filter=digest&page=1',#英国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=19&filter=digest&page=1',#奥地利
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=18&filter=digest&page=1',#西班牙
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=15&filter=digest&page=1',#瑞士
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=26&filter=digest&page=1',#希腊
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=58&filter=digest&page=1',#亚洲各国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=57&filter=digest&page=1',#日本韩国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=106&filter=digest&page=1',#泰国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=108&filter=digest&page=1',#新马泰
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=107&filter=digest&page=1',#柬埔寨
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=110&filter=digest&page=1',#菲律宾
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=111&filter=digest&page=1',#印尼
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=103&filter=digest&page=1',#印度
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=102&filter=digest&page=1',#尼泊尔
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=104&filter=digest&page=1',#马尔代夫
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=52&filter=digest&page=1',#香港
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=51&filter=digest&page=1',#国内
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=53&filter=digest&page=1',#美国
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=54&filter=digest&page=1',#加拿大
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=55&filter=digest&page=1',#拉美
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=56&filter=digest&page=1',#澳大利亚
+                                  'http://www.go2eu.com/bbs/forumdisplay.php?fid=83&filter=digest&page=1',#新西兰
+                                  'http://www.17u.com/blog/best/1',#17u.com
+                                  'http://bbs.55bbs.com/forumdisplay.php?fid=34&filter=digest&page=1',#55bbs
+                                  ],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    #lvping
+                                    {
+                                     'regex':r'/Journals\.aspx\?type=[12]+&title=&district=0&IsTitle=T&selecttype=0&orderby=[rd]+&pageindex=\d+$', 
+                                     'region':'//form[@id="newMasterForm"]/div[5]/div[2]/div[3]/div[3]',
+                                     'priority':1,
+                                     },
+                                    #go2eu
+                                    {
+                                     'regex':r'forumdisplay\.php\?fid=\d+&filter=digest&page=\d+$',
+                                     'region':'//body/div[6]/div[4]/div',
+                                     'priority':1, 
+                                     },
+                                    #17u
+                                    {
+                                     'regex':r'/blog/best/\d+$',
+                                     'region':'//div[@id="pageList"]/div',
+                                     'priority':1, 
+                                     },
+                                    #55bbs
+                                    {
+                                     'regex':r'forumdisplay\.php\?fid=34&filter=digest&page=\d+$', 
+                                     'region':'//div[@id="list_left"]/div[1]/div[1]',
+                                     'priority':1,
+                                     },
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  #lvping
+                                  {
+                                   'itemCollectionName':'Article',
+                                   'regex':r'(/showjournal\-d\d+-r\d+\-journals\.html)|(/journals/AllSingleJournals\.aspx\?Writing=\d+)|(travel\-d\d+\-s\d+/\w+:\w+\.html)|(/showjournal\-d\w+\-r\d+\-detail\.html)',
+                                   'region':'//div[@id="yjDetail"]',
+                                   'priority':1000
+                                   },
+                                  #go2eu
+                                  {
+                                   'itemCollectionName':'BBSArticle',
+                                   'regex':r'viewthread\.php\?tid=\d+&extra=page[(=)|(%3D)]+\d+[(&)|(%26)]+amp[(;)|(%3B)]+filter[(=)|(%3D)]+digest$',
+                                   'region':'//div/form/table',
+                                   'priority':1000
+                                   },
+                                  #17u
+                                  {
+                                   'itemCollectionName':'BBSArticle',
+                                   'regex':r'/blog/article/\d+\.html$',
+                                   'region':'//div[@id="major"]/table',
+                                   'priority':1000
+                                   },
+                                  #55bbs
+                                  {
+                                   'itemCollectionName':'BBSArticle',
+                                   'regex':r'thread-\d+-1-\d+\.html$',
+                                   'region':'//div/form/table',
+                                   'priority':1000
+                                   },
+                                  ]
+                     },
+                
+    "onegreenSpider":{
+                     'allowedDomains':[
+                                       "www.onegreen.net",
+                                       ],
+                     'startUrls':[
+                                  'http://www.onegreen.net/maps/List/List_711.html',
+#                                  'http://www.onegreen.net/maps/List/List_1167.html',
+#                                  'http://www.onegreen.net/maps/List/List_712.html',
+#                                  'http://www.onegreen.net/maps/List/List_747.html',
+#                                  'http://www.onegreen.net/maps/List/List_748.html',
+#                                  'http://www.onegreen.net/maps/List/List_749.html',
+#                                  'http://www.onegreen.net/maps/List/List_750.html',
+#                                  'http://www.onegreen.net/maps/List/List_751.html',
+#                                  'http://www.onegreen.net/maps/List/List_752.html',
+#                                  'http://www.onegreen.net/maps/List/List_753.html',
+#                                  'http://www.onegreen.net/maps/List/List_754.html',
+#                                  'http://www.onegreen.net/maps/List/List_755.html',
+#                                  'http://www.onegreen.net/maps/List/List_756.html',
+#                                  'http://www.onegreen.net/maps/List/List_757.html',
+#                                  'http://www.onegreen.net/maps/List/List_758.html',
+#                                  'http://www.onegreen.net/maps/List/List_759.html',
+#                                  'http://www.onegreen.net/maps/List/List_760.html',
+#                                  'http://www.onegreen.net/maps/List/List_761.html',
+#                                  'http://www.onegreen.net/maps/List/List_762.html',
+#                                  'http://www.onegreen.net/maps/List/List_763.html',
+#                                  'http://www.onegreen.net/maps/List/List_764.html',
+#                                  'http://www.onegreen.net/maps/List/List_765.html',
+#                                  'http://www.onegreen.net/maps/List/List_766.html',
+#                                  'http://www.onegreen.net/maps/List/List_767.html',
+#                                  'http://www.onegreen.net/maps/List/List_768.html',
+#                                  'http://www.onegreen.net/maps/List/List_769.html',
+#                                  'http://www.onegreen.net/maps/List/List_770.html',
+#                                  'http://www.onegreen.net/maps/List/List_771.html',
+#                                  'http://www.onegreen.net/maps/List/List_772.html',
+#                                  'http://www.onegreen.net/maps/List/List_1177.html',#交通图
+                                  ],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    {
+                                     'regex':r'/maps/ShowClass\.asp\?ClassID=\d+&page=\d+$',
+                                     'region':'//table[1]//table//tr[2]/td/div',
+                                     'priority':1,
+                                     },
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  {
+                                   'itemCollectionName':'ImageItem',
+                                   'regex':r'/maps/HTML/\d+\.html$',
+                                   'region':'//table[1]//table//tr[2]/td/table',
+                                   'priority':1000
+                                   },
+                                  ]
+                     },
     
+        
         
            
     
@@ -1981,40 +2132,40 @@ spiderConfig = {
           'go2euSpider':{
                            'allowedDomains':["go2eu.com"],
                            'startUrls':[
-                                #测试
-                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=98',
+#                                #测试
+#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=98',
 
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=12', #德国
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=14', #法国
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=13', #意大利
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=17', #荷比卢
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=18', #西班牙葡萄牙
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=19', #奥地利
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=16', #英国
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=15', #瑞士
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=26', #希腊土耳其
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=25', #北欧
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=24', #东欧
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=58', #东南亚
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=57', #东亚
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=59', #西亚南亚
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=51', #中国
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=52', #港澳台
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=53', #美国
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=54', #加拿大
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=55', #拉美
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=56', #澳大利亚
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=83', #新西兰
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=86', #埃及
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=60', #非洲
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=94', #游轮
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=3', #签证
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=1', #多国
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=62', #廉航
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=79', #交通
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=33', #自驾
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=80', #购物
-#                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=100', #银联
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=12', #德国
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=14', #法国
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=13', #意大利
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=17', #荷比卢
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=18', #西班牙葡萄牙
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=19', #奥地利
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=16', #英国
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=15', #瑞士
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=26', #希腊土耳其
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=25', #北欧
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=24', #东欧
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=58', #东南亚
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=57', #东亚
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=59', #西亚南亚
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=51', #中国
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=52', #港澳台
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=53', #美国
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=54', #加拿大
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=55', #拉美
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=56', #澳大利亚
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=83', #新西兰
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=86', #埃及
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=60', #非洲
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=94', #游轮
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=3', #签证
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=1', #多国
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=62', #廉航
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=79', #交通
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=33', #自驾
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=80', #购物
+                                'http://www.go2eu.com/bbs/forumdisplay.php?fid=100', #银联
                                ],
                 
                  #普通list页正则表达式
@@ -2023,21 +2174,24 @@ spiderConfig = {
                                ],
                  #item页正则表达式 itemCollectionName对应item存放的数据表名
                  'itemRegex':[
-                                  {'itemCollectionName':'BBSArticle',
-                                   'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
-                                   'itemPrintPageFormat':r'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=%s',
-                                   'itemTidRegex':r'tid=(\d+)',
-                                   'region':'//div/form/table',
-                                   'priority':1000},
-                                  ]
+                              {
+                               'itemCollectionName':'BBSArticle',
+                               'regex':r'(viewthread\.php\?tid=\d+&extra=page.{1,4}\d+)|(http://www\.go2eu\.com/bbs/viewthread\.php\?action=printable&tid=.*)',
+                               'itemPrintPageFormat':r'http://www.go2eu.com/bbs/viewthread.php?action=printable&tid=%s',
+                               'itemTidRegex':r'tid=(\d+)',
+                               'region':'//div/form/table',
+                               'priority':1000
+                               },
+                              ]
                     
                 },
+        
 
 
        "lvyeSpider":{
         'allowedDomains':["bbs.lvye.cn"],
                 'startUrls':[
-            'http://bbs.lvye.cn/forum-viewthread-action-printable-tid-318979.html'
+                             'http://bbs.lvye.cn/forum-viewthread-action-printable-tid-318979.html'
                         #'http://bbs.lvye.cn/forum-1559-1.html',#自驾
             #'htp://bbs.lvye.cn/forum-8-1.html',#游记攻略
             #'http://bbs.lvye.cn/forum-1815-1.html',#背包自助
@@ -2070,16 +2224,16 @@ spiderConfig = {
             
                      },
     "bbkerSpider":{
-        'allowedDomains':["www.bbker.com" ],
-        'startUrls':[                            
-            'http://www.bbker.com'
-        ],
-        #普通list页正则表达式
-        'normalRegex':[
-            {
-                'regex':'^http://www.bbker.com/bbker/\w+(/doclist/)*(\w+.html)*$',
-                'priority':1000
-            },
+                   'allowedDomains':["www.bbker.com" ],
+                   'startUrls':[                            
+                                'http://www.bbker.com'
+                                ],
+                    #普通list页正则表达式
+                    'normalRegex':[
+                                   {
+                                    'regex':'^http://www.bbker.com/bbker/\w+(/doclist/)*(\w+.html)*$',
+                                    'priority':1000
+                                    },
 #            {
 #                'regex':'^http://www.bbker.com/tag/[%\w\d]+.html$',
 #                'priority':1000
@@ -2088,20 +2242,21 @@ spiderConfig = {
 #                'regex':'^http://www.bbker.com/tag/doc/[%\w\d]+/(\d+.html)*$',
 #                'priority':1000
 #            },
-            {
-                'regex':'^http://www.bbker.com/bbker/\w+/doclist/volumn/[%\w\d]+/$',
-                'priority':1000
-            }
-        ],
-        #item页正则表达式 itemCollectionName对应item存放的数据表名
-        'itemRegex':[
-            #Article 
-            {
-                'itemCollectionName':'Article',
-                'regex':'^http://www.bbker.com/D\w+.html$',
-                'priority':600
-            }                                  
-        ]
-    },
-
+                                    {
+                                     'regex':'^http://www.bbker.com/bbker/\w+/doclist/volumn/[%\w\d]+/$',
+                                     'priority':1000
+                                    }
+                                    ],
+                    #item页正则表达式 itemCollectionName对应item存放的数据表名
+                    'itemRegex':[
+                                 #Article 
+                                 {
+                                  'itemCollectionName':'Article',
+                                  'regex':'^http://www.bbker.com/D\w+.html$',
+                                  'priority':600
+                                  }                            
+                                 ]
+                   },
+                
+                
 }

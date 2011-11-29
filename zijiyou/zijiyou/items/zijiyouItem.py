@@ -106,7 +106,7 @@ class Article(BaseItem):
     helpfulNum = Field()     #有用
     unhelpfulNum = Field()   #没有用
     
-    honors = Field()         #荣誉 ， 如：原创、加精
+    honuors = Field()         #荣誉 ， 如：原创、加精
     keyWords = Field()       #关键字  
     destination=Field()      #旅游目的地
     
@@ -273,7 +273,7 @@ class KeyWord(Item):
     '''
     搜索引擎关键字
     '''
-    collectionName="KeyWord"
+    collectionName=Field()
     keyWord=Field()
     itemCollectionName=Field() #关键字搜索出的item类别。必须是现有item之一，否则无法存储。 与ResponseBody的type相同
     priority=Field() #关键字优先级
@@ -285,11 +285,15 @@ class KeyWord(Item):
         super(KeyWord, self).__init__(*kw)
         self['collectionName']="KeyWord"
     
-#class Image(Item):
-#    '''
-#    爬取结果中的图片
-#    '''
-#    collectionName="ImageDb"
-#    imageUrl = Field() #图片原来的url
-#    imagePath = Field() #图片存到本地的路径地址
+class ImageItem(BaseItem):
+    '''
+    爬取结果中的图片
+    '''
+    collectionName = Field()
+    name = Field()      #图片名称
+    imageUrls = Field()  #图片原来的url
+    imagesInfo = Field() #图片存到本地的路径地址等信息
+    def __init__(self,*kw):
+        super(ImageItem, self).__init__(*kw)
+        self['collectionName']="ImageItem"
     

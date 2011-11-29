@@ -52,6 +52,8 @@ class Parse(object):
         self.limitNum=50# test should be 50 
         self.responseTotalNum=0
         self.curSeek=0
+        #是否需要列表格式的value。如imagelist需要的是list
+        self.listFields = ['imageUrls'] 
     
     def parse(self,spiderName=[]):
         '''
@@ -207,11 +209,14 @@ class Parse(object):
                     item['publishDate'] = publishdate
                     item['content'] = content
                     return item
-            value=("-".join("%s" % p for p in values)).encode("utf-8")
-            if k in self.specialField:
-                value=self.parseSpecialField(k, value)
-            if value :
-                item[k]=value.strip()
+            if k in self.listFields:
+                item[k] = values
+            else:
+                value=("-".join("%s" % p for p in values)).encode("utf-8")
+                if k in self.specialField:
+                    value=self.parseSpecialField(k, value)
+                if value :
+                    item[k]=value.strip()
         #regex+xpath解析
         regexItem={}
         regexName=itemCollectionName+'Regex'
