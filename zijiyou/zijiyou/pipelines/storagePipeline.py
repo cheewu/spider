@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/topics/item-pipeline.html
+'''
+Created on 2011-6-22
+
+@author: shiym
+'''
 from scrapy import log
 from scrapy.exceptions import NotConfigured
 from zijiyou.db.pipelineApt import StorageApt

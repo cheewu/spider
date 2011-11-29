@@ -15,21 +15,23 @@ class ImagesPipeline(ImagesPipeline):
     '''
     
     def get_media_requests(self, item, info):
+        '''
+        下载图片
+        '''
+        #Article等一个Article包含多个图片
         if item and 'imageUrls' in item:
             self.dtBegin=datetime.datetime.now()
-            print '测试 imgpipeline 发出图片下载请求%s' % item['imageUrls']
             log.msg("ImagePipeline，开始产生图片请求，并以最高的优先级下载，时间：%s" % datetime.datetime.now(), level=log.INFO)
             for url in item['imageUrls']:
                 log.msg("产生一个图片链接请求:%s" % url, level=log.INFO)
-                print '测试 图片url：%s'% url        
+                print 'media_requests 图片url：%s'% url        
                 yield Request(url)
 
     def item_completed(self, results, item, info):
-        if not (results and len(results)>1) :
-            print '测试 到达imgpipeline 但没有图片%s' % item
+        if not (results and len(results)>0) :
             return item
         self.dtEnd=datetime.datetime.now()
-        log.msg("图片下载完成，时间花费：%s" % (self.dtEnd - self.dtBegin), level=log.INFO)
-        print '测试 下载完成：结果%s'% results
+        log.msg("图片下载完成，时间花费：%s" % (self.dtEnd - self.dtBegin), level=log.DEBUG)
+        print '图片下载完成：结果%s'% results
         item['imagesInfo']=results
         return item

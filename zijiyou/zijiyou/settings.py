@@ -14,7 +14,7 @@ SPIDER_MODULES = ['zijiyou.spiders']
 NEWSPIDER_MODULE = 'zijiyou.spiders'
 DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ResponseBody'
 ITEM_PIPELINES=[
-#                'zijiyou.pipelines.imagesPipeline.ImagesPipeline',
+                'zijiyou.pipelines.imagesPipeline.ImagesPipeline',
                 'zijiyou.pipelines.storagePipeline.StoragePipeline' 
                 ]
 
@@ -53,37 +53,41 @@ DB_MAP={
         'xcarSpider':'pagexcar',
         'yahooSpider':'pageyahoo',
         'baseSeSpider':'pagebasese',
-        'bbsSpider2':'pagebbs'
+        'bbsSpider2':'pagebbs',
+        'jinghuaSpider':'pagejinghua',
+        'onegreenSpider':'pageonegreen',
         }
 #url独立数据库存储，按照domain分表存储
 DB_URL_COLLECTIONS_MAP = {
-                    '17uSpider':'yiqi17u',
-                    '21cnSpider':'eryi21cn',
-                    '55bbsSpider':'wuwu55bbs',
-                    'bbkerSpider':'bbker',
-                    'bytravelSpider':'bytravel',
-                    'daodaoSpider':'daodao',
-                    'go2euSpider':'go2eu',
-                    'hexunSpider':'hexun',
-                    'lotourSpider':'lotour',
-                    'lotourbbsSpider':'lotourbbs',
-                    'lvpingSpider':'lvping',
-                    'lvrenSpider':'lvren',
-                    'lvyeSpider':'lvye',
-                    'lvyou114Spider':'lvyou114',
-                    'mafengwoSpider':'mafengwo',
-                    'meishiSpider':'meishi',
-                    'peopleSpider':'people',
-                    'QQBlogSpider':'qqblog',
-                    'sinaSpider':'sina',
-                    'sinabbsSpider':'sinabbs',
-                    'sohuSpider':'sohu',
-                    'sozhenSpider':'sozhen',
-                    'xcarSpider':'xcar',
-                    'yahooSpider':'yahoo',
-                    'baseSeSpider':'basese',
-                    'bbsSpider2':'bbs'
-                      }
+                          '17uSpider':'yiqi17u',
+                          '21cnSpider':'eryi21cn',
+                          '55bbsSpider':'wuwu55bbs',
+                          'bbkerSpider':'bbker',
+                          'bytravelSpider':'bytravel',
+                          'daodaoSpider':'daodao',
+                          'go2euSpider':'go2eu',
+                          'hexunSpider':'hexun',
+                          'lotourSpider':'lotour',
+                          'lotourbbsSpider':'lotourbbs',
+                          'lvpingSpider':'lvping',
+                          'lvrenSpider':'lvren',
+                          'lvyeSpider':'lvye',
+                          'lvyou114Spider':'lvyou114',
+                          'mafengwoSpider':'mafengwo',
+                          'meishiSpider':'meishi',
+                          'peopleSpider':'people',
+                          'QQBlogSpider':'qqblog',
+                          'sinaSpider':'sina',
+                          'sinabbsSpider':'sinabbs',
+                          'sohuSpider':'sohu',
+                          'sozhenSpider':'sozhen',
+                          'xcarSpider':'xcar',
+                          'yahooSpider':'yahoo',
+                          'baseSeSpider':'basese',
+                          'bbsSpider2':'bbs',
+                          'jinghuaSpider':'jinghua',
+                          'onegreenSpider':'onegreen',
+                          }
 DB_ITEM_COLLECTIONS = [
                   'POI',
                   'Attraction',
@@ -103,7 +107,8 @@ DB_ITEM_COLLECTIONS = [
                   'KeyWord',
                   'ImageDb',
                   'Profile',
-                  'KeyList'
+                  'KeyList',
+                  'ImageItem',#图像
                   ]
 COLLECTION_NAME_MAP = {
                     'Attraction':'POI',
@@ -127,7 +132,7 @@ BBS_SPIDER_NAME = [
 
 LOG_FILE='./zijiyou.log' #./zijiyou.log /home/shiym/spider/zijiyou
 LOG_LEVEL='INFO' #INFO DEBUG
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 10
 #遵守robots协议
 #ROBOTSTXT_OBEY = True
 #爬虫监控器服务的日志
@@ -135,7 +140,7 @@ WEBSERVICE_LOGFILE = './webservice.log'
 #爬虫监控服务端口
 WEBSERVICE_PORT = [6080, 7030]
 #多线程
-CONCURRENT_REQUESTS_PER_SPIDER=2
+CONCURRENT_REQUESTS_PER_SPIDER=1
 #离线调度阀值 一般设为MAX_INII_REQUESTS_SIZE的80%
 PENDING_REQUEST_COUNTER= 80
 #pengdingRequest长度限制
@@ -143,7 +148,7 @@ MAX_INII_REQUESTS_SIZE = 100
 #公网ip更新周期
 PROXY_UPDATE_PERIOD = 3600*4 #3600*4
 #下载超时
-DOWNLOAD_TIMEOUT = 60
+DOWNLOAD_TIMEOUT = 180
 #代理公网ip文件
 PROXY_FILE_NAME='./proxy.txt'#./proxy.txt /home/shiym/spider/zijiyou
 #代理无效判断标准
@@ -161,7 +166,7 @@ DIAGNOSER_PATH = './diagnose.log'
 OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym
 #OFFLINE_PARSE_LOG = '/home/cubee/python/spider/spider/zijiyou/offlineParseLog.log'
 
-IMAGES_STORE = '/data/images' #图片存放路径 /home/hy/data/images
+IMAGES_STORE = '/data/mongodb/images' #图片存放路径 /home/hy/data/images
 IMAGES_EXPIRES = 9999 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999
 IMAGES_MIN_HEIGHT = 110
 IMAGES_MIN_WIDTH = 110
@@ -195,7 +200,7 @@ MAIL_TO_LIST = [
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL = True
+MAIL = False
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'
