@@ -60,7 +60,7 @@ class Parse(object):
         离线爬虫入口
         '''
         heard={'Content-type':'text/html',
-               'encoding':'gb18030',#uft-8
+               'encoding':'gb18030',
                'Content-Type': ['text/html;charset=gb18030'], #UTF-8
                'Pragma': ['no-cache'], 
                'Cache-Control': ['no-cache,no-store,must-revalidate']
@@ -265,10 +265,10 @@ class Parse(object):
                                 if sig_start:
                                     sig_start = 0
                                 else:
-                                    filter.append("<br/>\n#reply#\n<br/>") 
+                                    filter.append("--------------------------------------------") 
                             sig_p = 1
                         else:
-                            filter.append('\t'+p_strip+"<br/>")
+                            filter.append(p_strip+"\n")
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
                     if value.strip() == "" and k in self.requiredField:
                         self.parseLog('regex+xpath解析发现item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.INFO)

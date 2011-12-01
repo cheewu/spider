@@ -66,10 +66,11 @@ class RandomHttpProxy(object):
         """
         print '加载或更新公网代理：%s' % datetime.datetime.now()
         log.msg('加载或更新公网代理：%s' % datetime.datetime.now(),level=log.INFO)
+        counter = 0
         f=open(self.proxyFile)
         for p in f:
             pdict=p.split('=')
-            if len(pdict) == 2:
+            if len(pdict) == 2 and len(pdict[0])>2 and len(pdict[1]) > 5:
                 type=pdict[0].strip()
                 url=pdict[1].strip()
                 if not type in self.proxies.keys():
@@ -82,9 +83,11 @@ class RandomHttpProxy(object):
                 if url[:9] == '127.0.0.1':
                     newProxy['failNum'] = -999999999
                 self.proxies[type].append(newProxy)
+                counter += 1
             else:
                 print '无效的代理：%s' % p
                 log.msg('无效的代理：%s' % p,level=log.ERROR)
+        print '加载或更新公网代理数:%s' % counter
         #周期性加载更新
         reactor.callLater(self.proxyUpdatePeriod, self.updateProxy)
 

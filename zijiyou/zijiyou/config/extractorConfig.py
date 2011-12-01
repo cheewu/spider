@@ -10,7 +10,7 @@ extractorConfig = {
                                            }
                                 },
                 "daodaoSpider":{
-                                'threshold':0.19,
+                                'threshold':0.40,
                                 "Attraction":{
                                               'name':'//div[@class="wrpHeader clearfix"]/h1[@id="HEADING"]/text()',
                                               'area':'//div[@id="MAIN"]/div[@class="crumbs"]/ul/li/ul/li/a/text()',
@@ -95,7 +95,7 @@ extractorConfig = {
                                 },
                    
                 "lvpingSpider":{
-                                'threshold':0.19,
+                                'threshold':0.40,
                                 "Attraction":{
                                               'name':'//h1[@property="v:name"]/text()',
                                               'desc':'//div[@id="hiddenContent"]',
@@ -206,7 +206,7 @@ extractorConfig = {
                                         },
                                   },
                 "sozhenSpider":{
-                                'threshold':0.19,
+                                'threshold':0.40,
                                 "Article":{
                                            'author':'//div[2]/div[2]/div[1]/ul/li[1]/text()',
                                            'publishDate':'//div[2]/div[2]/div[1]/ul/li[2]/text()',
@@ -235,7 +235,7 @@ extractorConfig = {
                                 },
                    
                 "17uSpider":{
-                             'threshold':0.19,
+                             'threshold':0.4,
                              #第一部分
                             "Article1":{
                                         'mainext':True,
@@ -258,7 +258,7 @@ extractorConfig = {
                                         }
                              },
                 "lotourSpider":{
-                                'threshold':0.19,
+                                'threshold':0.40,
                                 "Article1":{
                                             'title':'//div[@id="maincontent"]/h6//text()',
                                             'publishDate':'//div[@id="maincontent"]/p[1]/span/text()',
@@ -277,7 +277,7 @@ extractorConfig = {
                                                 },
                                 },
                 "sinaSpider":{
-                              'threshold':0.16,
+                              'threshold':0.45,
                               'Article1':{
                                           'mainext':True,
 #                                         'title':'//h1[@id="artibodyTitle"]/text()',
@@ -292,7 +292,7 @@ extractorConfig = {
                                             },
                               },
                 "hexunSpider":{
-                               'threshold':0.19,
+                               'threshold':0.40,
                                'Article':{
                                           'title':'//div[@id="mainbox"]/div[2]/p[1]/text()',
                                           'publishDate':'//div[@id="mainbox"]/div[2]/div[1]/font/text()',
@@ -300,7 +300,7 @@ extractorConfig = {
                                           },
                                },
                 "peopleSpider":{
-                                'threshold':0.19,
+                                'threshold':0.40,
                                 'Article':{
                                            'title':'//div[@id="p_title"]/text()',
                                            'publishDate':'//div[@id="p_publishtime"]/text()',
@@ -313,7 +313,7 @@ extractorConfig = {
                                             },
                                 },
                 "sohuSpider":{
-                              'threshold':0.19,
+                              'threshold':0.40,
                               'Article1':{
                                           'title':'//div[1]/div[1]/h1/text()',
                                           'content':'//div[@id="sohu_content"]',
@@ -326,7 +326,7 @@ extractorConfig = {
                                           }
                               },
                 "bbkerSpider":{
-                               'threshold':0.19,
+                               'threshold':0.40,
                                'Article':{
                                           'mainext':True,
 #                                          'content':'//div[@id="pageright"]/div/div[2]',
@@ -336,7 +336,7 @@ extractorConfig = {
                                           }
                                },
                 "lvyou114Spider":{
-                                  'threshold':0.19,
+                                  'threshold':0.5,
                                   'Article':{
                                             'content':'//div[1]/div[1]/div[4]',
                                             'title':'//div[3]/div[1]/div[1]/div[1]/h1/text()',
@@ -345,7 +345,7 @@ extractorConfig = {
                                             }
                                   },
                 "21cnSpider":{
-                              'threshold':0.19,
+                              'threshold':0.50,
                               'Article':{
                                          'mainext':True,
 #                                         'title':'//div[@id="wrap"]//div[1]/div[2]/h2/text()',
@@ -373,7 +373,7 @@ extractorConfig = {
                                               }
                                   },
                 "yahooSpider":{
-                               'threshold':0.19,
+                               'threshold':0.40,
                                'Article1':{
                                            'title':'//div/div/div/div/h1/text()',
                                            'content':'//div[@class="text-area"]/div[@class="text fixclear"]|//div[@id="bd"]/div[@class="main"]/div[@class="bak con text"]/div[@class="imp"]/div[@class="bd"]',
@@ -399,7 +399,7 @@ extractorConfig = {
                                                 },
                                },
                 "lvrenSpider":{
-                               'threshold':0.19,
+                               'threshold':0.40,
                                'Article2':{
                                            'title':'//div[@id="guide_main"]/div[@class="clear"]/div[@class="left"]/h1[@class="guide"]/span[@class="o"]/text()',
                                            'destination':'//div[@class="tc-header-logo tc-container"]/div[@class="tc-center-container"]/div[@class="tc-logo"]/div[@class="tc-title"]/strong/text()',
@@ -414,7 +414,7 @@ extractorConfig = {
                                            },
                                },
                 "BBsSpider":{
-                             'threshold':0.19,
+                             'threshold':0.40,
                              'ArticleRegex':{
                                             'title':'//body',
                                             'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',
