@@ -19,10 +19,10 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.184 127.0.0.1 192.168.0.188
+DB_HOST = '192.168.0.184' #192.168.0.183 192.168.0.184 127.0.0.1 192.168.0.188
 PORT=27017
 DB_URL='url'
-DB_ITEM='page'
+DB_ITEM='pagetemp'
 #page按domain分库存储
 DB_MAP={
         'page':'page',
@@ -140,7 +140,7 @@ WEBSERVICE_LOGFILE = './webservice.log'
 #爬虫监控服务端口
 WEBSERVICE_PORT = [6080, 7030]
 #多线程
-CONCURRENT_REQUESTS_PER_SPIDER=1
+CONCURRENT_REQUESTS_PER_SPIDER= 10
 #离线调度阀值 一般设为MAX_INII_REQUESTS_SIZE的80%
 PENDING_REQUEST_COUNTER= 80
 #pengdingRequest长度限制
@@ -166,12 +166,13 @@ DIAGNOSER_PATH = './diagnose.log'
 OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym
 #OFFLINE_PARSE_LOG = '/home/cubee/python/spider/spider/zijiyou/offlineParseLog.log'
 
-IMAGES_STORE = '/data/mongodb/images' #图片存放路径 /home/hy/data/images
+IMAGES_STORE = '/home/shiym/data/images' #图片存放路径 /home/hy/data/images
 IMAGES_EXPIRES = 9999 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999
 IMAGES_MIN_HEIGHT = 110
 IMAGES_MIN_WIDTH = 110
 
-EXTENSIONS = {'zijiyou.extensions.diagnoser.Diagnoser':501
+EXTENSIONS = {
+              'zijiyou.extensions.diagnoser.Diagnoser':501
               }
 
 DOWNLOADER_MIDDLEWARES = {
@@ -196,7 +197,6 @@ SPIDER_MIDDLEWARES = {
 MAIL_INTERVAL = 14400
 #发送对象列表 
 MAIL_TO_LIST = [
-                "953227024@qq.com", 
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
@@ -211,7 +211,6 @@ MAIL_PASS = 'zijiyou'
 #检测内存的使用-内存泄漏 scrapy.contrib.memdebug.MemoryDebugger
 #MEMDEBUG_ENABLED=True
 MEMDEBUG_NOTIFY = [
-                "953227024@qq.com", 
                 "1413614423@qq.com"
                 ]
 #检测内存的使用-占用内存容量
@@ -220,7 +219,6 @@ MEMUSAGE_NOTIFY_MAIL=2000
 MEMUSAGE_WARNING_MB=3000
 #MEMUSAGE_LIMIT_MB=5048
 MEMUSAGE_NOTIFY_MAIL = [
-                        "953227024@qq.com", 
                         "1413614423@qq.com"
                         ]
 #telnet setting
