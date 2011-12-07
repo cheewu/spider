@@ -29,6 +29,13 @@ class OnlineApt(object):
         '''
         whereJson={"status":{"$gte":statusBegin,"$lt":statusEnd},"spiderName":spiderName}
         return mongoApt.find(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson,sortField='priority',limitNum=self.urlIncreasement * 5) #self.urlIncreasement * 20
+    
+    def findPendingUrls4JinghuaByStatusAndSpiderName(self,spiderName):
+        '''
+        精华游记url处理：不下载item只要url
+        '''
+        whereJson = {"status":{"$gte":300,"$lt":1001},"priority":1}
+        return mongoApt.find(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson,sortField='priority',limitNum=self.urlIncreasement * 5) #self.urlIncreasement * 20
 
     def updateUrlDbStatusByUrl(self,url,spiderName,status=200):
         '''
@@ -102,8 +109,8 @@ class OfflineApt(object):
         查询待解析的Page，通过状态
         '''
         colName='Page'
-        whereJson={'status':{'$lt':200}}
-#        whereJson={'url':'http://www.17u.com/blog/article/78238.html'}
+#        whereJson={'status':{'$lt':200}}
+        whereJson={'_id':ObjectId('4e5a783c25e25797a2b90989')}
         cursor = mongoApt.find(spiderName,colName, whereJson=whereJson)
         return cursor
     
