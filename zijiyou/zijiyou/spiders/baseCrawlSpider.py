@@ -301,6 +301,13 @@ class BaseCrawlSpider(CrawlSpider):
                 log.msg('在线解析item成功,url:%s' % response.url,level= log.INFO)
                 print '在线解析item成功,url:%s' % response.url
                 pageResponse['status']=200
+                
+        #计数下载次数
+        self.pendingRequestCounter -= 1
+        #补充request
+        if self.keepCrawlingSwitch and self.pendingRequestCounter <= 0:
+            pendingRequest = self.getPendingRequest()
+            items.extend(pendingRequest)
         return items
 
     def extractLinks(self, response, **extra): 
