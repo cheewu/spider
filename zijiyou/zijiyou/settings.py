@@ -22,7 +22,7 @@ ITEM_PIPELINES=[
 DB_HOST = '192.168.0.184' #192.168.0.183 192.168.0.184 127.0.0.1 192.168.0.188
 PORT=27017
 DB_URL='url'
-DB_ITEM='pagetemp'
+DB_ITEM='page'
 #page按domain分库存储
 DB_MAP={
         'page':'page',
@@ -56,6 +56,7 @@ DB_MAP={
         'bbsSpider2':'pagebbs',
         'jinghuaSpider':'pagejinghua',
         'onegreenSpider':'pageonegreen',
+        'daodaoSpider2':'pagedaodao2',
         }
 #url独立数据库存储，按照domain分表存储
 DB_URL_COLLECTIONS_MAP = {
@@ -87,6 +88,7 @@ DB_URL_COLLECTIONS_MAP = {
                           'bbsSpider2':'bbs',
                           'jinghuaSpider':'jinghua',
                           'onegreenSpider':'onegreen',
+                          'daodaoSpider2':'daodao2',
                           }
 DB_ITEM_COLLECTIONS = [
                   'POI',
@@ -132,7 +134,7 @@ BBS_SPIDER_NAME = [
 
 LOG_FILE='./zijiyou.log' #./zijiyou.log /home/shiym/spider/zijiyou
 LOG_LEVEL='INFO' #INFO DEBUG
-DOWNLOAD_DELAY = 10
+DOWNLOAD_DELAY = 5
 #遵守robots协议
 #ROBOTSTXT_OBEY = True
 #爬虫监控器服务的日志
@@ -140,7 +142,7 @@ WEBSERVICE_LOGFILE = './webservice.log'
 #爬虫监控服务端口
 WEBSERVICE_PORT = [6080, 7030]
 #多线程
-CONCURRENT_REQUESTS_PER_SPIDER= 10
+CONCURRENT_REQUESTS_PER_SPIDER= 2
 #离线调度阀值 一般设为MAX_INII_REQUESTS_SIZE的80%
 PENDING_REQUEST_COUNTER= 80
 #pengdingRequest长度限制
@@ -148,19 +150,23 @@ MAX_INII_REQUESTS_SIZE = 100
 #公网ip更新周期
 PROXY_UPDATE_PERIOD = 3600*4 #3600*4
 #下载超时
-DOWNLOAD_TIMEOUT = 180
+DOWNLOAD_TIMEOUT = 35
 #代理公网ip文件
 PROXY_FILE_NAME='./proxy.txt'#./proxy.txt /home/shiym/spider/zijiyou
+#无效代理的存放路径
+PROXY_FILE_NAME_INV = './proxyinv.txt'
 #代理无效判断标准
-PROXY_DEAD_THRESHOLD = 100
+PROXY_DEAD_THRESHOLD = 51
 #持续运行爬虫的开关。可以设置为False关掉，当需要测试爬虫的url正则是否能让parser准确地抽取目标url
-KEEP_CRAWLING_SWITCH = True
+KEEP_CRAWLING_SWITCH = False
 #重复次数
-RETRY_TIMES = 10
+RETRY_TIMES = 6
 #重新下载
 RETRY_HTTP_CODES = [ '302','400','403','404','407', '408','500','502','503','504']
 #遍历方式
 #SCHEDULER_ORDER='DFO'
+#自动关闭
+CLOSESPIDER_TIMEOUT = 60 * 60
 
 DIAGNOSER_PATH = './diagnose.log'
 OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym

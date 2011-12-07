@@ -8,6 +8,8 @@ from scrapy import log
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from scrapy.utils.httpobj import urlparse_cached
+from scrapy.xlib.pydispatch import dispatcher
+from scrapy import signals
 from twisted.internet import reactor
 from urllib import unquote, proxy_bypass
 from urllib2 import _parse_proxy
@@ -51,14 +53,30 @@ class RandomHttpProxy(object):
         self.proxyUpdatePeriod=settings.get('PROXY_UPDATE_PERIOD')
         #代理公网ip文件
         self.proxyFile=settings.get('PROXY_FILE_NAME')
+        #无效代理的存放路径
+        self.proxyFileInv = settings.get('PROXY_FILE_NAME_INV')
         #初始化代理
         self.proxyDeadThreshold=settings.get('PROXY_DEAD_THRESHOLD')
         #无效代理缓存表
-        self.proxyDead=[]
+        self.proxyDead=set()
+        #当前收集的无效代理
+        self.proxyInv = set()
+        #在爬虫结束前保存无效代理
+        dispatcher.connect(self.saveInvProxy, signal = signals.spider_closed)
         self.updateProxy()
 
         if not self.proxies:
             raise NotConfigured
+
+    def saveInvProxy(self,spider=None):
+        '''
+        保存当前收集到的无效代理列表到无效代理文件中
+        '''
+        finv1 = open(self.proxyFileInv,'a')
+        for p in self.proxyInv:
+            finv1.write('\n')
+            finv1.write(p)
+        finv1.close()
 
     def updateProxy(self):
         """
@@ -67,6 +85,14 @@ class RandomHttpProxy(object):
         print '加载或更新公网代理：%s' % datetime.datetime.now()
         log.msg('加载或更新公网代理：%s' % datetime.datetime.now(),level=log.INFO)
         counter = 0
+        self.saveInvProxy()
+        #更新无效代理过滤表
+        finv2 = open(self.proxyFileInv)
+        for p in finv2:
+            if len(p) > 10:
+                self.proxyDead.add(p.strip())
+        finv2.close()
+        #加载代理
         f=open(self.proxyFile)
         for p in f:
             pdict=p.split('=')
@@ -76,6 +102,7 @@ class RandomHttpProxy(object):
                 if not type in self.proxies.keys():
                     self.proxies[type]=[]
                 creds, proxyUrl=self._get_proxy(url, type)
+                #过滤无效代理
                 if proxyUrl in self.proxyDead:
                     continue
                 newProxy={'creds':creds,'proxyUrl':proxyUrl,'failsNum':0}
@@ -90,15 +117,16 @@ class RandomHttpProxy(object):
         print '加载或更新公网代理数:%s' % counter
         #周期性加载更新
         reactor.callLater(self.proxyUpdatePeriod, self.updateProxy)
+        f.close()
 
-    def clearProxyDead(self):
-        """
-        清空无效proxy缓存表
-        """
-        print '清空无效proxy缓存表：%s' % datetime.datetime.now()
-        log.msg('清空无效proxy缓存表：%s' % datetime.datetime.now(),level=log.INFO)
-        self.proxyDead = []
-        reactor.callLater(self.proxyUpdatePeriod*10,self.clearProxyDead)
+#    def clearProxyDead(self):
+#        """
+#        清空无效proxy缓存表
+#        """
+#        print '清空无效proxy缓存表：%s' % datetime.datetime.now()
+#        log.msg('清空无效proxy缓存表：%s' % datetime.datetime.now(),level=log.INFO)
+#        self.proxyDead = []
+#        reactor.callLater(self.proxyUpdatePeriod*10,self.clearProxyDead)
 
     def _get_proxy(self, url, orig_type):
         proxy_type, user, password, hostport = _parse_proxy(url)
@@ -145,16 +173,12 @@ class RandomHttpProxy(object):
                         #判断代理的失败次数是否超出限定
                         if pdict['failsNum'] >= self.proxyDeadThreshold:
                             self.proxies[scheme].remove(pdict)
-                            self.proxyDead.append(proxy)
+                            self.proxyInv.add(proxy)
                         else:
                             pdict['failsNum'] = 1+pdict['failsNum']
                         break
                 #更新次request的代理
                 self._set_proxy(request, scheme)
-                newProxy={}
-                if 'proxy' in request.meta:
-                    newProxy=request.meta['proxy']
-                print '更新代理。原代理：%s  新代理：%s' % (proxy,newProxy)
         
         return response
     
@@ -162,7 +186,8 @@ class RandomHttpProxy(object):
         """
         下载异常，可能是代理无效了，对代理进行惩罚性失败次数更新：10
         """
-        print '下载异常，可能是被封锁了ip，异常：%s' % exception
+        print '下载异常，可能是被封锁了ip或代理无效，异常：%s 代理：%s url:%s' % (exception,('proxy' in request.meta and request.meta['proxy'] or '无'),request.url)
+        log.msg('下载异常，可能是被封锁了ip或代理无效，异常：%s 代理：%s url:%s' % (exception,('proxy' in request.meta and request.meta['proxy'] or '无'),request.url), level=log.WARNING)
         parsed = urlparse_cached(request)
         scheme = parsed.scheme
         if scheme in self.proxies and 'proxy' in request.meta:
@@ -173,7 +198,7 @@ class RandomHttpProxy(object):
                     #判断代理的失败次数是否超出限定
                     if pdict['failsNum'] >= self.proxyDeadThreshold:
                         self.proxies[scheme].remove(pdict)
-                        self.proxyDead.append(proxy)
+                        self.proxyInv.add(proxy)
                     else:
                         pdict['failsNum'] = 50+pdict['failsNum']
                     break
@@ -191,18 +216,24 @@ class RandomHttpProxy(object):
         """
         循环选择一个代理ip
         """
+        proxyOrg = 'proxy' in request.meta and request.meta['proxy'] or '无'
         proxyLength = len(self.proxies[scheme])
         if proxyLength == 0:
             #取消代理，直接访问
             if 'proxy' in request.meta:
                 request.meta.pop('proxy')
+            print '代理列表为空！ 当前request的代理：%s' %('proxy' in request.meta and request.meta['proxy'] or '无')
         else:
             self.proxyCounter +=1
             proxyIndex = self.proxyCounter % proxyLength
             proxydict = self.proxies[scheme][proxyIndex]
             creds=proxydict['creds']
             proxy=proxydict['proxyUrl']
+            proxyNew = proxy
             
             request.meta['proxy'] = proxy
             if creds:
                 request.headers['Proxy-Authorization'] = 'Basic ' + creds
+            print '更新代理。原代理：%s  新代理：%s' % (proxyOrg,proxyNew)
+            
+            
