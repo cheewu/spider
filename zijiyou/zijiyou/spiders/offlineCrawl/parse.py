@@ -265,7 +265,7 @@ class Parse(object):
                                 if sig_start:
                                     sig_start = 0
                                 else:
-                                    filter.append("--------------------------------------------") 
+                                    filter.append("---------------------------------------------------------------------------------\n") 
                             sig_p = 1
                         else:
                             filter.append(p_strip+"\n")
