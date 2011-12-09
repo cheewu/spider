@@ -172,7 +172,7 @@ DIAGNOSER_PATH = './diagnose.log'
 OFFLINE_PARSE_LOG = './parselog/'#/home/shiym
 #OFFLINE_PARSE_LOG = '/home/cubee/python/spider/spider/zijiyou/offlineParseLog.log'
 
-IMAGES_STORE = '/home/shiym/data/images' #图片存放路径 /home/hy/data/images
+IMAGES_STORE = './images' #图片存放路径 /home/hy/data/images
 IMAGES_EXPIRES = 9999 #到期时间 测试用0，代表每次同一路径图片都会下载，正式运行可以调大无限大，如9999
 IMAGES_MIN_HEIGHT = 110
 IMAGES_MIN_WIDTH = 110
