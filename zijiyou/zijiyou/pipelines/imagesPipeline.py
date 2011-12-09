@@ -9,7 +9,7 @@ from scrapy.contrib.pipeline.images import ImagesPipeline
 from scrapy.http.request import Request
 import datetime
 
-class ImagesPipeline(ImagesPipeline):
+class ImgPipeline(ImagesPipeline):
     '''
     图片管道
     '''

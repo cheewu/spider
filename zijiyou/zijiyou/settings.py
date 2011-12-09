@@ -14,7 +14,7 @@ SPIDER_MODULES = ['zijiyou.spiders']
 NEWSPIDER_MODULE = 'zijiyou.spiders'
 DEFAULT_ITEM_CLASS = 'zijiyou.items.zijiyouItem.ResponseBody'
 ITEM_PIPELINES=[
-                'zijiyou.pipelines.imagesPipeline.ImagesPipeline',
+                'zijiyou.pipelines.imagesPipeline.ImgPipeline',
                 'zijiyou.pipelines.storagePipeline.StoragePipeline' 
                 ]
 
