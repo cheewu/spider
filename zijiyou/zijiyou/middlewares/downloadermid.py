@@ -31,7 +31,7 @@ class UpdateRequestedUrl(object):
     def process_response(self, request, response, spider):
         responseStatus=response.status
         if responseStatus in [400, 403, 304,404]:
-            log.msg("%s 错误！爬取站点可能拒绝访问或拒绝响应或者该页面没有更新" % responseStatus, level=log.ERROR)
+            log.msg("%s 错误！url:%s" % (responseStatus,request.url), level=log.ERROR)
         if 'urlId' in request.meta:
             urlId=request.meta['urlId']
             self.apt.updateUrlDbStatusById(urlId,spider.name, status=responseStatus)
@@ -200,7 +200,7 @@ class RandomHttpProxy(object):
                         self.proxies[scheme].remove(pdict)
                         self.proxyInv.add(proxy)
                     else:
-                        pdict['failsNum'] = 50+pdict['failsNum']
+                        pdict['failsNum'] = 20+pdict['failsNum']
                     break
         #更新代理
         self._set_proxy(request, scheme)

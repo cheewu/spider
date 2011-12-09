@@ -19,7 +19,7 @@ ITEM_PIPELINES=[
                 ]
 
 # mongodb setting
-DB_HOST = '192.168.0.184' #192.168.0.183 192.168.0.184 127.0.0.1 192.168.0.188
+DB_HOST = '127.0.0.1' #192.168.0.183 192.168.0.184 127.0.0.1 192.168.0.188
 PORT=27017
 DB_URL='url'
 DB_ITEM='page'
@@ -134,7 +134,7 @@ BBS_SPIDER_NAME = [
 
 LOG_FILE='./zijiyou.log' #./zijiyou.log /home/shiym/spider/zijiyou
 LOG_LEVEL='INFO' #INFO DEBUG
-DOWNLOAD_DELAY = 5
+DOWNLOAD_DELAY = 8
 #遵守robots协议
 #ROBOTSTXT_OBEY = True
 #爬虫监控器服务的日志
@@ -158,18 +158,18 @@ PROXY_FILE_NAME_INV = './proxyinv.txt'
 #代理无效判断标准
 PROXY_DEAD_THRESHOLD = 51
 #持续运行爬虫的开关。可以设置为False关掉，当需要测试爬虫的url正则是否能让parser准确地抽取目标url
-KEEP_CRAWLING_SWITCH = False
+KEEP_CRAWLING_SWITCH = True
 #重复次数
-RETRY_TIMES = 6
+RETRY_TIMES = 5
 #重新下载
 RETRY_HTTP_CODES = [ '302','400','403','404','407', '408','500','502','503','504']
 #遍历方式
 #SCHEDULER_ORDER='DFO'
-#自动关闭
-CLOSESPIDER_TIMEOUT = 60 * 60
+#自动关闭时间：每50分钟
+CLOSESPIDER_TIMEOUT = 60 * 50
 
 DIAGNOSER_PATH = './diagnose.log'
-OFFLINE_PARSE_LOG = './offlineParseLog.log'#/home/shiym
+OFFLINE_PARSE_LOG = './parselog/'#/home/shiym
 #OFFLINE_PARSE_LOG = '/home/cubee/python/spider/spider/zijiyou/offlineParseLog.log'
 
 IMAGES_STORE = '/home/shiym/data/images' #图片存放路径 /home/hy/data/images
@@ -206,7 +206,7 @@ MAIL_TO_LIST = [
                 "1413614423@qq.com"
                 ]
 #设置服务器，用户名、口令以及邮箱的后缀
-MAIL = False
+MAIL = True
 MAIL_HOST = 'smtp.sina.com'
 MAIL_PORT = 25
 MAIL_FROM = 'zijiyou2011@sina.com'
