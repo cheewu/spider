@@ -35,14 +35,6 @@ class Parse(object):
         #离线爬虫初始化
         self.isOffline=isOffline
         self.apt=OfflineApt()
-        if self.isOffline:   
-            #需要单独的日志记录
-            logFileName=settings.get('OFFLINE_PARSE_LOG')
-            if os.path.exists(logFileName):
-                self.loger=open(logFileName,'a')
-            else:
-                self.loger=open(logFileName,'w')
-                
         self.requiredField= ['content','title']
         self.specialField=['center','area','content','noteType']#,'content'
         self.specialItem=['MemberTrack']
@@ -72,6 +64,14 @@ class Parse(object):
         self.countSuc = 0
         self.countFail = 0
         for sn in spiderName:
+            #需要单独的日志记录
+            if self.isOffline:   
+                logFileName=settings.get('OFFLINE_PARSE_LOG')
+                logFileName = logFileName + sn +'.log'
+                if os.path.exists(logFileName):
+                    self.loger=open(logFileName,'a')
+                else:
+                    self.loger=open(logFileName,'w')
             cursor=self.apt.findUnparsedPageByStatus(sn)
             #进度条
             numAll=cursor.count()
