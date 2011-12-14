@@ -171,9 +171,9 @@ class Parse(object):
         item['status']=100
         item['spiderName'] = spiderName
         xpathItem = config[itemCollectionName]
-        #使用正文抽取，只要title、publishdate、content
+        #使用正文抽取，只要title、publishdate、content,imgList
         if 'mainext' in xpathItem and xpathItem['mainext']:
-            title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+            title,publishdate,content,imgs = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None,htmlId=pageid)
             if len(title) <1:
                 self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
                 return None
@@ -182,10 +182,10 @@ class Parse(object):
                 return None
             if len(publishdate) < 1:
                 self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
-                return None
             item['title'] = title
             item['publishDate'] = publishdate
             item['content'] = content
+            item['images'] = imgs
             return item
         #xpath解析
         for k,v in xpathItem.items():
@@ -195,7 +195,7 @@ class Parse(object):
                 self.parseLog('xpath解析发现item缺失属性：%s，类型： %s，spiderName:%s,xpath=%s, pageid:%s 。改用正文抽取尝试' % (k,itemCollectionName,spiderName,v,pageid), level=LogLevel.INFO)
                 #若为Article，xpath没有解析出来，就用正文抽取再解析一次
                 if item['collectionName'] == 'Article':
-                    title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+                    title,publishdate,content,imgs = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None,htmlId=pageid)
                     if len(title) <1:
                         self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
                         return None
@@ -204,10 +204,10 @@ class Parse(object):
                         return None
                     if len(publishdate) < 1:
                         self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
-                        return None
                     item['title'] = title
                     item['publishDate'] = publishdate
                     item['content'] = content
+                    item['images'] = imgs
                     return item
             if k in self.listFields:
                 item[k] = values
@@ -243,6 +243,9 @@ class Parse(object):
                         '标题:',
                         '作者:',
                         '时间:',
+                        '标题：',
+                        '作者：',
+                        '时间：',
                     ]
                     filter = []
                     sig_p = 0
@@ -267,9 +270,13 @@ class Parse(object):
                                 else:
                                     filter.append("---------------------------------------------------------------------------------\n") 
                             sig_p = 1
-                        else:
+                        #字数少于200被认为事无用的灌水回复
+                        elif len(p_strip) > 200:
                             filter.append(p_strip+"\n")
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
+                    #删除掉一些垃圾。标题:.*[打印本页]   
+                    if value:
+                        value = re.sub('标题:.*\[打印本页\]', '', value)
                     if value.strip() == "" and k in self.requiredField:
                         self.parseLog('regex+xpath解析发现item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.INFO)
                         return None
@@ -279,7 +286,7 @@ class Parse(object):
                     self.parseLog('regex+xpath解析item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s 。改用正文抽取尝试' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.INFO)
                     #若为Article，xpath没有解析出来，就用正文抽取再解析一次
                     if item['collectionName'] == 'Article':
-                        title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+                        title,publishdate,content,imgs = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None,htmlId=pageid)
                         if len(title) <1:
                             self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
                             return None
@@ -288,10 +295,10 @@ class Parse(object):
                             return None
                         if len(publishdate) < 1:
                             self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
-                            return None
                         item['title'] = title
                         item['publishDate'] = publishdate
                         item['content'] = content
+                        item['images'] = imgs
                         return item
                 if len(values) == 1:
                     value=("-".join("%s" % p for p in values)).encode("utf-8")
@@ -323,7 +330,7 @@ class Parse(object):
                             self.parseLog('非item页，因为缺失属性：%s，类型： %s， pageid:%s' % (hk,itemCollectionName,pageid), level=LogLevel.WARNING)                
                             #若为Article，xpath没有解析出来，就用正文抽取再解析一次
                             if item['collectionName'] == 'Article':
-                                title,publishdate,content = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None)
+                                title,publishdate,content,imgs = self.ext.doExtract(responseBody, threshold = config['threshold'] if 'threshold' in config else None,htmlId=pageid)
                                 if len(title) <1:
                                     self.parseLog('正文抽取未获得title，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
                                     return None
@@ -332,10 +339,10 @@ class Parse(object):
                                     return None
                                 if len(publishdate) < 1:
                                     self.parseLog('正文抽取未获得publishdate，spiderName:%s, pageid:%s' % (spiderName,pageid), level=LogLevel.WARNING)
-                                    return None
                                 item['title'] = title
                                 item['publishDate'] = publishdate
                                 item['content'] = content
+                                item['images'] = imgs
                                 return item
                         if hk in self.specialField:
                             value=self.parseSpecialField(hk, value)
@@ -388,7 +395,6 @@ class Parse(object):
             if matches:
                 newContent = matches.group(1)
                 return newContent
-            
         return content
     
     def parseSpecialItem(self, itemCollectionName, pageItem):
