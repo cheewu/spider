@@ -452,7 +452,7 @@ class Extracter(object):
             return maxtup
         return None
     
-    def _getMainText4(self,densDic, threshold,tagdensth=10,xpath = ''):
+    def _getMainText4(self,densDic, threshold,tagdensth=50,xpath = ''):
         """
         找正文块--采用层次非递归遍历法
         不应该包含 “上一篇 下一篇”或“上一页 下一页“
@@ -484,21 +484,21 @@ class Extracter(object):
                     tagName = str(p['self'][3].tag).lower()
                     if str(p['self'][3].tag).lower() == 'div':
                         count += 1
-                    if tagName in self.tagsIgnore or tagName in ['a','img','input','h1','h2','title','p'] or p['self'][1] < 200:
+                    if tagName in self.tagsIgnore or tagName in ['a','img','input','h1','h2','title','p'] or p['self'][1] < 200 :
                         continue
                     p['xpath'] = tag['xpath'] + '/%s[%s]' % (str(p['self'][3].tag).lower() if p['self'][3] is not None else '',count)
                     tagList.append(p)
             #访问节点 记录当前找到的最大的正文节点：如果新节点的正文数量 >= 当前最大找到的最大正文节点正文数-60，
-            if str(tag['self'][3].tag).lower() in ['td','div'] and tag['self'][1] >= maxTagTup['self'][1] * (50 + len(maxTagTup['xpath'].split('/')) - len(tag['xpath'].split('/'))) / 50 - 50 :
+            if str(tag['self'][3].tag).lower() in ['td','div'] and tag['self'][4] <=tagdensth and tag['self'][1] >= maxTagTup['self'][1] * (48 + len(maxTagTup['xpath'].split('/')) - len(tag['xpath'].split('/'))) / 50 - 50 and re.match('(.*前一篇.*后一篇.*)|(.*上一页.*下一页.*)|(.*前一页.*后一页.*)', str(etree.tostring(tag['self'][3], encoding = unicode))) is None:
                 maxTagTup = tag
                 #正文不应该包含 “上一篇 下一篇”或“上一页 下一页“
-                if maxTagTup['self'][0] >= threshold and re.match('(.*上一篇.*下一篇.*)|(.*前一篇.*后一篇.*)|(.*上一页.*下一页.*)|(.*前一页.*后一页.*)', str(etree.tostring(tag['self'][3], encoding = unicode))) is None:
+                if maxTagTup['self'][0] >= threshold :
                     mainTag = maxTagTup
                     #break条件：mainTag的子节点不会有更好的表现
                     isbreak = True
                     if mainTag.has_key('child'):
                         for child in mainTag['child']:
-                            if child['self'][1] > mainTag['self'][1] - 60:
+                            if child['self'][1] >= maxTagTup['self'][1] * (48 + len(maxTagTup['xpath'].split('/')) - len(tag['xpath'].split('/'))) / 50 - 50 :
                                 isbreak = False
                                 break
                     if isbreak:
