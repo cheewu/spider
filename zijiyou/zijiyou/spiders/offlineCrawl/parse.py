@@ -266,6 +266,19 @@ class Parse(object):
                     #过滤空字符end
                     for p in value:
                         p_strip = p.strip()
+                        hasImg = False
+                        #抽出所有的图片
+                        imgMatch = re.findall('(<img[ ]* .* />)',p_strip)
+                        if imgMatch:
+                            for p in imgMatch:
+                                #识别小图标
+                                if re.match('.*src[ ]*=".*(\w{20,100}).*',p) is None:
+                                    #滤除掉小图标
+                                    p_strip = p_strip.replace(p, '')
+                                else:
+                                    images.append(p)
+                                    hasImg = True
+                                        
                         if sig_p:
                             sig_p = 0
                             continue
@@ -276,19 +289,8 @@ class Parse(object):
                                 elif len(p_strip) > 200:
                                     filter.append("---------------------------------------------------------------------------------\n") 
                             sig_p = 1
-                        #字数少于200被认为事无用的灌水回复
-                        elif len(p_strip) > 200:
-                            #滤除掉小图标
-                            #抽出所有的图片
-                            imgMatch = re.findall('',p_strip)
-                            if imgMatch:
-                                for p in imgMatch:
-                                    #识别小图标
-                                    if re.match('.*src[ ]*=".*(\w{20,100}).*',p) is None:
-                                        #滤除
-                                        p_strip = p_strip.replace(p, '')
-                                    else:
-                                        images.append(p)
+                        #字数少于200被认为事无用的灌水回复，或者有图片
+                        elif len(p_strip) > 200 or hasImg:
                             filter.append(p_strip+"\n")
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
                     #删除掉一些垃圾。标题:.*[打印本页]   
@@ -325,7 +327,7 @@ class Parse(object):
                 if k in self.specialField:
                     value=self.parseSpecialField(k, value)
             
-            if value :
+            if value is not None:
                 item[k]=value.strip()
         #解析response中的数据
         respItem={}
