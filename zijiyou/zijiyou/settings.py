@@ -57,6 +57,7 @@ DB_MAP={
         'jinghuaSpider':'pagejinghua',
         'onegreenSpider':'pageonegreen',
         'daodaoSpider2':'pagedaodao2',
+        'baseSeSpider2':'baseSeSpider2',
         }
 #url独立数据库存储，按照domain分表存储
 DB_URL_COLLECTIONS_MAP = {
@@ -89,6 +90,7 @@ DB_URL_COLLECTIONS_MAP = {
                           'jinghuaSpider':'jinghua',
                           'onegreenSpider':'onegreen',
                           'daodaoSpider2':'daodao2',
+                          'baseSeSpider2':'baseSeSpider2',
                           }
 DB_ITEM_COLLECTIONS = [
                   'POI',
