@@ -13,7 +13,7 @@ class Extracter(object):
 
     control_chars = ''.join(map(unichr, range(0,32) + range(127,160)))
     control_char_re = re.compile('[%s]' % re.escape(control_chars))
-    tagsIgnore=["head","style", "script", "noscript", "<built-in function comment>", "option"]
+    tagsIgnore=["head","style", "script", "noscript", "<built-in function comment>", "option","textarea"]
     title = ''
     publishDate = ''
     pdateReg = r'(\d{4}[年-]+\d{1,2}[月-]+\d{1,2})'
@@ -31,11 +31,30 @@ class Extracter(object):
         threshold = threshold == None and float(0.16) or float(threshold)
         if not type(html) == unicode:
             html = unicode(html,'utf-8')
-        mtHtml = self._extMainText(html, threshold,htmlId=htmlId)
+        mtHtml,denstup = self._extMainText(html, threshold,htmlId=htmlId)
         # Transfer to plain text:
         text = self.getText(mtHtml,isextract=True)
         imgs = self.getImg(mtHtml)
         return self.title,self.publishDate,text.strip(),imgs
+    
+    def doExtract2(self,html,threshold=None,htmlId = 'noid'):
+        """
+        抽取正文
+        threshold 纯文本密度默认0.16
+        RETURN:
+        标题，发布时间，正文，图片列表，密度字典（xpath，文本密度，文本长度，标签密度，标签个数）
+        """
+        #初始化title publishdate
+        self.title = ''
+        self.publishDate = ''
+        threshold = threshold == None and float(0.16) or float(threshold)
+        if not type(html) == unicode:
+            html = unicode(html,'utf-8')
+        mtHtml,denstup = self._extMainText(html, threshold,htmlId=htmlId)
+        # Transfer to plain text:
+        text = self.getText(mtHtml,isextract=True)
+        imgs = self.getImg(mtHtml)
+        return self.title,self.publishDate,text.strip(),imgs,denstup
     
     def getImg(self,html):
         """
@@ -146,8 +165,8 @@ class Extracter(object):
 #            else:
 #                return etree.tostring(maxPart, encoding = unicode) if maxPart != None else ''
             mainTag = self._getMainText4(densDic, threshold)
-            print 'id:%s max部分xpath:%s 文本密度：%s 文本长度:%s 标签密度%s 标签个数%s ' % (htmlId,mainTag['xpath'],mainTag['self'][0],mainTag['self'][1],mainTag['self'][4],mainTag['self'][5])
-            return etree.tostring(mainTag['self'][3],encoding = unicode) if mainTag['self'][3] is not None else ''
+            densdic = {'xpath':mainTag['xpath'],'文本密度':mainTag['self'][0],'文本长度':mainTag['self'][1],'标签密度':mainTag['self'][4],'标签个数':mainTag['self'][5]}
+            return etree.tostring(mainTag['self'][3],encoding = unicode) if mainTag['self'][3] is not None else '' , densdic
     
     def _calcDensity(self,tree):
         """
@@ -178,7 +197,7 @@ class Extracter(object):
             if match :
                 self.publishDate = match.group(1)
                 self.publishDate = self.publishDate.strip()
-        if tag in ["style", "script", "noscript", "<built-in function comment>", "option"]:
+        if tag in ["style", "script", "noscript", "<built-in function comment>", "option","textarea"]:#textarea
             return None
         #an optional tail string. be used to hold additional data associated with the element. contains any text found after the element’s end tag and before the next tag.
         tail = tree.tail if tree.tail != None else ''
@@ -452,7 +471,7 @@ class Extracter(object):
             return maxtup
         return None
     
-    def _getMainText4(self,densDic, threshold,tagdensth=50,xpath = ''):
+    def _getMainText4(self,densDic, threshold,tagdensth=65,xpath = ''):
         """
         找正文块--采用层次非递归遍历法
         不应该包含 “上一篇 下一篇”或“上一页 下一页“

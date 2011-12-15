@@ -51,7 +51,7 @@ class BaseCrawlSpider(CrawlSpider):
 
     def __init__(self, *a, **kw):
         super(BaseCrawlSpider, self).__init__(*a, **kw)
-        if(not self.initConfig()):
+        if not self.initConfig():
                 raise NotConfigured('爬虫%s配置文件加载失败！'%self.name)
         if self.needParse:
             self.parser = Parse()

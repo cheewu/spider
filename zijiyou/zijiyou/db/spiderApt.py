@@ -76,14 +76,14 @@ class OnlineApt(object):
         '''
         已经完成的搜索引擎list页的总数
         '''
-        whereJson = {"status":{"$lte":400},"spiderName":'baseSeSpider',"priority":{"$lt":999}}
+        whereJson = {"status":{"$lte":400},"spiderName":spiderName,"priority":{"$lt":999}}
         return mongoApt.countByWhere(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
     
     def removeCompelitedSeListUrl(self,spiderName):
         '''
         清除已经完成的搜索引擎list页
         '''
-        whereJson = {"status":{"$lte":400},"spiderName":'baseSeSpider',"priority":{"$lt":999}}
+        whereJson = {"status":{"$lte":400},"spiderName":spiderName,"priority":{"$lt":999}}
         mongoApt.remove(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
         
     def findKerwordsForSespider(self):

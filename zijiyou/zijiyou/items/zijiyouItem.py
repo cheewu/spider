@@ -110,11 +110,13 @@ class Article(BaseItem):
     keyWords = Field()       #关键字  
     destination=Field()      #旅游目的地
     
-    images = Field()     #图片原始链接列表
+    images = Field()        #图片原始链接列表
     imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
     
     md5=Field()             #MD5值
     isDup=Field()           #标识是否重复
+    
+    densDic = Field()       #密度字典（xpath，文本密度，文本长度，标签密度，标签个数）
     
 #    def __str__(self):
 #        return "ArticleItem"
@@ -122,7 +124,7 @@ class Article(BaseItem):
     def __init__(self,*kw):
         super(Article, self).__init__(*kw)
         self['collectionName']="Article"
-        self['imageUrls']=[]
+        self['images']=[]
     
 class Note(BaseItem):
     '''
