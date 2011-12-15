@@ -415,6 +415,8 @@ extractorConfig = {
                                },
                 "BBsSpider":{
                              'threshold':0.40,
+                             'Article':{
+                                        },
                              'ArticleRegex':{
                                             'title':'//body',
                                             'titleRegex':u'标题'+':\s*</b>([^<>]*?)\s*<br',

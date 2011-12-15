@@ -217,6 +217,11 @@ class Parse(object):
                     value=self.parseSpecialField(k, value)
                 if value :
                     item[k]=value.strip()
+            #图片
+            if k == 'content' :
+                imgs = self.ext.getImg(v)
+                if imgs is not None:
+                    item['images'] = imgs
         #regex+xpath解析
         regexItem={}
         regexName=itemCollectionName+'Regex'
@@ -235,6 +240,7 @@ class Parse(object):
             #对bbs进行单独处理 @author 侯睿
             if isbbsSpider:
                 value = values
+                images = []
                 if k != 'content':
                     if type(values) == list:
                         value = value[0]
@@ -267,11 +273,22 @@ class Parse(object):
                             if p_strip == '作者:':
                                 if sig_start:
                                     sig_start = 0
-                                else:
+                                elif len(p_strip) > 200:
                                     filter.append("---------------------------------------------------------------------------------\n") 
                             sig_p = 1
                         #字数少于200被认为事无用的灌水回复
                         elif len(p_strip) > 200:
+                            #滤除掉小图标
+                            #抽出所有的图片
+                            imgMatch = re.findall('',p_strip)
+                            if imgMatch:
+                                for p in imgMatch:
+                                    #识别小图标
+                                    if re.match('.*src[ ]*=".*(\w{20,100}).*',p) is None:
+                                        #滤除
+                                        p_strip = p_strip.replace(p, '')
+                                    else:
+                                        images.append(p)
                             filter.append(p_strip+"\n")
                     value = (" ".join("%s" % p for p in filter)).encode("utf-8")
                     #删除掉一些垃圾。标题:.*[打印本页]   
@@ -280,6 +297,7 @@ class Parse(object):
                     if value.strip() == "" and k in self.requiredField:
                         self.parseLog('regex+xpath解析发现item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.INFO)
                         return None
+                    item['images'] = images
             #bbs单独处理end
             else:
                 if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:

@@ -109,8 +109,8 @@ class OfflineApt(object):
         查询待解析的Page，通过状态
         '''
         colName='Page'
-#        whereJson={'status':{'$lt':200}}
-        whereJson={'_id':ObjectId('4e5a783c25e25797a2b90989')}
+        whereJson={'status':{'$lt':200}}
+#        whereJson={'_id':ObjectId('4e5a783c25e25797a2b90989')}
         cursor = mongoApt.find(spiderName,colName, whereJson=whereJson)
         return cursor
     
