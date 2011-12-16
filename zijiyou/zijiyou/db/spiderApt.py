@@ -27,15 +27,15 @@ class OnlineApt(object):
         '''
         未被下载或下载失败的url，以便相应爬虫的恢复
         '''
-        whereJson={"status":{"$gte":statusBegin,"$lt":statusEnd},"spiderName":spiderName}
-        return mongoApt.find(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson,sortField='priority',limitNum=self.urlIncreasement * 5) #self.urlIncreasement * 20
+        whereJson={"status":{"$gte":statusBegin,"$lt":statusEnd}}
+        return mongoApt.find(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson,sortField='priority') #self.urlIncreasement * 20
     
     def findPendingUrls4JinghuaByStatusAndSpiderName(self,spiderName):
         '''
         精华游记url处理：不下载item只要url
         '''
         whereJson = {"status":{"$gte":300,"$lt":1001},"priority":1}
-        return mongoApt.find(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson,sortField='priority',limitNum=self.urlIncreasement * 5) #self.urlIncreasement * 20
+        return mongoApt.find(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson,sortField='priority') #self.urlIncreasement * 20
 
     def updateUrlDbStatusByUrl(self,url,spiderName,status=200):
         '''
@@ -49,7 +49,7 @@ class OnlineApt(object):
         '''
         加载用于排重的url的md5值
         '''
-        whereJson={"status":{"$lt":400},"spiderName":spiderName}
+        whereJson={"status":{"$lt":400}}
         return mongoApt.find(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson, sortField='status')
 
     def saveNewUrl(self,spiderName,urlItem={}):
@@ -76,14 +76,14 @@ class OnlineApt(object):
         '''
         已经完成的搜索引擎list页的总数
         '''
-        whereJson = {"status":{"$lte":400},"spiderName":spiderName,"priority":{"$lt":999}}
+        whereJson = {"status":{"$lte":400},"priority":{"$lt":999}}
         return mongoApt.countByWhere(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
     
     def removeCompelitedSeListUrl(self,spiderName):
         '''
         清除已经完成的搜索引擎list页
         '''
-        whereJson = {"status":{"$lte":400},"spiderName":spiderName,"priority":{"$lt":999}}
+        whereJson = {"status":{"$lte":400},"priority":{"$lt":999}}
         mongoApt.remove(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
         
     def findKerwordsForSespider(self):
@@ -110,7 +110,7 @@ class OfflineApt(object):
         '''
         colName='Page'
         whereJson={'status':{'$lt':200}}
-#        whereJson={'_id':ObjectId('4e5a783c25e25797a2b90989')}
+#        whereJson={'_id':ObjectId('4ee9c185f7764833170014ed')}
         cursor = mongoApt.find(spiderName,colName, whereJson=whereJson)
         return cursor
     
