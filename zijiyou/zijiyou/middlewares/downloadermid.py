@@ -222,7 +222,7 @@ class RandomHttpProxy(object):
             #取消代理，直接访问
             if 'proxy' in request.meta:
                 request.meta.pop('proxy')
-            print '代理列表为空！ 当前request的代理：%s' %('proxy' in request.meta and request.meta['proxy'] or '无')
+#            print '代理列表为空！ 当前request的代理：%s' %('proxy' in request.meta and request.meta['proxy'] or '无')
         else:
             self.proxyCounter +=1
             proxyIndex = self.proxyCounter % proxyLength
