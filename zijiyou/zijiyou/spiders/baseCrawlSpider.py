@@ -149,14 +149,14 @@ class BaseCrawlSpider(CrawlSpider):
 #        dtBegin=datetime.datetime.now()
         #查询recent requests
         pendingRequest=[]
-        #调度-10% 为下载异常
+        #调度-2% 为下载异常
         cursorExp = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=800, statusEnd=900)
-        numExp = 0.1 * self.urlIncreasement
+        numExp = 0.02 * self.urlIncreasement
         pendingRequest.extend(self.getRequestsFromCursor(cursorExp, numExp))
         numExp = len(pendingRequest)
-        #调度-10% 为下载失败
+        #调度-2% 为下载失败
         cursorExp = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=301, statusEnd=800)
-        numFailed = 0.1 * self.urlIncreasement
+        numFailed = 0.02 * self.urlIncreasement
         pendingRequest.extend(self.getRequestsFromCursor(cursorExp, numFailed))
         numFailed = len(pendingRequest) - numExp
         #调度剩下的为新url

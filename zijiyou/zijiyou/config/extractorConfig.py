@@ -9,6 +9,11 @@ extractorConfig = {
                                            'mainext':True,
                                            }
                                 },
+                "baseSeSpider2":{
+                                "Article":{
+                                           'mainext':True,
+                                           }
+                                },
                 "daodaoSpider":{
                                 'threshold':0.40,
                                 "Attraction":{

@@ -209,7 +209,7 @@ class BaseSeSpider2(BaseCrawlSpider):
             loader = ZijiyouItemLoader(Page(), response=response)
             pageResponse = loader.load_item()
             pageResponse.setdefault('spiderName', self.name)
-            pageResponse['status'] = 200
+            pageResponse['status'] = 1000
             pageResponse.setdefault('url', response.url)
             pageResponse.setdefault('itemCollectionName', itemCollectionName)
             pageResponse.setdefault('responseBody', response.body_as_unicode().encode('utf-8'))
@@ -219,9 +219,10 @@ class BaseSeSpider2(BaseCrawlSpider):
             items.append(pageResponse)
             
             #解析搜索引擎ArticleItem
-            article = self.parseArticleItem(response)    
-            if article is not None:
-                items.append(article)
+#            article = self.parseArticleItem(response)    
+#            if article is not None:
+#                items.append(article)
+#                pageResponse['status'] = 200
         
         #计数下载次数
         self.pendingRequestCounter -= 1
