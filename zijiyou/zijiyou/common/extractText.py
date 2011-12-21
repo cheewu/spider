@@ -69,7 +69,7 @@ class Extracter(object):
         root = fromstring(html)
         def _getImg(tree):
             imgs = []
-            if str(tree.tag).lower() == 'img' and re.match('.*src[ ]*=".*(\w{20,100}).*',str(etree.tostring(tree,encoding=unicode))) is not None:
+            if str(tree.tag).lower() == 'img' and re.match('.*src[ ]*=.*([0-9a-zA-Z]{20,100}).*',str(etree.tostring(tree,encoding=unicode))) is not None:
                 img = '<img '
                 #读标签属性
                 for k,v in tree.attrib.items():
@@ -104,7 +104,7 @@ class Extracter(object):
             if tag in self.tagsIgnore:
                 return ''
             #判断是否是保留标签 滤除小图标
-            if tag in tagsSave or (tag == 'img' and re.match('.*src[ ]*=".*(\w{20,100}).*', str(etree.tostring(tree,encoding=unicode))) is not None):
+            if tag in tagsSave or (tag == 'img' and re.match('.*src[ ]*=.*([0-9a-zA-Z]{20,100}).*', str(etree.tostring(tree,encoding=unicode))) is not None):
                 text += '<' + tag + ''
                 #读取标签属性
                 for k,v in tree.attrib.items():
@@ -119,7 +119,7 @@ class Extracter(object):
             for child in tree:
                 text += _getText(child)
             #判断是否是保留标签,保留则添加关闭标签
-            if tag in tagsSave or (tag == 'img' and re.match('.*src[ ]*=".*(\w{20,100}).*', str(etree.tostring(tree,encoding=unicode))) is not None):
+            if tag in tagsSave or (tag == 'img' and re.match('.*src[ ]*=.*([0-9a-zA-Z]{20,100}).*', str(etree.tostring(tree,encoding=unicode))) is not None):
                 if tree.text or hasChild:
                     text += "</" + tag + ">"
             #换行
@@ -237,7 +237,7 @@ class Extracter(object):
             #图片的长度作为字数计算
             if str(subtree.tag).lower() == 'img':
                 #滤除小图标
-                if re.match('.*src[ ]*=".*(\w{20,100}).*', str(etree.tostring(subtree,encoding=unicode))) is not None:
+                if re.match('.*src[ ]*=.*([0-9a-zA-Z]{20,100}).*', str(etree.tostring(subtree,encoding=unicode))) is not None:
                     countTextLen += len(etree.tostring(subtree, encoding = unicode).strip())
         density = float(countTextLen) / totalLen if totalLen != 0 else 0.0
         tagdens = 1000 * float(tagNum) / countTextLen if countTextLen != 0 else 0.0
