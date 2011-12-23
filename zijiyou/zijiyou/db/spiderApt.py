@@ -109,8 +109,9 @@ class OfflineApt(object):
         查询待解析的Page，通过状态
         '''
         colName='Page'
-        whereJson={'status':{'$lt':200}}
-#        whereJson={'_id':ObjectId('4ee9c185f7764833170014ed')}
+        whereJson={'status':{'$lt':200,'$gt':0}}
+#        whereJson={'_id':ObjectId('4e5e0e7df77648068901556d')}
+#        whereJson={'url':'http://www.mafengwo.cn/i/704654.html'}
         cursor = mongoApt.find(spiderName,colName, whereJson=whereJson)
         return cursor
     
@@ -126,7 +127,7 @@ class OfflineApt(object):
         更新PageDb的状态为解析失败状态
         '''
         colName='Page'
-        mongoApt.update(spiderName,colName, whereJson={'_id':ObjectId(pageId)}, updateJson={'status':101,'optDateTime':datetime.datetime.now()})
+        mongoApt.update(spiderName,colName, whereJson={'_id':ObjectId(pageId)}, updateJson={'status':110,'optDateTime':datetime.datetime.now()})
         
     def saveParsedItemToItemCollection(self,itemCollectionName,item):
         '''

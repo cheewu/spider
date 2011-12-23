@@ -259,7 +259,7 @@ class Parse(object):
                     item[k]=value.strip()
             #图片
             if k == 'content' :
-                imgs = self.ext.getImg(v)
+                imgs = self.ext.getImg(value)
                 if imgs is not None:
                     item['images'] = imgs
         #regex+xpath解析
