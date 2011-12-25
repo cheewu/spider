@@ -242,7 +242,6 @@ class Parse(object):
             
         #xpath解析
         for k,v in xpathItem.items():
-            value=''
             values = hxs.select(v).extract()
             if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:
                 self.parseLog('xpath解析发现item缺失属性：%s，类型： %s，spiderName:%s,xpath=%s, pageid:%s 。改用正文抽取尝试' % (k,itemCollectionName,spiderName,v,pageid), level=LogLevel.INFO)
@@ -252,16 +251,14 @@ class Parse(object):
             if k in self.listFields:
                 item[k] = values
             else:
-                value=("-".join("%s" % p for p in values)).encode("utf-8")
-                if k in self.specialField:
-                    value=self.parseSpecialField(k, value)
-                if value :
-                    item[k]=value.strip()
-            #图片
-            if k == 'content' :
-                imgs = self.ext.getImg(value)
-                if imgs is not None:
-                    item['images'] = imgs
+                value=self.parseSpecialField(k, values)
+                if value is not None:
+                    item[k]=value
+                #图片
+                if k == 'content' :
+                    imgs = self.ext.getImg(value)
+                    if imgs is not None:
+                        item['images'] = imgs
         #regex+xpath解析
         regexItem={}
         regexName=itemCollectionName+'Regex'
@@ -276,21 +273,18 @@ class Parse(object):
             else:
                 regex=regexItem[regex]
             values=hxs.select(v).re(regex)
-            value=''
             if (not values or len(values)<1 or (" ".join("%s" % p for p in values)).strip() == "") and k in self.requiredField:
                 self.parseLog('regex+xpath解析item缺失属性：%s，类型： %s，spiderName:%s, pageid:%s 。改用正文抽取尝试' % (k,itemCollectionName,spiderName,pageid), level=LogLevel.INFO)
                 #若为Article，xpath没有解析出来，就用正文抽取再解析一次
                 if item['collectionName'] == 'Article':
                     return self.extractMainTxt(item, responseBody, config['threshold'] if 'threshold' in config else None, spiderName, pageid)
-            if len(values) == 1:
-                value=("-".join("%s" % p for p in values)).encode("utf-8")
+            if k in self.listFields:
+                item[k] = values
             else:
-                value=values
-            if k in self.specialField:
-                value=self.parseSpecialField(k, value)
+                value=self.parseSpecialField(k, values)
+                if value is not None:
+                    item[k]=value
             
-            if value is not None:
-                item[k]=value.strip()
         #解析response中的数据
         respItem={}
         respName=itemCollectionName+'Resp'
@@ -326,8 +320,7 @@ class Parse(object):
                 return None
             elif not value:
                 continue
-            if k in self.specialField:
-                value=self.parseSpecialField(k, value)
+            value=self.parseSpecialField(k, value)
             item[k]=value.strip()
         return item
     
@@ -344,6 +337,8 @@ class Parse(object):
                 value=string.atof(org)
                 newContent.append(value)
             return newContent 
+        if type(content) == list:
+            content = "".join('%s' % p for p in content)
         if name == 'area':
             if len(content.split('-'))<3:
                 return content
@@ -364,6 +359,7 @@ class Parse(object):
             if matches:
                 newContent = matches.group(1)
                 return newContent
+        #join the values to str and return if content is list
         return content
     
     def parseSpecialItem(self, itemCollectionName, pageItem):

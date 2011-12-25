@@ -286,9 +286,11 @@ class BaseCrawlSpider(CrawlSpider):
                 if 'imageUrls' in item:
                     newimglist = []
                     for img in item['imageUrls']:
-                        if not re.search('www', img):
+                        if not re.search('http://', img):
                             newimg = "http://" + self.allowed_domains[0] + img
-                            newimglist.append(newimg)
+                        else:
+                            newimg = img
+                        newimglist.append(newimg)
                     item['imageUrls'] = newimglist
                 #装箱
                 newitem = ImageItem()
