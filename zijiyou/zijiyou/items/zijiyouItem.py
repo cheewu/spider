@@ -91,7 +91,6 @@ class Article(BaseItem):
     title = Field()     #标题
     author = Field()    #作者
     area = Field()      #地区
-    type = Field()         #文本类型
     tag = Field()          #标签
     attractions = Field()  #沿途风景
     feature = Field()      #线路特色
@@ -117,9 +116,6 @@ class Article(BaseItem):
     isDup=Field()           #标识是否重复
     
     densDic = Field()       #密度字典（xpath，文本密度，文本长度，标签密度，标签个数）
-    
-#    def __str__(self):
-#        return "ArticleItem"
     
     def __init__(self,*kw):
         super(Article, self).__init__(*kw)
