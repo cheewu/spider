@@ -189,6 +189,7 @@ class Parse(object):
         item['url']=response.url
         item['status']=100
         item['spiderName'] = spiderName
+        item['optDateTime'] = datetime.datetime.now()
         xpathItem = config[itemCollectionName]
         #使用正文抽取，只要title、publishdate、content,imgList
         if 'mainext' in xpathItem and xpathItem['mainext']:
@@ -423,9 +424,6 @@ class Parse(object):
         else:
             log.msg('%s level=%s  :%s \n' %(datetime.datetime.now(), level,msg))
         
-    def ExtText(self,input):
-        pass
-
 ##测试
 #if __name__ == '__main__':
 #    p=Parse(isOffline=True)
