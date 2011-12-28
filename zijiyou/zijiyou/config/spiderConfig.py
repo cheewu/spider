@@ -2311,7 +2311,29 @@ spiderConfig = {
                                    },
                                   ]
                      },
-    
+    "clSpider":{
+                     'allowedDomains':[
+                                       ],
+                     'startUrls':[
+                                  ],
+                     #普通list页正则表达式
+                     'normalRegex':[
+                                    {
+                                     'regex':r'/thread\d+\.php\?fid=\d+&search=&page=\d+',
+                                     'region':'//div[@id="main"]/div[3]/table//tr/td[1]/div',
+                                     'priority':1,
+                                     },
+                                    ],
+                     #item页正则表达式 itemCollectionName对应item存放的数据表名
+                     'itemRegex':[
+                                  {
+                                   'itemCollectionName':'ImageItem',
+                                   'regex':r'/htm_data/\d+/\d+/\d+\.html$',
+                                   'region':'//body/div[2]/div[4]',
+                                   'priority':1000
+                                   },
+                                  ]
+                     },
         
         
            

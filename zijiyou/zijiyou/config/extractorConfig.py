@@ -5,15 +5,40 @@ extractorConfig = {
                                "KeyList":{"keyWords":'//div[@class="doc"]/div[@class="col"]/div[@class="taglist"]/span//text()'},
                                },
                 "baseSeSpider":{
+                                'threshold':0.40,
                                 "Article":{
                                            'mainext':True,
                                            }
                                 },
                 "baseSeSpider2":{
-                                "Article":{
+                                 'threshold':0.40,
+                                 "Article":{
                                            'mainext':True,
                                            }
                                 },
+		       "daodaoSpider2":{
+                				'threshold':0.40,
+                				'Attraction':{
+                                              'name':'//div[@id="MAIN"]/div[2]/h1/text()',
+                					          'startRank':'//div[@id="MAIN"]/div[2]/span/text()',
+                					          'area':'//div[@id="MAIN"]/div[1]/ul/li/ul/li/a/text()',
+                					          'poiType':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[2]/a/text()',
+                					          'address':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[3]/span/text()',
+                					          'desc':'//div[@id="BODYCON"]/div[2]/p/text()',
+                					          'descLink':'//div[@id="BODYCON"]/div[2]/p/a/@href',
+								              'value1':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[3]//text()',
+                                              'value2':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[4]//text()',
+                                              'value3':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[5]//text()',
+	                                          'value4':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[6]//text()',
+        	                                  'value5':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[7]//text()',
+                					          },
+                				"Article":{
+                                           #第一部分和CommonSenseItem的一样
+                                           'publishDate':'//div[1]/p/span[2]/text()',
+                                           'content':'//div[@id="rd-inlineattr"]',
+                                           'title':'//div[1]/div/h1/text()',
+                                           },
+				                },
                 "daodaoSpider":{
                                 'threshold':0.40,
                                 "Attraction":{
@@ -59,7 +84,6 @@ extractorConfig = {
                                             'tag':'//ul[@class="article-extra borderBom"]/li[3]/div/a/text()',
                                             'attractions':'//ul[@class="article-senior-tags borderBom"]/li[1]/div/a/text()',
                                             'feature':'//ul[@class="article-senior-tags borderBom"]/li[2]/div/a/text()',
-                                            
                                             },
                                 "Note":{
                                         #第一部分和NoteItem的一样
@@ -103,7 +127,7 @@ extractorConfig = {
                                 'threshold':0.40,
                                 "Attraction":{
                                               'name':'//h1[@property="v:name"]/text()',
-                                              'desc':'//div[@id="hiddenContent"]',
+                                              'desc':'//div[@id="hiddenContent"]/text()',
                                               'area':'//div[@class="breadBar"]/a//text()', 
                                               'ticket':'//div[@id="hiddenContent"]/span[2]/following-sibling::p/text()',
                                               'replyNum':'//em[@property="v:count"]/text()',
@@ -462,6 +486,12 @@ extractorConfig = {
                                   'ImageItem':{
                                                'name':'//body/table[1]//tr[1]/td/span/text()',
                                                'imageUrls':'//body/table[2]//tr/td//img/@src',
+                                               },
+                                  },
+                'clSpider':{
+                                  'ImageItem':{
+                                               'name':'//div[3]/table//tr[1]/td[1]/text()',
+                                               'imageUrls':'//div[4]/table//tr[1]//table//div[4]/input/@src',
                                                },
                                   },
                    }
