@@ -339,7 +339,7 @@ class Parse(object):
                 newContent.append(value)
             return newContent 
         if type(content) == list:
-            content = "".join('%s' % p for p in content)
+            content = "".join('%s' % p for p in content).strip()
         if name == 'area':
             if len(content.split('-'))<3:
                 return content

@@ -2313,8 +2313,10 @@ spiderConfig = {
                      },
     "clSpider":{
                      'allowedDomains':[
+                                       "cl.eye.rs",
                                        ],
                      'startUrls':[
+                                  'http://cl.eye.rs/thread0806.php?fid=8',
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
