@@ -339,7 +339,7 @@ class Parse(object):
                 newContent.append(value)
             return newContent 
         if type(content) == list:
-            content = "".join('%s' % p for p in content).strip()
+            content = " ".join('%s' % p.strip() for p in content)
         if name == 'area':
             if len(content.split('-'))<3:
                 return content
@@ -353,7 +353,7 @@ class Parse(object):
                 return content
             mainText = self.ext.getText(content)
             #print mainText
-            return mainText
+            return mainText.strip()
         if name == 'noteType':
             noteTypeRegex = r':([^:]*)\.html'
             matches = re.search(noteTypeRegex,content,0)

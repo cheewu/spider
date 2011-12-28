@@ -31,6 +31,10 @@ extractorConfig = {
 	                                          'value3':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[6]//text()',
         	                                  'value4':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[7]//text()',
                 					          },
+						        'AttractionRegex':{
+                                                   'center':'//div[@id="FLOATMAP"]/div[1]/div[2]/script/text()',
+                                                   'centerRegex':r'lat:(.*),\nlng:(.*),',
+								                   },
                 				"Article":{
                                            #第一部分和CommonSenseItem的一样
                                            'publishDate':'//div[1]/p/span[2]/text()',
