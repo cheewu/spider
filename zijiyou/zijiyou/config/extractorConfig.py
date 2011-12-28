@@ -26,11 +26,10 @@ extractorConfig = {
                 					          'address':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[3]/span/text()',
                 					          'desc':'//div[@id="BODYCON"]/div[2]/p/text()',
                 					          'descLink':'//div[@id="BODYCON"]/div[2]/p/a/@href',
-								              'value1':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[3]//text()',
-                                              'value2':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[4]//text()',
-                                              'value3':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[5]//text()',
-	                                          'value4':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[6]//text()',
-        	                                  'value5':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[7]//text()',
+                                              'value1':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[4]//text()',
+                                              'value2':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[5]//text()',
+	                                          'value3':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[6]//text()',
+        	                                  'value4':'//div[@id="MAIN"]/div[3]/div[1]/div[1]/div[1]/div[2]/ul/li[7]//text()',
                 					          },
                 				"Article":{
                                            #第一部分和CommonSenseItem的一样
