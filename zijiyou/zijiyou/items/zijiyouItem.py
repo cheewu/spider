@@ -67,7 +67,6 @@ class POI(BaseItem):
     openTime=Field()   #开放时间
     ticket=Field()     #票价
     traffic=Field()    #交通
-    type=Field()       #POI类型
     webAddress=Field() #网址
     replyNum = Field() #点评数
     center=Field()  #坐标
@@ -75,8 +74,15 @@ class POI(BaseItem):
     imageUrls = Field()     #图片原始链接列表
     imagesInfo = Field()   #图片信息，是一个2元组列表。eg：(True 图片是否有效, {'checksum':图片MD5值，用于排重，如 '2b00042f7481c7b056c4b410d28f33cf','path': 图片在本地的路径，如'full/7d97e98f8af710c7e7fe703abc8f639e0ee507c4.jpg','url': 原始地址，如'http://www.example.com/images/product1.jpg'})
         
-#    def __str__(self):
-#        return "POIItem"
+    #properties which are varied from site to site 
+    value1 = Field()
+    value2 = Field()
+    value3 = Field()
+    value4 = Field()
+    value5 = Field()
+    value6 = Field()
+    value7 = Field()
+    value8 = Field()
     
     def __init__(self,*kw):
         super(POI, self).__init__(*kw)
