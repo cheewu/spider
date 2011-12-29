@@ -95,12 +95,18 @@ class BaseCrawlSpider(CrawlSpider):
                 meta=p['meta']
             if not 'md5' in p:
                 log.msg('没有md5的url：%s' % p['url'],level=log.ERROR)
-            if isneedDump and p['md5'] in self.urlDump:
+            if isneedDump and p['md5'] in self.urlDump :
+                continue
+            #allowdomain filter
+            allowed = False
+            for ad in self.allowed_domains:
+                if re.match(r'http://'+ad, p['url']) is not None:
+                    allowed = True
+                    break
+            if not allowed and len(self.allowed_domains) > 0:
                 continue
             self.urlDump.add(p['md5'])
             req=self.makeRequest(p["url"],callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])#dont_filter = True
-#            if not isneedDump:
-#                req.dont_filter=True
             if req:
                 pendingRequestTemp.append(req)
             #限制pending_request的长度
@@ -112,7 +118,6 @@ class BaseCrawlSpider(CrawlSpider):
         '''
         爬虫恢复初始化pendingRequest下载请求
         '''
-#        dtBegin=datetime.datetime.now()
         #查询recent requests
         pendingRequest=[]
         #调度-2% 为下载异常
@@ -352,7 +357,14 @@ class BaseCrawlSpider(CrawlSpider):
                 urlItem['meta']=meta
             if 'originUrl' in meta:
                 urlItem['originUrl']=meta['originUrl']
-            self.apt.saveNewUrl(self.name,urlItem=urlItem)
+            #allowdomain filter
+            allowed = False
+            for ad in self.allowed_domains:
+                if re.match(r'http://'+ad, url) is not None:
+                    allowed = True
+                    break
+            if allowed or len(self.allowed_domains) < 1:
+                self.apt.saveNewUrl(self.name,urlItem=urlItem)
             
     def makeRequest(self, url,referenceUrl=None,callBackFunctionName=None,meta={},urlId=None,priority=1, **kw): 
         '''

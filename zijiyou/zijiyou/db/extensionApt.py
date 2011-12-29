@@ -52,7 +52,7 @@ class DiagnoserApt(object):
         '''
         爬虫诊断 计算指定爬虫待下载网页数量
         '''
-        whereJson={'status':{'$gt':900}}
+        whereJson={'status':{'$gte':900}}
         uncrawlNum=mongoApt.countByWhere(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
         return uncrawlNum
         
@@ -60,7 +60,7 @@ class DiagnoserApt(object):
         '''
         爬虫诊断 计算指定爬虫已下载网页数量
         '''
-        whereJson={'status':{'$lt':900}}
+        whereJson={'status':{'$lt':900,'$gt':0}}
         crawlNum=mongoApt.countByWhere(self.urlDbnamekey,self.urlCollectionsMap[spiderName], whereJson=whereJson)
         return crawlNum
         

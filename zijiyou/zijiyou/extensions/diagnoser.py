@@ -92,7 +92,7 @@ class Diagnoser(object):
             return
         
         if self.mail:
-            self.mailer.send(to=self.mailTos, subject='爬虫诊断信息', body=content)
+            self.mailer.send(to=self.mailTos, subject='爬虫Reporter', body=content)
         #若关闭spider则不再发送邮件
         if not isClose:
             reactor.callLater(self.mailInterval, self.onSendMail)
@@ -109,13 +109,19 @@ class Diagnoser(object):
             content += "下载网页总数：%s  " % self.spiderDict[spiderName]['crawledCounter']
             content +="速度：%s/分钟  \n" % (self.spiderDict[spiderName]['crawledCounter'] * 60.0 / interval )
             content +="下载失败网页数信息：%s\n" % (self.spiderDict[spiderName]['faildedCounter'])
+            #待下载网页数量
+            uncrawledUrlNum = self.apt.countUncrawlUrlsBySpidername(spiderName)
+            itemNum = self.apt.countItemsBySpidername(spiderName)
+            crawledUrlNum = self.apt.countCrawledUrlsBySpidername(spiderName)
+            content += "已下载item页数量%s ,已下载网页数量%s ,待下载网页数量%s \n" % (itemNum,crawledUrlNum,uncrawledUrlNum)
             #清除爬虫
             self.spiderDict.pop(spiderName)
         else:
             content = "运行时邮件诊断信息\n"
         
         #收集每个爬虫的执行情况
-        content +="\n----------------------当前活动爬虫信息-------------------------\n"
+        if len(self.spiderDict)>0:
+            content +="\n----------------------当前活动爬虫信息-------------------------\n"
         for key in self.spiderDict.keys():
             msg = "爬虫%s的诊断信息：" % key
             msg += " 下载网页总数：%s" % self.spiderDict[key]['crawledCounter']
@@ -135,7 +141,7 @@ class Diagnoser(object):
             content +="---------------"
 
         #收集爬虫系统总体信息
-        if self.totalPagecounts >1:
+        if self.totalPagecounts >50:
             content +="\n----------------------爬虫系统总体信息-------------------------\n"
             interval=(datetime.datetime.now()-self.dtBegin).seconds + 1
             self.dtBegin = datetime.datetime.now()

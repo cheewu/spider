@@ -1458,45 +1458,41 @@ spiderConfig = {
             "gdaround.lotour.com",
             "scaround.lotour.com",
             "news.lotour.com",
-            "golden.lotour.com"
+            "golden.lotour.com",
+            'www.lotour.com'
         ],
         'startUrls':[                  
             "http://www.lotour.com/sitemap.html"
         ],
         #普通list页正则表达式
         'normalRegex':[                           
-            {
-                'regex':'^http://\w+\.lotour\.com/\w+/index_\d+.shtml$',
-                'priority':1000
-            },
-            {
-                'regex':'^http://\w+\.lotour\.com/\w+/*$',
-                'priority':1000
-            },
-            {
-                'regex':'^http://\w+\.lotour\.com/*$',
-                'priority':1000
-            }
-        ],
+                        {
+                            'regex':'^http://\w+\.lotour\.com/\w+/index_\d+.shtml$',
+                            'priority':1000
+                        },
+                        {
+                            'regex':'^http://\w+\.lotour\.com/\w+/*$',
+                            'priority':1000
+                        },
+                        {
+                            'regex':'^http://\w+\.lotour\.com/*$',
+                            'priority':1000
+                        }
+                       ],
         #item页正则表达式 itemCollectionName对应item存放的数据表名
         'itemRegex':[
-#            {
-#                'itemCollectionName':'POI',
-#                'regex':'^http://d.lotour.com/\w+/*$',
-#                'priority':1000
-#            }, 
-            {
-                'itemCollectionName':'Article1',
-                'regex':r'^http://\w+.lotour.com/\w+/20\d{6}/\w+\.shtml$',
-                'priority':600
-            },  
-            {
-                'itemCollectionName':'Article2',
-                'regex':'^http://www.lotour.com/snapshot/\d+-\d+-\d+/snapshot(_\d+)+.shtml$',
-                'priority':300
-            }
-        ]                     
-    },
+                     {
+                        'itemCollectionName':'Article1',
+                        'regex':r'^http://\w+.lotour.com/\w+/20\d{6}/\w+\.shtml$',
+                        'priority':600
+                    },  
+                    {
+                        'itemCollectionName':'Article2',
+                        'regex':'^http://www.lotour.com/snapshot/\d+-\d+-\d+/snapshot(_\d+)+.shtml$',
+                        'priority':300
+                    }
+                    ]                
+                },
 
     "17uSpider":{
         'allowedDomains':["www.17u.com"],
@@ -2329,8 +2325,10 @@ spiderConfig = {
                      },
     "clSpider":{
                      'allowedDomains':[
+                                       "cl.eye.rs",
                                        ],
                      'startUrls':[
+                                  'http://cl.eye.rs/thread0806.php?fid=8',
                                   ],
                      #普通list页正则表达式
                      'normalRegex':[
