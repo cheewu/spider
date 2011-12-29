@@ -87,39 +87,6 @@ class BaseCrawlSpider(CrawlSpider):
             log.msg("spider配置异常，缺少必要的配置信息。爬虫名:%s" % self.name, level=log.ERROR)
             return False
 
-#    def initUrlDupfilter(self):
-#        '''
-#        初始化爬虫排重库，并找出需要更新的网页Reqest
-#        '''
-#        log.msg('初始化爬虫%s排重库' % self.name, level=log.INFO)
-#        self.urlDump=set()
-#        urlForUpdateStategy=[]
-#        dtBegin=datetime.datetime.now()
-#        cursor = self.apt.findUrlsForDupfilter(self.name)
-#        dtLoad=datetime.datetime.now()
-#        log.msg('爬虫%s排重库完成Url加载.从UrlDb加载%s个；数据库查询时间花费：%s' %(self.name,cursor.count(),dtLoad-dtBegin), level=log.INFO)
-#        #更新策略
-#        now = datetime.datetime.now()
-#        for p in cursor:
-#            #更新策略
-#            if 'updateInterval' in p and p['status'] in [200, 304] and now-datetime.timedelta(days=p["updateInterval"]) > p["dateTime"]:
-#                continue
-##                meta={}
-##                headers={}
-##                if 'reference' in p :
-##                    meta['reference'] = p['reference']
-##                if self.updateStrategy in p:
-##                    meta[self.updateStrategy]=p[self.updateStrategy]
-##                    headers['If-Modified-Since'] = self.getGMTFormatDate(p['dateTime'])
-##                req=self.makeRequest(p["url"], callBackFunctionName=p["callBack"], urlId=p['_id'],priority=p["priority"])
-##                urlForUpdateStategy.append(req)
-#            else:
-#                self.urlDump.add(p['md5'])
-#        dtDump=datetime.datetime.now()
-#        log.msg("爬虫排重库完成初始化. 排重库的容量=%s；初始化Dump花费时间花费：%s" % (len(self.urlDump),dtDump-dtLoad), level=log.INFO)
-#        log.msg("爬虫%s需要更新的网页数量有%s" % (self.name,len(urlForUpdateStategy)), level=log.INFO)
-#        return urlForUpdateStategy
-
     def getRequestsFromCursor(self,cursor,num,isneedDump=True):
         pendingRequestTemp=[]
         for p in cursor:
@@ -129,7 +96,6 @@ class BaseCrawlSpider(CrawlSpider):
             if not 'md5' in p:
                 log.msg('没有md5的url：%s' % p['url'],level=log.ERROR)
             if isneedDump and p['md5'] in self.urlDump:
-                log.msg('url已经加入过pengdingequest中。%s' % p['url'], level=log.DEBUG)
                 continue
             self.urlDump.add(p['md5'])
             req=self.makeRequest(p["url"],callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])#dont_filter = True
@@ -151,12 +117,12 @@ class BaseCrawlSpider(CrawlSpider):
         pendingRequest=[]
         #调度-2% 为下载异常
         cursorExp = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=800, statusEnd=900)
-        numExp = 0.02 * self.urlIncreasement
+        numExp = 0.01 * self.urlIncreasement
         pendingRequest.extend(self.getRequestsFromCursor(cursorExp, numExp))
         numExp = len(pendingRequest)
         #调度-2% 为下载失败
         cursorExp = self.apt.findPendingUrlsByStatusAndSpiderName(self.name, statusBegin=301, statusEnd=800)
-        numFailed = 0.02 * self.urlIncreasement
+        numFailed = 0.01 * self.urlIncreasement
         pendingRequest.extend(self.getRequestsFromCursor(cursorExp, numFailed))
         numFailed = len(pendingRequest) - numExp
         #调度剩下的为新url

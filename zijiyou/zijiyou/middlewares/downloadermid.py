@@ -35,7 +35,7 @@ class UpdateRequestedUrl(object):
         if 'urlId' in request.meta:
             urlId=request.meta['urlId']
             self.apt.updateUrlDbStatusById(urlId,spider.name, status=responseStatus)
-            log.msg("用urlId更新url访问状态 url:%s" % request.url, level=log.INFO)
+            log.msg("用urlId更新url访问状态:%s url:%s" % (response.status,request.url), level=log.INFO)
         else:
 #            self.apt.updateUrlDbStatusByUrl(request.url,spider.name, status=responseStatus)
             log.msg("没有urlId，请确认是否种子url url:%s" % request.url, level=log.WARNING)
@@ -97,7 +97,6 @@ class RandomHttpProxy(object):
         for p in f:
             pdict=p.split('=')
             if len(pdict) == 2 and len(pdict[0])>2 and len(pdict[1]) > 5:
-                type=pdict[0].strip()
                 url=pdict[1].strip()
                 if not type in self.proxies.keys():
                     self.proxies[type]=[]
@@ -186,8 +185,8 @@ class RandomHttpProxy(object):
         """
         下载异常，可能是代理无效了，对代理进行惩罚性失败次数更新：10
         """
-        print '下载异常，可能是被封锁了ip或代理无效，异常：%s 代理：%s url:%s' % (exception,('proxy' in request.meta and request.meta['proxy'] or '无'),request.url)
-        log.msg('下载异常，可能是被封锁了ip或代理无效，异常：%s 代理：%s url:%s' % (exception,('proxy' in request.meta and request.meta['proxy'] or '无'),request.url), level=log.WARNING)
+        print '下载异常，异常：%s 代理：%s url:%s' % (exception,('proxy' in request.meta and request.meta['proxy'] or '无'),request.url)
+        log.msg('下载异常，异常：%s 代理：%s url:%s' % (exception,('proxy' in request.meta and request.meta['proxy'] or '无'),request.url), level=log.WARNING)
         parsed = urlparse_cached(request)
         scheme = parsed.scheme
         if scheme in self.proxies and 'proxy' in request.meta:
