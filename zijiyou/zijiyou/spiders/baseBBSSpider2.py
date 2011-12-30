@@ -56,7 +56,7 @@ class BaseBBSSpider2(BaseCrawlSpider):
                 else:
                     links = self.extractLinks(response, allow = v['regex'])
                 if len(links)<1:
-                    log.msg('从%s中没有抽取到item的link。reg：%s;region:%s' % (response.url,v['regex'],v['region']), level=log.WARNING)
+                    log.msg('从%s中没有抽取到item的link。reg：%s;region:%s' % (response.url,v['regex'],v['region'] if 'region' in v else 'empty'), level=log.WARNING)
                 # 拼凑item的新link
                 itemCounter += len(links)
                 for link in links:

@@ -89,6 +89,7 @@ class BaseCrawlSpider(CrawlSpider):
 
     def getRequestsFromCursor(self,cursor,num,isneedDump=True):
         pendingRequestTemp=[]
+        notallowedcounter = 0 
         for p in cursor:
             meta={}
             if 'meta' in p:
@@ -104,6 +105,7 @@ class BaseCrawlSpider(CrawlSpider):
                     allowed = True
                     break
             if not allowed and len(self.allowed_domains) > 0:
+                notallowedcounter += 1
                 continue
             self.urlDump.add(p['md5'])
             req=self.makeRequest(p["url"],callBackFunctionName=p["callBack"],meta=meta, urlId=p['_id'],priority=p["priority"])#dont_filter = True
@@ -112,6 +114,8 @@ class BaseCrawlSpider(CrawlSpider):
             #限制pending_request的长度
             if len(pendingRequestTemp)>= num:
                 break
+        if notallowedcounter > 0:
+            log.msg('getPendingRequest found unallowed urls :%s' % notallowedcounter, level=log.WARNING)
         return pendingRequestTemp
 
     def getPendingRequest(self):
