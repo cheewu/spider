@@ -4,8 +4,8 @@ Created on 2011-8-5
 
 @author: shiym
 '''
-from pymongo.objectid import ObjectId
 from scrapy.conf import settings
+from bson.objectid import ObjectId
 from zijiyou.db.apt import mongoApt
 import datetime
 
