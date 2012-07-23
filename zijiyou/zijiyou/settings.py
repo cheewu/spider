@@ -184,7 +184,7 @@ EXTENSIONS = {
               }
 
 DOWNLOADER_MIDDLEWARES = {
-                            'zijiyou.middlewares.downloadermid.RandomHttpProxy': 749,
+                            #'zijiyou.middlewares.downloadermid.RandomHttpProxy': 749,
                             'zijiyou.middlewares.downloadermid.UpdateRequestedUrl':901
                             }
 
