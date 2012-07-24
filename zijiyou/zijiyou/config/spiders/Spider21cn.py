@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+Spider21cn={
+        'allowedDomains':["travel.21cn.com"],
+        'startUrls':[
+                     'http://travel.21cn.com/'
+                    ],
+        #普通list页正则表达式
+        'normalRegex':[
+                       {
+                        #列表，如：http://travel.21cn.com/scene/foreign/list1.shtml
+                        'regex':'^http://travel\.21cn\.com/.*/list\d+\.shtml$',
+                        'priority':1000
+                        },
+                       {
+                        #列表（含分页），如：http://travel.21cn.com/scene/foreign/list2.shtml
+                        'regex':'^list\d+\.shtml$',
+                        'priority':1000
+                        }
+                       ],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[
+                     #Article
+                     {
+                      #文章页面，如：http://travel.21cn.com/outdoor/tubu/2007/08/17/3422364.shtml
+                      'itemCollectionName':'Article',
+                      'regex':'http://travel\.21cn\.com/\w+/\w+/\d+/\d+/\d+/\d+\.shtml',
+                      'priority':600
+                      },
+                     #Article  
+                     {
+                      #含分页的文章，如：http://travel.21cn.com/guide/senery/2011/09/27/9268652_2.shtml
+                      'itemCollectionName':'Article',
+                      'regex':'^\d+_\d+\.shtml$',
+                      'priority':600
+                      }  
+                     ]
+                  }

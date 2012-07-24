@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+lotourSpider={
+        'allowedDomains':[
+            "d.lotour.com",
+            "abroad.lotour.com" ,
+            "outdoor.lotour.com",
+            "leisure.lotour.com",
+            "chn.lotour.com",
+            "bjaround.lotour.com",
+            "sharound.lotour.com",
+            "gdaround.lotour.com",
+            "scaround.lotour.com",
+            "news.lotour.com",
+            "golden.lotour.com",
+            'www.lotour.com'
+        ],
+        'startUrls':[                  
+            "http://www.lotour.com/sitemap.html"
+        ],
+        #普通list页正则表达式
+        'normalRegex':[                           
+                        {
+                            'regex':'^http://\w+\.lotour\.com/\w+/index_\d+.shtml$',
+                            'priority':1000
+                        },
+                        {
+                            'regex':'^http://\w+\.lotour\.com/\w+/*$',
+                            'priority':1000
+                        },
+                        {
+                            'regex':'^http://\w+\.lotour\.com/*$',
+                            'priority':1000
+                        }
+                       ],
+        #item页正则表达式 itemCollectionName对应item存放的数据表名
+        'itemRegex':[
+                     {
+                        'itemCollectionName':'Article1',
+                        'regex':r'^http://\w+.lotour.com/\w+/20\d{6}/\w+\.shtml$',
+                        'priority':600
+                    },  
+                    {
+                        'itemCollectionName':'Article2',
+                        'regex':'^http://www.lotour.com/snapshot/\d+-\d+-\d+/snapshot(_\d+)+.shtml$',
+                        'priority':300
+                    }
+                    ]                
+                }
